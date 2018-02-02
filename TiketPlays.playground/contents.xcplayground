@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios'>
+    <pages>
+        <page name='EmptyStates'/>
+        <page name='Untitled Page'/>
+        <page name='TiketForm'/>
+        <page name='PassengerDomesticForm'/>
+        <page name='FlightDirects'/>
+        <page name='FlightPayments'/>
+        <page name='PassengerInternationalForm'/>
+        <page name='AirportPicks'/>
+        <page name='PassengerPicks'/>
+        <page name='DatePicks'/>
+        <page name='FlightResults'/>
+        <page name='FlightFilters'/>
+    </pages>
+</playground>

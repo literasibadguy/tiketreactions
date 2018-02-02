@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FlightDirectViewCell" rowHeight="268" id="KGk-i7-Jjw" customClass="FlightDirectViewCell" customModule="TiketComponents" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="268"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="267.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Hkp-L1-jDo" userLabel="Flight Direct Info Stack View">
+                        <rect key="frame" x="0.0" y="10" width="320" height="247.5"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lV8-8p-bfa" userLabel="Flight Number Stack View">
+                                <rect key="frame" x="0.0" y="0.0" width="116.5" height="64.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="No. Penerbangan" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KEV-Eq-ZDd">
+                                        <rect key="frame" x="0.0" y="0.0" width="116.5" height="35.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="SJ-242" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CP5-3h-sdd">
+                                        <rect key="frame" x="0.0" y="35.5" width="116.5" height="29"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2II-X4-GPA" userLabel="Flight Info Stack View">
+                                <rect key="frame" x="0.0" y="64.5" width="320" height="183"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="cTc-es-q9S" userLabel="Departure Info Stack View">
+                                        <rect key="frame" x="0.0" y="30" width="102" height="123"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keberangkatan" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w6c-wA-mzf">
+                                                <rect key="frame" x="0.0" y="0.0" width="102" height="17"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="bbp-x7-8q0" userLabel="Departure City Stack View">
+                                                <rect key="frame" x="0.0" y="17" width="76" height="60"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CGK" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BUw-YK-KV5">
+                                                        <rect key="frame" x="0.0" y="0.0" width="76" height="43"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="36"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jakarta" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e9d-ca-9gh">
+                                                        <rect key="frame" x="0.0" y="43" width="76" height="17"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="pWm-qY-hLz" userLabel="Departure Date Stack View">
+                                                <rect key="frame" x="0.0" y="77" width="102" height="46"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="05:40" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ctX-j0-Znk" userLabel="Departure Time Label">
+                                                        <rect key="frame" x="0.0" y="0.0" width="66" height="29"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Minggu, 21 September 2018" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="608-pg-oxI" userLabel="Departure Date Label">
+                                                        <rect key="frame" x="0.0" y="29" width="102" height="17"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="pWm-qY-hLz" firstAttribute="trailing" secondItem="w6c-wA-mzf" secondAttribute="trailing" id="5MH-Xl-a7U"/>
+                                        </constraints>
+                                    </stackView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="flight-green-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="FKY-AA-3mR">
+                                        <rect key="frame" x="102" y="82" width="63" height="19"/>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="to2-xJ-dNZ" userLabel="Arrival Info Stack View">
+                                        <rect key="frame" x="165" y="30" width="155" height="123"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kedatangan" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n9O-xd-I7E">
+                                                <rect key="frame" x="0.0" y="0.0" width="80.5" height="17"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pAB-BX-N1J" userLabel="Arrival City Stack View">
+                                                <rect key="frame" x="0.0" y="17" width="75.5" height="60"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HKG" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I4b-Sn-sVU">
+                                                        <rect key="frame" x="0.0" y="0.0" width="75.5" height="43"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="36"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hongkong" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OkS-T0-GgQ">
+                                                        <rect key="frame" x="0.0" y="43" width="75.5" height="17"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="IpF-kc-4tw" userLabel="Arrival Date Stack View">
+                                                <rect key="frame" x="0.0" y="77" width="155" height="46"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="09:45" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Laj-xw-30N">
+                                                        <rect key="frame" x="0.0" y="0.0" width="65.5" height="29"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Minggu, 21 September 2018" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NeE-KB-OIL">
+                                                        <rect key="frame" x="0.0" y="29" width="155" height="17"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="cTc-es-q9S" firstAttribute="top" secondItem="2II-X4-GPA" secondAttribute="top" constant="30" id="3ZH-hp-Im5"/>
+                                    <constraint firstItem="cTc-es-q9S" firstAttribute="top" secondItem="to2-xJ-dNZ" secondAttribute="top" id="sJS-Ru-if9"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Hkp-L1-jDo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="DIE-V0-jzg"/>
+                    <constraint firstAttribute="bottom" secondItem="Hkp-L1-jDo" secondAttribute="bottom" constant="10" id="U0Y-e2-3te"/>
+                    <constraint firstItem="Hkp-L1-jDo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="VKg-RG-A0C"/>
+                    <constraint firstAttribute="trailing" secondItem="Hkp-L1-jDo" secondAttribute="trailing" id="Y3B-cp-LA5"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="arrivalCityLabel" destination="OkS-T0-GgQ" id="aoX-rl-49i"/>
+                <outlet property="arrivalCodeLabel" destination="I4b-Sn-sVU" id="FiG-nz-LiH"/>
+                <outlet property="arrivalDateLabel" destination="NeE-KB-OIL" id="C1H-Wf-VNx"/>
+                <outlet property="arrivalInfoStackView" destination="to2-xJ-dNZ" id="ttI-Je-ISk"/>
+                <outlet property="arrivalTimeLabel" destination="Laj-xw-30N" id="Sou-hk-rzq"/>
+                <outlet property="arrivalTitleLabel" destination="n9O-xd-I7E" id="VZ1-4g-8Pt"/>
+                <outlet property="departureCityLabel" destination="e9d-ca-9gh" id="dwG-IA-N4X"/>
+                <outlet property="departureCodeLabel" destination="BUw-YK-KV5" id="tYW-2o-Jrj"/>
+                <outlet property="departureDateLabel" destination="608-pg-oxI" id="GeU-n5-vZg"/>
+                <outlet property="departureInfoStackView" destination="cTc-es-q9S" id="reK-ti-vaq"/>
+                <outlet property="departureTimeLabel" destination="ctX-j0-Znk" id="f6T-rc-VsW"/>
+                <outlet property="departureTitleLabel" destination="w6c-wA-mzf" id="Lge-vi-wyO"/>
+                <outlet property="flightDirectInfoStackView" destination="Hkp-L1-jDo" id="s2B-eq-lQX"/>
+                <outlet property="flightInfoStackView" destination="2II-X4-GPA" id="CJK-R5-BUF"/>
+                <outlet property="numberFlightLabel" destination="CP5-3h-sdd" id="rTH-NC-eQS"/>
+                <outlet property="numberFlightTitleLabel" destination="KEV-Eq-ZDd" id="ATP-pS-Gg7"/>
+            </connections>
+            <point key="canvasLocation" x="-10" y="64"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="flight-green-arrow" width="63" height="19"/>
+    </resources>
+</document>

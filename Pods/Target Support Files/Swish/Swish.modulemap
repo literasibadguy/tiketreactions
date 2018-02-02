@@ -1,0 +1,6 @@
+framework module Swish {
+  umbrella header "Swish-umbrella.h"
+
+  export *
+  module * { export * }
+}

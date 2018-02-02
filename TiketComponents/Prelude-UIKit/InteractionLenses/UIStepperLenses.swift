@@ -1,0 +1,114 @@
+//
+//  UIStepperLenses.swift
+//  TiketComponents
+//
+//  Created by Firas Rafislam on 28/01/18.
+//  Copyright © 2018 Firas Rafislam. All rights reserved.
+//
+
+import Foundation
+import Prelude
+
+public protocol UIStepperProtocol: UIControlProtocol {
+    var isContinuous: Bool { get set }
+    var autorepeat: Bool { get set }
+    var wraps: Bool { get set }
+    var value: Double { get set }
+    var minimumValue: Double { get set }
+    var maximumValue: Double { get set }
+    var stepValue: Double { get set }
+    
+    var tintColor: UIColor! { get set }
+    
+    func backgroundImage(for state: UIControlState) -> UIImage?
+    func setBackgroundImage(_ image: UIImage?, for state: UIControlState)
+    
+    func incrementImage(for state: UIControlState) -> UIImage?
+    func setIncrementImage(_ image: UIImage?, for state: UIControlState)
+    func decrementImage(for state: UIControlState) -> UIImage?
+    func setDecrementImage(_ image: UIImage?, for state: UIControlState)
+    
+}
+
+extension UIStepper: UIStepperProtocol {
+    
+}
+
+public extension LensHolder where Object: UIStepperProtocol {
+    public var isContinuous: Lens<Object, Bool> {
+        return Lens(
+            view: { $0.isContinuous },
+            set: { $1.isContinuous = $0; return $1 }
+        )
+    }
+    
+    public var autorepeat: Lens<Object, Bool> {
+        return Lens(
+            view: { $0.autorepeat },
+            set: { $1.autorepeat = $0; return $1 }
+        )
+    }
+    
+    public var wraps: Lens<Object, Bool> {
+        return Lens(
+            view: { $0.wraps },
+            set: { $1.wraps = $0; return $1 }
+        )
+    }
+    
+    public var value: Lens<Object, Double> {
+        return Lens(
+            view: { $0.value },
+            set: { $1.value = $0; return $1 }
+        )
+    }
+    
+    public var minimumValue: Lens<Object, Double> {
+        return Lens(
+            view: { $0.minimumValue },
+            set: { $1.minimumValue = $0; return $1 }
+        )
+    }
+    
+    public var maximumValue: Lens<Object, Double> {
+        return Lens(
+            view: { $0.maximumValue },
+            set: { $1.maximumValue = $0; return $1 }
+        )
+    }
+    
+    public var stepValue: Lens<Object, Double> {
+        return Lens(
+            view: { $0.stepValue },
+            set: { $1.stepValue = $0; return $1 }
+        )
+    }
+    
+    public var tintColor: Lens<Object, UIColor> {
+        return Lens(
+            view: { $0.tintColor },
+            set: { $1.tintColor = $0; return $1 }
+        )
+    }
+    
+    public  func backgroundImage(for state: UIControlState) -> Lens<Object, UIImage?> {
+        return Lens(
+            view: { view in view.backgroundImage(for: state) },
+            set: { view, set in set.setBackgroundImage(view, for: state); return set }
+        )
+    }
+    
+    public func incrementImage(for state: UIControlState) -> Lens<Object, UIImage?> {
+        return Lens(
+            view: { view in view.incrementImage(for: state) },
+            set: { view, set in set.setIncrementImage(view, for: state); return set}
+        )
+    }
+    
+    public func decrementImage(for state: UIControlState) -> Lens<Object, UIImage?> {
+        return Lens(
+            view: { view in view.decrementImage(for: state) },
+            set: { view, set in set.setDecrementImage(view, for: state); return set}
+        )
+    }
+}
