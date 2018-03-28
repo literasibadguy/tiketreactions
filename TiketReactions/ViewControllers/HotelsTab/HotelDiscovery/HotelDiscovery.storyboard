@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Hotel-->
+        <scene sceneID="9yr-mV-ON4">
+            <objects>
+                <tableViewController storyboardIdentifier="HotelDiscoveryVC" title="Hotel" id="U9I-KD-sKL" customClass="HotelDiscoveryVC" customModule="TiketComponents" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="yS2-dJ-pBS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="HotelDiscoveryViewCell" rowHeight="300" id="FrQ-Xh-RLE" customClass="HotelDiscoveryViewCell" customModule="TiketComponents" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="300"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FrQ-Xh-RLE" id="bfn-L0-9MD">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="299.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="J.W. Marriot Hotel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uX6-He-qO3">
+                                            <rect key="frame" x="16" y="214" width="343" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="N7S-a4-pv4"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jakarta" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oni-Xi-MvJ">
+                                            <rect key="frame" x="16" y="177" width="343" height="29"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start IDR 540,000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lho-ds-uNf">
+                                            <rect key="frame" x="16" y="245" width="197" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="197" id="h8K-68-4Fr"/>
+                                                <constraint firstAttribute="height" constant="22" id="prw-7T-qJg"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2xj-zG-afJ" customClass="DesignableImageView" customModule="Spring">
+                                            <rect key="frame" x="16" y="11" width="343" height="150"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="150" id="eGX-eI-KGV"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="10"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="oni-Xi-MvJ" firstAttribute="trailing" secondItem="uX6-He-qO3" secondAttribute="trailing" id="03I-ld-1yP"/>
+                                        <constraint firstItem="2xj-zG-afJ" firstAttribute="leading" secondItem="bfn-L0-9MD" secondAttribute="leadingMargin" id="3f6-Fq-cb1"/>
+                                        <constraint firstItem="oni-Xi-MvJ" firstAttribute="leading" secondItem="uX6-He-qO3" secondAttribute="leading" id="F1j-18-WnI"/>
+                                        <constraint firstItem="2xj-zG-afJ" firstAttribute="trailing" secondItem="bfn-L0-9MD" secondAttribute="trailingMargin" id="GdU-mF-Ztq"/>
+                                        <constraint firstItem="2xj-zG-afJ" firstAttribute="leading" secondItem="oni-Xi-MvJ" secondAttribute="leading" id="Le6-3w-i8K"/>
+                                        <constraint firstItem="lho-ds-uNf" firstAttribute="top" secondItem="uX6-He-qO3" secondAttribute="bottom" constant="10" id="P4Y-jy-ar4"/>
+                                        <constraint firstItem="2xj-zG-afJ" firstAttribute="trailing" secondItem="oni-Xi-MvJ" secondAttribute="trailing" id="QpD-HH-si8"/>
+                                        <constraint firstItem="uX6-He-qO3" firstAttribute="leading" secondItem="lho-ds-uNf" secondAttribute="leading" id="Uur-s6-bnS"/>
+                                        <constraint firstItem="2xj-zG-afJ" firstAttribute="top" secondItem="bfn-L0-9MD" secondAttribute="topMargin" id="VvG-PS-AhG"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="lho-ds-uNf" secondAttribute="bottom" constant="22" id="jFG-5S-juz"/>
+                                        <constraint firstItem="oni-Xi-MvJ" firstAttribute="top" secondItem="2xj-zG-afJ" secondAttribute="bottom" constant="16" id="mvk-tF-rm0"/>
+                                        <constraint firstItem="uX6-He-qO3" firstAttribute="top" secondItem="oni-Xi-MvJ" secondAttribute="bottom" constant="8" symbolic="YES" id="rbF-TB-4Lt"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="businessNameLabel" destination="uX6-He-qO3" id="2Xb-bi-Btr"/>
+                                    <outlet property="cityLabel" destination="oni-Xi-MvJ" id="Ys7-qa-aPA"/>
+                                    <outlet property="priceValueLabel" destination="lho-ds-uNf" id="4U5-BB-Apf"/>
+                                    <outlet property="primaryPhotoImageView" destination="2xj-zG-afJ" id="sP5-hk-zBV"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="U9I-KD-sKL" id="1HH-XY-Wm0"/>
+                            <outlet property="delegate" destination="U9I-KD-sKL" id="esf-kv-9Bp"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gpN-w7-2OF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-95.200000000000003" y="158.77061469265368"/>
+        </scene>
+    </scenes>
+</document>

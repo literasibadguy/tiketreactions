@@ -2,7 +2,7 @@
 //  TiketComponentsTests.swift
 //  TiketComponentsTests
 //
-//  Created by Firas Rafislam on 22/02/18.
+//  Created by Firas Rafislam on 25/01/18.
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 

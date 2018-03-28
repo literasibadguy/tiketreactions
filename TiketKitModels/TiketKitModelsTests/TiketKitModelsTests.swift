@@ -1,15 +1,15 @@
 //
-//  TiketComponentsTests.swift
-//  TiketComponentsTests
+//  TiketKitModelsTests.swift
+//  TiketKitModelsTests
 //
-//  Created by Firas Rafislam on 22/02/18.
+//  Created by Firas Rafislam on 18/03/18.
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 
 import XCTest
-@testable import TiketComponents
+@testable import TiketKitModels
 
-class TiketComponentsTests: XCTestCase {
+class TiketKitModelsTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

@@ -1,15 +1,22 @@
 //
-//  TiketComponentsTests.swift
+//  AppDelegateViewModelTests.swift
 //  TiketComponentsTests
 //
-//  Created by Firas Rafislam on 22/02/18.
+//  Created by Firas Rafislam on 09/02/18.
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
-
+import Prelude
+import ReactiveSwift
+import Result
 import XCTest
+import UserNotifications
 @testable import TiketComponents
+@testable import TiketAPIs
 
-class TiketComponentsTests: XCTestCase {
+class AppDelegateViewModelTests: XCTestCase {
+    let vm: AppDelegateViewModelType = AppDelegateViewModel()
+    
+    fileprivate let presentViewController = TestObserver<Int, NoError>()
     
     override func setUp() {
         super.setUp()

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AvailableRoomViewCell" rowHeight="155" id="KGk-i7-Jjw" customClass="AvailableRoomViewCell" customModule="TiketComponents" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="155"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="154.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Superior Room Only" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xj9-kj-2aY">
+                        <rect key="frame" x="133" y="15" width="186" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="bqB-qc-67m"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IDR 380,000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WkR-IC-A5E">
+                        <rect key="frame" x="133" y="46" width="144" height="29"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="29" id="9UE-o2-CyP"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Room available: 2, Including Breakfast" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bbp-2c-Phg">
+                        <rect key="frame" x="133" y="83" width="178" height="57"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mEz-Gj-AbR" customClass="DesignableImageView" customModule="Spring">
+                        <rect key="frame" x="12" y="37" width="113" height="80"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="80" id="XUZ-xe-SPj"/>
+                            <constraint firstAttribute="width" constant="113" id="dE5-FO-Ba7"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Xj9-kj-2aY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="4" id="JVc-Mw-xEr"/>
+                    <constraint firstItem="Xj9-kj-2aY" firstAttribute="leading" secondItem="mEz-Gj-AbR" secondAttribute="trailing" constant="8" symbolic="YES" id="U8b-h3-YXT"/>
+                    <constraint firstItem="WkR-IC-A5E" firstAttribute="top" secondItem="Xj9-kj-2aY" secondAttribute="bottom" constant="7" id="Vbj-IX-YNH"/>
+                    <constraint firstItem="Bbp-2c-Phg" firstAttribute="top" secondItem="WkR-IC-A5E" secondAttribute="bottom" constant="8" symbolic="YES" id="akW-Hi-owL"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Bbp-2c-Phg" secondAttribute="trailing" constant="-7" id="gS7-UP-kUC"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Xj9-kj-2aY" secondAttribute="trailing" constant="-15" id="i2b-g6-lkg"/>
+                    <constraint firstItem="Xj9-kj-2aY" firstAttribute="leading" secondItem="WkR-IC-A5E" secondAttribute="leading" id="jB2-w5-BoZ"/>
+                    <constraint firstItem="mEz-Gj-AbR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-4" id="lxT-iq-sol"/>
+                    <constraint firstItem="WkR-IC-A5E" firstAttribute="leading" secondItem="Bbp-2c-Phg" secondAttribute="leading" id="oG1-Gr-yA4"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Bbp-2c-Phg" secondAttribute="bottom" constant="4" id="p9l-LE-LbA"/>
+                    <constraint firstItem="mEz-Gj-AbR" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="urj-gR-puD"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="roomDescriptionLabel" destination="Bbp-2c-Phg" id="ZsE-gt-eLj"/>
+                <outlet property="roomPhotoImageView" destination="mEz-Gj-AbR" id="hBZ-VU-Nqv"/>
+                <outlet property="roomPriceLabel" destination="WkR-IC-A5E" id="ogG-9z-L4y"/>
+                <outlet property="roomTypeLabel" destination="Xj9-kj-2aY" id="49l-BF-BOv"/>
+            </connections>
+            <point key="canvasLocation" x="112" y="109.5"/>
+        </tableViewCell>
+    </objects>
+</document>
