@@ -1,8 +1,8 @@
 //
-//  OrderListViewModel.swift
+//  HotelDiscoveryEmbedViewModel.swift
 //  TiketReactions
 //
-//  Created by Firas Rafislam on 24/02/18.
+//  Created by Firas Rafislam on 10/04/18.
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 

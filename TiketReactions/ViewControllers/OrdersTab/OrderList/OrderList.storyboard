@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Order-->
+        <scene sceneID="8XR-q6-EgB">
+            <objects>
+                <tableViewController storyboardIdentifier="OrderListVC" title="Order" id="Q8n-FT-Xhw" customClass="OrderListVC" customModule="TiketReactions" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="W5g-I9-hza">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OrderListViewCell" rowHeight="165" id="gAC-hd-6Ln" customClass="OrderListViewCell" customModule="TiketReactions" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="165"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gAC-hd-6Ln" id="HPr-U3-IqD">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="164.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="YWH-B5-aM9">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="164.5"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Hotel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eyH-wi-Saq">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="97.5"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The 101 Legian" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwX-FO-bnP">
+                                                    <rect key="frame" x="0.0" y="97.5" width="375" height="21.5"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Superior Room (Only), 3 Malam " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J3E-P7-3ne">
+                                                    <rect key="frame" x="0.0" y="119" width="375" height="24"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 Maret 2018" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgY-a5-wdL">
+                                                    <rect key="frame" x="0.0" y="143" width="375" height="21.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="YWH-B5-aM9" firstAttribute="top" secondItem="HPr-U3-IqD" secondAttribute="top" id="NKe-0W-kOF"/>
+                                        <constraint firstItem="YWH-B5-aM9" firstAttribute="leading" secondItem="HPr-U3-IqD" secondAttribute="leading" id="QG7-9a-lnG"/>
+                                        <constraint firstAttribute="bottom" secondItem="YWH-B5-aM9" secondAttribute="bottom" id="S9N-70-AVY"/>
+                                        <constraint firstAttribute="trailing" secondItem="YWH-B5-aM9" secondAttribute="trailing" id="UdJ-wc-qlC"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="orderNameDetailLabel" destination="J3E-P7-3ne" id="9BZ-uH-Dg1"/>
+                                    <outlet property="orderNameLabel" destination="gwX-FO-bnP" id="lij-gG-aNw"/>
+                                    <outlet property="orderTypeLabel" destination="eyH-wi-Saq" id="mMl-cN-cVN"/>
+                                    <outlet property="startDateLabel" destination="cgY-a5-wdL" id="8a0-U0-c8K"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Q8n-FT-Xhw" id="gsA-ed-Hru"/>
+                            <outlet property="delegate" destination="Q8n-FT-Xhw" id="Md2-Xn-qcV"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gS0-0R-IER" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="40.799999999999997" y="146.17691154422789"/>
+        </scene>
+    </scenes>
+</document>

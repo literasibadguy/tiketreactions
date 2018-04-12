@@ -1,20 +1,15 @@
 //
-//  OrderListVC.swift
-//  TiketComponents
+//  OrderDetailsVC.swift
+//  TiketReactions
 //
-//  Created by Firas Rafislam on 08/02/18.
+//  Created by Firas Rafislam on 07/04/18.
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 
 import UIKit
 
-class OrderListVC: UITableViewController {
-    
-    static func instantiate() -> OrderListVC {
-        let vc = Storyboard.OrderList.instantiate(OrderListVC.self)
-        return vc
-    }
-    
+class OrderDetailsVC: UITableViewController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
