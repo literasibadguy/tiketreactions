@@ -1,14 +1,14 @@
 //
-//  GuestFormTableViewCell.swift
+//  HotelPaymentViewCell.swift
 //  TiketReactions
 //
-//  Created by Firas Rafislam on 24/04/18.
+//  Created by Firas Rafislam on 22/04/18.
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 
 import UIKit
 
-class GuestFormTableViewCell: UITableViewCell {
+class HotelPaymentViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -20,5 +20,5 @@ class GuestFormTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
 }

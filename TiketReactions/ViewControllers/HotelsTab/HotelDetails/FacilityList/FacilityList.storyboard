@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Facility ListVC-->
+        <scene sceneID="iIQ-gh-QLN">
+            <objects>
+                <viewController storyboardIdentifier="FacilityListVC" id="ot9-3p-7Dj" customClass="FacilityListVC" customModule="TiketReactions" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="49d-3w-PLR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F5V-Lm-vfS">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fasilitas Hotel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MdO-Xd-4V4">
+                                        <rect key="frame" x="20" y="80" width="178" height="33.5"/>
+                                        <viewLayoutGuide key="safeArea" id="Lhw-XH-cf1"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="28"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wQu-uH-ly1">
+                                        <rect key="frame" x="8" y="28" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Fic-yY-yjW"/>
+                                            <constraint firstAttribute="width" constant="30" id="PPQ-bg-5uz"/>
+                                        </constraints>
+                                        <state key="normal" title="Cancel" image="cancel-button-saved"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="wQu-uH-ly1" firstAttribute="leading" secondItem="U0W-by-q90" secondAttribute="leading" constant="8" id="3vF-gE-ILK"/>
+                                    <constraint firstItem="MdO-Xd-4V4" firstAttribute="top" secondItem="U0W-by-q90" secondAttribute="top" constant="60" id="484-bU-vHr"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="MdO-Xd-4V4" secondAttribute="trailing" id="Dkl-Ua-4Z2"/>
+                                    <constraint firstItem="wQu-uH-ly1" firstAttribute="top" secondItem="U0W-by-q90" secondAttribute="top" constant="8" id="cgj-a2-WS8"/>
+                                    <constraint firstItem="MdO-Xd-4V4" firstAttribute="leading" secondItem="U0W-by-q90" secondAttribute="leading" constant="20" id="sgd-lP-WE6"/>
+                                </constraints>
+                                <viewLayoutGuide key="safeArea" id="U0W-by-q90"/>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LFz-V2-il6" userLabel="Facility Hotel Table View">
+                                <rect key="frame" x="0.0" y="130" width="375" height="537"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DestHotelViewCell" rowHeight="78" id="jES-VC-qgH" customClass="DestHotelViewCell" customModule="TiketReactions" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="78"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jES-VC-qgH" id="CrZ-ux-IK9">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="77.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xi2-MD-pn5">
+                                                    <rect key="frame" x="16" y="11" width="343" height="54"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="vtc-Zl-3RC" userLabel="City Title Label">
+                                                            <rect key="frame" x="0.0" y="0.0" width="343" height="54"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Jakarta" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4HN-wZ-F0b">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="34.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Soekarno Hatta" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hI2-s1-eZ0">
+                                                                    <rect key="frame" x="0.0" y="34.5" width="343" height="19.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="xi2-MD-pn5" secondAttribute="bottom" constant="2" id="Bcf-vS-yif"/>
+                                                <constraint firstItem="xi2-MD-pn5" firstAttribute="centerY" secondItem="CrZ-ux-IK9" secondAttribute="centerY" id="Gmf-mQ-KoK"/>
+                                                <constraint firstItem="xi2-MD-pn5" firstAttribute="leading" secondItem="CrZ-ux-IK9" secondAttribute="leading" constant="16" id="PaP-L9-724"/>
+                                                <constraint firstAttribute="trailing" secondItem="xi2-MD-pn5" secondAttribute="trailing" constant="16" id="pEa-gc-xGK"/>
+                                                <constraint firstItem="xi2-MD-pn5" firstAttribute="top" secondItem="CrZ-ux-IK9" secondAttribute="topMargin" id="th0-tx-emG"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="contentStackView" destination="vtc-Zl-3RC" id="QVd-y1-HMn"/>
+                                            <outlet property="destHotelStackView" destination="xi2-MD-pn5" id="hmr-A0-TTT"/>
+                                            <outlet property="hotelSubtitleLabel" destination="hI2-s1-eZ0" id="T0p-f3-JDH"/>
+                                            <outlet property="hotelTitleLabel" destination="4HN-wZ-F0b" id="kbF-hs-iNG"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="LFz-V2-il6" firstAttribute="trailing" secondItem="qwd-vp-q07" secondAttribute="trailing" id="0C1-rf-IxR"/>
+                            <constraint firstAttribute="trailing" secondItem="F5V-Lm-vfS" secondAttribute="trailing" id="0bv-98-GTo"/>
+                            <constraint firstItem="LFz-V2-il6" firstAttribute="top" secondItem="qwd-vp-q07" secondAttribute="top" constant="110" id="1WP-8E-2H2"/>
+                            <constraint firstItem="F5V-Lm-vfS" firstAttribute="leading" secondItem="49d-3w-PLR" secondAttribute="leading" id="6Bt-Nb-XBy"/>
+                            <constraint firstItem="LFz-V2-il6" firstAttribute="leading" secondItem="qwd-vp-q07" secondAttribute="leading" id="Cdt-cw-bDn"/>
+                            <constraint firstItem="LFz-V2-il6" firstAttribute="top" secondItem="F5V-Lm-vfS" secondAttribute="bottom" id="E0K-4N-Adp"/>
+                            <constraint firstItem="LFz-V2-il6" firstAttribute="bottom" secondItem="qwd-vp-q07" secondAttribute="bottom" id="oXs-bK-e1h"/>
+                            <constraint firstItem="F5V-Lm-vfS" firstAttribute="top" secondItem="49d-3w-PLR" secondAttribute="top" id="sHm-gq-x2o"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="qwd-vp-q07"/>
+                    </view>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="cancelButton" destination="wQu-uH-ly1" id="L2w-dv-8v2"/>
+                        <outlet property="facilityHotelTableView" destination="LFz-V2-il6" id="9Gg-71-ogD"/>
+                        <outlet property="groupLabel" destination="4HN-wZ-F0b" id="D9V-jt-6aJ"/>
+                        <outlet property="headerDestinationView" destination="F5V-Lm-vfS" id="ayc-xP-lR2"/>
+                        <outlet property="headerFacilityView" destination="F5V-Lm-vfS" id="38X-PN-Hyu"/>
+                        <outlet property="hotelDestinationTableView" destination="LFz-V2-il6" id="ZeA-Wr-aj8"/>
+                        <outlet property="titleHeaderLabel" destination="MdO-Xd-4V4" id="ySK-cf-ODz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rar-ik-qb2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1274" y="215"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="cancel-button-saved" width="40" height="40"/>
+    </resources>
+</document>
