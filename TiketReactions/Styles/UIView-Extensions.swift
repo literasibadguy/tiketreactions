@@ -58,3 +58,12 @@ extension UIView {
     }
 }
 
+public func appHasWideScreenForView(_ view: UIView) -> Bool {
+    let width = view.bounds.width
+    if width > 700 {
+        return true
+    } else {
+        return false
+    }
+}
+

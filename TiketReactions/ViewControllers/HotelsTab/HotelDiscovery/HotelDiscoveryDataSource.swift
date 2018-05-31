@@ -7,7 +7,8 @@
 //
 
 import Foundation
-import TiketAPIs
+import TiketKitModels
+import UIKit
 
 internal final class HotelDiscoveryDataSource: ValueCellDataSource {
     internal enum Section: Int {

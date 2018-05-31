@@ -16,6 +16,10 @@ public final class OrderListDataSource: ValueCellDataSource {
         self.set(values: orders, cellClass: OrderListViewCell.self, inSection: 0)
     }
     
+    public func orderAtIndexPath(_ indexPath: IndexPath) -> OrderData? {
+        return self[indexPath] as? OrderData
+    }
+    
     public override func configureCell(tableCell cell: UITableViewCell, withValue value: Any) {
         switch (cell, value) {
         case let (cell as OrderListViewCell, value as OrderData):

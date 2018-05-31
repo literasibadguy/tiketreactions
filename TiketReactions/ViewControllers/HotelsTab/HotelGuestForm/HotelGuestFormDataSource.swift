@@ -7,35 +7,46 @@
 //
 
 import Foundation
-import TiketAPIs
+import TiketKitModels
+import UIKit
 
 internal final class HotelGuestFormDataSource: ValueCellDataSource {
     
     internal enum Section: Int {
         case orderSummary
-        case roomSummary
-        case guestForm
+        case contactForm
         case guestOption
+        case guestForm
     }
     
-    internal func load(hotelDirect: HotelDirect, availableRoom: AvailableRoom) {
-        self.clearValues()
-        
-        self.set(values: [hotelDirect], cellClass: OrderFirstViewCell.self, inSection: Section.orderSummary.rawValue)
-        self.set(values: [availableRoom], cellClass: RoomSummaryViewCell.self, inSection: Section.roomSummary.rawValue)
-        self.set(values: [1], cellClass: ContactInfoViewCell.self, inSection: Section.guestForm.rawValue)
+    internal func load(hotelDirect: HotelDirect, availableRoom: AvailableRoom, summary: HotelBookingSummary) {
+
+        self.set(values: [summary], cellClass: OrderFirstViewCell.self, inSection: Section.orderSummary.rawValue)
+        self.set(values: [1], cellClass: ContactInfoViewCell.self, inSection: Section.contactForm.rawValue)
         self.set(values: [1], cellClass: GuestOptionViewCell.self, inSection: Section.guestOption.rawValue)
     }
     
+    internal func loadForAnotherGuest(_ param: CheckoutGuestParams) {
+        
+        self.appendRow(value: param, cellClass: GuestFormTableViewCell.self, toSection: Section.guestForm.rawValue)
+    }
+    
+    internal func removeForAnotherGuest() -> [IndexPath] {
+        
+        self.clearValues(section: Section.guestForm.rawValue)
+        
+        return [IndexPath(row: 0, section: Section.guestForm.rawValue)]
+    }
+
     override func configureCell(tableCell cell: UITableViewCell, withValue value: Any) {
         switch (cell, value) {
-        case let (cell as OrderFirstViewCell, value as HotelDirect):
-            cell.configureWith(value: value)
-        case let (cell as RoomSummaryViewCell, value as AvailableRoom):
+        case let (cell as OrderFirstViewCell, value as HotelBookingSummary):
             cell.configureWith(value: value)
         case let (cell as ContactInfoViewCell, value as Int):
             cell.configureWith(value: value)
         case let (cell as GuestOptionViewCell, value as Int):
+            cell.configureWith(value: value)
+        case let (cell as GuestFormTableViewCell, value as CheckoutGuestParams):
             cell.configureWith(value: value)
         default:
             fatalError("Unrecognized message error: \(cell) \(value)")

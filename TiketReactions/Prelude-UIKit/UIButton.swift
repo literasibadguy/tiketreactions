@@ -6,4 +6,11 @@
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+extension UIButton {
+    
+    public func setBackgroundColor(_ backgroundColor: UIColor, forState state: UIControlState) {
+        self.setBackgroundImage(.pixel(ofColor: backgroundColor), for: state)
+    }
+}

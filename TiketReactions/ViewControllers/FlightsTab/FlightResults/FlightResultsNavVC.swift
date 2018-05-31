@@ -7,9 +7,20 @@
 //
 
 import Prelude
+import ReactiveSwift
+import TiketKitModels
 import UIKit
 
-class FlightResultsNavVC: UIViewController {
+public protocol FlightResultsNavDelegate: class {
+    func goingBackToPickingDate(_ resultsNavVC: FlightResultsNavVC)
+    func flightResultsNavigationHeaderSelectedParams(_ params: SearchFlightParams)
+}
+
+public final class FlightResultsNavVC: UIViewController {
+    
+    fileprivate let viewModel: FlightResultsNavViewModelType = FlightResultsNavViewModel()
+    
+    public weak var delegate: FlightResultsNavDelegate?
     
     @IBOutlet fileprivate weak var navResultsStackView: UIStackView!
     
@@ -21,17 +32,48 @@ class FlightResultsNavVC: UIViewController {
     
     @IBOutlet fileprivate weak var filterButton: UIButton!
     
-    override func viewDidLoad() {
+    internal func configureWith(envelopeFlight: SearchFlightEnvelope) {
+        self.viewModel.inputs.configureEnvelope(flightEnvelope: envelopeFlight)
+    }
+    
+    public override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        
+        self.viewModel.inputs.viewDidLoad()
     }
 
     
-    override func bindStyles() {
+    public override func bindStyles() {
         super.bindStyles()
         
         _ = self.filterButton
             |> UIButton.lens.titleColor(forState: .normal) .~ .tk_official_green
+        
+        _ = self.routeTitleLabel
+            |> UILabel.lens.textColor .~ .tk_official_green
+        
+        _ = self.dateTitleLabel
+            |> UILabel.lens.textColor .~ .tk_official_green
+    }
+    
+    public override func bindViewModel() {
+        super.bindViewModel()
+        
+        self.routeTitleLabel.rac.text = self.viewModel.outputs.departureAirportCodeText
+        
+        self.viewModel.outputs.backToPickDates
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] in
+                guard let _self = self else { return }
+                _self.delegate?.goingBackToPickingDate(_self)
+        }
+    }
+    
+    @objc fileprivate func cancelButtonTapped() {
+        self.viewModel.inputs.tappedButtonCancel()
     }
 }

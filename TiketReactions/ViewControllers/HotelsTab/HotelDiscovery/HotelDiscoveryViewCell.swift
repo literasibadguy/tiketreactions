@@ -6,27 +6,97 @@
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 import Spring
-import TiketAPIs
+import Prelude
+import ReactiveSwift
+import Result
+import TiketKitModels
 import UIKit
 
-class HotelDiscoveryViewCell: UITableViewCell, ValueCell {
+internal final class HotelDiscoveryViewCell: UITableViewCell, ValueCell {
     typealias Value = HotelResult
     
-    @IBOutlet fileprivate weak var primaryPhotoImageView: DesignableImageView!
-    @IBOutlet fileprivate weak var cityLabel: UILabel!
-    @IBOutlet fileprivate weak var businessNameLabel: UILabel!
-    @IBOutlet fileprivate weak var priceValueLabel: UILabel!
+    fileprivate let viewModel: HotelResultCardViewModelType = HotelResultCardViewModel()
+    
+    @IBOutlet fileprivate weak var cardView: UIView!
+    @IBOutlet fileprivate weak var hotelStackView: UIStackView!
+    @IBOutlet fileprivate weak var featuredHotelImageView: DesignableImageView!
+    @IBOutlet fileprivate weak var hotelInfoStackView: UIStackView!
+    @IBOutlet fileprivate weak var hotelNameLabel: UILabel!
+    @IBOutlet fileprivate weak var hotelCityLabel: UILabel!
+    @IBOutlet fileprivate weak var hotelRatingStackView: UIStackView!
+    @IBOutlet fileprivate weak var hotelRatingImageView: UIImageView!
+    
+    @IBOutlet fileprivate weak var hotelPriceLabel: UILabel!
+    
+    @IBOutlet fileprivate weak var discoverySeparatorView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
     
+    internal override func bindStyles() {
+        super.bindStyles()
+        
+        _ = self
+            |> baseTableViewCellStyle()
+            |> HotelDiscoveryViewCell.lens.contentView.layoutMargins %~~ { _, cell in
+                cell.traitCollection.isRegularRegular
+                    ? .init(topBottom: Styles.grid(4), leftRight: Styles.grid(28))
+                    : .init(topBottom: Styles.grid(3), leftRight: Styles.grid(2))
+        }
+        
+        _ = self.hotelStackView
+            |> UIStackView.lens.spacing .~ Styles.grid(2)
+        
+        _ = self.hotelInfoStackView
+            |> UIStackView.lens.spacing .~ Styles.grid(1)
+        
+        _ = self.hotelNameLabel
+            |> UILabel.lens.font .~ UIFont.boldSystemFont(ofSize: 16.0)
+            |> UILabel.lens.numberOfLines .~ 2
+            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
+        
+        _ = self.hotelCityLabel
+            |> UILabel.lens.font .~ UIFont.systemFont(ofSize: 14.0)
+            |> UILabel.lens.textColor .~ .tk_dark_grey_400
+        
+        _ = self.hotelPriceLabel
+            |> UILabel.lens.font .~ UIFont.systemFont(ofSize: 16.0)
+            |> UILabel.lens.textColor .~ .tk_dark_grey_500
+        
+        _ = self.discoverySeparatorView
+            |> UIView.lens.backgroundColor .~ .tk_base_grey_100
+    }
+    
+    internal override func bindViewModel() {
+        super.bindViewModel()
+        
+        self.hotelNameLabel.rac.text = self.viewModel.outputs.hotelNameTitleLabelText
+        self.hotelCityLabel.rac.text = self.viewModel.outputs.hotelCityTitleLabelText
+        self.hotelPriceLabel.rac.text = self.viewModel.outputs.hotelPriceTitleLabelText
+        
+        
+        self.viewModel.outputs.hotelImageURL
+            .observe(on: UIScheduler())
+            .on(event: { [weak self] _ in
+                self?.featuredHotelImageView.af_cancelImageRequest()
+                self?.featuredHotelImageView.image = nil
+            })
+            .skipNil()
+            .observeValues { [weak self] url in
+                self?.featuredHotelImageView.ck_setImageWithURL(url)
+        }
+        
+        self.viewModel.outputs.ratingImage
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] star in
+                self?.hotelRatingImageView.image = star
+        }
+    }
     
     func configureWith(value: HotelResult) {
-        self.cityLabel.text = value.provinceName
-        self.businessNameLabel.text = value.name
-        self.priceValueLabel.text = value.metadataHotel.totalPrice
+        self.viewModel.inputs.configureWith(hotel: value)
     }
     
 }

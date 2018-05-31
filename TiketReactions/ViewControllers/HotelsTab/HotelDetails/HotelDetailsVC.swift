@@ -6,7 +6,7 @@
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 import ReactiveSwift
-import TiketAPIs
+import TiketKitModels
 import UIKit
 
 protocol HotelDetailsVCDelegate: class {
@@ -19,12 +19,13 @@ public final class HotelDetailsVC: UIViewController {
     
     fileprivate var navDetailsVC: HotelDetailsNavVC!
     fileprivate var directsHotelVC: HotelDirectsVC!
+    fileprivate var navRoomsVC: PickRoomNavVC!
     
     @IBOutlet weak private var navBarTopConstraint: NSLayoutConstraint!
     
-    public static func configureWith(hotelResult: HotelResult) -> HotelDetailsVC {
+    public static func configureWith(hotelResult: HotelResult, booking: HotelBookingSummary) -> HotelDetailsVC {
         let vc = Storyboard.HotelDirects.instantiate(HotelDetailsVC.self)
-        vc.viewModel.inputs.configureWith(hotelResult: hotelResult)
+        vc.viewModel.inputs.configureWith(hotelResult: hotelResult, booking: booking)
         return vc
     }
     
@@ -32,9 +33,9 @@ public final class HotelDetailsVC: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.navDetailsVC = self.childViewControllers.flatMap { $0 as? HotelDetailsNavVC }.first
-        self.directsHotelVC = self.childViewControllers.flatMap { $0 as? HotelDirectsVC }.first
-        
+        self.navDetailsVC = self.childViewControllers.compactMap { $0 as? HotelDetailsNavVC }.first
+        self.directsHotelVC = self.childViewControllers.compactMap { $0 as? HotelDirectsVC }.first
+        self.navRoomsVC = self.childViewControllers.compactMap { $0 as? PickRoomNavVC }.first
         
         self.viewModel.inputs.viewDidLoad()
     }
@@ -69,10 +70,10 @@ public final class HotelDetailsVC: UIViewController {
         
         self.viewModel.outputs.configureChildVCHotelDirect
         .observe(on: UIScheduler())
-        .observeValues { [weak self] hotelDirect in
-            self?.directsHotelVC.configureWith(hotelDirect: hotelDirect)
-            print("What Values: \(hotelDirect)")
-
+        .observeValues { [weak self] selected, hotelDirect, summary in
+            self?.navDetailsVC.configureWith(selected: selected)
+            self?.directsHotelVC.configureWith(selected: selected, hotelDirect: hotelDirect, booking: summary)
+            self?.navRoomsVC.configureWith(hotel: hotelDirect, booking: summary)
         }
         
         self.viewModel.outputs.setNavigationBarHiddenAnimated

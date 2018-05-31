@@ -7,16 +7,22 @@
 //
 
 import Foundation
+import TiketKitModels
+import UIKit
 
-class FlightResultsDataSource: ValueCellDataSource {
+public final class FlightResultsDataSource: ValueCellDataSource {
     
-    func load() {
-        self.set(values: ["SINGAPORE AIR", "GARUDA", "AIR ASIA", "QANTAS", "EMIRATES", "SINGAPORE AIR", "GARUDA", "AIR ASIA", "QANTAS", "EMIRATES"], cellClass: FlightResultViewCell.self, inSection: 0)
+    public func load(flights: [Flight]) {
+        self.set(values: flights, cellClass: FlightResultViewCell.self, inSection: 0)
     }
     
-    override func configureCell(tableCell cell: UITableViewCell, withValue value: Any) {
+    public func flightAtIndexPath(_ indexPath: IndexPath) -> Flight? {
+        return self[indexPath] as? Flight
+    }
+    
+    public override func configureCell(tableCell cell: UITableViewCell, withValue value: Any) {
         switch (cell, value) {
-        case let (cell as FlightResultViewCell, value as String):
+        case let (cell as FlightResultViewCell, value as Flight):
             cell.configureWith(value: value)
         default:
             fatalError("Unrecognized Error: \(type(of: cell)) \(type(of: value))")

@@ -13,5 +13,9 @@
         <page name='DatePicks'/>
         <page name='FlightResults'/>
         <page name='FlightFilters'/>
+        <page name='AvailableRooms'/>
+        <page name='HotelDirects'/>
+        <page name='HotelResults'/>
+        <page name='RootTabBar'/>
     </pages>
 </playground>

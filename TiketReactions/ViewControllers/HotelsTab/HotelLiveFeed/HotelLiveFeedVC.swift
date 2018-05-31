@@ -6,30 +6,68 @@
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 
+import Prelude
+import ReactiveSwift
 import UIKit
+import TiketKitModels
 
-class HotelLiveFeedVC: UIViewController {
-
+internal final class HotelLiveFeedVC: UIViewController {
+    
+    fileprivate let viewModel: HotelLiveFeedViewModelType = HotelLiveFeedViewModel()
+    
+    private weak var navigationHeaderVC: HotelLiveFeedNavVC!
+    private weak var contentVC: HotelLiveFeedContentVC!
+    
+    internal static func instantiate() -> HotelLiveFeedVC {
+        return Storyboard.HotelLiveFeed.instantiate(HotelLiveFeedVC.self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.navigationHeaderVC = self.childViewControllers.compactMap { $0 as? HotelLiveFeedNavVC }.first
+        self.navigationHeaderVC.delegate = self
+        self.contentVC = self.childViewControllers.compactMap { $0 as? HotelLiveFeedContentVC }.first
+//        self.navigationHeaderVC.delegate = self
+        
+        self.viewModel.inputs.viewDidLoad()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.viewModel.inputs.viewWillAppear(animated: animated)
+        
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func bindViewModel() {
+        super.bindViewModel()
+        
+        self.viewModel.outputs.configureNavigationHeader
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] navigation in
+                print("WHATS CURRENT NAVIGATION: \(navigation)")
+                self?.navigationHeaderVC.configureWith(params: navigation)
+        }
+        
+        self.viewModel.outputs.loadFilterIntoDataSource
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] filter in
+                self?.contentVC.change(filter: filter)
+        }
     }
-    */
-
+    
+    internal func filter(with params: SearchHotelParams) {
+        self.viewModel.inputs.filter(withParams: params)
+    }
 }
+
+extension HotelLiveFeedVC: HotelLiveFeedNavViewDelegate {
+    func hotelLiveFeedNavigationFilterSelectedParams(_ params: SearchHotelParams) {
+        self.viewModel.inputs.filter(withParams: params)
+    }
+}
+

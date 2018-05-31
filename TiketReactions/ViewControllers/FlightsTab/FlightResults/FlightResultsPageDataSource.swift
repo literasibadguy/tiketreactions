@@ -5,8 +5,7 @@
 //  Created by Firas Rafislam on 31/01/18.
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
-
-import TiketAPIs
+import TiketKitModels
 import UIKit
 
 class FlightResultsPageDataSource: NSObject, UIPageViewControllerDataSource {
@@ -21,6 +20,10 @@ class FlightResultsPageDataSource: NSObject, UIPageViewControllerDataSource {
     
     func indexFor(controller: UIViewController) -> Int? {
         return self.viewControllers.index(of: controller)
+    }
+    
+    func delegate(controller: FlightResultsContentVC) {
+        controller.delegate = self as? FlightResultsContentViewDelegate
     }
     
     internal func controllerFor(index: Int) -> UIViewController? {

@@ -10,7 +10,6 @@ import Foundation
 import Prelude
 import ReactiveSwift
 import Result
-import TiketAPIs
 
 public struct AppEnvironment {
     internal static let environmentStorageKey = "firasrafislam.TiketReactions.AppEnvironment.current"
@@ -20,6 +19,10 @@ public struct AppEnvironment {
     
     public static func getToken(_ envelope: GetTokenEnvelope) {
         replaceCurrentEnvironment(apiService: current.apiService.getToken(TiketToken(token: envelope.token)))
+    }
+    
+    public static func replaceCurrency(_ currency: String) {
+        replaceCurrentEnvironment(apiService: current.apiService.selectedCurrency(currency))
     }
     
     public static var current: Environment! {

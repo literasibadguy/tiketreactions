@@ -7,23 +7,23 @@
 //
 
 import Foundation
+import TiketKitModels
 import UIKit
 
 class HotelDirectsContentDataSource: ValueCellDataSource {
+    
     internal enum Section: Int {
         case main
-        case subpages
-        case availableRooms
+        case facilityList
+        case summaryMap
     }
     
-    internal func load(hotelDirect: HotelDirect) {
+    internal func load(selected: HotelResult, hotelDirect: HotelDirect) {
         self.set(values: [hotelDirect], cellClass: HotelDirectMainViewCell.self, inSection: Section.main.rawValue)
         
-        hotelDirect.availableRooms.roomResults.forEach { availableRoom in
-            self.appendRow(value: availableRoom, cellClass: AvailableRoomViewCell.self, toSection: Section.main.rawValue)
-        }
+        self.set(values: [Localizations.FacilityHotelTitle], cellClass: FacilityListViewCell.self, inSection: Section.facilityList.rawValue)
         
-//        self.set(values: [hotelDirect], cellClass: HotelSubpageViewCell.self, inSection: Section.subpages.rawValue)
+        self.set(values: [selected], cellClass: HotelMapViewCell.self, inSection: Section.summaryMap.rawValue)
         
     }
     
@@ -35,7 +35,9 @@ class HotelDirectsContentDataSource: ValueCellDataSource {
         switch (cell, value) {
         case let (cell as HotelDirectMainViewCell, value as HotelDirect):
             cell.configureWith(value: value)
-        case let (cell as AvailableRoomViewCell, value as AvailableRoom):
+        case let (cell as FacilityListViewCell, value as String):
+            cell.configureWith(value: value)
+        case let (cell as HotelMapViewCell, value as HotelResult):
             cell.configureWith(value: value)
         default:
             fatalError("Unrecognized type error: \(type(of: cell)) \(type(of: value))")

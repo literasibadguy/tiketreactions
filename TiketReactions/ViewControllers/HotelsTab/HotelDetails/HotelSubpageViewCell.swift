@@ -6,7 +6,7 @@
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 import Prelude
-import TiketAPIs
+import TiketKitModels
 import UIKit
 
 class HotelSubpageViewCell: UITableViewCell, ValueCell {

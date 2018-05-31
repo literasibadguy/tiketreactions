@@ -1,57 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RoomSummaryViewCell" rowHeight="104" id="Bip-SK-xqQ" customClass="RoomSummaryViewCell" customModule="TiketComponents" customModuleProvider="target">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RoomSummaryViewCell" rowHeight="104" id="Bip-SK-xqQ" customClass="RoomSummaryViewCell" customModule="TiketReactions" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="104"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Bip-SK-xqQ" id="g3K-mg-rGk">
                 <rect key="frame" x="0.0" y="0.0" width="375" height="103.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="W3T-5O-SLU" userLabel="Room Summary Stack View">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="103.5"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K9l-y4-CM2" userLabel="Room Summary Container View">
+                        <rect key="frame" x="0.0" y="3" width="375" height="97.5"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wig-ab-Nst">
-                                <rect key="frame" x="0.0" y="14.5" width="80" height="75"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="75" id="IMm-sc-CEj"/>
-                                    <constraint firstAttribute="width" constant="80" id="scJ-Yh-kUO"/>
-                                </constraints>
-                            </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zsw-50-9OP" userLabel="Room Stack View">
-                                <rect key="frame" x="80" y="28" width="295" height="48"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="W3T-5O-SLU" userLabel="Room Summary Stack View">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="97.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Superior Luxury Room" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mgL-LF-Row">
-                                        <rect key="frame" x="0.0" y="0.0" width="295" height="26.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dengan sarapan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Jq-WZ-ce9">
-                                        <rect key="frame" x="0.0" y="26.5" width="295" height="21.5"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wig-ab-Nst">
+                                        <rect key="frame" x="0.0" y="11.5" width="80" height="75"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="75" id="IMm-sc-CEj"/>
+                                            <constraint firstAttribute="width" constant="80" id="scJ-Yh-kUO"/>
+                                        </constraints>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zsw-50-9OP" userLabel="Room Stack View">
+                                        <rect key="frame" x="80" y="25" width="295" height="48"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Superior Luxury Room" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mgL-LF-Row">
+                                                <rect key="frame" x="0.0" y="0.0" width="295" height="26.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dengan sarapan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Jq-WZ-ce9">
+                                                <rect key="frame" x="0.0" y="26.5" width="295" height="21.5"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                             </stackView>
                         </subviews>
-                    </stackView>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="W3T-5O-SLU" firstAttribute="top" secondItem="K9l-y4-CM2" secondAttribute="top" id="700-g7-oYF"/>
+                            <constraint firstItem="W3T-5O-SLU" firstAttribute="leading" secondItem="K9l-y4-CM2" secondAttribute="leading" id="Il8-74-1W5"/>
+                            <constraint firstAttribute="trailing" secondItem="W3T-5O-SLU" secondAttribute="trailing" id="Ygz-Hd-h8B"/>
+                            <constraint firstAttribute="bottom" secondItem="W3T-5O-SLU" secondAttribute="bottom" id="aW5-Zs-4F3"/>
+                        </constraints>
+                    </view>
                 </subviews>
+                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="W3T-5O-SLU" secondAttribute="trailing" id="1hP-37-6B5"/>
-                    <constraint firstAttribute="bottom" secondItem="W3T-5O-SLU" secondAttribute="bottom" id="R6r-ew-fvp"/>
-                    <constraint firstItem="W3T-5O-SLU" firstAttribute="leading" secondItem="g3K-mg-rGk" secondAttribute="leading" id="a77-Er-bjd"/>
-                    <constraint firstItem="W3T-5O-SLU" firstAttribute="top" secondItem="g3K-mg-rGk" secondAttribute="top" id="f03-O9-H8I"/>
+                    <constraint firstItem="K9l-y4-CM2" firstAttribute="leading" secondItem="g3K-mg-rGk" secondAttribute="leading" id="Z4D-Un-H9D"/>
+                    <constraint firstAttribute="bottom" secondItem="K9l-y4-CM2" secondAttribute="bottom" constant="3" id="bue-uB-aJa"/>
+                    <constraint firstAttribute="trailing" secondItem="K9l-y4-CM2" secondAttribute="trailing" id="l0G-xj-KKy"/>
+                    <constraint firstItem="K9l-y4-CM2" firstAttribute="top" secondItem="g3K-mg-rGk" secondAttribute="top" constant="3" id="oxm-Ck-mv4"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

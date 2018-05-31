@@ -19,7 +19,9 @@ public protocol UIBarItemProtocol: CKObjectProtocol {
     var tag: Int { get set }
 }
 
-extension UIBarItem: UIBarItemProtocol {}
+extension UIBarItem: UIBarItemProtocol {
+
+}
 
 public extension LensHolder where Object: UIBarItemProtocol {
     public var enabled: Lens<Object, Bool> {
@@ -70,4 +72,5 @@ public extension LensHolder where Object: UIBarItemProtocol {
             set: { $1.tag = $0; return $1 }
         )
     }
+    
 }

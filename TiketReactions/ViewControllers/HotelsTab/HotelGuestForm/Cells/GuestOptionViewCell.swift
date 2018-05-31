@@ -8,9 +8,15 @@
 import Prelude
 import UIKit
 
-class GuestOptionViewCell: UITableViewCell, ValueCell {
+protocol GuestOptionViewCellDelegate: class {
+    func guestFormOptionChanged(_ option: Bool)
+}
+
+internal class GuestOptionViewCell: UITableViewCell, ValueCell {
     
     typealias Value = Int
+    
+    weak var delegate: GuestOptionViewCellDelegate?
     
     @IBOutlet fileprivate weak var guestOptionStackView: UIStackView!
     @IBOutlet fileprivate weak var titleOptionLabel: UILabel!
@@ -27,9 +33,18 @@ class GuestOptionViewCell: UITableViewCell, ValueCell {
         // Configure the view for the selected state
     }
     
+    override func bindStyles() {
+        super.bindStyles()
+
+    }
+    
+    @IBAction func anotherGuestOptionChanged(_ sender: UISwitch) {
+        self.delegate?.guestFormOptionChanged(sender.isOn)
+    }
+    
     
     func configureWith(value: Int) {
         _ = self.titleOptionLabel
-            |> UILabel.lens.text .~ "Pemesanan untuk orang lain"
+            |> UILabel.lens.text .~ Localizations.AnotherguestOptionFormTitle
     }
 }

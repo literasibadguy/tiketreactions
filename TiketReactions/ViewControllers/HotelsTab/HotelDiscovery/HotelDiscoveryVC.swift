@@ -8,20 +8,32 @@
 
 import Prelude
 import ReactiveSwift
-import TiketAPIs
+import TiketKitModels
 import UIKit
 
-class HotelDiscoveryVC: UITableViewController {
+public protocol HotelDiscoveryDelegate: class {
+    func gettingEnvelope(discovery: HotelDiscoveryVC, envelope: SearchHotelEnvelopes)
+}
+
+public final class HotelDiscoveryVC: UITableViewController {
     fileprivate var emptyStatesController: EmptyStatesVC?
     fileprivate let dataSource = HotelDiscoveryDataSource()
     fileprivate let loadingIndicatorView = UIActivityIndicatorView()
     
     fileprivate let viewModel: HotelDiscoveryViewModelType = HotelDiscoveryViewModel()
     
-    static func configuredWith(sort: SearchHotelParams) -> HotelDiscoveryVC {
-        let vc = Storyboard.HotelDiscovery.instantiate(HotelDiscoveryVC.self)
-        vc.viewModel.inputs.selectedFilter(sort)
-        return vc
+    public weak var delegate: HotelDiscoveryDelegate?
+    
+    public func configuredWith(hotelSelected: AutoHotelResult, sort: SearchHotelParams, summary: HotelBookingSummary) {
+        self.viewModel.inputs.selectedFilter(hotelSelected, param: sort, summary: summary)
+    }
+    
+    public func filterUpdated(_ param: SearchHotelParams) {
+        self.viewModel.inputs.filtersUpdated(param)
+    }
+    
+    public func filterDismissed() {
+        self.viewModel.inputs.filtersDismissed()
     }
     
     static func instantiate() -> HotelDiscoveryVC {
@@ -29,7 +41,7 @@ class HotelDiscoveryVC: UITableViewController {
         return vc
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.addSubview(self.loadingIndicatorView)
@@ -49,31 +61,31 @@ class HotelDiscoveryVC: UITableViewController {
         emptyVC.didMove(toParentViewController: self)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
          self.viewModel.inputs.viewWillAppear()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
          self.viewModel.inputs.viewDidAppear()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
          self.viewModel.inputs.viewDidDisappear(animated: animated)
     }
     
-    override func viewDidLayoutSubviews() {
+    public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         self.loadingIndicatorView.center = self.tableView.center
     }
     
-    override func bindStyles() {
+    public override func bindStyles() {
         super.bindStyles()
         
         _ = self
@@ -83,19 +95,33 @@ class HotelDiscoveryVC: UITableViewController {
             |> baseActivityIndicatorStyle
     }
     
-    override func bindViewModel() {
+    public override func bindViewModel() {
         super.bindViewModel()
         
         print("[HOTEL DISCOVERY VC]: Hotel Discovery VC Bind View Model")
         
         self.loadingIndicatorView.rac.animating = self.viewModel.outputs.hotelsAreLoading
         
-         self.viewModel.outputs.hotels
+        self.viewModel.outputs.notifyDelegate
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] envelope in
+                guard let _self = self else { return }
+                _self.delegate?.gettingEnvelope(discovery: _self, envelope: envelope)
+        }
+        
+        self.viewModel.outputs.hotels
             .observe(on: UIScheduler())
             .observeValues { [weak self] hotels in
                 self?.dataSource.load(hotelResult: hotels)
                 self?.tableView.reloadData()
          }
+        
+        self.viewModel.outputs.filtersHotels
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] filterHotels in
+                self?.dataSource.load(hotelResult: filterHotels)
+                self?.tableView.reloadData()
+        }
         
         self.viewModel.outputs.showEmptyState
             .observe(on: UIScheduler())
@@ -112,20 +138,20 @@ class HotelDiscoveryVC: UITableViewController {
         
         self.viewModel.outputs.goToHotel
             .observe(on: UIScheduler())
-            .observeValues { [weak self] hotelResult in
-                print("GET ME LINK: \(hotelResult.businessURI)")
-                self?.goTo(hotel: hotelResult)
+            .observeValues { [weak self] hotelResult, summary in
+//                print("GET ME LINK: \(hotelResult.businessURI)")
+                self?.goTo(hotel: hotelResult, summary: summary)
         }
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let hotel = self.dataSource.hotelAtIndexPath(indexPath) {
             self.viewModel.inputs.tapped(hotel: hotel)
         }
     }
     
-    fileprivate func goTo(hotel: HotelResult) {
-        let vc = HotelDetailsVC.configureWith(hotelResult: hotel)
+    fileprivate func goTo(hotel: HotelResult, summary: HotelBookingSummary) {
+        let vc = HotelDetailsVC.configureWith(hotelResult: hotel, booking: summary)
         let navHotelVC = UINavigationController(rootViewController: vc)
         self.present(navHotelVC, animated: true, completion: nil)
     }

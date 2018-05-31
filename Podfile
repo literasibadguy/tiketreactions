@@ -1,54 +1,36 @@
-# Uncomment the next line to define a global platform for your project
+
+inhibit_all_warnings!
+use_frameworks!
+
 platform :ios, '11.0'
+workspace 'TiketReactions.xcworkspace'
 
-target 'TiketComponents' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
-  use_frameworks!
-
-  # Pods for TiketComponents
-
+def shared_with_all_pods
   pod 'Kickstarter-Prelude'
-  pod 'ReactiveSwift'
-  pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
-
-  target 'TiketComponentsTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
-end
-
-target 'TiketAPIs' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
-  use_frameworks!
-
-  # Pods for TiketComponents
-
-  pod 'Argo'
-  pod 'Curry'
-  pod 'Kickstarter-Prelude'
-  pod 'Runes'
-  pod 'Swish'
-
-  target 'TiketAPIsTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
+  pod 'ReactiveSwift', '~> 3.0'
+  pod 'Result'
+  pod 'SwiftGen'
 end
 
 target 'TiketReactions' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
-  use_frameworks!
+  project 'TiketReactions.xcodeproj'
 
-  # Pods for TiketReactions
-  pod 'Kickstarter-Prelude'
-  pod 'ReactiveSwift'
+  shared_with_all_pods
+  pod 'Argo'
+  pod 'CalendarDateRangePickerViewController'
+  pod 'Curry'
+  pod 'Runes'
+  pod 'Alamofire', '~> 4.6'
+  pod 'AlamofireImage'
+  pod 'FSPagerView'
+  pod 'GoogleMaps'
+  pod 'GooglePlaces'
+  pod 'PhoneNumberKit'
   pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
 
   target 'TiketReactionsTests' do
-    inherit! :search_paths
     # Pods for testing
+    pod 'FBSnapshotTestCase'
   end
 
   target 'TiketReactionsUITests' do
@@ -57,3 +39,20 @@ target 'TiketReactions' do
   end
 
 end
+
+target 'TiketKitModels' do
+  project 'TiketKitModels/TiketKitModels.xcodeproj'
+
+  shared_with_all_pods
+  pod 'Argo'
+  pod 'Curry'
+  pod 'Runes'
+  pod 'PhoneNumberKit'
+
+  target 'TiketKitModelsTests' do
+     pod 'FBSnapshotTestCase'
+  end
+
+
+end
+

@@ -51,12 +51,22 @@
                             <constraint firstAttribute="trailing" secondItem="wfq-hu-ZJN" secondAttribute="trailing" id="K71-wz-Fuz"/>
                         </constraints>
                     </stackView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nE5-xL-KXx">
+                        <rect key="frame" x="5" y="88.5" width="310" height="1"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="S2T-yk-X7c"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="ZTn-FB-o1Y" secondAttribute="trailing" constant="5" id="3Di-rL-3Ed"/>
+                    <constraint firstItem="nE5-xL-KXx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="NcM-I7-fVc"/>
                     <constraint firstItem="ZTn-FB-o1Y" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="R2B-01-ONO"/>
                     <constraint firstItem="ZTn-FB-o1Y" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="b5X-A5-6hN"/>
+                    <constraint firstAttribute="bottom" secondItem="nE5-xL-KXx" secondAttribute="bottom" id="ko0-tr-lb1"/>
                     <constraint firstAttribute="bottom" secondItem="ZTn-FB-o1Y" secondAttribute="bottom" constant="10" id="uiB-Zg-zaC"/>
+                    <constraint firstAttribute="trailing" secondItem="nE5-xL-KXx" secondAttribute="trailing" constant="5" id="zVj-g2-u6v"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

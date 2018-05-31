@@ -7,12 +7,22 @@
 //
 
 import UIKit
+import FSPagerView
+import Spring
 
-class BannerPagerViewCell: UICollectionViewCell {
-
-    override func awakeFromNib() {
+public final class BannerPagerViewCell: FSPagerViewCell, ValueCell {
+    
+    public typealias Value = String
+    
+    @IBOutlet fileprivate weak var bannerImageView: UIImageView!
+    
+    public override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
+    public func configureWith(value: String) {
+        self.bannerImageView.image = UIImage(named: value)
+    }
+    
 }

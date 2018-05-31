@@ -19,6 +19,7 @@ public protocol UIViewProtocol: CKObjectProtocol, UITraitEnvironmentProtocol, Le
     func contentHuggingPriority(for axis: UILayoutConstraintAxis) -> UILayoutPriority
     var contentMode: UIViewContentMode { get set }
     var frame: CGRect { get set }
+    var center: CGPoint { get set }
     var isHidden: Bool { get set }
     var layer: CALayer { get }
     var layoutMargins: UIEdgeInsets { get set }
@@ -90,6 +91,13 @@ public extension LensHolder where Object: UIViewProtocol {
         return Lens(
             view: { view in view.frame },
             set: { view, set in set.frame = view; return set }
+        )
+    }
+    
+    public var center: Lens<Object, CGPoint> {
+        return Lens(
+            view: { view in view.center },
+            set: { view, set in set.center = view; return set }
         )
     }
     

@@ -9,7 +9,10 @@
 import UIKit
 
 class GradientView: UIView {
-
+    
+    @IBInspectable public var startColor: UIColor?
+    @IBInspectable public var endColor: UIColor?
+    
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

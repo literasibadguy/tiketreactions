@@ -7,16 +7,21 @@
 //
 
 import Foundation
+import Prelude
 import ReactiveSwift
 import Result
-import TiketAPIs
+import TiketKitModels
 
 public protocol ContactInfoCellViewModelInputs {
     func titleSalutationButtonTapped()
     func titleSalutationChanged(_ text: String?)
+    func titleSalutationCanceled()
     
-    func fullNameTextFieldChange(_ text: String?)
-    func fullNameTextFieldDidEndEditing()
+    func firstNameTextFieldChange(_ text: String?)
+    func firstNameTextFieldDidEndEditing()
+    
+    func lastNameTextFieldChange(_ text: String?)
+    func lastNameTextFieldDidEndEditing()
     
     func emailTextFieldChange(_ text: String?)
     func emailTextFieldDidEndEditing()
@@ -31,11 +36,13 @@ public protocol ContactInfoCellViewModelInputs {
 public protocol ContactInfoCellViewModelOutputs {
     var titleLabelText: Signal<String, NoError> { get }
     var goToTitleSalutationPicker: Signal<(), NoError> { get }
-    var isGuestFormValid: Signal<Bool, NoError> { get }
-    var fullnameTextFieldText: Signal<String, NoError> { get }
+    var dismissSalutationPicker: Signal<(), NoError> { get }
+    var firstNameTextFieldText: Signal<String, NoError> { get }
+    var lastNameTextFieldText: Signal<String, NoError> { get }
     var emailTextFieldText: Signal<String, NoError> { get }
     var phoneCodeLabelText: Signal<String, NoError> { get }
     var phoneTextFieldText: Signal<String, NoError> { get }
+    var contactFormIsCompleted: Signal<Bool, NoError> { get }
     var collectForCheckout: Signal<CheckoutGuestParams, NoError> { get }
 }
 
@@ -47,19 +54,53 @@ public protocol ContactInfoCellViewModelType {
 public final class ContactInfoCellViewModel: ContactInfoCellViewModelType, ContactInfoCellViewModelInputs, ContactInfoCellViewModelOutputs {
     
     init() {
-        self.titleLabelText = .empty
-        self.fullnameTextFieldText = .empty
+        
+        let initialText = self.salutationChangedProperty.signal.mapConst("")
+        
         self.goToTitleSalutationPicker = self.salutationButtonTappedProperty.signal
-        self.isGuestFormValid = self.emailTextFieldChangeProperty.signal.skipNil().map(isValidEmail)
+        self.dismissSalutationPicker = self.salutationCanceledProperty.signal
         
+        let title = Signal.merge(self.salutationChangedProperty.signal.skipNil(), initialText)
+        let firstname = Signal.merge(self.firstNameTextFieldChangeProperty.signal.skipNil(), initialText)
+        let lastname = Signal.merge(self.lastNameTextFieldChangeProperty.signal.skipNil(), initialText)
+        let email = Signal.merge(self.emailTextFieldChangeProperty.signal.skipNil(), initialText)
+        let phone = Signal.merge(self.phoneTextFieldChangeProperty.signal.skipNil(), initialText)
+        
+        let titleIsPresent = title.map { $0 != "" }
+        let firstnameIsPresent = firstname.map { $0 != "" }
+        let lastnameIsPresent = lastname.map { $0 != "" }
+        let emailIsPresent = email.map { $0 != "" }
+        let phoneIsPresent = phone.map { $0 != "" }
+        
+        let contactForm = Signal.combineLatest(title, firstname, lastname, email, phone)
+        
+        self.titleLabelText = title
+        self.firstNameTextFieldText = .empty
+        self.lastNameTextFieldText = .empty
         self.emailTextFieldText = .empty
-        self.phoneTextFieldText = .empty
         self.phoneCodeLabelText = .empty
+        self.phoneTextFieldText = .empty
         
-        let combineGuest = Signal.combineLatest(self.salutationChangedProperty.signal.skipNil(),self.emailTextFieldChangeProperty.signal, self.fullNameTextFieldChangeProperty.signal, self.phoneTextFieldChangeProperty.signal).map { title ,email, fullname, phone in
-            return (title, email, fullname, phone)
-        }
-        self.collectForCheckout = .empty
+        self.contactFormIsCompleted = Signal.combineLatest(titleIsPresent, firstnameIsPresent, lastnameIsPresent, emailIsPresent, phoneIsPresent).map { $0 && $1 && $2 && $3 && $4 }.skipRepeats()
+        
+        let contactInfoParams = contactForm.switchMap { title, first, last, email, phone -> SignalProducer<CheckoutGuestParams, NoError> in
+            
+            let param = .defaults
+                |> CheckoutGuestParams.lens.conSalutation .~ "Mr"
+                |> CheckoutGuestParams.lens.conFirstName .~ first
+                |> CheckoutGuestParams.lens.conLastName .~ last
+                |> CheckoutGuestParams.lens.conEmailAddress .~ email
+                |> CheckoutGuestParams.lens.conPhone .~ "%2B\(phone)"
+                |> CheckoutGuestParams.lens.salutation .~ "Mr"
+                |> CheckoutGuestParams.lens.firstName .~ first
+                |> CheckoutGuestParams.lens.lastName .~ last
+                |> CheckoutGuestParams.lens.phone .~ "%2B\(phone)"
+            
+            return SignalProducer(value: param)
+        }.materialize()
+        
+        self.collectForCheckout = contactInfoParams.values()
+        
     }
     
     fileprivate let salutationButtonTappedProperty = MutableProperty(())
@@ -72,14 +113,29 @@ public final class ContactInfoCellViewModel: ContactInfoCellViewModelType, Conta
         self.salutationChangedProperty.value = text
     }
     
-    fileprivate let fullNameTextFieldChangeProperty = MutableProperty<String?>(nil)
-    public func fullNameTextFieldChange(_ text: String?) {
-        self.fullNameTextFieldChangeProperty.value = text
+    fileprivate let salutationCanceledProperty = MutableProperty(())
+    public func titleSalutationCanceled() {
+        self.salutationCanceledProperty.value = ()
     }
     
-    fileprivate let fullNameEndEditingProperty = MutableProperty(())
-    public func fullNameTextFieldDidEndEditing() {
-        self.fullNameEndEditingProperty.value = ()
+    fileprivate let firstNameTextFieldChangeProperty = MutableProperty<String?>(nil)
+    public func firstNameTextFieldChange(_ text: String?) {
+        self.firstNameTextFieldChangeProperty.value = text
+    }
+    
+    fileprivate let firstNameEndEditingProperty = MutableProperty(())
+    public func firstNameTextFieldDidEndEditing() {
+        self.firstNameEndEditingProperty.value = ()
+    }
+    
+    fileprivate let lastNameTextFieldChangeProperty = MutableProperty<String?>(nil)
+    public func lastNameTextFieldChange(_ text: String?) {
+        self.lastNameTextFieldChangeProperty.value = text
+    }
+    
+    fileprivate let lastNameEndEditingProperty = MutableProperty(())
+    public func lastNameTextFieldDidEndEditing() {
+        self.lastNameEndEditingProperty.value = ()
     }
     
     fileprivate let emailTextFieldChangeProperty = MutableProperty<String?>(nil)
@@ -114,17 +170,19 @@ public final class ContactInfoCellViewModel: ContactInfoCellViewModelType, Conta
     
     public let titleLabelText: Signal<String, NoError>
     public let goToTitleSalutationPicker: Signal<(), NoError>
-    public let isGuestFormValid: Signal<Bool, NoError>
-    public let fullnameTextFieldText: Signal<String, NoError>
+    public let dismissSalutationPicker: Signal<(), NoError>
+    public let firstNameTextFieldText: Signal<String, NoError>
+    public let lastNameTextFieldText: Signal<String, NoError>
     public let emailTextFieldText: Signal<String, NoError>
     public let phoneTextFieldText: Signal<String, NoError>
     public let phoneCodeLabelText: Signal<String, NoError>
+    public let contactFormIsCompleted: Signal<Bool, NoError>
     public let collectForCheckout: Signal<CheckoutGuestParams, NoError>
     
     public var inputs: ContactInfoCellViewModelInputs { return self }
     public var outputs: ContactInfoCellViewModelOutputs { return self }
 }
 
-private func isValid(email: String) -> Bool {
-    return isValidEmail(email)
+private func isValid(title: String, email: String, fullname: String, phone: String) -> Bool {
+    return isValidEmail(email) && !title.isEmpty
 }

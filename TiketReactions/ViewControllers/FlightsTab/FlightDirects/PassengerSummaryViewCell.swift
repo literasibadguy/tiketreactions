@@ -6,11 +6,12 @@
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 
+import TiketKitModels
 import UIKit
 
 class PassengerSummaryViewCell: UITableViewCell, ValueCell {
     
-    typealias Value = String
+    typealias Value = AdultPassengerParam
     
     @IBOutlet fileprivate weak var titlePassengerLabel: UILabel!
     @IBOutlet fileprivate weak var formSummaryLabel: UILabel!
@@ -28,7 +29,7 @@ class PassengerSummaryViewCell: UITableViewCell, ValueCell {
         // Configure the view for the selected state
     }
     
-    func configureWith(value: String) {
+    func configureWith(value: AdultPassengerParam) {
         
     }
 }

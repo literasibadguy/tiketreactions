@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Currency ListVC-->
+        <scene sceneID="LSg-jH-28T">
+            <objects>
+                <viewController storyboardIdentifier="CurrencyListVC" id="fRX-VR-QGc" customClass="CurrencyListVC" customModule="TripToZero" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YUv-WG-949">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ip7-oD-Awo">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="163"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currency" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZKm-SE-zt0">
+                                        <rect key="frame" x="20" y="40" width="133.5" height="38.5"/>
+                                        <viewLayoutGuide key="safeArea" id="dFP-gL-j7p"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="32"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="CCj-Z4-7la">
+                                        <rect key="frame" x="0.0" y="86.5" width="375" height="56"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </searchBar>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tSK-AL-grP">
+                                        <rect key="frame" x="337" y="28" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="Eld-S0-Fw1"/>
+                                            <constraint firstAttribute="height" constant="30" id="bX2-Rs-sC6"/>
+                                        </constraints>
+                                        <state key="normal" title="Cancel" image="cancel-button-saved"/>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WYI-fB-6W2" userLabel="Currency Separator View">
+                                        <rect key="frame" x="0.0" y="162" width="375" height="1"/>
+                                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="MUC-69-fs6"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="ZKm-SE-zt0" firstAttribute="top" secondItem="sF8-pk-Hlp" secondAttribute="top" constant="20" id="7IR-cs-O0u"/>
+                                    <constraint firstItem="sF8-pk-Hlp" firstAttribute="trailing" secondItem="tSK-AL-grP" secondAttribute="trailing" constant="8" id="FrK-k4-Zje"/>
+                                    <constraint firstItem="WYI-fB-6W2" firstAttribute="leading" secondItem="sF8-pk-Hlp" secondAttribute="leading" id="KcC-nk-Ra5"/>
+                                    <constraint firstItem="sF8-pk-Hlp" firstAttribute="trailing" secondItem="WYI-fB-6W2" secondAttribute="trailing" id="Phw-3F-2Wr"/>
+                                    <constraint firstItem="CCj-Z4-7la" firstAttribute="trailing" secondItem="sF8-pk-Hlp" secondAttribute="trailing" id="Rdi-GC-mNN"/>
+                                    <constraint firstItem="tSK-AL-grP" firstAttribute="top" secondItem="sF8-pk-Hlp" secondAttribute="top" constant="8" id="ZUF-FH-Mzx"/>
+                                    <constraint firstItem="CCj-Z4-7la" firstAttribute="top" secondItem="ZKm-SE-zt0" secondAttribute="bottom" constant="8" id="ewu-WF-8A5"/>
+                                    <constraint firstAttribute="bottom" secondItem="WYI-fB-6W2" secondAttribute="bottom" id="htJ-bN-kkv"/>
+                                    <constraint firstItem="CCj-Z4-7la" firstAttribute="leading" secondItem="sF8-pk-Hlp" secondAttribute="leading" id="qW0-Xc-caM"/>
+                                    <constraint firstItem="ZKm-SE-zt0" firstAttribute="leading" secondItem="sF8-pk-Hlp" secondAttribute="leading" constant="20" id="yC4-M8-Nci"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ZKm-SE-zt0" secondAttribute="trailing" id="zPd-Fq-QvA"/>
+                                </constraints>
+                                <viewLayoutGuide key="safeArea" id="sF8-pk-Hlp"/>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1mf-Lc-p67" userLabel="Currency Table View">
+                                <rect key="frame" x="0.0" y="163" width="375" height="504"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CurrencyListViewCell" rowHeight="78" id="3jp-HN-BAT" userLabel="CurrencyListViewCell" customClass="CurrencyListViewCell" customModule="TripToZero" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="78"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3jp-HN-BAT" id="zYb-hE-cUd">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="77.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nzh-2N-y0k" userLabel="Currency List Stack View">
+                                                    <rect key="frame" x="16" y="11" width="343" height="54"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="rP3-uk-gDa" userLabel="Currency Stack View">
+                                                            <rect key="frame" x="0.0" y="0.0" width="343" height="54"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Jakarta" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PAT-5g-gcu" userLabel="Currency Title Label">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="34.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Soekarno Hatta" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mje-Mo-Tb6" userLabel="Currency Subtitle Label">
+                                                                    <rect key="frame" x="0.0" y="34.5" width="343" height="19.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Nzh-2N-y0k" firstAttribute="leading" secondItem="zYb-hE-cUd" secondAttribute="leading" constant="16" id="10f-f3-AQd"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Nzh-2N-y0k" secondAttribute="bottom" constant="2" id="8hy-xk-I2L"/>
+                                                <constraint firstItem="Nzh-2N-y0k" firstAttribute="centerY" secondItem="zYb-hE-cUd" secondAttribute="centerY" id="EwA-K1-fem"/>
+                                                <constraint firstAttribute="trailing" secondItem="Nzh-2N-y0k" secondAttribute="trailing" constant="16" id="IFQ-LL-8Qq"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="currencySubtitleLabel" destination="Mje-Mo-Tb6" id="7fN-et-gAs"/>
+                                            <outlet property="currencyTitleLabel" destination="PAT-5g-gcu" id="4kF-Ry-716"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="iYn-tR-Z5i">
+                                <rect key="frame" x="177.5" y="405" width="20" height="20"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ip7-oD-Awo" firstAttribute="leading" secondItem="YUv-WG-949" secondAttribute="leading" id="7E2-nj-ZEB"/>
+                            <constraint firstItem="iYn-tR-Z5i" firstAttribute="centerX" secondItem="1mf-Lc-p67" secondAttribute="centerX" id="Eln-7U-BAH"/>
+                            <constraint firstItem="1mf-Lc-p67" firstAttribute="bottom" secondItem="ZX6-b2-CIF" secondAttribute="bottom" id="Jvr-i3-nyf"/>
+                            <constraint firstItem="iYn-tR-Z5i" firstAttribute="centerY" secondItem="1mf-Lc-p67" secondAttribute="centerY" id="Lpe-cD-CHl"/>
+                            <constraint firstItem="1mf-Lc-p67" firstAttribute="leading" secondItem="ZX6-b2-CIF" secondAttribute="leading" id="Qe6-8C-xbO"/>
+                            <constraint firstAttribute="trailing" secondItem="ip7-oD-Awo" secondAttribute="trailing" id="bhq-Bb-8KS"/>
+                            <constraint firstItem="ip7-oD-Awo" firstAttribute="top" secondItem="YUv-WG-949" secondAttribute="top" id="jWp-K6-5oq"/>
+                            <constraint firstItem="1mf-Lc-p67" firstAttribute="top" secondItem="ZX6-b2-CIF" secondAttribute="top" constant="143" id="jds-td-sfv"/>
+                            <constraint firstItem="1mf-Lc-p67" firstAttribute="trailing" secondItem="ZX6-b2-CIF" secondAttribute="trailing" id="ob2-lB-M0n"/>
+                            <constraint firstItem="1mf-Lc-p67" firstAttribute="top" secondItem="ip7-oD-Awo" secondAttribute="bottom" id="yWq-Wh-6uH"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ZX6-b2-CIF"/>
+                    </view>
+                    <connections>
+                        <outlet property="cancelButton" destination="tSK-AL-grP" id="7Ar-Vf-tie"/>
+                        <outlet property="currencySeparatorView" destination="WYI-fB-6W2" id="774-as-IIw"/>
+                        <outlet property="currencyTableView" destination="1mf-Lc-p67" id="93N-5a-Ijx"/>
+                        <outlet property="loadingIndicatorView" destination="iYn-tR-Z5i" id="W9B-Am-ytj"/>
+                        <outlet property="searchBar" destination="CCj-Z4-7la" id="NZ0-HT-Hgh"/>
+                        <outlet property="titleHeaderLabel" destination="ZKm-SE-zt0" id="FFg-KB-Ayw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J95-Lz-0KI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1274" y="215"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="cancel-button-saved" width="40" height="40"/>
+    </resources>
+</document>

@@ -1,0 +1,63 @@
+/* 
+  Localizable.strings
+  TiketReactions
+
+  Created by Firas Rafislam on 21/05/18.
+  Copyright © 2018 Firas Rafislam. All rights reserved.
+*/
+
+"Destination_Hotel_Title_Form" = "Destination / Hotel";
+"Welcome_To_TripToZero" = "Welcome to triptozero";
+"Your_Location_Title" = "Your Location";
+"Guest_Room_Title_Form" = "Guest & Room";
+"Room_Title" = "%d Rooms";
+"Guest_Title" = "%d Guests";
+"Pick_Date_Title_Form" = "Pick Dates";
+"How_Nights_Title" = "How Many Nights?";
+"Count_Nights_Title" = "%d Nights";
+"Maximum_Nights_Alert_Title" = "Only Maximum 11 Nights";
+"Maximum_Nights_Reminder_Title" = "Maximum 11 Nights";
+"CheckIn_Pick_Title" = "Choose Check-In Date";
+"CheckOut_Pick_Title" = "Choose Check-Out Date";
+"CheckOut_Date_Title" = "Check-Out Date";
+"Find_Hotel_Title" = "Search Hotels";
+"Filter_Button_Title" = "Filter";
+"Filter_HotelResults_Title" = "%d Hotels Found";
+"Filter_Populer_Title" = "Populer";
+"Filter_HighPrice_Title" = "Highest Price";
+"Filter_LowPrice_Title" = "Lowest Price";
+"Filter_HighStar_Title" = "Highest Star";
+"Filter_LowStar_Title" = "Lowest Star";
+"Choose_Room_Title" = "Choose Room";
+"Order_Room_Title" = "Book Room";
+"AvailableBreakfast_Title" = "Including Breakfast";
+"UnavailableBreakfast_Title" = "Not Included Breakfast";
+"AvailableRoom_Title" = "Available Rooms: %@";
+"PricePerNight_Hotel_Title" = "%@ per night";
+"Facility_Hotel_Title" = "Hotel Facility";
+"Facility_Room_Title" = "Room Facility";
+"Address_Hotel_Title" = "Address";
+"Order_Hotel_Title" = "Order Hotel Room";
+"Guest_Contact_Form_Title" = "Guest Form";
+"Title_Form_Data" = "Title";
+"Mr_Form_Data" = "Mr";
+"Mrs_Form_Data" = "Mrs";
+"Ms_Form_Data" = "Ms";
+"FirstName_Form_Data" = "First Name";
+"LastName_Form_Data" = "Last Name";
+"Email_Form_Data" = "Email";
+"PhoneNumber_Form_Data" = "Phone Number";
+"AnotherGuest_Option_Form_Title" = "Is It For Another Person?";
+"ChoosePayment_Title" = "Choose Payment";
+"ConfirmData_Title" = "Please Confirm Data Is It True?";
+"ConfirmError_Title" = "Oops.. There's error a found. Please try again";
+"BackButton_Title" = "Back";
+"CancelButton_Title" = "Cancel";
+"DoneButton_Title" = "Done";
+"ApplyButton_Title" = "Apply";
+"ConfirmYes_Title" = "Yes";
+"ConfirmNo_Title" = "No";
+"PriceTotal_Title" = "Price Total";
+"OrderId_Title" = "Order Id";
+"CreditCard_Title" = "Credit Card";
+"Transfer_Title" = "Transfer";

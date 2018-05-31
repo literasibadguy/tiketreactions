@@ -9,10 +9,10 @@
 import Prelude
 import ReactiveSwift
 import Result
-import TiketAPIs
+import TiketKitModels
 
 public protocol HotelDetailsVCViewModelInputs {
-    func configureWith(hotelResult: HotelResult)
+    func configureWith(hotelResult: HotelResult, booking: HotelBookingSummary)
     
     func viewDidLoad()
     
@@ -26,7 +26,7 @@ public protocol HotelDetailsVCViewModelInputs {
 }
 
 public protocol HotelDetailsVCViewModelOutputs {
-    var configureChildVCHotelDirect: Signal<HotelDirect, NoError> { get }
+    var configureChildVCHotelDirect: Signal<(HotelResult, HotelDirect, HotelBookingSummary), NoError> { get }
     
     var prefersStatusBarHidden: Bool { get }
     
@@ -51,9 +51,13 @@ public final class HotelDetailsViewModel: HotelDetailsViewModelType, HotelDetail
             |> SearchHotelParams.lens.adult .~ "1"
             |> SearchHotelParams.lens.room .~ 1
         
-        self.configureChildVCHotelDirect = self.configHotelDirectProperty.signal.skipNil().switchMap { result in
-            AppEnvironment.current.apiService.fetchHotelDetail(url: result.businessURI, params: sampleParams).demoteErrors()
+        let selectedHotel = Signal.combineLatest(self.configHotelDirectProperty.signal.skipNil(), self.viewDidLoadProperty.signal).map(first)
+        
+        let requestDirect = selectedHotel.switchMap { result in
+            AppEnvironment.current.apiService.fetchHotelDetail(url: result.0.businessURI, params: sampleParams).demoteErrors()
         }
+        
+        self.configureChildVCHotelDirect = Signal.combineLatest(selectedHotel.map(first), requestDirect, selectedHotel.map(second))
         
         self.setNeedsStatusBarAppearanceUpdate = Signal.merge(self.viewWillAppearAnimatedProperty.signal.ignoreValues(), self.willTransitionToCollectionProperty.signal.ignoreValues())
         
@@ -65,9 +69,9 @@ public final class HotelDetailsViewModel: HotelDetailsViewModelType, HotelDetail
         self.topLayoutConstraintConstant = self.initialTopConstraintProperty.signal.skipNil().takePairWhen(self.willTransitionToCollectionProperty.signal.skipNil()).map(topLayoutConstraintConstant(initialTopConstraint:traitCollection:))
     }
     
-    private let configHotelDirectProperty = MutableProperty<HotelResult?>(nil)
-    public func configureWith(hotelResult: HotelResult) {
-        self.configHotelDirectProperty.value = hotelResult
+    fileprivate let configHotelDirectProperty = MutableProperty<(HotelResult, HotelBookingSummary)?>(nil)
+    public func configureWith(hotelResult: HotelResult, booking: HotelBookingSummary) {
+        self.configHotelDirectProperty.value = (hotelResult, booking)
     }
     
     fileprivate let viewDidLoadProperty = MutableProperty(())
@@ -100,7 +104,7 @@ public final class HotelDetailsViewModel: HotelDetailsViewModelType, HotelDetail
         return self.prefersStatusBarHiddenProperty.value
     }
     
-    public let configureChildVCHotelDirect: Signal<HotelDirect, NoError>
+    public let configureChildVCHotelDirect: Signal<(HotelResult, HotelDirect, HotelBookingSummary), NoError>
     public let setNavigationBarHiddenAnimated: Signal<(Bool, Bool), NoError>
     public let setNeedsStatusBarAppearanceUpdate: Signal<(), NoError>
     public let topLayoutConstraintConstant: Signal<CGFloat, NoError>

@@ -17,6 +17,7 @@ public protocol UIButtonProtocol: UIControlProtocol {
     var imageView: UIImageView? { get }
     func setAttributedTitle(_ title: NSAttributedString?, for state: UIControlState)
 //    func setBackgroundColor(_ backgroundColor: UIColor, for state: UIControlState)
+    func setBackgroundColor(_ backgroundColor: UIColor, forState state: UIControlState)
     func setBackgroundImage(_ image: UIImage?, for state: UIControlState)
     func setImage(_ image: UIImage?, for state: UIControlState)
     func setTitle(_ title: String?, for state: UIControlState)
@@ -51,6 +52,13 @@ public extension LensHolder where Object: UIButtonProtocol {
         return Lens(
             view: { $0.attributedTitle(for: state) ?? NSAttributedString(string: "") },
             set: { $1.setAttributedTitle($0, for: state); return $1 }
+        )
+    }
+    
+    public func backgroundColor(forState state: UIControlState) -> Lens<Object, UIColor> {
+        return Lens(
+            view: { _ in .clear },
+            set: { $1.setBackgroundColor($0, forState: state); return $1 }
         )
     }
     

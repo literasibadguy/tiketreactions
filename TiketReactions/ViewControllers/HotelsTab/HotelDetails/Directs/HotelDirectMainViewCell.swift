@@ -6,81 +6,95 @@
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 import Prelude
+import ReactiveSwift
+import TiketKitModels
 import UIKit
 
 class HotelDirectMainViewCell: UITableViewCell, ValueCell {
-    
     typealias Value = HotelDirect
+    
+    fileprivate let viewModel: HotelDirectMainCellViewModelType = HotelDirectMainCellViewModel()
+    fileprivate let photoSource = HotelPhotosDataSource()
 
     @IBOutlet fileprivate weak var hotelDirectStackView: UIStackView!
-    
-    @IBOutlet fileprivate weak var hotelMainImageView: UIImageView!
     @IBOutlet fileprivate weak var hotelTitleLabel: UILabel!
     @IBOutlet fileprivate weak var hotelCityLabel: UILabel!
-    @IBOutlet fileprivate weak var starImageView: UIImageView!
-    @IBOutlet fileprivate weak var hotelDescriptionLabel: UILabel!
-    @IBOutlet fileprivate weak var readMoreButton: UIButton!
+    @IBOutlet fileprivate weak var hotelInfoStackView: UIStackView!
+    @IBOutlet fileprivate weak var photosCollectionView: UICollectionView!
+    @IBOutlet fileprivate weak var ratingStackView: UIStackView!
+    @IBOutlet fileprivate weak var ratingImageView: UIImageView!
+    @IBOutlet fileprivate weak var hotelCrumbLabel: UILabel!
+    @IBOutlet fileprivate weak var hotelInfoSeparatorView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        self.photosCollectionView.dataSource = photoSource
     }
     
     override func bindStyles() {
         super.bindStyles()
         
-        _ = hotelMainImageView
-            |> UIImageView.lens.contentMode .~ .scaleAspectFill
-            |> UIImageView.lens.backgroundColor .~ .gray
-        
-        _ = self.hotelTitleLabel
-            |> UILabel.lens.font %~~ { _, label in
-                label.traitCollection.isRegularRegular
-                    ? UIFont.boldSystemFont(ofSize: 28)
-                : UIFont.boldSystemFont(ofSize: 24)
+        _ = self.hotelInfoStackView
+            |> UIStackView.lens.layoutMargins %~~ { _, stackView in
+                stackView.traitCollection.isRegularRegular
+                    ? .init(topBottom: Styles.grid(6), leftRight: Styles.grid(16))
+                    : .init(top: Styles.grid(4), left: Styles.grid(4), bottom: Styles.grid(3), right: Styles.grid(4))
             }
-            |> UILabel.lens.numberOfLines .~ 0
-        
-        _ = self.hotelDescriptionLabel
-            |> UILabel.lens.font %~~ { _, label in
-                label.traitCollection.isRegularRegular
-                    ? UIFont.systemFont(ofSize: 18)
-                    : UIFont.systemFont(ofSize: 15)
-            }
-            |> UILabel.lens.numberOfLines .~ 0
-        
-        _ = self.hotelDirectStackView
-            |> UIStackView.lens.spacing .~ Styles.grid(4)
             |> UIStackView.lens.isLayoutMarginsRelativeArrangement .~ true
-            |> UIStackView.lens.layoutMargins %~~ { _, view in
-                view.traitCollection.isRegularRegular
-                    ? .init(top: Styles.grid(6), left: Styles.grid(16), bottom: Styles.grid(18), right: Styles.grid(16)) : .init(top: Styles.grid(4), left: Styles.grid(4), bottom: Styles.grid(16), right: Styles.grid(4))
+            |> UIStackView.lens.spacing .~ Styles.grid(2)
+
+        _ = self.hotelTitleLabel
+            |> UILabel.lens.numberOfLines .~ 2
+            |> UILabel.lens.textColor .~ UIColor.tk_typo_green_grey_600
+        
+        _ = self.hotelCityLabel
+            |> UILabel.lens.font %~~ { _, label in
+                label.traitCollection.isRegularRegular
+                    ? UIFont.systemFont(ofSize: 20)
+                    : UIFont.systemFont(ofSize: 16)
+            }
+            |> UILabel.lens.textColor .~ UIColor.tk_typo_green_grey_500
+        
+        _ = self.hotelCrumbLabel
+            |> UILabel.lens.font .~ UIFont.systemFont(ofSize: 14.0)
+            |> UILabel.lens.textColor .~ UIColor.tk_dark_grey_400
+            |> UILabel.lens.numberOfLines .~ 4
+        
+        _ = self.hotelInfoSeparatorView
+            |> UIView.lens.backgroundColor .~ .tk_base_grey_100
+    }
+    
+    override func bindViewModel() {
+        super.bindViewModel()
+        
+        self.hotelTitleLabel.rac.text = self.viewModel.outputs.hotelnameTitleText
+        self.hotelCityLabel.rac.text = self.viewModel.outputs.hotelProvinceTitleText
+        
+        self.viewModel.outputs.starRating
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] rating in
+                self?.ratingImageView.image = rating
         }
         
-        _ = self.readMoreButton
-            |> UIButton.lens.titleColor(forState: .normal) .~ UIColor.tk_official_green
-            |> UIButton.lens.titleLabel.font .~ UIFont.boldSystemFont(ofSize: 15.0)
-            |> UIButton.lens.title(forState: .normal) .~ "Baca lebih"
-            |> UIButton.lens.contentEdgeInsets .~ .init(top: Styles.grid(3) - 1, left: 0, bottom: Styles.grid(4) - 1, right: 0)
+        self.viewModel.outputs.photos
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] photos in
+                self?.photoSource.load(photos: photos)
+                self?.photosCollectionView.reloadData()
+        }
+        
+        self.viewModel.outputs.firstRooms
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] first in
+                self?.hotelCrumbLabel.text = first.roomDescription
+        }
         
     }
     
     func configureWith(value: HotelDirect) {
-        
-        _ = self.hotelTitleLabel
-            |> UILabel.lens.text .~ value.breadcrumb.businessName
-        self.hotelMainImageView.ck_setImageWithURL(URL(string: value.largePhotos)!)
-        
-        _ = self.hotelCityLabel
-            |> UILabel.lens.text .~ value.breadcrumb.cityName
-        
-        _ = self.starImageView
-            |> UIImageView.lens.image .~ UIImage(named: ratingForStar(rating: value.breadcrumb.starRating))
-        
-        _ = self.hotelDescriptionLabel
-            |> UILabel.lens.text .~ "Don't forget this is the best hotel in the world, How can you discomfort yourself in your room when this hotel is trying be the best experience without any public matters. When we speak 'only you', not everyone anymore It's you somehow you need to catch these situations without take another opportunities"
-        
-        
+        self.viewModel.inputs.configureWith(hotel: value)
     }
     
     private func ratingForStar(rating: String) -> String {
@@ -100,3 +114,10 @@ class HotelDirectMainViewCell: UITableViewCell, ValueCell {
         }
     }
 }
+
+extension HotelDirectMainViewCell: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: self.hotelDirectStackView.bounds.width, height: self.photosCollectionView.bounds.height)
+    }
+}
+

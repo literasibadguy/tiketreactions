@@ -135,11 +135,8 @@ open class ValueCellDataSource: NSObject, UICollectionViewDataSource, UITableVie
                                      cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let (value, reusableId) = self.values[indexPath.section][indexPath.item]
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusableId, for: indexPath)
-        
         self.configureCell(collectionCell: cell, withValue: value)
-        
         return cell
     }
     

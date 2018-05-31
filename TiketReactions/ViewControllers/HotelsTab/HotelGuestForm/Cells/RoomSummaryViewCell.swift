@@ -7,7 +7,7 @@
 //
 
 import Prelude
-import TiketAPIs
+import TiketKitModels
 import UIKit
 
 class RoomSummaryViewCell: UITableViewCell, ValueCell {
@@ -34,6 +34,9 @@ class RoomSummaryViewCell: UITableViewCell, ValueCell {
     override func bindStyles() {
         super.bindStyles()
         
+        _ = self.contentView
+            |> UIView.lens.backgroundColor .~ .tk_base_grey_100
+        
         _ = self.roomSummaryStackView
             |> UIStackView.lens.layoutMargins %~~ { _, stackView in
                 stackView.traitCollection.isRegularRegular
@@ -42,6 +45,12 @@ class RoomSummaryViewCell: UITableViewCell, ValueCell {
             }
             |> UIStackView.lens.isLayoutMarginsRelativeArrangement .~ true
             |> UIStackView.lens.spacing .~ 6
+        
+        _ = self.roomNameLabel
+            |> UILabel.lens.font .~ UIFont.systemFont(ofSize: 16.0)
+        
+        _ = self.breakfastStatusLabel
+            |> UILabel.lens.font .~ UIFont.systemFont(ofSize: 14.0)
     }
     
     func configureWith(value: AvailableRoom) {

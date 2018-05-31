@@ -7,15 +7,14 @@
 //
 
 import UIKit
-import TiketComponents
 
 class FirstViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let emptyStatesVC = EmptyStatesVC.instantiate()
-        self.navigationController?.present(emptyStatesVC, animated: true, completion: nil)
+//        let emptyStatesVC = EmptyStatesVC.instantiate()
+//        self.navigationController?.present(emptyStatesVC, animated: true, completion: nil)
         // Do any additional setup after loading the view, typically from a nib.
     }
 

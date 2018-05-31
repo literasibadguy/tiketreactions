@@ -11,13 +11,13 @@ import ReactiveSwift
 extension SignalProtocol {
     
     public func takeUntil(_ predicate: @escaping (Value) -> Bool) -> Signal<Value, Error> {
-        return Signal { observer in
+        return Signal.init { observer, _ in
             return self.signal.observe { event in
                 if case let .value(value) = event, predicate(value) {
                     observer.send(value: value)
                     observer.sendCompleted()
                 } else {
-                    observer.action(event)
+                    observer.send(event)
                 }
             }
         }

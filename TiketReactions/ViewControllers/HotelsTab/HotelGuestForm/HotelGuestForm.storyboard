@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,13 +12,13 @@
         <!--Hotel Guest FormVC-->
         <scene sceneID="KSc-SA-H8C">
             <objects>
-                <tableViewController storyboardIdentifier="HotelGuestFormVC" id="Ga2-hR-hkh" customClass="HotelGuestFormVC" customModule="TiketComponents" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="HotelGuestFormVC" id="Ga2-hR-hkh" customClass="HotelGuestFormVC" customModule="TiketReactions" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="gTa-be-i9H">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="650"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OrderFirstViewCell" rowHeight="83" id="i6S-so-fI2" customClass="OrderFirstViewCell" customModule="TiketComponents" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OrderFirstViewCell" rowHeight="83" id="i6S-so-fI2" customClass="OrderFirstViewCell" customModule="TiketReactions" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="83"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="i6S-so-fI2" id="RS5-RJ-4mn">
@@ -28,36 +28,61 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="SqJ-uj-J6S" userLabel="Order First Stack View">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="83"/>
                                             <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pesan Hotel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D4l-Oc-fmp" userLabel="Order Hotel Label">
+                                                    <rect key="frame" x="0.0" y="0.0" width="82.5" height="17"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="The Trans Luxury Bandung" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LvB-6Q-LYD">
-                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="62.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                    <rect key="frame" x="0.0" y="17" width="231.5" height="32"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="24 September 2018, 5 Malam" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ip-vN-ysD">
-                                                    <rect key="frame" x="0.0" y="62.5" width="240.5" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <rect key="frame" x="0.0" y="49" width="195" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 Tamu, Junior Suites Room" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Yk-lm-jDk">
+                                                    <rect key="frame" x="0.0" y="66" width="184" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </stackView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gIb-6k-xOH">
+                                            <rect key="frame" x="0.0" y="82" width="375" height="1"/>
+                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="1" id="Vs8-LB-5QL"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="gIb-6k-xOH" secondAttribute="bottom" id="2Un-s2-1tb"/>
                                         <constraint firstAttribute="bottom" secondItem="SqJ-uj-J6S" secondAttribute="bottom" id="CMT-Ra-dbl"/>
                                         <constraint firstItem="SqJ-uj-J6S" firstAttribute="leading" secondItem="4i7-vJ-UkJ" secondAttribute="leading" id="Vyd-lt-J0L"/>
+                                        <constraint firstItem="4i7-vJ-UkJ" firstAttribute="trailing" secondItem="gIb-6k-xOH" secondAttribute="trailing" id="aCo-3x-GBq"/>
                                         <constraint firstItem="4i7-vJ-UkJ" firstAttribute="trailing" secondItem="SqJ-uj-J6S" secondAttribute="trailing" id="gB7-Cv-0a3"/>
                                         <constraint firstItem="SqJ-uj-J6S" firstAttribute="top" secondItem="RS5-RJ-4mn" secondAttribute="top" id="uuZ-7S-vuo"/>
+                                        <constraint firstItem="gIb-6k-xOH" firstAttribute="leading" secondItem="4i7-vJ-UkJ" secondAttribute="leading" id="zw2-jK-SoK"/>
                                     </constraints>
                                     <viewLayoutGuide key="safeArea" id="4i7-vJ-UkJ"/>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="guestRoomLabel" destination="7Yk-lm-jDk" id="gXU-Qp-PXV"/>
                                     <outlet property="hotelNameOrderLabel" destination="LvB-6Q-LYD" id="VZ8-Jf-KfG"/>
+                                    <outlet property="orderFirstSeparatorView" destination="gIb-6k-xOH" id="YoV-kC-ZQa"/>
                                     <outlet property="orderFirstStackView" destination="SqJ-uj-J6S" id="WHM-o0-aga"/>
+                                    <outlet property="orderHotelTitleLabel" destination="D4l-Oc-fmp" id="UU9-6T-77S"/>
                                     <outlet property="statusOrderDateLabel" destination="6ip-vN-ysD" id="jX2-EP-4jk"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="GuestOptionViewCell" rowHeight="64" id="cq2-Zz-qB5" customClass="GuestOptionViewCell" customModule="TiketComponents" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="GuestOptionViewCell" rowHeight="64" id="cq2-Zz-qB5" customClass="GuestOptionViewCell" customModule="TiketReactions" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="111" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cq2-Zz-qB5" id="aWp-xV-EPg">
@@ -73,8 +98,11 @@
                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5zf-Cv-bz2">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="5zf-Cv-bz2">
                                                     <rect key="frame" x="294" y="0.0" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="anotherGuestOptionChanged:" destination="cq2-Zz-qB5" eventType="valueChanged" id="ZG3-Ip-RKg"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                         </stackView>
@@ -109,7 +137,7 @@
         <!--Booking-->
         <scene sceneID="sFY-U1-AlG">
             <objects>
-                <viewController storyboardIdentifier="HotelContainerGuestFormVC" title="Booking" id="wMP-NP-yvq" customClass="HotelContainerGuestFormVC" customModule="TiketComponents" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HotelContainerGuestFormVC" title="Booking" id="wMP-NP-yvq" customClass="HotelContainerGuestFormVC" customModule="TiketReactions" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Vn8-j9-aLV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -129,12 +157,12 @@
                                     <segue destination="yZO-IK-jGd" kind="embed" id="EpV-tx-l1E"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x4a-Ks-7fe" userLabel="Loading Overlay View">
+                            <view alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x4a-Ks-7fe" userLabel="Loading Overlay View">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="xsv-Nk-sLc">
-                                <rect key="frame" x="177" y="324" width="20" height="20"/>
+                                <rect key="frame" x="177" y="323.5" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -168,7 +196,7 @@
         <!--Hotel Nav Guest FormVC-->
         <scene sceneID="jJN-lF-FQv">
             <objects>
-                <viewController storyboardIdentifier="HotelNavGuestFormVC" id="yZO-IK-jGd" customClass="HotelNavGuestFormVC" customModule="TiketComponents" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HotelNavGuestFormVC" id="yZO-IK-jGd" customClass="HotelNavGuestFormVC" customModule="TiketReactions" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XHF-OG-qc9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -201,7 +229,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="5FU-yC-JPI"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Pilih Pembayaran"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="10"/>

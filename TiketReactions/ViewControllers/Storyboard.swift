@@ -2,20 +2,30 @@ import UIKit
 
 public enum Storyboard: String {
     case Main
+    case CurrencyList
     case FlightForm
     case PickAirports
     case PickPassengers
     case PickDates
     case FlightResults
+    case PickFlight
     case FlightDirects
     case PassengerForm
     case FlightPayments
+    case HotelLiveFeed
     case HotelForm
+    case PickDatesHotel
     case DestinationHotel
     case HotelDiscovery
+    case HotelDiscoveryFilters
     case HotelDirects
+    case FacilityList
     case HotelGuestForm
+    case HotelPaymentsVC
+    case AvailableRoomLists
     case OrderList
+    case OrderDetails
+    case CheckoutPage
     case GeneralAbout
     case EmptyStates
     

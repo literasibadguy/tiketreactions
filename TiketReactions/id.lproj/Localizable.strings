@@ -1,0 +1,63 @@
+/* 
+  Localizable.strings
+  TiketReactions
+
+  Created by Firas Rafislam on 21/05/18.
+  Copyright © 2018 Firas Rafislam. All rights reserved.
+*/
+
+"Destination_Hotel_Title_Form" = "Destinasi / Hotel";
+"Welcome_To_TripToZero" = "Selamat Datang di triptozero";
+"Your_Location_Title" = "Lokasi Kamu";
+"Guest_Room_Title_Form" = "Tamu & Kamar";
+"Room_Title" = "%d Kamar";
+"Guest_Title" = "%d Tamu";
+"Pick_Date_Title_Form" = "Pilih Tanggal";
+"How_Nights_Title" = "Berapa Malam?";
+"Count_Nights_Title" = "%d Malam";
+"Maximum_Nights_Alert_Title" = "Maaf Maksimal 11 Malam";
+"Maximum_Nights_Reminder_Title" = "Maksimal 11 Nights";
+"CheckIn_Pick_Title" = "Pilih tanggal Check-In";
+"CheckOut_Pick_Title" = "Pilih tanggal Check-Out";
+"CheckOut_Date_Title" = "Tanggal Check-Out";
+"Find_Hotel_Title" = "Cari Hotel";
+"Filter_Button_Title" = "Filter";
+"Filter_HotelResults_Title" = "%d Hotel";
+"Filter_Populer_Title" = "Populer";
+"Filter_HighPrice_Title" = "Harga Tertinggi";
+"Filter_LowPrice_Title" = "Harga Terendah";
+"Filter_HighStar_Title" = "Bintang Tertinggi";
+"Filter_LowStar_Title" = "Bintang Terendah";
+"Choose_Room_Title" = "Pilih Kamar";
+"Order_Room_Title" = "Pesan Kamar";
+"AvailableBreakfast_Title" = "Termasuk Sarapan";
+"UnavailableBreakfast_Title" = "Tidak Termasuk Sarapan";
+"AvailableRoom_Title" = "Tersedia Kamar: %@";
+"PricePerNight_Hotel_Title" = "%@ per malam";
+"Facility_Hotel_Title" = "Fasilitas Hotel";
+"Facility_Room_Title" = "Fasilitas Kamar";
+"Address_Hotel_Title" = "Alamat";
+"Order_Hotel_Title" = "Pesan Kamar Hotel";
+"Guest_Contact_Form_Title" = "Form Tamu";
+"Title_Form_Data" = "Title";
+"Mr_Form_Data" = "Tuan";
+"Mrs_Form_Data" = "Nyonya";
+"Ms_Form_Data" = "Nona";
+"FirstName_Form_Data" = "Nama Depan";
+"LastName_Form_Data" = "Nama Belakang";
+"Email_Form_Data" = "Email";
+"PhoneNumber_Form_Data" = "No. Handphone";
+"AnotherGuest_Option_Form_Title" = "Atas Nama Orang Lain";
+"ChoosePayment_Title" = "Pilih Pembayaran";
+"ConfirmData_Title" = "Mohon Konfirmasi Apakah Data Benar?";
+"ConfirmError_Title" = "Oops.. Mohon Maaf, Silakan coba lagi";
+"BackButton_Title" = "Kembali";
+"CancelButton_Title" = "Batal";
+"DoneButton_Title" = "Selesai";
+"ApplyButton_Title" = "Selesai";
+"ConfirmYes_Title" = "Ya";
+"ConfirmNo_Title" = "Belum";
+"PriceTotal_Title" = "Total Harga";
+"OrderId_Title" = "Order Id";
+"CreditCard_Title" = "Kartu Kredit";
+"Transfer_Title" = "Transfer";

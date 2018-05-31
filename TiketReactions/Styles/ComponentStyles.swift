@@ -33,11 +33,12 @@ public func baseTableControllerStyle<TVC: UITableViewControllerProtocol> (estima
         <> TVC.lens.tableView.estimatedRowHeight .~ estimatedRowHeight
     
     #if os(iOS)
-        return style <> TVC.lens.tableView.separatorStyle .~ .singleLine
+        return style <> TVC.lens.tableView.separatorStyle .~ .none
     #else
         return
     #endif
 }
+
 
 public func baseTableViewCellStyle <TVC: UITableViewCellProtocol> () -> ((TVC) -> TVC) {
     
@@ -64,10 +65,18 @@ public func baseActivityIndicatorStyle(indicator: UIActivityIndicatorView) -> UI
 
 public func cardStyle <V: UIViewProtocol> (cornerRadius radius: CGFloat = 0) -> ((V) -> V) {
     return roundedStyle(cornerRadius: radius)
-        <> V.lens.layer.borderColor .~ UIColor.red.cgColor
-        <> V.lens.layer.borderWidth .~ 1.0
+        <> V.lens.layer.borderColor .~ UIColor.clear.cgColor
+        <> V.lens.layer.borderWidth .~ 0
         <> V.lens.backgroundColor .~ .white
 }
+
+public let feedTableViewCellStyle = baseTableViewCellStyle()
+    <> UITableViewCell.lens.contentView.layoutMargins %~~ { _, cell in
+        cell.traitCollection.isRegularRegular
+            ? .init(topBottom: Styles.grid(2), leftRight: Styles.grid(30))
+            : .init(topBottom: Styles.gridHalf(3), leftRight: Styles.grid(2))
+}
+
 
 public let separatorStyle =
     UIView.lens.backgroundColor .~ .gray
@@ -88,8 +97,9 @@ private let navBarLens: Lens<UINavigationController?, UINavigationBar?> = Lens(
 private let baseNavigationBarStyle =
     UINavigationBar.lens.titleTextAttributes .~ [
         NSAttributedStringKey.foregroundColor: UIColor.black,
-        NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16.0)
+        NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 16.0)
         ]
         <> UINavigationBar.lens.translucent .~ false
         <> UINavigationBar.lens.barTintColor .~ .white
+        <> UINavigationBar.lens.tintColor .~ .tk_official_green
 

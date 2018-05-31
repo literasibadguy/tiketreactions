@@ -7,7 +7,7 @@
 //
 import Prelude
 import ReactiveSwift
-import TiketAPIs
+import TiketKitModels
 import UIKit
 
 public final class RootTabBarVC: UITabBarController {
@@ -18,6 +18,14 @@ public final class RootTabBarVC: UITabBarController {
         self.delegate = self
         
         self.viewModel.inputs.viewDidLoad()
+    }
+    
+    override public func bindStyles() {
+        super.bindStyles()
+        
+        _ = self.tabBar
+            |> UITabBar.lens.tintColor .~ .tk_official_green
+        
     }
     
     override public func bindViewModel() {
@@ -44,13 +52,11 @@ public final class RootTabBarVC: UITabBarController {
         }
     }
     
+    /*
     public func switchToFlight() {
         self.viewModel.inputs.switchToFlight()
     }
-    
-    public func switchToHotel(params: SearchHotelParams?) {
-        self.viewModel.inputs.switchToHotel(params: params)
-    }
+    */
     
     public func switchToHotelForm() {
         self.viewModel.inputs.switchToHotelForm()
@@ -67,10 +73,6 @@ public final class RootTabBarVC: UITabBarController {
     fileprivate func setTabBarItemsStyles(withData data: TabBarItemsData) {
         data.items.forEach { item in
             switch item {
-            case let .flight(index):
-                _ = tabBarItem(atIndex: index) ?|> flightTabBarItemStyle()
-            case let .hotel(index):
-                _ = tabBarItem(atIndex: index) ?|> hotelTabBarItemStyle()
             case let .hotelForm(index):
                 _ = tabBarItem(atIndex: index) ?|> hotelTabBarItemStyle()
             case let .order(index):

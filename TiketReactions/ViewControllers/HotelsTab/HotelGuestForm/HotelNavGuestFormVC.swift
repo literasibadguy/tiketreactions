@@ -9,11 +9,12 @@
 import Prelude
 import ReactiveSwift
 import Spring
-import TiketAPIs
+import TiketKitModels
 import UIKit
 
 public protocol HotelNavGuestFormDelegate: class {
     func navGuestFormDidTapPayment(_ controller: HotelNavGuestFormVC, loading: Bool)
+    func bookingButtonTapped(_ controller: HotelNavGuestFormVC)
 }
 
 public final class HotelNavGuestFormVC: UIViewController {
@@ -24,8 +25,16 @@ public final class HotelNavGuestFormVC: UIViewController {
     @IBOutlet fileprivate weak var totalValueLabel: UILabel!
     @IBOutlet fileprivate  weak var goPaymentButton: DesignableButton!
     
-    public func configureWith(room: AvailableRoom) {
+    internal func configureWith(room: AvailableRoom) {
         self.viewModel.inputs.configWith(room: room)
+    }
+    
+    internal func configureGuestForm(guestForm: CheckoutGuestParams) {
+        self.viewModel.inputs.configFormGuest(guestForm)
+    }
+    
+    internal func formed(enable: Bool) {
+        self.viewModel.inputs.form(completed: enable)
     }
     
     public override func viewDidLoad() {
@@ -41,18 +50,23 @@ public final class HotelNavGuestFormVC: UIViewController {
         super.bindStyles()
         
         _ = self.goPaymentButton
-            |> UIButton.lens.backgroundColor .~ .tk_official_green
+            |> UIButton.lens.backgroundColor(forState: .normal) .~ .tk_official_green
             |> UIButton.lens.titleColor(forState: .normal) .~ .white
+            |> UIButton.lens.backgroundColor(forState: .disabled) .~ .tk_typo_green_grey_500
+            |> UIButton.lens.isEnabled .~ false
+            |> UIButton.lens.title(forState: .normal) .~ Localizations.ChoosepaymentTitle
     }
     
     public override func bindViewModel() {
         super.bindViewModel()
         
-        self.viewModel.outputs.goToPayment
+        self.goPaymentButton.rac.isEnabled = self.viewModel.outputs.isCheckoutButtonEnabled
+        self.totalValueLabel.rac.text = self.viewModel.outputs.totalPriceText
+        
+        self.viewModel.outputs.diagnosticEvent
             .observe(on: UIScheduler())
-            .observeValues { [weak self] addOrder in
-                print("ORDER STATUS: \(addOrder.diagnostic.confirm)")
-                self?.goToPaymentMethodsVC()
+            .observeValues { status in
+                print("DIAGNOSTIC STATUS: \(status)")
         }
         
         self.viewModel.outputs.showLoadingOverlay
@@ -60,6 +74,15 @@ public final class HotelNavGuestFormVC: UIViewController {
             .observeValues { [weak self] overlay in
                 print("TELL ME BUTTON TAPPED PROPERTY: \(overlay)")
                 self?.delegate?.navGuestFormDidTapPayment(self!, loading: overlay)
+                self?.delegate?.bookingButtonTapped(self!)
+        }
+        
+        self.viewModel.outputs.checkoutGuestParam
+            .observe(on: UIScheduler())
+            .observeValues { guestData in
+                print("WHO IS GUEST First Name FROM BOOKING RECEIPT: \(String(describing: guestData.conFirstName))")
+                print("WHO IS GUEST Last Name FROM BOOKING RECEIPT: \(String(describing: guestData.conLastName))")
+                print("WHO IS GUEST PHONE: \(String(describing: guestData.conPhone))")
         }
     }
     

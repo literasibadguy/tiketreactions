@@ -7,9 +7,130 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B1DD59241640B8E4EF278F5 /* Pods_TiketKitModels_TiketKitModelsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DDFCCEC09F394FE3F54CCDB /* Pods_TiketKitModels_TiketKitModelsTests.framework */; };
+		93ED6AB8017A29EBE310F55D /* Pods_TiketKitModels.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C81F193067260E81007D3B5E /* Pods_TiketKitModels.framework */; };
+		CD099FAD206DE23000234460 /* SearchHotelAreaEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD099FAC206DE23000234460 /* SearchHotelAreaEnvelope.swift */; };
+		CD0B11F120B6458100DC25CE /* CurrencyListEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0B11F020B6458100DC25CE /* CurrencyListEnvelope.swift */; };
 		CD0D68C7205E528D00548BC6 /* TiketKitModels.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD0D68BD205E528D00548BC6 /* TiketKitModels.framework */; };
 		CD0D68CC205E528D00548BC6 /* TiketKitModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D68CB205E528D00548BC6 /* TiketKitModelsTests.swift */; };
 		CD0D68CE205E528D00548BC6 /* TiketKitModels.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0D68C0205E528D00548BC6 /* TiketKitModels.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CD0D6995205E621F00548BC6 /* IgnoreValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D698A205E621300548BC6 /* IgnoreValues.swift */; };
+		CD0D6996205E621F00548BC6 /* MapConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D698B205E621300548BC6 /* MapConst.swift */; };
+		CD0D6997205E621F00548BC6 /* FlatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D698C205E621300548BC6 /* FlatMap.swift */; };
+		CD0D6998205E621F00548BC6 /* SwitchMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D698D205E621300548BC6 /* SwitchMap.swift */; };
+		CD0D6999205E621F00548BC6 /* CKDelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D698E205E621300548BC6 /* CKDelay.swift */; };
+		CD0D699B205E621F00548BC6 /* MergeWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D6990205E621300548BC6 /* MergeWith.swift */; };
+		CD0D699C205E621F00548BC6 /* DemoteErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D6991205E621300548BC6 /* DemoteErrors.swift */; };
+		CD0D699D205E621F00548BC6 /* Rac.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D6992205E621300548BC6 /* Rac.swift */; };
+		CD0D699E205E621F00548BC6 /* TakeWhen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D6993205E621300548BC6 /* TakeWhen.swift */; };
+		CD0D699F205E622300548BC6 /* UISearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D697E205E621300548BC6 /* UISearchBar.swift */; };
+		CD0D69A0205E622300548BC6 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D697F205E621300548BC6 /* UILabel.swift */; };
+		CD0D69A1205E622300548BC6 /* UIActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D6980205E621300548BC6 /* UIActivityIndicator.swift */; };
+		CD0D69A2205E622300548BC6 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D6981205E621300548BC6 /* UITextField.swift */; };
+		CD0D69A3205E622300548BC6 /* UIButtonAssociations.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D6982205E621300548BC6 /* UIButtonAssociations.swift */; };
+		CD0D69A4205E622300548BC6 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D6983205E621300548BC6 /* UIView.swift */; };
+		CD0D69A5205E622300548BC6 /* UIStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D6984205E621300548BC6 /* UIStepper.swift */; };
+		CD0D69A6205E622800548BC6 /* DispatchTimeInterval-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D6986205E621300548BC6 /* DispatchTimeInterval-Extensions.swift */; };
+		CD0D69A7205E622800548BC6 /* LazyMutableProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D6987205E621300548BC6 /* LazyMutableProperty.swift */; };
+		CD0D69A8205E622800548BC6 /* LazyAssociatedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D6988205E621300548BC6 /* LazyAssociatedProperty.swift */; };
+		CD0D69ED205E660A00548BC6 /* UIDeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D69E0205E660900548BC6 /* UIDeviceType.swift */; };
+		CD0D69EE205E660A00548BC6 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D69E1205E660900548BC6 /* Language.swift */; };
+		CD0D69EF205E660A00548BC6 /* DateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D69E2205E660900548BC6 /* DateProtocol.swift */; };
+		CD0D69F0205E660A00548BC6 /* NSHTTPCookieStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D69E3205E660900548BC6 /* NSHTTPCookieStorageType.swift */; };
+		CD0D69F3205E660A00548BC6 /* IsValidEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D69E6205E660900548BC6 /* IsValidEmail.swift */; };
+		CD0D69F4205E660A00548BC6 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D69E7205E660A00548BC6 /* Reachability.swift */; };
+		CD0D69F5205E660A00548BC6 /* Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D69E8205E660A00548BC6 /* Format.swift */; };
+		CD0D69F7205E660A00548BC6 /* NSBundleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D69EA205E660A00548BC6 /* NSBundleType.swift */; };
+		CD0D69F8205E660A00548BC6 /* KeyValueStoreType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D69EB205E660A00548BC6 /* KeyValueStoreType.swift */; };
+		CD0D69F9205E660A00548BC6 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D69EC205E660A00548BC6 /* AppEnvironment.swift */; };
+		CD0D69FB205E683F00548BC6 /* FlightsListContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D69FA205E683F00548BC6 /* FlightsListContentViewModelTests.swift */; };
+		CD0D6A00205E68CE00548BC6 /* TestObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D69FD205E68CE00548BC6 /* TestObserver.swift */; };
+		CD0D6A01205E68CE00548BC6 /* Tuple.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D69FE205E68CE00548BC6 /* Tuple.swift */; };
+		CD0D6A02205E68CE00548BC6 /* SomeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D69FF205E68CE00548BC6 /* SomeError.swift */; };
+		CD0D6A0D205E68FC00548BC6 /* XCTestCase+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D6A04205E68FB00548BC6 /* XCTestCase+Async.swift */; };
+		CD0D6A0E205E68FC00548BC6 /* XCTAssert-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D6A05205E68FB00548BC6 /* XCTAssert-Extensions.swift */; };
+		CD0D6A0F205E68FC00548BC6 /* TraitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D6A06205E68FB00548BC6 /* TraitController.swift */; };
+		CD0D6A10205E68FC00548BC6 /* TestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D6A07205E68FB00548BC6 /* TestCase.swift */; };
+		CD0D6A11205E68FC00548BC6 /* XCTestCase+AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D6A08205E68FB00548BC6 /* XCTestCase+AppEnvironment.swift */; };
+		CD0D6A12205E68FC00548BC6 /* MockBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D6A09205E68FC00548BC6 /* MockBundle.swift */; };
+		CD0D6A13205E68FC00548BC6 /* Event-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D6A0A205E68FC00548BC6 /* Event-Extensions.swift */; };
+		CD0D6A14205E68FC00548BC6 /* Combos.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D6A0B205E68FC00548BC6 /* Combos.swift */; };
+		CD0D6A15205E68FC00548BC6 /* EnvironmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D6A0C205E68FC00548BC6 /* EnvironmentTests.swift */; };
+		CD0F935D2079878A0085B5C8 /* OrderListLenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0F935C2079878A0085B5C8 /* OrderListLenses.swift */; };
+		CD1021F02081E40700F26983 /* CheckoutPageRequestEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1021EF2081E40700F26983 /* CheckoutPageRequestEnvelope.swift */; };
+		CD1022002082049200F26983 /* Values.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1021FF2082049200F26983 /* Values.swift */; };
+		CD10220220820CA600F26983 /* CheckoutLoginCustomerEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD10220120820CA600F26983 /* CheckoutLoginCustomerEnvelope.swift */; };
+		CD102204208211C100F26983 /* CheckoutLoginParamsLenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD102203208211C100F26983 /* CheckoutLoginParamsLenses.swift */; };
+		CD19F10C20B8DE4A0048689A /* TakeUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D698F205E621300548BC6 /* TakeUntil.swift */; };
+		CD52603A2080936F000B2865 /* CheckoutPaymentEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5260392080936F000B2865 /* CheckoutPaymentEnvelope.swift */; };
+		CD54C11B206771DE001A2596 /* String+Whitespace.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD54C11A206771DE001A2596 /* String+Whitespace.swift */; };
+		CD60125620A2834B00CDF272 /* Paginate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D69E9205E660A00548BC6 /* Paginate.swift */; };
+		CD707029209737280073312F /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD707028209737280073312F /* Errors.swift */; };
+		CD82EACE2068ED670006F66C /* FlightOrderEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD82EACD2068ED670006F66C /* FlightOrderEnvelope.swift */; };
+		CD82EAD02068EF300006F66C /* FlightMyOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD82EACF2068EF300006F66C /* FlightMyOrder.swift */; };
+		CD82EAD22068EF5A0006F66C /* FlightOrderData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD82EAD12068EF5A0006F66C /* FlightOrderData.swift */; };
+		CD97290620A14ED400321199 /* HotelResultSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD97290520A14ED400321199 /* HotelResultSamples.swift */; };
+		CD97290820A14EEF00321199 /* OrderDataSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD97290720A14EEF00321199 /* OrderDataSamples.swift */; };
+		CDAC38D52097D21B00B494D7 /* HotelBookingSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAC38D42097D21B00B494D7 /* HotelBookingSummary.swift */; };
+		CDAC38D72097D27400B494D7 /* HotelBookingSummaryLenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAC38D62097D27400B494D7 /* HotelBookingSummaryLenses.swift */; };
+		CDAFFDF320B2155500CA3136 /* LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAFFDF220B2155500CA3136 /* LocalizedString.swift */; };
+		CDB8AB25207B60D100FBCB1A /* AirportResultLenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB8AB24207B60D100FBCB1A /* AirportResultLenses.swift */; };
+		CDB96746205E8A3D00DEE52F /* ClientAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96702205E8A3C00DEE52F /* ClientAuth.swift */; };
+		CDB96747205E8A3D00DEE52F /* TiketToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96703205E8A3C00DEE52F /* TiketToken.swift */; };
+		CDB96748205E8A3D00DEE52F /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96704205E8A3C00DEE52F /* Secrets.swift */; };
+		CDB96749205E8A3D00DEE52F /* TiketServerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96705205E8A3C00DEE52F /* TiketServerConfig.swift */; };
+		CDB9674A205E8A3D00DEE52F /* AddOrderParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96708205E8A3C00DEE52F /* AddOrderParams.swift */; };
+		CDB9674B205E8A3D00DEE52F /* AutocompleteHotelEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96709205E8A3C00DEE52F /* AutocompleteHotelEnvelope.swift */; };
+		CDB9674C205E8A3D00DEE52F /* CheckoutGuestEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9670A205E8A3C00DEE52F /* CheckoutGuestEnvelope.swift */; };
+		CDB9674D205E8A3D00DEE52F /* AvailableRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9670B205E8A3C00DEE52F /* AvailableRoom.swift */; };
+		CDB9674E205E8A3D00DEE52F /* SearchHotelParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9670C205E8A3C00DEE52F /* SearchHotelParams.swift */; };
+		CDB9674F205E8A3D00DEE52F /* HotelPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9670D205E8A3C00DEE52F /* HotelPagination.swift */; };
+		CDB96750205E8A3D00DEE52F /* AddOrderEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9670E205E8A3C00DEE52F /* AddOrderEnvelope.swift */; };
+		CDB96751205E8A3D00DEE52F /* CheckoutGuestParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9670F205E8A3C00DEE52F /* CheckoutGuestParams.swift */; };
+		CDB96752205E8A3D00DEE52F /* SearchHotelEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96710205E8A3C00DEE52F /* SearchHotelEnvelope.swift */; };
+		CDB96753205E8A3D00DEE52F /* HotelResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96711205E8A3C00DEE52F /* HotelResult.swift */; };
+		CDB96754205E8A3D00DEE52F /* HotelDirect.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96712205E8A3C00DEE52F /* HotelDirect.swift */; };
+		CDB96755205E8A3D00DEE52F /* AddOrderFlightEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96714205E8A3C00DEE52F /* AddOrderFlightEnvelope.swift */; };
+		CDB96756205E8A3D00DEE52F /* SearchFlightEnvelopes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96715205E8A3C00DEE52F /* SearchFlightEnvelopes.swift */; };
+		CDB96757205E8A3D00DEE52F /* FlightInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96716205E8A3C00DEE52F /* FlightInfo.swift */; };
+		CDB96758205E8A3D00DEE52F /* Flight.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96717205E8A3D00DEE52F /* Flight.swift */; };
+		CDB96759205E8A3D00DEE52F /* SearchFlightParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96718205E8A3D00DEE52F /* SearchFlightParams.swift */; };
+		CDB9675A205E8A3D00DEE52F /* SearchAirportsEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96719205E8A3D00DEE52F /* SearchAirportsEnvelope.swift */; };
+		CDB9675B205E8A3D00DEE52F /* Airport.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9671A205E8A3D00DEE52F /* Airport.swift */; };
+		CDB9675C205E8A3D00DEE52F /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9671B205E8A3D00DEE52F /* Config.swift */; };
+		CDB9675D205E8A3D00DEE52F /* Diagnostic.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9671C205E8A3D00DEE52F /* Diagnostic.swift */; };
+		CDB9675E205E8A3D00DEE52F /* CurrentBookingHotel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9671E205E8A3D00DEE52F /* CurrentBookingHotel.swift */; };
+		CDB9675F205E8A3D00DEE52F /* CurrentProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9671F205E8A3D00DEE52F /* CurrentProfile.swift */; };
+		CDB96760205E8A3D00DEE52F /* CheckoutHotelCustomerEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96720205E8A3D00DEE52F /* CheckoutHotelCustomerEnvelope.swift */; };
+		CDB96761205E8A3D00DEE52F /* HotelOrderEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96722205E8A3D00DEE52F /* HotelOrderEnvelope.swift */; };
+		CDB96762205E8A3D00DEE52F /* MyOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96723205E8A3D00DEE52F /* MyOrder.swift */; };
+		CDB96763205E8A3D00DEE52F /* OrderData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96724205E8A3D00DEE52F /* OrderData.swift */; };
+		CDB96764205E8A3D00DEE52F /* GetTokenEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96725205E8A3D00DEE52F /* GetTokenEnvelope.swift */; };
+		CDB96765205E8A3D00DEE52F /* ErrorEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96726205E8A3D00DEE52F /* ErrorEnvelope.swift */; };
+		CDB96766205E8A3D00DEE52F /* NSURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96728205E8A3D00DEE52F /* NSURLSession.swift */; };
+		CDB96767205E8A3D00DEE52F /* Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96729205E8A3D00DEE52F /* Decodable.swift */; };
+		CDB96768205E8A3D00DEE52F /* Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9672A205E8A3D00DEE52F /* Method.swift */; };
+		CDB96769205E8A3D00DEE52F /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9672B205E8A3D00DEE52F /* Route.swift */; };
+		CDB9676A205E8A3D00DEE52F /* FlightInfoSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9672D205E8A3D00DEE52F /* FlightInfoSamples.swift */; };
+		CDB9676B205E8A3D00DEE52F /* DiagnosticSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9672E205E8A3D00DEE52F /* DiagnosticSamples.swift */; };
+		CDB9676C205E8A3D00DEE52F /* ConfigSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9672F205E8A3D00DEE52F /* ConfigSamples.swift */; };
+		CDB9676D205E8A3D00DEE52F /* AvailableRoomSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96730205E8A3D00DEE52F /* AvailableRoomSamples.swift */; };
+		CDB9676E205E8A3D00DEE52F /* FlightSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96731205E8A3D00DEE52F /* FlightSamples.swift */; };
+		CDB9676F205E8A3D00DEE52F /* SearchHotelEnvelopeSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96732205E8A3D00DEE52F /* SearchHotelEnvelopeSamples.swift */; };
+		CDB96771205E8A3D00DEE52F /* EncodableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96735205E8A3D00DEE52F /* EncodableType.swift */; };
+		CDB96772205E8A3D00DEE52F /* TiketServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96737205E8A3D00DEE52F /* TiketServiceType.swift */; };
+		CDB96773205E8A3D00DEE52F /* TiketServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96738205E8A3D00DEE52F /* TiketServices.swift */; };
+		CDB96775205E8A3D00DEE52F /* SearchHotelParamsLenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9673C205E8A3D00DEE52F /* SearchHotelParamsLenses.swift */; };
+		CDB96776205E8A3D00DEE52F /* SearchHotelEnvelopeLenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9673D205E8A3D00DEE52F /* SearchHotelEnvelopeLenses.swift */; };
+		CDB96777205E8A3D00DEE52F /* CheckoutGuestParamsLenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9673E205E8A3D00DEE52F /* CheckoutGuestParamsLenses.swift */; };
+		CDB96778205E8A3D00DEE52F /* AvailableRoomLenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9673F205E8A3D00DEE52F /* AvailableRoomLenses.swift */; };
+		CDB96779205E8A3D00DEE52F /* AddOrderFlightLenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96741205E8A3D00DEE52F /* AddOrderFlightLenses.swift */; };
+		CDB9677A205E8A3D00DEE52F /* SearchFlightParamsLenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96742205E8A3D00DEE52F /* SearchFlightParamsLenses.swift */; };
+		CDB9677B205E8A3D00DEE52F /* FlightInfoLenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96743205E8A3D00DEE52F /* FlightInfoLenses.swift */; };
+		CDB9677C205E8A3D00DEE52F /* FlightLenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96744205E8A3D00DEE52F /* FlightLenses.swift */; };
+		CDB9677D205E8A9900DEE52F /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D69E4205E660900548BC6 /* Environment.swift */; };
+		CDB9677F205E9BE800DEE52F /* AppDelegateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D69E5205E660900548BC6 /* AppDelegateViewModel.swift */; };
+		CDDA460020736DFE00844004 /* UISwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDA45FF20736DFE00844004 /* UISwitch.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -23,12 +144,142 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02BE1FD5EA238BD56661AB6E /* Pods-TiketKitModels.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TiketKitModels.release.xcconfig"; path = "../Pods/Target Support Files/Pods-TiketKitModels/Pods-TiketKitModels.release.xcconfig"; sourceTree = "<group>"; };
+		1DDFCCEC09F394FE3F54CCDB /* Pods_TiketKitModels_TiketKitModelsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TiketKitModels_TiketKitModelsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C06D27B990E9B63343519A2 /* Pods-TiketKitModels.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TiketKitModels.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-TiketKitModels/Pods-TiketKitModels.debug.xcconfig"; sourceTree = "<group>"; };
+		38431EB6EEEEB9E68E111AE2 /* Pods-TiketKitModels-TiketKitModelsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TiketKitModels-TiketKitModelsTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-TiketKitModels-TiketKitModelsTests/Pods-TiketKitModels-TiketKitModelsTests.release.xcconfig"; sourceTree = "<group>"; };
+		8EAECC6B7482EB94BA15D21A /* Pods-TiketKitModels-TiketKitModelsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TiketKitModels-TiketKitModelsTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-TiketKitModels-TiketKitModelsTests/Pods-TiketKitModels-TiketKitModelsTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C81F193067260E81007D3B5E /* Pods_TiketKitModels.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TiketKitModels.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD099FAC206DE23000234460 /* SearchHotelAreaEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHotelAreaEnvelope.swift; sourceTree = "<group>"; };
+		CD0B11F020B6458100DC25CE /* CurrencyListEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyListEnvelope.swift; sourceTree = "<group>"; };
+		CD0B76CF205E88980031BB20 /* TiketAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TiketAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD0D68BD205E528D00548BC6 /* TiketKitModels.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TiketKitModels.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD0D68C0205E528D00548BC6 /* TiketKitModels.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TiketKitModels.h; sourceTree = "<group>"; };
 		CD0D68C1205E528D00548BC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CD0D68C6205E528D00548BC6 /* TiketKitModelsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TiketKitModelsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD0D68CB205E528D00548BC6 /* TiketKitModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiketKitModelsTests.swift; sourceTree = "<group>"; };
 		CD0D68CD205E528D00548BC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CD0D697E205E621300548BC6 /* UISearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISearchBar.swift; sourceTree = "<group>"; };
+		CD0D697F205E621300548BC6 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
+		CD0D6980205E621300548BC6 /* UIActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIActivityIndicator.swift; sourceTree = "<group>"; };
+		CD0D6981205E621300548BC6 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
+		CD0D6982205E621300548BC6 /* UIButtonAssociations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonAssociations.swift; sourceTree = "<group>"; };
+		CD0D6983205E621300548BC6 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		CD0D6984205E621300548BC6 /* UIStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStepper.swift; sourceTree = "<group>"; };
+		CD0D6986205E621300548BC6 /* DispatchTimeInterval-Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchTimeInterval-Extensions.swift"; sourceTree = "<group>"; };
+		CD0D6987205E621300548BC6 /* LazyMutableProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyMutableProperty.swift; sourceTree = "<group>"; };
+		CD0D6988205E621300548BC6 /* LazyAssociatedProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyAssociatedProperty.swift; sourceTree = "<group>"; };
+		CD0D698A205E621300548BC6 /* IgnoreValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoreValues.swift; sourceTree = "<group>"; };
+		CD0D698B205E621300548BC6 /* MapConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConst.swift; sourceTree = "<group>"; };
+		CD0D698C205E621300548BC6 /* FlatMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatMap.swift; sourceTree = "<group>"; };
+		CD0D698D205E621300548BC6 /* SwitchMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchMap.swift; sourceTree = "<group>"; };
+		CD0D698E205E621300548BC6 /* CKDelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKDelay.swift; sourceTree = "<group>"; };
+		CD0D698F205E621300548BC6 /* TakeUntil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeUntil.swift; sourceTree = "<group>"; };
+		CD0D6990205E621300548BC6 /* MergeWith.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeWith.swift; sourceTree = "<group>"; };
+		CD0D6991205E621300548BC6 /* DemoteErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoteErrors.swift; sourceTree = "<group>"; };
+		CD0D6992205E621300548BC6 /* Rac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rac.swift; sourceTree = "<group>"; };
+		CD0D6993205E621300548BC6 /* TakeWhen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeWhen.swift; sourceTree = "<group>"; };
+		CD0D69DD205E65CB00548BC6 /* FlightsListContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightsListContentViewModel.swift; sourceTree = "<group>"; };
+		CD0D69E0205E660900548BC6 /* UIDeviceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIDeviceType.swift; path = ../../../TiketReactions/Basics/UIDeviceType.swift; sourceTree = "<group>"; };
+		CD0D69E1205E660900548BC6 /* Language.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Language.swift; path = ../../../TiketReactions/Basics/Language.swift; sourceTree = "<group>"; };
+		CD0D69E2205E660900548BC6 /* DateProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateProtocol.swift; path = ../../../TiketReactions/Basics/DateProtocol.swift; sourceTree = "<group>"; };
+		CD0D69E3205E660900548BC6 /* NSHTTPCookieStorageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSHTTPCookieStorageType.swift; path = ../../../TiketReactions/Basics/NSHTTPCookieStorageType.swift; sourceTree = "<group>"; };
+		CD0D69E4205E660900548BC6 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Environment.swift; path = ../../../TiketReactions/Basics/Environment.swift; sourceTree = "<group>"; };
+		CD0D69E5205E660900548BC6 /* AppDelegateViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegateViewModel.swift; path = ../../../TiketReactions/Basics/AppDelegateViewModel.swift; sourceTree = "<group>"; };
+		CD0D69E6205E660900548BC6 /* IsValidEmail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IsValidEmail.swift; path = ../../../TiketReactions/Basics/IsValidEmail.swift; sourceTree = "<group>"; };
+		CD0D69E7205E660A00548BC6 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = ../../../TiketReactions/Basics/Reachability.swift; sourceTree = "<group>"; };
+		CD0D69E8205E660A00548BC6 /* Format.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Format.swift; path = ../../../TiketReactions/Basics/Format.swift; sourceTree = "<group>"; };
+		CD0D69E9205E660A00548BC6 /* Paginate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Paginate.swift; path = ../../../TiketReactions/Basics/Paginate.swift; sourceTree = "<group>"; };
+		CD0D69EA205E660A00548BC6 /* NSBundleType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSBundleType.swift; path = ../../../TiketReactions/Basics/NSBundleType.swift; sourceTree = "<group>"; };
+		CD0D69EB205E660A00548BC6 /* KeyValueStoreType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeyValueStoreType.swift; path = ../../../TiketReactions/Basics/KeyValueStoreType.swift; sourceTree = "<group>"; };
+		CD0D69EC205E660A00548BC6 /* AppEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppEnvironment.swift; path = ../../../TiketReactions/Basics/AppEnvironment.swift; sourceTree = "<group>"; };
+		CD0D69FA205E683F00548BC6 /* FlightsListContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightsListContentViewModelTests.swift; sourceTree = "<group>"; };
+		CD0D69FD205E68CE00548BC6 /* TestObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestObserver.swift; path = ../../../TiketReactionsTests/ReactiveTestHelpers/TestObserver.swift; sourceTree = "<group>"; };
+		CD0D69FE205E68CE00548BC6 /* Tuple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tuple.swift; path = ../../../TiketReactionsTests/ReactiveTestHelpers/Tuple.swift; sourceTree = "<group>"; };
+		CD0D69FF205E68CE00548BC6 /* SomeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SomeError.swift; path = ../../../TiketReactionsTests/ReactiveTestHelpers/SomeError.swift; sourceTree = "<group>"; };
+		CD0D6A04205E68FB00548BC6 /* XCTestCase+Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "XCTestCase+Async.swift"; path = "../../../TiketReactionsTests/BasicsTests/XCTestCase+Async.swift"; sourceTree = "<group>"; };
+		CD0D6A05205E68FB00548BC6 /* XCTAssert-Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "XCTAssert-Extensions.swift"; path = "../../../TiketReactionsTests/BasicsTests/XCTAssert-Extensions.swift"; sourceTree = "<group>"; };
+		CD0D6A06205E68FB00548BC6 /* TraitController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TraitController.swift; path = ../../../TiketReactionsTests/BasicsTests/TraitController.swift; sourceTree = "<group>"; };
+		CD0D6A07205E68FB00548BC6 /* TestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestCase.swift; path = ../../../TiketReactionsTests/BasicsTests/TestCase.swift; sourceTree = "<group>"; };
+		CD0D6A08205E68FB00548BC6 /* XCTestCase+AppEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "XCTestCase+AppEnvironment.swift"; path = "../../../TiketReactionsTests/BasicsTests/XCTestCase+AppEnvironment.swift"; sourceTree = "<group>"; };
+		CD0D6A09205E68FC00548BC6 /* MockBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockBundle.swift; path = ../../../TiketReactionsTests/BasicsTests/MockBundle.swift; sourceTree = "<group>"; };
+		CD0D6A0A205E68FC00548BC6 /* Event-Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Event-Extensions.swift"; path = "../../../TiketReactionsTests/BasicsTests/Event-Extensions.swift"; sourceTree = "<group>"; };
+		CD0D6A0B205E68FC00548BC6 /* Combos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Combos.swift; path = ../../../TiketReactionsTests/BasicsTests/Combos.swift; sourceTree = "<group>"; };
+		CD0D6A0C205E68FC00548BC6 /* EnvironmentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EnvironmentTests.swift; path = ../../../TiketReactionsTests/BasicsTests/EnvironmentTests.swift; sourceTree = "<group>"; };
+		CD0F935C2079878A0085B5C8 /* OrderListLenses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListLenses.swift; sourceTree = "<group>"; };
+		CD1021EF2081E40700F26983 /* CheckoutPageRequestEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutPageRequestEnvelope.swift; sourceTree = "<group>"; };
+		CD1021FF2082049200F26983 /* Values.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Values.swift; sourceTree = "<group>"; };
+		CD10220120820CA600F26983 /* CheckoutLoginCustomerEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutLoginCustomerEnvelope.swift; sourceTree = "<group>"; };
+		CD102203208211C100F26983 /* CheckoutLoginParamsLenses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutLoginParamsLenses.swift; sourceTree = "<group>"; };
+		CD5260392080936F000B2865 /* CheckoutPaymentEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutPaymentEnvelope.swift; sourceTree = "<group>"; tabWidth = 5; };
+		CD54C11A206771DE001A2596 /* String+Whitespace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Whitespace.swift"; sourceTree = "<group>"; };
+		CD707028209737280073312F /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		CD82EACD2068ED670006F66C /* FlightOrderEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightOrderEnvelope.swift; sourceTree = "<group>"; };
+		CD82EACF2068EF300006F66C /* FlightMyOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightMyOrder.swift; sourceTree = "<group>"; };
+		CD82EAD12068EF5A0006F66C /* FlightOrderData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightOrderData.swift; sourceTree = "<group>"; };
+		CD97290520A14ED400321199 /* HotelResultSamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelResultSamples.swift; sourceTree = "<group>"; };
+		CD97290720A14EEF00321199 /* OrderDataSamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDataSamples.swift; sourceTree = "<group>"; };
+		CDAC38D42097D21B00B494D7 /* HotelBookingSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelBookingSummary.swift; sourceTree = "<group>"; };
+		CDAC38D62097D27400B494D7 /* HotelBookingSummaryLenses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelBookingSummaryLenses.swift; sourceTree = "<group>"; };
+		CDAFFDF220B2155500CA3136 /* LocalizedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedString.swift; sourceTree = "<group>"; };
+		CDB8AB24207B60D100FBCB1A /* AirportResultLenses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirportResultLenses.swift; sourceTree = "<group>"; };
+		CDB96700205E8A3C00DEE52F /* FakeServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeServices.swift; sourceTree = "<group>"; };
+		CDB96702205E8A3C00DEE52F /* ClientAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientAuth.swift; sourceTree = "<group>"; };
+		CDB96703205E8A3C00DEE52F /* TiketToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TiketToken.swift; sourceTree = "<group>"; };
+		CDB96704205E8A3C00DEE52F /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		CDB96705205E8A3C00DEE52F /* TiketServerConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TiketServerConfig.swift; sourceTree = "<group>"; };
+		CDB96708205E8A3C00DEE52F /* AddOrderParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrderParams.swift; sourceTree = "<group>"; };
+		CDB96709205E8A3C00DEE52F /* AutocompleteHotelEnvelope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteHotelEnvelope.swift; sourceTree = "<group>"; };
+		CDB9670A205E8A3C00DEE52F /* CheckoutGuestEnvelope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutGuestEnvelope.swift; sourceTree = "<group>"; };
+		CDB9670B205E8A3C00DEE52F /* AvailableRoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableRoom.swift; sourceTree = "<group>"; };
+		CDB9670C205E8A3C00DEE52F /* SearchHotelParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchHotelParams.swift; sourceTree = "<group>"; };
+		CDB9670D205E8A3C00DEE52F /* HotelPagination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotelPagination.swift; sourceTree = "<group>"; };
+		CDB9670E205E8A3C00DEE52F /* AddOrderEnvelope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrderEnvelope.swift; sourceTree = "<group>"; };
+		CDB9670F205E8A3C00DEE52F /* CheckoutGuestParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutGuestParams.swift; sourceTree = "<group>"; };
+		CDB96710205E8A3C00DEE52F /* SearchHotelEnvelope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchHotelEnvelope.swift; sourceTree = "<group>"; };
+		CDB96711205E8A3C00DEE52F /* HotelResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotelResult.swift; sourceTree = "<group>"; };
+		CDB96712205E8A3C00DEE52F /* HotelDirect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotelDirect.swift; sourceTree = "<group>"; };
+		CDB96714205E8A3C00DEE52F /* AddOrderFlightEnvelope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrderFlightEnvelope.swift; sourceTree = "<group>"; };
+		CDB96715205E8A3C00DEE52F /* SearchFlightEnvelopes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFlightEnvelopes.swift; sourceTree = "<group>"; };
+		CDB96716205E8A3C00DEE52F /* FlightInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightInfo.swift; sourceTree = "<group>"; };
+		CDB96717205E8A3D00DEE52F /* Flight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Flight.swift; sourceTree = "<group>"; };
+		CDB96718205E8A3D00DEE52F /* SearchFlightParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFlightParams.swift; sourceTree = "<group>"; };
+		CDB96719205E8A3D00DEE52F /* SearchAirportsEnvelope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchAirportsEnvelope.swift; sourceTree = "<group>"; };
+		CDB9671A205E8A3D00DEE52F /* Airport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Airport.swift; sourceTree = "<group>"; };
+		CDB9671B205E8A3D00DEE52F /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		CDB9671C205E8A3D00DEE52F /* Diagnostic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Diagnostic.swift; sourceTree = "<group>"; };
+		CDB9671E205E8A3D00DEE52F /* CurrentBookingHotel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentBookingHotel.swift; sourceTree = "<group>"; };
+		CDB9671F205E8A3D00DEE52F /* CurrentProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentProfile.swift; sourceTree = "<group>"; };
+		CDB96720205E8A3D00DEE52F /* CheckoutHotelCustomerEnvelope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutHotelCustomerEnvelope.swift; sourceTree = "<group>"; };
+		CDB96722205E8A3D00DEE52F /* HotelOrderEnvelope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotelOrderEnvelope.swift; sourceTree = "<group>"; };
+		CDB96723205E8A3D00DEE52F /* MyOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyOrder.swift; sourceTree = "<group>"; };
+		CDB96724205E8A3D00DEE52F /* OrderData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderData.swift; sourceTree = "<group>"; };
+		CDB96725205E8A3D00DEE52F /* GetTokenEnvelope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetTokenEnvelope.swift; sourceTree = "<group>"; };
+		CDB96726205E8A3D00DEE52F /* ErrorEnvelope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorEnvelope.swift; sourceTree = "<group>"; };
+		CDB96728205E8A3D00DEE52F /* NSURLSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSession.swift; sourceTree = "<group>"; };
+		CDB96729205E8A3D00DEE52F /* Decodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Decodable.swift; sourceTree = "<group>"; };
+		CDB9672A205E8A3D00DEE52F /* Method.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Method.swift; sourceTree = "<group>"; };
+		CDB9672B205E8A3D00DEE52F /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		CDB9672D205E8A3D00DEE52F /* FlightInfoSamples.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightInfoSamples.swift; sourceTree = "<group>"; };
+		CDB9672E205E8A3D00DEE52F /* DiagnosticSamples.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiagnosticSamples.swift; sourceTree = "<group>"; };
+		CDB9672F205E8A3D00DEE52F /* ConfigSamples.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigSamples.swift; sourceTree = "<group>"; };
+		CDB96730205E8A3D00DEE52F /* AvailableRoomSamples.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableRoomSamples.swift; sourceTree = "<group>"; };
+		CDB96731205E8A3D00DEE52F /* FlightSamples.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightSamples.swift; sourceTree = "<group>"; };
+		CDB96732205E8A3D00DEE52F /* SearchHotelEnvelopeSamples.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchHotelEnvelopeSamples.swift; sourceTree = "<group>"; };
+		CDB96733205E8A3D00DEE52F /* HotelDirectSamples.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotelDirectSamples.swift; sourceTree = "<group>"; };
+		CDB96735205E8A3D00DEE52F /* EncodableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncodableType.swift; sourceTree = "<group>"; };
+		CDB96737205E8A3D00DEE52F /* TiketServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TiketServiceType.swift; sourceTree = "<group>"; };
+		CDB96738205E8A3D00DEE52F /* TiketServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TiketServices.swift; sourceTree = "<group>"; };
+		CDB96739205E8A3D00DEE52F /* FakeTiketServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeTiketServices.swift; sourceTree = "<group>"; };
+		CDB9673C205E8A3D00DEE52F /* SearchHotelParamsLenses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchHotelParamsLenses.swift; sourceTree = "<group>"; };
+		CDB9673D205E8A3D00DEE52F /* SearchHotelEnvelopeLenses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchHotelEnvelopeLenses.swift; sourceTree = "<group>"; };
+		CDB9673E205E8A3D00DEE52F /* CheckoutGuestParamsLenses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutGuestParamsLenses.swift; sourceTree = "<group>"; };
+		CDB9673F205E8A3D00DEE52F /* AvailableRoomLenses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableRoomLenses.swift; sourceTree = "<group>"; };
+		CDB96741205E8A3D00DEE52F /* AddOrderFlightLenses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrderFlightLenses.swift; sourceTree = "<group>"; };
+		CDB96742205E8A3D00DEE52F /* SearchFlightParamsLenses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFlightParamsLenses.swift; sourceTree = "<group>"; };
+		CDB96743205E8A3D00DEE52F /* FlightInfoLenses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightInfoLenses.swift; sourceTree = "<group>"; };
+		CDB96744205E8A3D00DEE52F /* FlightLenses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightLenses.swift; sourceTree = "<group>"; };
+		CDDA45FF20736DFE00844004 /* UISwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISwitch.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +287,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93ED6AB8017A29EBE310F55D /* Pods_TiketKitModels.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,18 +296,42 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD0D68C7205E528D00548BC6 /* TiketKitModels.framework in Frameworks */,
+				8B1DD59241640B8E4EF278F5 /* Pods_TiketKitModels_TiketKitModelsTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		51FB8E4F37FDBE1F2DCA7DE6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2C06D27B990E9B63343519A2 /* Pods-TiketKitModels.debug.xcconfig */,
+				02BE1FD5EA238BD56661AB6E /* Pods-TiketKitModels.release.xcconfig */,
+				8EAECC6B7482EB94BA15D21A /* Pods-TiketKitModels-TiketKitModelsTests.debug.xcconfig */,
+				38431EB6EEEEB9E68E111AE2 /* Pods-TiketKitModels-TiketKitModelsTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		C29A1BC8353C4773600DAD04 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CD0B76CF205E88980031BB20 /* TiketAPI.framework */,
+				C81F193067260E81007D3B5E /* Pods_TiketKitModels.framework */,
+				1DDFCCEC09F394FE3F54CCDB /* Pods_TiketKitModels_TiketKitModelsTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CD0D68B3205E528D00548BC6 = {
 			isa = PBXGroup;
 			children = (
 				CD0D68BF205E528D00548BC6 /* TiketKitModels */,
 				CD0D68CA205E528D00548BC6 /* TiketKitModelsTests */,
 				CD0D68BE205E528D00548BC6 /* Products */,
+				51FB8E4F37FDBE1F2DCA7DE6 /* Pods */,
+				C29A1BC8353C4773600DAD04 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,6 +347,10 @@
 		CD0D68BF205E528D00548BC6 /* TiketKitModels */ = {
 			isa = PBXGroup;
 			children = (
+				CDB966FF205E8A3C00DEE52F /* API */,
+				CD0D69DF205E65F900548BC6 /* Environments */,
+				CD0D69D7205E654000548BC6 /* ViewModels */,
+				CD0D6994205E621300548BC6 /* Reactive-Extensions */,
 				CD0D68C0205E528D00548BC6 /* TiketKitModels.h */,
 				CD0D68C1205E528D00548BC6 /* Info.plist */,
 			);
@@ -80,10 +360,353 @@
 		CD0D68CA205E528D00548BC6 /* TiketKitModelsTests */ = {
 			isa = PBXGroup;
 			children = (
+				CD0D6A03205E68F000548BC6 /* LibraryTests */,
+				CD0D69FC205E68C300548BC6 /* ReactiveTestHelpers */,
 				CD0D68CB205E528D00548BC6 /* TiketKitModelsTests.swift */,
 				CD0D68CD205E528D00548BC6 /* Info.plist */,
+				CD0D69FA205E683F00548BC6 /* FlightsListContentViewModelTests.swift */,
 			);
 			path = TiketKitModelsTests;
+			sourceTree = "<group>";
+		};
+		CD0D6985205E621300548BC6 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				CD0D697E205E621300548BC6 /* UISearchBar.swift */,
+				CD0D697F205E621300548BC6 /* UILabel.swift */,
+				CD0D6980205E621300548BC6 /* UIActivityIndicator.swift */,
+				CD0D6981205E621300548BC6 /* UITextField.swift */,
+				CD0D6982205E621300548BC6 /* UIButtonAssociations.swift */,
+				CD0D6983205E621300548BC6 /* UIView.swift */,
+				CD0D6984205E621300548BC6 /* UIStepper.swift */,
+				CDDA45FF20736DFE00844004 /* UISwitch.swift */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		CD0D6989205E621300548BC6 /* helpers */ = {
+			isa = PBXGroup;
+			children = (
+				CD0D6986205E621300548BC6 /* DispatchTimeInterval-Extensions.swift */,
+				CD0D6987205E621300548BC6 /* LazyMutableProperty.swift */,
+				CD0D6988205E621300548BC6 /* LazyAssociatedProperty.swift */,
+			);
+			path = helpers;
+			sourceTree = "<group>";
+		};
+		CD0D6994205E621300548BC6 /* Reactive-Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CD0D6985205E621300548BC6 /* UIKit */,
+				CD0D6989205E621300548BC6 /* helpers */,
+				CD0D698A205E621300548BC6 /* IgnoreValues.swift */,
+				CD0D698B205E621300548BC6 /* MapConst.swift */,
+				CD0D698C205E621300548BC6 /* FlatMap.swift */,
+				CD0D698D205E621300548BC6 /* SwitchMap.swift */,
+				CD0D698E205E621300548BC6 /* CKDelay.swift */,
+				CD0D698F205E621300548BC6 /* TakeUntil.swift */,
+				CD0D6990205E621300548BC6 /* MergeWith.swift */,
+				CD0D6991205E621300548BC6 /* DemoteErrors.swift */,
+				CD0D6992205E621300548BC6 /* Rac.swift */,
+				CD0D6993205E621300548BC6 /* TakeWhen.swift */,
+				CD1021FF2082049200F26983 /* Values.swift */,
+				CD707028209737280073312F /* Errors.swift */,
+			);
+			path = "Reactive-Extensions";
+			sourceTree = "<group>";
+		};
+		CD0D69D7205E654000548BC6 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				CD0D69DC205E658D00548BC6 /* FlightDirects */,
+				CD0D69DB205E657B00548BC6 /* FlightResults */,
+				CD0D69DA205E656F00548BC6 /* FlightForm */,
+				CD0D69D9205E655F00548BC6 /* HotelResults */,
+				CD0D69D8205E654C00548BC6 /* HotelForm */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		CD0D69D8205E654C00548BC6 /* HotelForm */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HotelForm;
+			sourceTree = "<group>";
+		};
+		CD0D69D9205E655F00548BC6 /* HotelResults */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HotelResults;
+			sourceTree = "<group>";
+		};
+		CD0D69DA205E656F00548BC6 /* FlightForm */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FlightForm;
+			sourceTree = "<group>";
+		};
+		CD0D69DB205E657B00548BC6 /* FlightResults */ = {
+			isa = PBXGroup;
+			children = (
+				CD0D69DD205E65CB00548BC6 /* FlightsListContentViewModel.swift */,
+			);
+			path = FlightResults;
+			sourceTree = "<group>";
+		};
+		CD0D69DC205E658D00548BC6 /* FlightDirects */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FlightDirects;
+			sourceTree = "<group>";
+		};
+		CD0D69DF205E65F900548BC6 /* Environments */ = {
+			isa = PBXGroup;
+			children = (
+				CD0D69E4205E660900548BC6 /* Environment.swift */,
+				CD0D69EB205E660A00548BC6 /* KeyValueStoreType.swift */,
+				CD0D69EA205E660A00548BC6 /* NSBundleType.swift */,
+				CD0D69E7205E660A00548BC6 /* Reachability.swift */,
+				CD0D69E1205E660900548BC6 /* Language.swift */,
+				CD0D69EC205E660A00548BC6 /* AppEnvironment.swift */,
+				CD0D69E2205E660900548BC6 /* DateProtocol.swift */,
+				CD0D69E0205E660900548BC6 /* UIDeviceType.swift */,
+				CD0D69E3205E660900548BC6 /* NSHTTPCookieStorageType.swift */,
+				CD0D69E5205E660900548BC6 /* AppDelegateViewModel.swift */,
+				CD0D69E9205E660A00548BC6 /* Paginate.swift */,
+				CD0D69E6205E660900548BC6 /* IsValidEmail.swift */,
+				CD0D69E8205E660A00548BC6 /* Format.swift */,
+				CD54C11A206771DE001A2596 /* String+Whitespace.swift */,
+				CDAFFDF220B2155500CA3136 /* LocalizedString.swift */,
+			);
+			path = Environments;
+			sourceTree = "<group>";
+		};
+		CD0D69FC205E68C300548BC6 /* ReactiveTestHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				CD0D69FD205E68CE00548BC6 /* TestObserver.swift */,
+				CD0D69FF205E68CE00548BC6 /* SomeError.swift */,
+				CD0D69FE205E68CE00548BC6 /* Tuple.swift */,
+			);
+			path = ReactiveTestHelpers;
+			sourceTree = "<group>";
+		};
+		CD0D6A03205E68F000548BC6 /* LibraryTests */ = {
+			isa = PBXGroup;
+			children = (
+				CD0D6A04205E68FB00548BC6 /* XCTestCase+Async.swift */,
+				CD0D6A0C205E68FC00548BC6 /* EnvironmentTests.swift */,
+				CD0D6A0B205E68FC00548BC6 /* Combos.swift */,
+				CD0D6A06205E68FB00548BC6 /* TraitController.swift */,
+				CD0D6A08205E68FB00548BC6 /* XCTestCase+AppEnvironment.swift */,
+				CD0D6A07205E68FB00548BC6 /* TestCase.swift */,
+				CD0D6A09205E68FC00548BC6 /* MockBundle.swift */,
+				CD0D6A0A205E68FC00548BC6 /* Event-Extensions.swift */,
+				CD0D6A05205E68FB00548BC6 /* XCTAssert-Extensions.swift */,
+			);
+			path = LibraryTests;
+			sourceTree = "<group>";
+		};
+		CD1021EE2081E3F700F26983 /* Checkout */ = {
+			isa = PBXGroup;
+			children = (
+				CD5260392080936F000B2865 /* CheckoutPaymentEnvelope.swift */,
+				CD1021EF2081E40700F26983 /* CheckoutPageRequestEnvelope.swift */,
+				CD10220120820CA600F26983 /* CheckoutLoginCustomerEnvelope.swift */,
+			);
+			path = Checkout;
+			sourceTree = "<group>";
+		};
+		CD82EACC2068ED550006F66C /* FlightOrders */ = {
+			isa = PBXGroup;
+			children = (
+				CD82EACD2068ED670006F66C /* FlightOrderEnvelope.swift */,
+				CD82EACF2068EF300006F66C /* FlightMyOrder.swift */,
+				CD82EAD12068EF5A0006F66C /* FlightOrderData.swift */,
+			);
+			path = FlightOrders;
+			sourceTree = "<group>";
+		};
+		CDB966FF205E8A3C00DEE52F /* API */ = {
+			isa = PBXGroup;
+			children = (
+				CDB96700205E8A3C00DEE52F /* FakeServices.swift */,
+				CDB96701205E8A3C00DEE52F /* Bases */,
+				CDB96706205E8A3C00DEE52F /* Models */,
+				CDB96727205E8A3D00DEE52F /* extensions */,
+				CDB9672C205E8A3D00DEE52F /* Samples */,
+				CDB96734205E8A3D00DEE52F /* lib */,
+				CDB96736205E8A3D00DEE52F /* Services */,
+				CDB9673A205E8A3D00DEE52F /* Lenses */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		CDB96701205E8A3C00DEE52F /* Bases */ = {
+			isa = PBXGroup;
+			children = (
+				CDB96702205E8A3C00DEE52F /* ClientAuth.swift */,
+				CDB96703205E8A3C00DEE52F /* TiketToken.swift */,
+				CDB96704205E8A3C00DEE52F /* Secrets.swift */,
+				CDB96705205E8A3C00DEE52F /* TiketServerConfig.swift */,
+			);
+			path = Bases;
+			sourceTree = "<group>";
+		};
+		CDB96706205E8A3C00DEE52F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CD1021EE2081E3F700F26983 /* Checkout */,
+				CD82EACC2068ED550006F66C /* FlightOrders */,
+				CDB96707205E8A3C00DEE52F /* Hotel */,
+				CDB96713205E8A3C00DEE52F /* Flight */,
+				CDB9671B205E8A3D00DEE52F /* Config.swift */,
+				CDB9671C205E8A3D00DEE52F /* Diagnostic.swift */,
+				CDB9671D205E8A3D00DEE52F /* Profile */,
+				CDB96721205E8A3D00DEE52F /* HotelOrders */,
+				CDB96725205E8A3D00DEE52F /* GetTokenEnvelope.swift */,
+				CDB96726205E8A3D00DEE52F /* ErrorEnvelope.swift */,
+				CD0B11F020B6458100DC25CE /* CurrencyListEnvelope.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		CDB96707205E8A3C00DEE52F /* Hotel */ = {
+			isa = PBXGroup;
+			children = (
+				CDB96708205E8A3C00DEE52F /* AddOrderParams.swift */,
+				CDB96709205E8A3C00DEE52F /* AutocompleteHotelEnvelope.swift */,
+				CDB9670A205E8A3C00DEE52F /* CheckoutGuestEnvelope.swift */,
+				CDB9670B205E8A3C00DEE52F /* AvailableRoom.swift */,
+				CDB9670C205E8A3C00DEE52F /* SearchHotelParams.swift */,
+				CDB9670D205E8A3C00DEE52F /* HotelPagination.swift */,
+				CDB9670E205E8A3C00DEE52F /* AddOrderEnvelope.swift */,
+				CDB9670F205E8A3C00DEE52F /* CheckoutGuestParams.swift */,
+				CDB96710205E8A3C00DEE52F /* SearchHotelEnvelope.swift */,
+				CDB96711205E8A3C00DEE52F /* HotelResult.swift */,
+				CDB96712205E8A3C00DEE52F /* HotelDirect.swift */,
+				CD099FAC206DE23000234460 /* SearchHotelAreaEnvelope.swift */,
+				CDAC38D42097D21B00B494D7 /* HotelBookingSummary.swift */,
+				CDB96720205E8A3D00DEE52F /* CheckoutHotelCustomerEnvelope.swift */,
+			);
+			path = Hotel;
+			sourceTree = "<group>";
+		};
+		CDB96713205E8A3C00DEE52F /* Flight */ = {
+			isa = PBXGroup;
+			children = (
+				CDB96714205E8A3C00DEE52F /* AddOrderFlightEnvelope.swift */,
+				CDB96715205E8A3C00DEE52F /* SearchFlightEnvelopes.swift */,
+				CDB96716205E8A3C00DEE52F /* FlightInfo.swift */,
+				CDB96717205E8A3D00DEE52F /* Flight.swift */,
+				CDB96718205E8A3D00DEE52F /* SearchFlightParams.swift */,
+				CDB96719205E8A3D00DEE52F /* SearchAirportsEnvelope.swift */,
+				CDB9671A205E8A3D00DEE52F /* Airport.swift */,
+			);
+			path = Flight;
+			sourceTree = "<group>";
+		};
+		CDB9671D205E8A3D00DEE52F /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				CDB9671E205E8A3D00DEE52F /* CurrentBookingHotel.swift */,
+				CDB9671F205E8A3D00DEE52F /* CurrentProfile.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		CDB96721205E8A3D00DEE52F /* HotelOrders */ = {
+			isa = PBXGroup;
+			children = (
+				CDB96722205E8A3D00DEE52F /* HotelOrderEnvelope.swift */,
+				CDB96723205E8A3D00DEE52F /* MyOrder.swift */,
+				CDB96724205E8A3D00DEE52F /* OrderData.swift */,
+			);
+			path = HotelOrders;
+			sourceTree = "<group>";
+		};
+		CDB96727205E8A3D00DEE52F /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CDB96728205E8A3D00DEE52F /* NSURLSession.swift */,
+				CDB96729205E8A3D00DEE52F /* Decodable.swift */,
+				CDB9672A205E8A3D00DEE52F /* Method.swift */,
+				CDB9672B205E8A3D00DEE52F /* Route.swift */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
+		CDB9672C205E8A3D00DEE52F /* Samples */ = {
+			isa = PBXGroup;
+			children = (
+				CDB9672D205E8A3D00DEE52F /* FlightInfoSamples.swift */,
+				CDB9672E205E8A3D00DEE52F /* DiagnosticSamples.swift */,
+				CDB9672F205E8A3D00DEE52F /* ConfigSamples.swift */,
+				CDB96730205E8A3D00DEE52F /* AvailableRoomSamples.swift */,
+				CDB96731205E8A3D00DEE52F /* FlightSamples.swift */,
+				CDB96732205E8A3D00DEE52F /* SearchHotelEnvelopeSamples.swift */,
+				CDB96733205E8A3D00DEE52F /* HotelDirectSamples.swift */,
+				CD97290520A14ED400321199 /* HotelResultSamples.swift */,
+				CD97290720A14EEF00321199 /* OrderDataSamples.swift */,
+			);
+			path = Samples;
+			sourceTree = "<group>";
+		};
+		CDB96734205E8A3D00DEE52F /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				CDB96735205E8A3D00DEE52F /* EncodableType.swift */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		CDB96736205E8A3D00DEE52F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				CDB96737205E8A3D00DEE52F /* TiketServiceType.swift */,
+				CDB96738205E8A3D00DEE52F /* TiketServices.swift */,
+				CDB96739205E8A3D00DEE52F /* FakeTiketServices.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		CDB9673A205E8A3D00DEE52F /* Lenses */ = {
+			isa = PBXGroup;
+			children = (
+				CDB9673B205E8A3D00DEE52F /* Hotel */,
+				CDB96740205E8A3D00DEE52F /* Flight */,
+				CDB96742205E8A3D00DEE52F /* SearchFlightParamsLenses.swift */,
+				CDB96743205E8A3D00DEE52F /* FlightInfoLenses.swift */,
+				CDB96744205E8A3D00DEE52F /* FlightLenses.swift */,
+				CD0F935C2079878A0085B5C8 /* OrderListLenses.swift */,
+			);
+			path = Lenses;
+			sourceTree = "<group>";
+		};
+		CDB9673B205E8A3D00DEE52F /* Hotel */ = {
+			isa = PBXGroup;
+			children = (
+				CDB9673E205E8A3D00DEE52F /* CheckoutGuestParamsLenses.swift */,
+				CDB9673C205E8A3D00DEE52F /* SearchHotelParamsLenses.swift */,
+				CDB9673D205E8A3D00DEE52F /* SearchHotelEnvelopeLenses.swift */,
+				CDB9673F205E8A3D00DEE52F /* AvailableRoomLenses.swift */,
+				CD102203208211C100F26983 /* CheckoutLoginParamsLenses.swift */,
+				CDAC38D62097D27400B494D7 /* HotelBookingSummaryLenses.swift */,
+			);
+			path = Hotel;
+			sourceTree = "<group>";
+		};
+		CDB96740205E8A3D00DEE52F /* Flight */ = {
+			isa = PBXGroup;
+			children = (
+				CDB96741205E8A3D00DEE52F /* AddOrderFlightLenses.swift */,
+				CDB8AB24207B60D100FBCB1A /* AirportResultLenses.swift */,
+			);
+			path = Flight;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -104,6 +727,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD0D68D1205E528D00548BC6 /* Build configuration list for PBXNativeTarget "TiketKitModels" */;
 			buildPhases = (
+				B5878B0C6B8AC499311A3DF2 /* [CP] Check Pods Manifest.lock */,
 				CD0D68B8205E528D00548BC6 /* Sources */,
 				CD0D68B9205E528D00548BC6 /* Frameworks */,
 				CD0D68BA205E528D00548BC6 /* Headers */,
@@ -122,9 +746,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD0D68D4205E528D00548BC6 /* Build configuration list for PBXNativeTarget "TiketKitModelsTests" */;
 			buildPhases = (
+				12904F224B18C866B75C9102 /* [CP] Check Pods Manifest.lock */,
 				CD0D68C2205E528D00548BC6 /* Sources */,
 				CD0D68C3205E528D00548BC6 /* Frameworks */,
 				CD0D68C4205E528D00548BC6 /* Resources */,
+				24A7BCD74EAAC8136E9DE7D3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -191,11 +817,188 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		12904F224B18C866B75C9102 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TiketKitModels-TiketKitModelsTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		24A7BCD74EAAC8136E9DE7D3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/../Pods/Target Support Files/Pods-TiketKitModels-TiketKitModelsTests/Pods-TiketKitModels-TiketKitModelsTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Argo/Argo.framework",
+				"${BUILT_PRODUCTS_DIR}/Curry/Curry.framework",
+				"${BUILT_PRODUCTS_DIR}/Kickstarter-Prelude/Prelude.framework",
+				"${BUILT_PRODUCTS_DIR}/PhoneNumberKit/PhoneNumberKit.framework",
+				"${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
+				"${BUILT_PRODUCTS_DIR}/Runes/Runes.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSnapshotTestCase/FBSnapshotTestCase.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Argo.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Curry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Prelude.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PhoneNumberKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Runes.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSnapshotTestCase.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-TiketKitModels-TiketKitModelsTests/Pods-TiketKitModels-TiketKitModelsTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B5878B0C6B8AC499311A3DF2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TiketKitModels-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		CD0D68B8205E528D00548BC6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDB96746205E8A3D00DEE52F /* ClientAuth.swift in Sources */,
+				CD102204208211C100F26983 /* CheckoutLoginParamsLenses.swift in Sources */,
+				CD099FAD206DE23000234460 /* SearchHotelAreaEnvelope.swift in Sources */,
+				CDB96762205E8A3D00DEE52F /* MyOrder.swift in Sources */,
+				CD0D69A4205E622300548BC6 /* UIView.swift in Sources */,
+				CDB9674D205E8A3D00DEE52F /* AvailableRoom.swift in Sources */,
+				CD0D69EF205E660A00548BC6 /* DateProtocol.swift in Sources */,
+				CDB96777205E8A3D00DEE52F /* CheckoutGuestParamsLenses.swift in Sources */,
+				CD0D69F0205E660A00548BC6 /* NSHTTPCookieStorageType.swift in Sources */,
+				CDB9677A205E8A3D00DEE52F /* SearchFlightParamsLenses.swift in Sources */,
+				CDB9674A205E8A3D00DEE52F /* AddOrderParams.swift in Sources */,
+				CDAC38D52097D21B00B494D7 /* HotelBookingSummary.swift in Sources */,
+				CDB96776205E8A3D00DEE52F /* SearchHotelEnvelopeLenses.swift in Sources */,
+				CD0F935D2079878A0085B5C8 /* OrderListLenses.swift in Sources */,
+				CDAFFDF320B2155500CA3136 /* LocalizedString.swift in Sources */,
+				CDB96766205E8A3D00DEE52F /* NSURLSession.swift in Sources */,
+				CD707029209737280073312F /* Errors.swift in Sources */,
+				CDB96753205E8A3D00DEE52F /* HotelResult.swift in Sources */,
+				CD0D699C205E621F00548BC6 /* DemoteErrors.swift in Sources */,
+				CD0D6997205E621F00548BC6 /* FlatMap.swift in Sources */,
+				CDB9676B205E8A3D00DEE52F /* DiagnosticSamples.swift in Sources */,
+				CDB9677B205E8A3D00DEE52F /* FlightInfoLenses.swift in Sources */,
+				CD0D699E205E621F00548BC6 /* TakeWhen.swift in Sources */,
+				CD19F10C20B8DE4A0048689A /* TakeUntil.swift in Sources */,
+				CDB9676D205E8A3D00DEE52F /* AvailableRoomSamples.swift in Sources */,
+				CDB96772205E8A3D00DEE52F /* TiketServiceType.swift in Sources */,
+				CD0D69F8205E660A00548BC6 /* KeyValueStoreType.swift in Sources */,
+				CDB96760205E8A3D00DEE52F /* CheckoutHotelCustomerEnvelope.swift in Sources */,
+				CD0D69A1205E622300548BC6 /* UIActivityIndicator.swift in Sources */,
+				CDB8AB25207B60D100FBCB1A /* AirportResultLenses.swift in Sources */,
+				CDB96751205E8A3D00DEE52F /* CheckoutGuestParams.swift in Sources */,
+				CDB96763205E8A3D00DEE52F /* OrderData.swift in Sources */,
+				CDB96748205E8A3D00DEE52F /* Secrets.swift in Sources */,
+				CD0D69A5205E622300548BC6 /* UIStepper.swift in Sources */,
+				CD0D69ED205E660A00548BC6 /* UIDeviceType.swift in Sources */,
+				CD0D6999205E621F00548BC6 /* CKDelay.swift in Sources */,
+				CDB9676F205E8A3D00DEE52F /* SearchHotelEnvelopeSamples.swift in Sources */,
+				CD1021F02081E40700F26983 /* CheckoutPageRequestEnvelope.swift in Sources */,
+				CDB96773205E8A3D00DEE52F /* TiketServices.swift in Sources */,
+				CD1022002082049200F26983 /* Values.swift in Sources */,
+				CDB96755205E8A3D00DEE52F /* AddOrderFlightEnvelope.swift in Sources */,
+				CDB96759205E8A3D00DEE52F /* SearchFlightParams.swift in Sources */,
+				CDB9676E205E8A3D00DEE52F /* FlightSamples.swift in Sources */,
+				CDB96747205E8A3D00DEE52F /* TiketToken.swift in Sources */,
+				CD0D69A7205E622800548BC6 /* LazyMutableProperty.swift in Sources */,
+				CDB96771205E8A3D00DEE52F /* EncodableType.swift in Sources */,
+				CDB96764205E8A3D00DEE52F /* GetTokenEnvelope.swift in Sources */,
+				CDB96757205E8A3D00DEE52F /* FlightInfo.swift in Sources */,
+				CDB96754205E8A3D00DEE52F /* HotelDirect.swift in Sources */,
+				CDB96767205E8A3D00DEE52F /* Decodable.swift in Sources */,
+				CDB9675D205E8A3D00DEE52F /* Diagnostic.swift in Sources */,
+				CD82EAD02068EF300006F66C /* FlightMyOrder.swift in Sources */,
+				CD97290620A14ED400321199 /* HotelResultSamples.swift in Sources */,
+				CDDA460020736DFE00844004 /* UISwitch.swift in Sources */,
+				CDB9675A205E8A3D00DEE52F /* SearchAirportsEnvelope.swift in Sources */,
+				CD0D69F7205E660A00548BC6 /* NSBundleType.swift in Sources */,
+				CD0D6996205E621F00548BC6 /* MapConst.swift in Sources */,
+				CDB9674E205E8A3D00DEE52F /* SearchHotelParams.swift in Sources */,
+				CDB96749205E8A3D00DEE52F /* TiketServerConfig.swift in Sources */,
+				CD0D699F205E622300548BC6 /* UISearchBar.swift in Sources */,
+				CD82EAD22068EF5A0006F66C /* FlightOrderData.swift in Sources */,
+				CD0D69F5205E660A00548BC6 /* Format.swift in Sources */,
+				CDB96761205E8A3D00DEE52F /* HotelOrderEnvelope.swift in Sources */,
+				CDB96778205E8A3D00DEE52F /* AvailableRoomLenses.swift in Sources */,
+				CDB9674B205E8A3D00DEE52F /* AutocompleteHotelEnvelope.swift in Sources */,
+				CDB96768205E8A3D00DEE52F /* Method.swift in Sources */,
+				CD60125620A2834B00CDF272 /* Paginate.swift in Sources */,
+				CD0B11F120B6458100DC25CE /* CurrencyListEnvelope.swift in Sources */,
+				CD0D69F4205E660A00548BC6 /* Reachability.swift in Sources */,
+				CD0D699B205E621F00548BC6 /* MergeWith.swift in Sources */,
+				CDB9677F205E9BE800DEE52F /* AppDelegateViewModel.swift in Sources */,
+				CD52603A2080936F000B2865 /* CheckoutPaymentEnvelope.swift in Sources */,
+				CDB96775205E8A3D00DEE52F /* SearchHotelParamsLenses.swift in Sources */,
+				CDB9675F205E8A3D00DEE52F /* CurrentProfile.swift in Sources */,
+				CD0D69A2205E622300548BC6 /* UITextField.swift in Sources */,
+				CDB9676C205E8A3D00DEE52F /* ConfigSamples.swift in Sources */,
+				CDAC38D72097D27400B494D7 /* HotelBookingSummaryLenses.swift in Sources */,
+				CD0D69F3205E660A00548BC6 /* IsValidEmail.swift in Sources */,
+				CD0D6998205E621F00548BC6 /* SwitchMap.swift in Sources */,
+				CD54C11B206771DE001A2596 /* String+Whitespace.swift in Sources */,
+				CDB9674F205E8A3D00DEE52F /* HotelPagination.swift in Sources */,
+				CD97290820A14EEF00321199 /* OrderDataSamples.swift in Sources */,
+				CDB9675C205E8A3D00DEE52F /* Config.swift in Sources */,
+				CDB96756205E8A3D00DEE52F /* SearchFlightEnvelopes.swift in Sources */,
+				CD0D69A6205E622800548BC6 /* DispatchTimeInterval-Extensions.swift in Sources */,
+				CD82EACE2068ED670006F66C /* FlightOrderEnvelope.swift in Sources */,
+				CD0D6995205E621F00548BC6 /* IgnoreValues.swift in Sources */,
+				CDB96779205E8A3D00DEE52F /* AddOrderFlightLenses.swift in Sources */,
+				CDB96752205E8A3D00DEE52F /* SearchHotelEnvelope.swift in Sources */,
+				CD10220220820CA600F26983 /* CheckoutLoginCustomerEnvelope.swift in Sources */,
+				CD0D69A8205E622800548BC6 /* LazyAssociatedProperty.swift in Sources */,
+				CDB9674C205E8A3D00DEE52F /* CheckoutGuestEnvelope.swift in Sources */,
+				CD0D69A0205E622300548BC6 /* UILabel.swift in Sources */,
+				CDB9675B205E8A3D00DEE52F /* Airport.swift in Sources */,
+				CDB96769205E8A3D00DEE52F /* Route.swift in Sources */,
+				CD0D69A3205E622300548BC6 /* UIButtonAssociations.swift in Sources */,
+				CDB96750205E8A3D00DEE52F /* AddOrderEnvelope.swift in Sources */,
+				CDB96765205E8A3D00DEE52F /* ErrorEnvelope.swift in Sources */,
+				CD0D699D205E621F00548BC6 /* Rac.swift in Sources */,
+				CD0D69EE205E660A00548BC6 /* Language.swift in Sources */,
+				CD0D69F9205E660A00548BC6 /* AppEnvironment.swift in Sources */,
+				CDB9676A205E8A3D00DEE52F /* FlightInfoSamples.swift in Sources */,
+				CDB9675E205E8A3D00DEE52F /* CurrentBookingHotel.swift in Sources */,
+				CDB9677C205E8A3D00DEE52F /* FlightLenses.swift in Sources */,
+				CDB96758205E8A3D00DEE52F /* Flight.swift in Sources */,
+				CDB9677D205E8A9900DEE52F /* Environment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,7 +1006,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD0D6A13205E68FC00548BC6 /* Event-Extensions.swift in Sources */,
+				CD0D6A11205E68FC00548BC6 /* XCTestCase+AppEnvironment.swift in Sources */,
+				CD0D6A0F205E68FC00548BC6 /* TraitController.swift in Sources */,
+				CD0D6A14205E68FC00548BC6 /* Combos.swift in Sources */,
+				CD0D6A12205E68FC00548BC6 /* MockBundle.swift in Sources */,
+				CD0D6A01205E68CE00548BC6 /* Tuple.swift in Sources */,
+				CD0D69FB205E683F00548BC6 /* FlightsListContentViewModelTests.swift in Sources */,
+				CD0D6A0E205E68FC00548BC6 /* XCTAssert-Extensions.swift in Sources */,
 				CD0D68CC205E528D00548BC6 /* TiketKitModelsTests.swift in Sources */,
+				CD0D6A10205E68FC00548BC6 /* TestCase.swift in Sources */,
+				CD0D6A0D205E68FC00548BC6 /* XCTestCase+Async.swift in Sources */,
+				CD0D6A00205E68CE00548BC6 /* TestObserver.swift in Sources */,
+				CD0D6A02205E68CE00548BC6 /* SomeError.swift in Sources */,
+				CD0D6A15205E68FC00548BC6 /* EnvironmentTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,7 +1149,9 @@
 		};
 		CD0D68D2205E528D00548BC6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C06D27B990E9B63343519A2 /* Pods-TiketKitModels.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "${inherited}";
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -343,7 +1161,8 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = TiketKitModels/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = firasrafislam.TiketKitModels;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -354,7 +1173,9 @@
 		};
 		CD0D68D3205E528D00548BC6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 02BE1FD5EA238BD56661AB6E /* Pods-TiketKitModels.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "${inherited}";
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -364,7 +1185,8 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = TiketKitModels/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = firasrafislam.TiketKitModels;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -375,7 +1197,9 @@
 		};
 		CD0D68D5205E528D00548BC6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8EAECC6B7482EB94BA15D21A /* Pods-TiketKitModels-TiketKitModelsTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DLL674263K;
 				INFOPLIST_FILE = TiketKitModelsTests/Info.plist;
@@ -389,7 +1213,9 @@
 		};
 		CD0D68D6205E528D00548BC6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38431EB6EEEEB9E68E111AE2 /* Pods-TiketKitModels-TiketKitModelsTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DLL674263K;
 				INFOPLIST_FILE = TiketKitModelsTests/Info.plist;

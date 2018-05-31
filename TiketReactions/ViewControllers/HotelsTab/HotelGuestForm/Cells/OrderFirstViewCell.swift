@@ -7,16 +7,20 @@
 //
 
 import Prelude
-import TiketAPIs
+import TiketKitModels
 import UIKit
 
 class OrderFirstViewCell: UITableViewCell, ValueCell {
     
-    typealias Value = HotelDirect
+    typealias Value = HotelBookingSummary
     
     @IBOutlet fileprivate weak var orderFirstStackView: UIStackView!
+    
+    @IBOutlet fileprivate weak var orderHotelTitleLabel: UILabel!
     @IBOutlet fileprivate weak var hotelNameOrderLabel: UILabel!
     @IBOutlet fileprivate weak var statusOrderDateLabel: UILabel!
+    @IBOutlet fileprivate weak var guestRoomLabel: UILabel!
+    @IBOutlet fileprivate weak var orderFirstSeparatorView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,18 +40,35 @@ class OrderFirstViewCell: UITableViewCell, ValueCell {
             |> UIStackView.lens.layoutMargins %~~ { _, stackView in
                 stackView.traitCollection.isRegularRegular
                     ? .init(topBottom: Styles.grid(6), leftRight: Styles.grid(4))
-                    : .init(top: Styles.grid(4), left: Styles.grid(2), bottom: Styles.grid(3), right: Styles.grid(2))
+                    : .init(top: Styles.grid(4), left: Styles.grid(4), bottom: Styles.grid(3), right: Styles.grid(2))
             }
             |> UIStackView.lens.isLayoutMarginsRelativeArrangement .~ true
             |> UIStackView.lens.spacing .~ 3
         
-    }
-    
-    func configureWith(value: HotelDirect) {
         _ = self.hotelNameOrderLabel
-            |> UILabel.lens.text .~ value.breadcrumb.businessName
+            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
         
         _ = self.statusOrderDateLabel
-            |> UILabel.lens.text .~ "5 Malam"
+            |> UILabel.lens.textColor .~ .tk_typo_green_grey_500
+        
+        _ = self.guestRoomLabel
+            |> UILabel.lens.textColor .~ .tk_typo_green_grey_500
+        
+        _ = self.orderFirstSeparatorView
+            |> UIView.lens.backgroundColor .~ .tk_base_grey_100
+        
+        _ = self.orderHotelTitleLabel
+            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
+            |> UILabel.lens.text .~ Localizations.OrderHotelTitle
+    }
+    
+    func configureWith(value: HotelBookingSummary) {
+        
+        _ = self.hotelNameOrderLabel
+            |> UILabel.lens.text .~ value.hotelName
+        _ = self.statusOrderDateLabel
+            |> UILabel.lens.text .~ "\(value.dateRange)"
+        _ = self.guestRoomLabel
+            |> UILabel.lens.text .~ "\(value.guestCount), \(value.roomType)"
     }
 }

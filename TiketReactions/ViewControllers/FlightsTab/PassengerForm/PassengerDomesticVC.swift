@@ -65,7 +65,8 @@ class PassengerDomesticVC: UIViewController {
     
     @objc fileprivate func goToTitlePicker() {
         print("TITLE PICKER SELECTED")
-        let vc = PassengerTitlePickerVC.instantiate(delegate: self)
+        let titles = ["Tuan", "Nyonya"]
+        let vc = PassengerTitlePickerVC.instantiate(titles: titles, selectedTitle: titles.first!, delegate: self)
         self.present(vc, animated: true, completion: nil)
     }
     

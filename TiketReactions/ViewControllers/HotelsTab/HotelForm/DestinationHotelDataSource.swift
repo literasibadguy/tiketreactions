@@ -7,11 +7,18 @@
 //
 
 import Foundation
-import TiketAPIs
+import GoogleMaps
+import TiketKitModels
+import UIKit
 
 internal final class DestinationHotelDataSource: ValueCellDataSource {
     internal enum Section: Int {
+        case suggestDestination
         case autoResults
+    }
+    
+    internal func initialDestination(_ address: GMSAddress) {
+        self.set(values: [address], cellClass: DestinationLocationViewCell.self, inSection: Section.suggestDestination.rawValue)
     }
     
     internal func load(results: [AutoHotelResult]) {
@@ -24,6 +31,10 @@ internal final class DestinationHotelDataSource: ValueCellDataSource {
         }
     }
     
+    internal func suggestLocationRow(indexPath: IndexPath) -> GMSAddress? {
+        return self[indexPath] as? GMSAddress
+    }
+    
     internal func destHotelRow(indexPath: IndexPath) -> AutoHotelResult? {
         return self[indexPath] as? AutoHotelResult
     }
@@ -31,6 +42,8 @@ internal final class DestinationHotelDataSource: ValueCellDataSource {
     override func configureCell(tableCell cell: UITableViewCell, withValue value: Any) {
         switch (cell, value) {
         case let (cell as DestHotelViewCell, value as AutoHotelResult):
+            cell.configureWith(value: value)
+        case let (cell as DestinationLocationViewCell, value as GMSAddress):
             cell.configureWith(value: value)
         default:
             fatalError("Unrecognized error: \(type(of: cell)) \(type(of: value))")

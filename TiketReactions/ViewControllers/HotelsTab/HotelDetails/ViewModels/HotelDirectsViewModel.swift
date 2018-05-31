@@ -10,10 +10,11 @@ import Foundation
 import Prelude
 import ReactiveSwift
 import Result
-import TiketAPIs
+import TiketKitModels
 
 public protocol HotelDirectsViewModelInputs {
-    func configureWith(hotelDirect: HotelDirect)
+    func configureWith(selected: HotelResult, hotelDirect: HotelDirect, booking: HotelBookingSummary)
+    func tapHotelFacility(_ facilities: String)
     func tappedRoomAvailable(availableRoom: AvailableRoom)
     func viewWillAppear(animated: Bool)
     func viewDidAppear(animated: Bool)
@@ -21,8 +22,11 @@ public protocol HotelDirectsViewModelInputs {
 }
 
 public protocol HotelDirectsViewModelOutputs {
-    var goToRoomAvailable: Signal<(HotelDirect, AvailableRoom), NoError> { get }
-    var loadHotelDirect: Signal<HotelDirect, NoError> { get }
+    var goToFacilities: Signal<[HotelDirect.AvailableFacility], NoError> { get }
+    var goToRoomAvailable: Signal<(HotelDirect, AvailableRoom, HotelBookingSummary), NoError> { get }
+    var loadMinimalHotelDirect: Signal<HotelDirect, NoError> { get }
+    var loadHotelDirect: Signal<(HotelResult, HotelDirect), NoError> { get }
+    var directsAreLoading: Signal<Bool, NoError> { get }
 }
 
 public protocol HotelDirectsViewModelType {
@@ -34,16 +38,27 @@ public final class HotelDirectsViewModel: HotelDirectsViewModelType, HotelDirect
     
     public init() {
         
-        let project = Signal.combineLatest(self.configDataProperty.signal.skipNil(), self.viewDidLoadProperty.signal).map(first)
+        let hotelDirect = Signal.combineLatest(self.configDataProperty.signal.skipNil(), self.viewDidLoadProperty.signal).map(first)
+        let direct = hotelDirect.map(second)
         
-        self.loadHotelDirect = project
+        self.loadHotelDirect = Signal.combineLatest(hotelDirect.map { $0.0 }, hotelDirect.map { $0.1 })
         
-        self.goToRoomAvailable = Signal.combineLatest(project, self.tappedRoomAvailableProperty.signal.skipNil())
+        self.loadMinimalHotelDirect = .empty
+        self.goToRoomAvailable = .empty
+        
+        self.directsAreLoading = Signal.combineLatest(self.configDataProperty.signal.ignoreValues(), self.viewDidLoadProperty.signal).mapConst(false)
+        
+        self.goToFacilities = direct.map { $0.availFacilities }.takeWhen(self.tapFacilityProperty.signal.ignoreValues())
     }
     
-    fileprivate let configDataProperty = MutableProperty<HotelDirect?>(nil)
-    public func configureWith(hotelDirect: HotelDirect) {
-        self.configDataProperty.value = hotelDirect
+    fileprivate let configDataProperty = MutableProperty<(HotelResult, HotelDirect, HotelBookingSummary)?>(nil)
+    public func configureWith(selected: HotelResult, hotelDirect: HotelDirect, booking: HotelBookingSummary) {
+        self.configDataProperty.value = (selected, hotelDirect, booking)
+    }
+    
+    fileprivate let tapFacilityProperty = MutableProperty("")
+    public func tapHotelFacility(_ facilities: String) {
+        self.tapFacilityProperty.value = facilities
     }
     
     fileprivate let tappedRoomAvailableProperty = MutableProperty<AvailableRoom?>(nil)
@@ -66,8 +81,11 @@ public final class HotelDirectsViewModel: HotelDirectsViewModelType, HotelDirect
         self.viewDidLoadProperty.value = ()
     }
     
-    public let goToRoomAvailable: Signal<(HotelDirect, AvailableRoom), NoError>
-    public let loadHotelDirect: Signal<HotelDirect, NoError>
+    public let goToFacilities: Signal<[HotelDirect.AvailableFacility], NoError>
+    public let goToRoomAvailable: Signal<(HotelDirect, AvailableRoom, HotelBookingSummary), NoError>
+    public let loadMinimalHotelDirect: Signal<HotelDirect, NoError>
+    public let loadHotelDirect: Signal<(HotelResult, HotelDirect), NoError>
+    public let directsAreLoading: Signal<Bool, NoError>
     
     public var inputs: HotelDirectsViewModelInputs { return self }
     public var outputs: HotelDirectsViewModelOutputs { return self }

@@ -10,6 +10,7 @@ import Foundation
 import Prelude
 import ReactiveSwift
 import Result
+import TiketKitModels
 
 public protocol FlightResultsNavViewModelInputs {
     func configureEnvelope(flightEnvelope: SearchFlightEnvelope)

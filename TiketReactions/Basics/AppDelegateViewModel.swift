@@ -9,10 +9,10 @@
 import Prelude
 import ReactiveSwift
 import Result
-import TiketAPIs
 import UserNotifications
 
 public protocol AppDelegateViewModelInputs {
+    
     func applicationDidFinishLaunching(application: UIApplication?, launchOptions: [AnyHashable: Any]?)
 }
 
@@ -22,11 +22,13 @@ public protocol AppDelegateViewModelOutputs {
     var tokenIntoEnvironment: Signal<GetTokenEnvelope, NoError> { get }
     
     var goToFlight: Signal<(), NoError> { get }
-    var goToHotel: Signal<SearchHotelParams?, NoError> { get }
+    var goToHotel: Signal<(), NoError> { get }
     var goToOrder: Signal<(), NoError> { get }
     var goToAbout: Signal<(), NoError> { get }
     
     var presentViewController: Signal<UIViewController, NoError> { get }
+    
+    var synchronizeUbiquitousStore: Signal<(), NoError> { get }
 }
 
 public protocol AppDelegateViewModelType {
@@ -42,8 +44,9 @@ public final class AppDelegateViewModel: AppDelegateViewModelType, AppDelegateVi
         let clientAuth = ClientAuth(clientId: Secrets.Api.Client.production)
         
         self.tokenIntoEnvironment = self.applicationLaunchOptionsProperty.signal.skipNil().switchMap { _ in
-            AppEnvironment.current.apiService.getTokenEnvelope(clientAuth: clientAuth).demoteErrors()
-        }
+            AppEnvironment.current.apiService.getTokenEnvelope(clientAuth: clientAuth).materialize()
+        }.values()
+        
         print("SOMETHING INTO TOKEN INTO ENVIRONMENT: \(self.tokenIntoEnvironment)")
         
         self.goToFlight = .empty
@@ -51,6 +54,8 @@ public final class AppDelegateViewModel: AppDelegateViewModelType, AppDelegateVi
         self.goToOrder = .empty
         self.goToAbout = .empty
         self.presentViewController = .empty
+        
+        self.synchronizeUbiquitousStore = .empty
         
         self.applicationDidFinishLaunchingReturnValueProperty <~ self.applicationLaunchOptionsProperty.signal.skipNil().map { _ , options in
             options?[UIApplicationLaunchOptionsKey.shortcutItem] == nil
@@ -65,10 +70,11 @@ public final class AppDelegateViewModel: AppDelegateViewModelType, AppDelegateVi
     
     public let tokenIntoEnvironment: Signal<GetTokenEnvelope, NoError>
     public let goToFlight: Signal<(), NoError>
-    public let goToHotel: Signal<SearchHotelParams?, NoError>
+    public let goToHotel: Signal<(), NoError>
     public let goToOrder: Signal<(), NoError>
     public let goToAbout: Signal<(), NoError>
     public let presentViewController: Signal<UIViewController, NoError>
+    public let synchronizeUbiquitousStore: Signal<(), NoError>
     
     fileprivate let applicationDidFinishLaunchingReturnValueProperty = MutableProperty(true)
     public var applicationDidFinishLaunchingReturnValue: Bool {

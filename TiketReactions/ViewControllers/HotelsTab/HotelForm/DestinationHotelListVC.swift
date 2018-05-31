@@ -6,10 +6,12 @@
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 
+import CoreLocation
+import GoogleMaps
 import Prelude
 import ReactiveSwift
 import Result
-import TiketAPIs
+import TiketKitModels
 import UIKit
 
 internal protocol DestinationHotelListVCDelegate: class {
@@ -24,9 +26,12 @@ internal final class DestinationHotelListVC: UIViewController, UITableViewDelega
     @IBOutlet fileprivate weak var searchBar: UISearchBar!
     @IBOutlet fileprivate weak var cancelButton: UIButton!
     @IBOutlet fileprivate weak var hotelDestinationTableView: UITableView!
+    @IBOutlet fileprivate weak var destinationSeparatorView: UIView!
+    @IBOutlet fileprivate weak var loadingIndicatorView: UIActivityIndicatorView!
     
-    private let dataSource = DestinationHotelDataSource()
-    private let viewModel: DestinationHotelListViewModelType = DestinationHotelListViewModel()
+    fileprivate let dataSource = DestinationHotelDataSource()
+    fileprivate let viewModel: DestinationHotelListViewModelType = DestinationHotelListViewModel()
+    fileprivate let locationManager = CLLocationManager()
     
     internal weak var delegate: DestinationHotelListVCDelegate?
     
@@ -38,11 +43,13 @@ internal final class DestinationHotelListVC: UIViewController, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         self.hotelDestinationTableView.dataSource = self.dataSource
         self.hotelDestinationTableView.delegate = self
         
-        // Do any additional setup after loading the view.
+        self.searchBar.becomeFirstResponder()
         
+        // Do any additional setup after loading the view.
         self.viewModel.inputs.viewDidLoad()
     }
     
@@ -55,19 +62,52 @@ internal final class DestinationHotelListVC: UIViewController, UITableViewDelega
         self.viewModel.inputs.viewWillAppear(animated: animated)
     }
     
+    
     internal override func bindStyles() {
         super.bindStyles()
         
+        _ = self.hotelDestinationTableView
+            |> UITableView.lens.separatorStyle .~ .none
+            |> UITableView.lens.backgroundColor .~ .white
+            |> UITableView.lens.rowHeight .~ UITableViewAutomaticDimension
+            |> UITableView.lens.estimatedRowHeight .~ 88.0
+        
+        _ = self.loadingIndicatorView
+            |> baseActivityIndicatorStyle
+        
+        _ = self.destinationSeparatorView
+            |> UIView.lens.backgroundColor .~ .tk_base_grey_100
+        
         _ = self.titleHeaderLabel
-            |> UILabel.lens.text .~ "Destinasi / Hotel"
+            |> UILabel.lens.text .~ Localizations.DestinationHotelTitleForm
+            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
+            |> UILabel.lens.font .~ UIFont.boldSystemFont(ofSize: 22.0)
     }
     
     internal override func bindViewModel() {
         super.bindViewModel()
         
+        self.loadingIndicatorView.rac.animating = self.viewModel.outputs.resultsAreLoading
+        
+        self.viewModel.outputs.fetchingLocation
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] in
+                self?.getCurrentLocation()
+        }
+        
+        self.viewModel.outputs.initialCurrentLocation
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] current in
+                self?.locationManager.stopUpdatingLocation()
+                print("CURRENT CITY: \(current.locality ?? "")")
+                self?.dataSource.initialDestination(current)
+                self?.hotelDestinationTableView.reloadData()
+        }
+        
         self.viewModel.outputs.results
             .observe(on: UIScheduler())
             .observeValues { [weak self] results in
+                self?.getCurrentLocation()
                 self?.dataSource.load(results: results)
                 self?.hotelDestinationTableView.reloadData()
         }
@@ -78,6 +118,7 @@ internal final class DestinationHotelListVC: UIViewController, UITableViewDelega
             .observe(on: QueueScheduler.main)
             .observeValues { [weak self] selectedRow in
                 guard let _self = self else { return }
+                _self.searchBar.resignFirstResponder()
                 _self.dismiss(animated: true, completion: nil)
                 _self.delegate?.destinationHotelList(_self, selectedRow: selectedRow)
                 
@@ -88,6 +129,8 @@ internal final class DestinationHotelListVC: UIViewController, UITableViewDelega
         if let expandableRow = self.dataSource.destHotelRow(indexPath: indexPath) {
             print("WHAT SELECTED: \(expandableRow.category)")
             self.viewModel.inputs.tapped(hotelResult: expandableRow)
+        } else if let suggestLocation = self.dataSource.suggestLocationRow(indexPath: indexPath) {
+            
         }
 //        self.dismiss(animated: true, completion: nil)
     }
@@ -106,8 +149,78 @@ internal final class DestinationHotelListVC: UIViewController, UITableViewDelega
         }, completion: nil)
     }
     
+    fileprivate func getCurrentLocation() {
+        let status = CLLocationManager.authorizationStatus()
+        
+        if status == .notDetermined {
+            self.locationManager.requestWhenInUseAuthorization()
+            return
+        }
+        
+        // 3
+        if status == .denied || status == .restricted {
+            let alert = UIAlertController(title: "Location Services Disabled", message: "Please enable Location Services in Settings", preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(okAction)
+            
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        
+        self.locationManager.delegate = self
+        self.locationManager.startUpdatingLocation()
+    }
+    
+    
+    
     @objc fileprivate func closeButtonTapped() {
+        self.searchBar.resignFirstResponder()
         self.dismiss(animated: true, completion: nil)
+    }
+    
+}
+
+extension DestinationHotelListVC: CLLocationManagerDelegate {
+    internal func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        lookUpCurrentLocation(lastLocation: locations.last!, completionHandler: { self.viewModel.inputs.updateLastCurrentLocation($0!) })
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        
+    }
+    
+    private func lookUpCurrentLocation(lastLocation: CLLocation, completionHandler: @escaping (GMSAddress?)
+        -> Void ) {
+        // Use the last reported location.
+        let geocoder = CLGeocoder()
+        
+        let googleGeocoder = GMSGeocoder()
+        
+        googleGeocoder.reverseGeocodeCoordinate(lastLocation.coordinate, completionHandler: { (placesmarks, error) in
+            if error == nil {
+                let firstLocation = placesmarks?.firstResult()
+                completionHandler(firstLocation)
+            } else {
+                completionHandler(nil)
+            }
+        })
+        
+        /*
+        // Look up the location and pass it to the completion handler
+        geocoder.reverseGeocodeLocation(lastLocation,
+                                        completionHandler: { (placemarks, error) in
+                                            if error == nil {
+                                                let firstLocation = placemarks?[0]
+                                                completionHandler(firstLocation)
+                                            }
+                                            else {
+                                                // An error occurred during geocoding.
+                                                completionHandler(nil)
+                                            }
+        })
+        */
     }
     
 }

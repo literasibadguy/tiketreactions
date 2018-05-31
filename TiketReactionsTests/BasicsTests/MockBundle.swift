@@ -24,9 +24,12 @@ private let stores = [
 ]
 
 internal struct MockBundle: NSBundleType {
-    
     internal let bundleIdentifier: String?
     fileprivate let store: [String: String]
+    
+    internal func path(forResource name: String?, ofType ext: String?) -> String? {
+        return name
+    }
     
     internal init(bundleIdentifier: String? = "com.bundle.mock", lang: String = "Base") {
         self.bundleIdentifier = bundleIdentifier

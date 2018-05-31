@@ -7,7 +7,7 @@
 //
 
 import Prelude
-import TiketAPIs
+import TiketKitModels
 import UIKit
 
 class DestHotelViewCell: UITableViewCell, ValueCell {
@@ -19,7 +19,6 @@ class DestHotelViewCell: UITableViewCell, ValueCell {
     
     @IBOutlet fileprivate weak var hotelTitleLabel: UILabel!
     @IBOutlet fileprivate weak var hotelSubtitleLabel: UILabel!
-    @IBOutlet fileprivate weak var hotelTypeLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,6 +29,13 @@ class DestHotelViewCell: UITableViewCell, ValueCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+        _ = self.hotelTitleLabel
+            |> UILabel.lens.font .~ UIFont.boldSystemFont(ofSize: 16.0)
+            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
+        
+        _ = self.hotelSubtitleLabel
+            |> UILabel.lens.font .~ UIFont.systemFont(ofSize: 16.0)
+            |> UILabel.lens.textColor .~ .tk_typo_green_grey_500
     }
     
     func configureWith(value: AutoHotelResult) {
@@ -39,10 +45,7 @@ class DestHotelViewCell: UITableViewCell, ValueCell {
         
         _ = self.hotelSubtitleLabel
             |> UILabel.lens.text .~ value.labelLocation
-        
-        _ = self.hotelTypeLabel
-            |> UILabel.lens.isHidden .~ true
-        
+
     }
     
 }

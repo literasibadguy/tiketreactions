@@ -1,9 +1,20 @@
-//
-//  Errors.swift
-//  TiketKitModels
-//
-//  Created by Firas Rafislam on 30/04/18.
-//  Copyright © 2018 Firas Rafislam. All rights reserved.
-//
+import ReactiveSwift
+import Result
 
-import Foundation
+extension SignalProtocol where Value: EventProtocol, Error == NoError {
+    /**
+     - returns: A signal of errors of `Error` events from a materialized signal.
+     */
+    public func errors() -> Signal<Value.Error, NoError> {
+        return self.signal.map { $0.event.error }.skipNil()
+    }
+}
+
+extension SignalProducerProtocol where Value: EventProtocol, Error == NoError {
+    /**
+     - returns: A producer of errors of `Error` events from a materialized signal.
+     */
+    public func errors() -> SignalProducer<Value.Error, NoError> {
+        return self.producer.lift { $0.errors() }
+    }
+}

@@ -5,14 +5,35 @@
 //  Created by Firas Rafislam on 08/05/18.
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
-
+import AVFoundation
+import FBSnapshotTestCase
+import Prelude
+import ReactiveSwift
+import Result
 import XCTest
+@testable import TiketKitModels
 
-class TestCase: FBSnapshotTestCase {
+internal class TestCase: FBSnapshotTestCase {
+    
+    internal let config = Config.config
+    internal let cookieStorage = MockCookieStorage()
+    internal let dateType = MockDate.self
+    internal let mainBundle = MockBundle()
+    internal let reachability = MutableProperty(Reachability.wifi)
+    internal let scheduler = TestScheduler(startDate: MockDate().date)
+    internal let ubiquitousStore = FakeKeyValueStore()
+    internal let userDefaults = FakeKeyValueStore()
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+        UIView.doBadSwizzleStuff()
+        UIViewController.doBadSwizzleStuff()
+        
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "GMT")!
+        
+        AppEnvironment.pushEnvironment(apiService: self.apiService, apiDelayInterval: <#T##DispatchTimeInterval#>, calendar: <#T##Calendar#>, cookieStorage: <#T##HTTPCookieStorageProtocol#>, countryCode: <#T##String#>, dateType: <#T##DateProtocol.Type#>, debounceInterval: <#T##DispatchTimeInterval#>, device: <#T##UIDeviceType#>, isVoiceOverRunning: <#T##(() -> Bool)##(() -> Bool)##() -> Bool#>, language: <#T##Language#>, locale: <#T##Locale#>, mainBundle: <#T##NSBundleType#>, reachability: <#T##SignalProducer<Reachability, NoError>#>, scheduler: <#T##DateScheduler#>, ubiquitousStore: <#T##KeyValueStoreType#>, userDefaults: <#T##KeyValueStoreType#>)
     }
     
     override func tearDown() {

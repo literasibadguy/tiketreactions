@@ -6,12 +6,12 @@
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 import Prelude
-import TiketAPIs
+import TiketKitModels
 import UIKit
 
 class FlightDirectViewCell: UITableViewCell, ValueCell {
     
-    typealias Value = String
+    typealias Value = Flight
     
     // STACK MAINTAINED
     @IBOutlet fileprivate weak var flightDirectInfoStackView: UIStackView!
@@ -38,17 +38,15 @@ class FlightDirectViewCell: UITableViewCell, ValueCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         // Initialization code
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-    }
-    
-    public func configureWith(value: String) {
-        
     }
     
     override func bindStyles() {
@@ -77,5 +75,26 @@ class FlightDirectViewCell: UITableViewCell, ValueCell {
         
         _ = self.arrivalDateLabel
             |> UILabel.lens.numberOfLines .~ 2
+    }
+    
+    func configureWith(value: Flight) {
+        _ = self.numberFlightLabel
+            |> UILabel.lens.text .~ value.flightNumber
+        
+        _ = self.departureTimeLabel
+            |> UILabel.lens.text .~ value.flightDetail.simpleDepartureTime
+        _ = self.arrivalTimeLabel
+            |> UILabel.lens.text .~ value.flightDetail.simpleArrivalTime
+        
+        _ = self.departureDateLabel
+            |> UILabel.lens.text .~ value.inner.departureFlightDateStrShort
+        _ = self.arrivalDateLabel
+            |> UILabel.lens.text .~ value.inner.arrivalFlightDateStrShort
+        
+        _ = self.departureCityLabel
+            |> UILabel.lens.text .~ value.departureCity
+        _ = self.arrivalCityLabel
+            |> UILabel.lens.text .~ value.arrivalCity
+        
     }
 }

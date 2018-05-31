@@ -8,13 +8,18 @@
 
 import UIKit
 
+public protocol PassengerOptionCellDelegate: class {
+    func contactOptionPassengerChanged(_ switched: UISwitch)
+}
+
 class PassengerOptionViewCell: UITableViewCell, ValueCell {
     
     typealias Value = String
     
+    public weak var delegate: PassengerOptionCellDelegate?
+    
     @IBOutlet fileprivate weak var optionTitleLabel: UILabel!
     @IBOutlet fileprivate weak var optionSwitch: UISwitch!
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,4 +29,9 @@ class PassengerOptionViewCell: UITableViewCell, ValueCell {
     func configureWith(value: String) {
         
     }
+    
+    @IBAction internal func contactOptionPassengerChanged(_ sender: UISwitch) {
+        self.delegate?.contactOptionPassengerChanged(sender)
+    }
+    
 }

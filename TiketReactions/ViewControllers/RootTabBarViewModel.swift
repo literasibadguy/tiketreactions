@@ -6,10 +6,10 @@
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 
-import TiketAPIs
 import Prelude
 import ReactiveSwift
 import Result
+import TiketKitModels
 import UIKit
 
 internal struct TabBarItemsData {
@@ -17,8 +17,7 @@ internal struct TabBarItemsData {
 }
 
 internal enum TabBarItem {
-    case flight(index: Int)
-    case hotel(index: Int)
+//    case flightForm(index: Int)
     case hotelForm(index: Int)
     case order(index: Int)
     case about(index: Int)
@@ -28,8 +27,6 @@ internal protocol RootViewModelInputs {
     func didSelectIndex(_ index: Int)
     
     func switchToFlight()
-    
-    func switchToHotel(params: SearchHotelParams?)
     
     func switchToHotelForm()
     
@@ -65,9 +62,9 @@ internal final class RootViewModel: RootViewModelType, RootViewModelInputs, Root
         let currentUser = Signal.merge(self.viewDidLoadProperty.signal, self.userSessionStartedProperty.signal, self.userSessionEndedProperty.signal)
         
         let standardViewControllers = self.viewDidLoadProperty.signal.map { _ in
-            [FlightFormVC.instantiate(), HotelDiscoveryVC.instantiate(), HotelFormVC.instantiate(), OrderListVC.instantiate(), GeneralAboutVC.instantiate()]
+            [HotelFormVC.instantiate(), OrderListVC.instantiate(), GeneralAboutVC.instantiate()]
         }
-        
+
         self.setViewControllers = standardViewControllers.map { $0.map(UINavigationController.init(rootViewController:)) }
         
 //        self.selectedIndex = .empty
@@ -77,10 +74,9 @@ internal final class RootViewModel: RootViewModelType, RootViewModelInputs, Root
         self.selectedIndex = Signal.combineLatest(
             .merge(
                 self.didSelectIndexProperty.signal,
-                self.switchToFlightProperty.signal.mapConst(0),
-                self.switchToHotelProperty.signal.mapConst(1),
-                self.switchToHotelFormProperty.signal.mapConst(2),
-                self.switchToAboutProperty.signal.mapConst(3)),
+                self.switchToHotelFormProperty.signal.mapConst(0),
+                self.switchToOrderProperty.signal.mapConst(1),
+                self.switchToAboutProperty.signal.mapConst(2)),
             self.setViewControllers, self.viewDidLoadProperty.signal).map { idx, vcs, _ in clamp(0, vcs.count - 1)(idx) }
         
         self.tabBarItemsData = self.viewDidLoadProperty.signal.mapConst(tabData())
@@ -95,12 +91,7 @@ internal final class RootViewModel: RootViewModelType, RootViewModelInputs, Root
     func switchToFlight() {
         self.switchToFlightProperty.value = ()
     }
-    
-    fileprivate let switchToHotelProperty = MutableProperty<SearchHotelParams?>(nil)
-    func switchToHotel(params: SearchHotelParams?) {
-        self.switchToHotelProperty.value = params
-    }
-    
+
     fileprivate let switchToHotelFormProperty = MutableProperty(())
     func switchToHotelForm() {
         self.switchToHotelFormProperty.value = ()
@@ -140,7 +131,7 @@ internal final class RootViewModel: RootViewModelType, RootViewModelInputs, Root
 }
 
 private func tabData() -> TabBarItemsData {
-    let items: [TabBarItem] = [.flight(index: 0), .hotel(index: 1), .hotelForm(index: 2), .order(index: 3), .about(index: 4)]
+    let items: [TabBarItem] = [.hotelForm(index: 0), .order(index: 1), .about(index: 2)]
     
     return TabBarItemsData(items: items)
 }
@@ -154,10 +145,6 @@ extension TabBarItemsData: Equatable {
 extension TabBarItem: Equatable {
     static func == (lhs: TabBarItem, rhs: TabBarItem) -> Bool {
         switch (lhs, rhs) {
-        case let (.flight(lhs), .flight(rhs)):
-            return lhs == rhs
-        case let (.hotel(lhs), .hotel(rhs)):
-            return lhs == rhs
         case let (.hotelForm(lhs), .hotelForm(rhs)):
             return lhs == rhs
         case let (.order(lhs), .order(rhs)):

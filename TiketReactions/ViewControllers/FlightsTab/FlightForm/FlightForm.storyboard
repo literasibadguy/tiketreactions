@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,7 +12,7 @@
         <!--Flight-->
         <scene sceneID="nXd-gX-cWS">
             <objects>
-                <viewController storyboardIdentifier="FlightFormVC" title="Flight" id="czF-2W-VR6" customClass="FlightFormVC" customModule="TiketComponents" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FlightFormVC" title="Flight" id="czF-2W-VR6" customClass="FlightFormVC" customModule="TiketReactions" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eDD-ai-0Lx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="seg-s0-ShT" userLabel="International Stack View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="545"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="594"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selamat Terbang" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wn1-36-V7N" userLabel="Passenger Label">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
@@ -29,20 +29,23 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NHi-Bq-gQt" customClass="DesignableImageView" customModule="Spring">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AiC-Bw-uLn" customClass="FSPagerView" customModule="FSPagerView">
                                                 <rect key="frame" x="0.0" y="43" width="375" height="250"/>
-                                                <color key="backgroundColor" red="0.12554647020725385" green="0.12554647020725385" blue="0.12554647020725385" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="250" id="bj5-xP-KaT"/>
+                                                    <constraint firstAttribute="height" constant="250" id="AZL-jL-21d"/>
                                                 </constraints>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="10"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </imageView>
+                                            </view>
+                                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="GAZ-Us-p0L">
+                                                <rect key="frame" x="0.0" y="293" width="375" height="10"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="10" id="8Sk-ps-Lpl"/>
+                                                </constraints>
+                                                <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="currentPageIndicatorTintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </pageControl>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="fRE-4M-RB9" userLabel="From Input Stack View">
-                                                <rect key="frame" x="0.0" y="293" width="375" height="62"/>
+                                                <rect key="frame" x="0.0" y="303" width="375" height="62"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dari" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yWS-ba-4jQ" userLabel="Title Input Text Label">
                                                         <rect key="frame" x="0.0" y="0.0" width="27.5" height="17"/>
@@ -94,15 +97,48 @@
                                                     <constraint firstItem="w7E-UF-tKA" firstAttribute="leading" secondItem="fRE-4M-RB9" secondAttribute="leading" id="lP7-Bn-Qma"/>
                                                 </constraints>
                                             </stackView>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wUv-7c-Xon" userLabel="Title Separator View">
-                                                <rect key="frame" x="0.0" y="355" width="375" height="1"/>
-                                                <color key="backgroundColor" red="0.4297707778" green="0.93670528880000004" blue="0.48656967540000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="1" id="1nE-Yg-GEO"/>
-                                                </constraints>
-                                            </view>
+                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EfW-ps-HGc">
+                                                <rect key="frame" x="0.0" y="365" width="375" height="40"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="Wfd-5B-Gw9" userLabel="Round Stack View">
+                                                        <rect key="frame" x="0.0" y="0.0" width="345" height="40"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ed-Aw-hSP">
+                                                                <rect key="frame" x="295" y="0.0" width="50" height="20"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="20" id="YrU-nb-gNd"/>
+                                                                </constraints>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wUv-7c-Xon" userLabel="Title Separator View">
+                                                                <rect key="frame" x="0.0" y="20" width="345" height="1"/>
+                                                                <color key="backgroundColor" red="0.4297707778" green="0.93670528880000004" blue="0.48656967540000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="1" id="MwR-c9-KOH"/>
+                                                                </constraints>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Mq-Ia-twy">
+                                                                <rect key="frame" x="295" y="21" width="50" height="19"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="19" id="204-u9-w2B"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="wUv-7c-Xon" firstAttribute="leading" secondItem="Wfd-5B-Gw9" secondAttribute="leading" id="iCo-Zf-RcX"/>
+                                                        </constraints>
+                                                    </stackView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jS1-1G-HRA">
+                                                        <rect key="frame" x="345" y="0.0" width="30" height="40"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="40" id="HfG-ff-VpC"/>
+                                                            <constraint firstAttribute="width" constant="30" id="hGG-FD-1Ae"/>
+                                                        </constraints>
+                                                        <state key="normal" image="crosspath-icon-button"/>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="qFM-U0-uaf" userLabel="Date Born Input Stack View">
-                                                <rect key="frame" x="0.0" y="356" width="375" height="62"/>
+                                                <rect key="frame" x="0.0" y="405" width="375" height="62"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ke" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6YT-ub-R4f" userLabel="Date Born Input Text Label">
                                                         <rect key="frame" x="0.0" y="0.0" width="17.5" height="17"/>
@@ -155,14 +191,14 @@
                                                 </constraints>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9v6-Mq-e4h" userLabel="Date Born Separator View">
-                                                <rect key="frame" x="0.0" y="418" width="375" height="1"/>
+                                                <rect key="frame" x="0.0" y="467" width="375" height="1"/>
                                                 <color key="backgroundColor" red="0.4297707778" green="0.93670528880000004" blue="0.48656967540000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="XgI-gb-vZL"/>
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="fvG-Mr-SB2" userLabel="Citizenship Input Stack View">
-                                                <rect key="frame" x="0.0" y="419" width="375" height="62"/>
+                                                <rect key="frame" x="0.0" y="468" width="375" height="62"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Penumpang" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r9I-JN-6aC" userLabel="Citizenship Input Text Label">
                                                         <rect key="frame" x="0.0" y="0.0" width="80.5" height="17"/>
@@ -215,14 +251,14 @@
                                                 </constraints>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zCx-Hx-Pum" userLabel="Citizenship Separator View">
-                                                <rect key="frame" x="0.0" y="481" width="375" height="1"/>
+                                                <rect key="frame" x="0.0" y="530" width="375" height="1"/>
                                                 <color key="backgroundColor" red="0.4297707778" green="0.93670528880000004" blue="0.48656967540000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="xzD-8O-2cU"/>
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="KbT-yD-nd2" userLabel="Pasport Expired Input Stack View">
-                                                <rect key="frame" x="0.0" y="482" width="375" height="62"/>
+                                                <rect key="frame" x="0.0" y="531" width="375" height="62"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kelas Kabin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iDE-AU-PBY" userLabel="Pasport Expired Input Text Label">
                                                         <rect key="frame" x="0.0" y="0.0" width="78" height="17"/>
@@ -275,7 +311,7 @@
                                                 </constraints>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AFf-Cm-GZc" userLabel="Pasport Expired Separator View">
-                                                <rect key="frame" x="0.0" y="544" width="375" height="1"/>
+                                                <rect key="frame" x="0.0" y="593" width="375" height="1"/>
                                                 <color key="backgroundColor" red="0.4297707778" green="0.93670528880000004" blue="0.48656967540000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="lIL-3b-Tnq"/>
@@ -284,7 +320,7 @@
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zqU-Va-a6g" customClass="DesignableButton" customModule="Spring">
-                                        <rect key="frame" x="20" y="565" width="335" height="50"/>
+                                        <rect key="frame" x="20" y="614" width="335" height="50"/>
                                         <color key="backgroundColor" red="0.4297707778" green="0.93670528880000004" blue="0.48656967540000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="HYN-7Z-YsV"/>
@@ -325,12 +361,29 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="ToContainerView" destination="T1f-qn-QDh" id="cXx-6D-sqe"/>
+                        <outlet property="bannerPageControl" destination="GAZ-Us-p0L" id="Z0y-In-bSe"/>
+                        <outlet property="bannerPagerView" destination="AiC-Bw-uLn" id="6uR-mc-crF"/>
+                        <outlet property="classButton" destination="X3F-wQ-vEr" id="LRm-db-S9p"/>
                         <outlet property="classContainerView" destination="D4W-M5-c0Q" id="Wea-ft-VJq"/>
+                        <outlet property="configureRoundStackView" destination="EfW-ps-HGc" id="BHe-SM-bf5"/>
+                        <outlet property="destinationButton" destination="Jdp-PF-roX" id="M4t-sH-qXG"/>
+                        <outlet property="destinationLabel" destination="EOM-rr-Zvc" id="cdu-Rf-lTS"/>
+                        <outlet property="destinationMenuStackView" destination="KgM-vw-dB8" id="Flq-Rx-8DM"/>
+                        <outlet property="destinationSeparatorView" destination="9v6-Mq-e4h" id="Q8U-7G-Hc6"/>
                         <outlet property="flightFormStackView" destination="seg-s0-ShT" id="hBK-Aw-bv7"/>
                         <outlet property="fromContainerView" destination="w7E-UF-tKA" id="Q9b-pS-SZE"/>
                         <outlet property="fromInputStackView" destination="fRE-4M-RB9" id="LG1-gD-gOm"/>
                         <outlet property="orderFirstButton" destination="zqU-Va-a6g" id="CR9-ld-y58"/>
+                        <outlet property="originButton" destination="REJ-fU-4im" id="rD3-RF-sVw"/>
+                        <outlet property="originLabel" destination="uWh-uO-tjx" id="6tc-nq-keg"/>
+                        <outlet property="originMenuStackView" destination="uBd-P6-kAt" id="hSI-bq-t3N"/>
+                        <outlet property="originSeparatorView" destination="wUv-7c-Xon" id="2ps-mK-Tr9"/>
+                        <outlet property="passengerButton" destination="din-6F-J2N" id="4dy-Dk-0bO"/>
+                        <outlet property="passengerMenuStackView" destination="RyJ-Ja-46a" id="LdF-56-Ns7"/>
                         <outlet property="passengersContainerView" destination="Sg5-tJ-nKS" id="Z5g-ls-x7b"/>
+                        <outlet property="passengersLabel" destination="eaJ-6d-joX" id="4op-AR-rxA"/>
+                        <outlet property="passengersSeparatorView" destination="zCx-Hx-Pum" id="ZYF-jl-Zxc"/>
+                        <outlet property="roundDestinationButton" destination="jS1-1G-HRA" id="JWm-rE-X2e"/>
                         <outlet property="scrollView" destination="iXt-Vx-Dq9" id="11Z-w4-Qnl"/>
                     </connections>
                 </viewController>
@@ -657,6 +710,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="crosspath-icon-button" width="30" height="30"/>
         <image name="pick-green-arrow" width="50" height="44"/>
     </resources>
 </document>

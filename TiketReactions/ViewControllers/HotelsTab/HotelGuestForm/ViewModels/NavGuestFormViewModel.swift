@@ -7,22 +7,26 @@
 //
 
 import Foundation
+import Prelude
 import ReactiveSwift
 import Result
-import TiketAPIs
+import TiketKitModels
 
 public protocol NavGuestFormViewModelInputs {
     func configWith(room: AvailableRoom)
     func bookingButtonTapped()
     func configFromContactInfo()
     func configFormGuest(_ guest: CheckoutGuestParams)
+    func form(completed: Bool)
     func viewDidLoad()
 }
 
 
 public protocol NavGuestFormViewModelOutputs {
     var checkoutGuestParam: Signal<CheckoutGuestParams, NoError> { get }
-    var goToPayment: Signal<AddOrderEnvelope, NoError> { get }
+    var diagnosticEvent: Signal<String, NoError> { get }
+    var totalPriceText: Signal<String, NoError> { get }
+    var isCheckoutButtonEnabled: Signal<Bool, NoError> { get }
     var showLoadingOverlay: Signal<Bool, NoError> { get }
 }
 
@@ -35,12 +39,18 @@ public final class NavGuestFormViewModel: NavGuestFormViewModelType, NavGuestFor
 
     public init() {
         
-        self.goToPayment = Signal.combineLatest(self.configWithData.signal.skipNil(), self.bookingButtonTappedProperty.signal.mapConst(true)).switchMap { room, book in
-            AppEnvironment.current.apiService.addOrder(url: room.bookURI).demoteErrors()
-        }
+        let roomCheckout = self.configWithData.signal.skipNil()
+        let guest = self.configFormGuestProperty.signal.skipNil()
+        
+        let checkoutGuest = Signal.combineLatest(self.configWithData.signal.skipNil(), self.configFormGuestProperty.signal.skipNil())
+        
+        self.totalPriceText = roomCheckout.signal.map { "\(Format.symbolForCurrency($0.currency)) \(Localizations.PricepernightHotelTitle(Format.currency($0.price, country: "Rp")))" }
+        
+        self.diagnosticEvent = .empty
+        self.isCheckoutButtonEnabled = self.formCompletedProperty.signal
         
         self.showLoadingOverlay = self.bookingButtonTappedProperty.signal.mapConst(true)
-        self.checkoutGuestParam = .empty
+        self.checkoutGuestParam = self.configFormGuestProperty.signal.skipNil()
     }
     
     fileprivate let configWithData = MutableProperty<AvailableRoom?>(nil)
@@ -63,13 +73,20 @@ public final class NavGuestFormViewModel: NavGuestFormViewModelType, NavGuestFor
         self.configFormGuestProperty.value = guest
     }
     
+    fileprivate let formCompletedProperty = MutableProperty(false)
+    public func form(completed: Bool) {
+        self.formCompletedProperty.value = completed
+    }
+    
     fileprivate let viewDidLoadProperty = MutableProperty(())
     public func viewDidLoad() {
         self.viewDidLoadProperty.value = ()
     }
     
-    public let goToPayment: Signal<AddOrderEnvelope, NoError>
     public let checkoutGuestParam: Signal<CheckoutGuestParams, NoError>
+    public let diagnosticEvent: Signal<String, NoError>
+    public let totalPriceText: Signal<String, NoError>
+    public let isCheckoutButtonEnabled: Signal<Bool, NoError>
     public let showLoadingOverlay: Signal<Bool, NoError>
     
     public var inputs: NavGuestFormViewModelInputs { return self }

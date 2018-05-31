@@ -5,12 +5,13 @@
 //  Created by Firas Rafislam on 28/01/18.
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
-
+import Prelude
+import TiketKitModels
 import UIKit
 
 class AirportViewCell: UITableViewCell, ValueCell {
     
-    typealias Value = String
+    typealias Value = AirportResult
     
     @IBOutlet fileprivate weak var cityLabel: UILabel!
     @IBOutlet fileprivate weak var airportLabel: UILabel!
@@ -27,8 +28,19 @@ class AirportViewCell: UITableViewCell, ValueCell {
         // Configure the view for the selected state
     }
     
-    func configureWith(value: String) {
-        self.airportLabel?.text = value
+    override func bindStyles() {
+        super.bindStyles()
+    }
+    
+    func configureWith(value: AirportResult) {
+        _ = self.airportLabel
+            |> UILabel.lens.text .~ value.airportName
+        
+        _ = self.cityLabel
+            |> UILabel.lens.text .~ value.locationName
+        
+        _ = self.airportCodeLabel
+            |> UILabel.lens.text .~ value.airportCode
     }
     
 }

@@ -10,13 +10,8 @@ import ReactiveSwift
 import Result
 import XCTest
 import UserNotifications
-@testable import TiketComponents
-@testable import TiketAPIs
 
 class AppDelegateViewModelTests: XCTestCase {
-    let vm: AppDelegateViewModelType = AppDelegateViewModel()
-    
-    fileprivate let presentViewController = TestObserver<Int, NoError>()
     
     override func setUp() {
         super.setUp()

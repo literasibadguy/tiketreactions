@@ -6,4 +6,210 @@
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 
-import Foundation
+import Argo
+import Curry
+import Runes
+
+public struct FlightOrderData {
+    public let expire: Int
+    public let orderDetailId: String
+    public let orderExpireDatetime: String
+    public let orderType: String
+    public let orderName: String
+    public let orderNameDetail: String
+    public let tenor: String
+    public let detail: FlightOrderDataDetail
+    public let orderPhoto: String
+    public let tax: Int
+    public let itemCharge: Int
+    public let subtotalAndCharge: String
+    public let deleteUri: String
+}
+
+public struct FlightOrderDataDetail {
+    public let orderDetailId: String
+    public let flightStatus: FlightStatus
+    
+    public struct FlightStatus {
+        public let airlinesName: String
+        public let flightNumber: String
+        public let priceAdult: String
+        
+        public let priceChild: String
+        public let priceInfant: String
+        public let flightDate: String
+        public let departureTime: String
+        
+        public let arrivalTime: String
+        public let baggageFee: String
+        public let departureAirportName: String
+        public let arrivalAirportName: String
+    }
+    
+    public let passengers: [AdultPassenger]
+    public let priceTotal: Int
+    public let breakDownPrice: [SeparatePrice]
+    
+    public struct AdultPassenger {
+        public let orderPassengerId: String
+        public let orderDetailId: String
+        public let type: String
+        public let firstName: String
+        
+        public let lastName: String
+        public let title: String
+        public let idNumber: String
+        // Passengers International
+        public let internationalPassenger: InternationalPassenger
+        
+        public struct InternationalPassenger {
+            public let birthDate: String?
+            public let adultIndex: String?
+            public let passportNo: String?
+            public let passportExpiry: String?
+            
+            public let passportIssuingCountry: String?
+            public let passportNationality: String?
+            public let checkInBaggage: String?
+            public let checkInBaggageSize: String?
+            
+            public let passportIssuedDate: String?
+            public let birthCountry: String?
+        }
+        
+    }
+    
+    public struct SeparatePrice {
+        public let category: String
+        public let type: String
+        public let value: Int
+        public let currency: String
+        public let text: String
+    }
+}
+
+extension FlightOrderData: Argo.Decodable {
+    public static func decode(_ json: JSON) -> Decoded<FlightOrderData> {
+        let tmp1 = curry(FlightOrderData.init)
+            <^> json <| "expire"
+            <*> json <| "order_detail_id"
+            <*> json <| "order_expire_datetime"
+            <*> json <| "order_type"
+            <*> json <| "order_name"
+        
+        let tmp2 = tmp1
+            <*> json <| "order_name_detail"
+            <*> json <| "tenor"
+            <*> json <| "detail"
+            <*> json <| "order_photo"
+        
+        return tmp2
+            <*> json <| "tax"
+            <*> json <| "item_charge"
+            <*> json <| "subtotal_and_charge"
+            <*> json <| "delete_uri"
+    }
+}
+
+extension FlightOrderDataDetail: Argo.Decodable {
+    public static func decode(_ json: JSON) -> Decoded<FlightOrderDataDetail> {
+        let tmp1 = curry(FlightOrderDataDetail.init)
+            <^> json <| "order_detail_id"
+            <*> FlightStatus.decode(json)
+            <*> json <|| ["passengers", "adult"]
+        
+        return tmp1
+            <*> json <| "price"
+            <*> json <|| "breakdown_price"
+    }
+}
+
+extension FlightOrderDataDetail.FlightStatus: Argo.Decodable {
+    public static func decode(_ json: JSON) -> Decoded<FlightOrderDataDetail.FlightStatus> {
+        let tmp1 = curry(FlightOrderDataDetail.FlightStatus.init)
+            <^> json <| "airlines_name"
+            <*> json <| "flight_number"
+            <*> json <| "price_adult"
+        
+        let tmp2 = tmp1
+            <*> json <| "price_child"
+            <*> json <| "price_infant"
+            <*> json <| "flight_date"
+            <*> json <| "departure_time"
+        
+        return tmp2
+            <*> json <| "arrival_time"
+            <*> json <| "baggage_fee"
+            <*> json <| "departure_airport_name"
+            <*> json <| "arrival_airport_name"
+    }
+}
+
+extension FlightOrderDataDetail.AdultPassenger: Argo.Decodable {
+    public static func decode(_ json: JSON) -> Decoded<FlightOrderDataDetail.AdultPassenger> {
+        let tmp1 = curry(FlightOrderDataDetail.AdultPassenger.init)
+            <^> json <| "order_passenger_id"
+            <*> json <| "order_detail_id"
+            <*> json <| "type"
+            <*> json <| "first_name"
+        
+        return tmp1
+            <*> json <| "last_name"
+            <*> json <| "title"
+            <*> json <| "id_number"
+            <*> InternationalPassenger.decode(json)
+    }
+}
+
+extension FlightOrderDataDetail.AdultPassenger.InternationalPassenger: Argo.Decodable {
+    public static func decode(_ json: JSON) -> Decoded<FlightOrderDataDetail.AdultPassenger.InternationalPassenger> {
+        
+        let create = curry(FlightOrderDataDetail.AdultPassenger.InternationalPassenger.init)
+        
+        let nil1 = create
+            <^> .success(nil)
+            <*> .success(nil)
+            <*> .success(nil)
+            <*> .success(nil)
+        
+        let nil2 = nil1
+            <*> .success(nil)
+            <*> .success(nil)
+            <*> .success(nil)
+            <*> .success(nil)
+        
+        let nil3 = nil2
+            <*> .success(nil)
+            <*> .success(nil)
+        
+        let tmp1 = create
+            <^> json <|? "birth_date"
+            <*> json <|? "adult_index"
+            <*> json <|? "passport_no"
+            <*> json <|? "passport_expiry"
+        
+        let tmp2 = tmp1
+            <*> json <|? "passport_issuing_country"
+            <*> json <|? "passport_nationality"
+            <*> json <|? "check_in_baggage"
+            <*> json <|? "check_in_baggage_size"
+        
+        let tmp3 = tmp2
+            <*> json <|? "passport_issued_Date"
+            <*> json <|? "birth_country"
+        
+        return nil3 <|> tmp3
+    }
+}
+
+extension FlightOrderDataDetail.SeparatePrice: Argo.Decodable {
+    public static func decode(_ json: JSON) -> Decoded<FlightOrderDataDetail.SeparatePrice> {
+        return curry(FlightOrderDataDetail.SeparatePrice.init)
+            <^> json <| "category"
+            <*> json <| "type"
+            <*> json <| "value"
+            <*> json <| "currency"
+            <*> json <| "text"
+    }
+}
+
