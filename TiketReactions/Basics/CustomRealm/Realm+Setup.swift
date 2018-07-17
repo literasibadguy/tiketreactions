@@ -1,8 +1,8 @@
 //
-//  IssuedListDataSource.swift
+//  Realm+Setup.swift
 //  TiketReactions
 //
-//  Created by Firas Rafislam on 27/06/18.
+//  Created by Firas Rafislam on 16/07/18.
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 
