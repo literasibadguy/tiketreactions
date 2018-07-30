@@ -41,7 +41,8 @@ internal final class PickRoomNavVC: UIViewController {
         
         _ = startingPriceLabel
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
-            |> UILabel.lens.font .~ UIFont.systemFont(ofSize: 16.0)
+            |> UILabel.lens.font .~ UIFont.boldSystemFont(ofSize: 16.0)
+            |> UILabel.lens.numberOfLines .~ 2
         
         _ = self.roomNavSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_base_grey_100
@@ -53,7 +54,7 @@ internal final class PickRoomNavVC: UIViewController {
         self.startingPriceLabel.rac.text = self.viewModel.outputs.startPriceRoomTitleText
         
         self.viewModel.outputs.goToAvailableRooms
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] direct, summary in
                 self?.goToAvailableRooms(hotelDirect: direct, booking: summary)
         }

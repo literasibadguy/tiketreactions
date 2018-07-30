@@ -23,12 +23,14 @@ public func isValidEmail(_ email: String) -> Bool {
 }
 
 
-public func isValidPhone(_ phone: String) -> Bool {
+public func isValidPhone(_ phone: String, code: String) -> Bool {
 //    let regex = try? NSRegularExpression(pattern: phonePatter, options: [])
+    
+    print("WHATS CURRENT CODE PHONE NUMBER: \(code)")
     
     let kitNumber = PhoneNumberKit()
     do {
-        let _ = try kitNumber.parse(phone, withRegion: "ID")
+        let _ = try kitNumber.parse(phone, withRegion: code)
         return true
     } catch {
         return false

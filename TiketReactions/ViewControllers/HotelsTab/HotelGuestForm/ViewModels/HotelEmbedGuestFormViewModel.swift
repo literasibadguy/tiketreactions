@@ -8,6 +8,7 @@
 
 import Foundation
 import Prelude
+import RealmSwift
 import ReactiveSwift
 import Result
 import TiketKitModels
@@ -16,6 +17,7 @@ private struct CheckoutRetryError: Error {}
 
 public protocol HotelEmbedGuestFormViewModelInputs {
     func configureWith(hotelDirect: HotelDirect, availableRoom: AvailableRoom, booking: HotelBookingSummary)
+    func isFormFilled(_ valid: Bool)
     func configFormOrder(_ param: CheckoutGuestParams)
     func isThereAnotherGuest(_ should: Bool)
     func configAnotherGuest(salutation: String, fullname: String)
@@ -76,7 +78,7 @@ public final class HotelEmbedGuestFormViewModel: HotelEmbedGuestFormViewModelTyp
         self.configureGuestFormParam = .empty
         self.completeForm = .empty
         
-        self.notifyEnabled = self.configFormOrderProperty.signal.map { !$0.isNil }
+        self.notifyEnabled = self.formFilledProperty.signal.skipNil()
         
         let isLoading = MutableProperty(false)
         
@@ -87,37 +89,60 @@ public final class HotelEmbedGuestFormViewModel: HotelEmbedGuestFormViewModelTyp
                 AppEnvironment.current.apiService.addOrder(url: package.bookURI).on(starting: { isLoading.value = true }, completed: { isLoading.value = true },  terminated: { isLoading.value = false }).flatMapError { _ in
                     return SignalProducer(error: CheckoutRetryError())
                     }.flatMap { envelope -> SignalProducer<AddOrderEnvelope, CheckoutRetryError> in
+                        
+                        switch envelope.diagnostic.status {
+                        case .failed, .error, .timeout:
+                            return SignalProducer(error: CheckoutRetryError())
+                        case .successful:
+                            return SignalProducer(value: envelope)
+                        case .empty: break
+                            
+                        }
+                        
                         return SignalProducer(value: envelope)
-                }
+                }.retry(upTo: 2)
             }
-        }.materialize().takeWhen(self.remindCheckoutProperty.signal.filter(isTrue).ignoreValues())
+        }.materialize().takeWhen(self.remindCheckoutProperty.signal.skipNil().filter(isTrue).ignoreValues())
+        
+        addOrderEnvelope.values().observe(on: UIScheduler()).observeValues { envelope in
+            print("ADD ORDER: \(envelope)")
+        }
         
         let lastOrderEvent = addOrderEnvelope.signal.promoteError(CheckoutRetryError.self).switchMap { _ in SignalProducer<(), CheckoutRetryError>(value: ()).ck_delay(.seconds(1), on: AppEnvironment.current.scheduler).flatMap {
-            AppEnvironment.current.apiService.fetchHotelOrder().on(starting: { isLoading.value = true }, completed: { isLoading.value = true }, terminated: { isLoading.value = false }).flatMapError { _ in return SignalProducer(error: CheckoutRetryError()) }.flatMap { envelope -> SignalProducer<HotelOrderEnvelope, CheckoutRetryError> in
-                    return SignalProducer(value: envelope)
+            AppEnvironment.current.apiService.fetchHotelOrder().on(starting: { isLoading.value = true }, completed: { isLoading.value = true }, terminated: { isLoading.value = false }).flatMapError { _ in return SignalProducer(error: CheckoutRetryError()) }
+                .flatMap { envelope -> SignalProducer<HotelOrderEnvelope, CheckoutRetryError> in
+                
+                switch envelope.diagnostic.status {
+                    case .failed, .empty, .error, .timeout:
+                        return SignalProducer(error: CheckoutRetryError())
+                    case .successful:
+                        return SignalProducer(value: envelope)
                 }
+                }.retry(upTo: 2)
             }
         }.materialize()
         
-        let myOrder = lastOrderEvent.values().signal.map { $0.myOrder }
-        let lastOrderDetailId = myOrder.signal.map { $0.orderData }.filter { !$0.isEmpty }.map { $0.last!.orderDetailId }
+        let myOrder = lastOrderEvent.values().signal.map { $0.myOrder }.skipNil()
+        
+        let lastOrderDetailId = myOrder.signal.map { $0.orderData }.filter { !$0.isEmpty }
+            .map { $0.last!.orderDetailId }
         
         lastOrderDetailId.observe(on: UIScheduler()).observeValues { lastDetailId in
-            print("WHATS LAST ORDER DETAIL ID: \(lastDetailId)")
+            print("WHATS LAST ORDER DETAIL ID: \(String(describing: lastDetailId))")
         }
         
-        let checkoutRequestLink = lastOrderEvent.values().signal.filter { !$0.checkout.isEmpty }.map { $0.checkout
+        let checkoutRequestLink = lastOrderEvent.values().signal.filter { $0.checkout != nil }.map { $0.checkout
         }
         
         checkoutRequestLink.observe(on: UIScheduler()).observeValues { checkoutURI in
-            print("WHATS CHECKOUT URI: \(checkoutURI)")
+            print("WHATS CHECKOUT URI: \(String(describing: checkoutURI))")
         }
         
         self.isOrderCompleted = lastOrderEvent.values()
         
         let loginParams = self.configFormOrderProperty.signal.skipNil().switchMap { params -> SignalProducer<CheckoutLoginParams, NoError> in
             let new = .defaults
-                |> CheckoutLoginParams.lens.salutation .~ "Mr"
+                |> CheckoutLoginParams.lens.salutation .~ params.conSalutation
                 |> CheckoutLoginParams.lens.firstName .~ params.conFirstName
                 |> CheckoutLoginParams.lens.lastName .~ params.conLastName
                 |> CheckoutLoginParams.lens.email .~ params.conEmailAddress
@@ -132,11 +157,12 @@ public final class HotelEmbedGuestFormViewModel: HotelEmbedGuestFormViewModelTyp
         
         let checkoutPageRequestEnvelope = checkoutRequestLink.signal.promoteError(CheckoutRetryError.self).switchMap { checkout in
             SignalProducer<(), CheckoutRetryError>(value: ()).ck_delay(.seconds(1), on: AppEnvironment.current.scheduler).flatMap {
-                AppEnvironment.current.apiService.checkoutPageRequest(url: checkout).on(starting: { isLoading.value = true }, completed: { isLoading.value = true },  terminated: { isLoading.value = false }).flatMapError {
+                AppEnvironment.current.apiService.checkoutPageRequest(url: checkout!).on(starting: { isLoading.value = true }, completed: { isLoading.value = true },  terminated: { isLoading.value = false }).flatMapError {
                     _ in return SignalProducer(error: CheckoutRetryError())
                     }.flatMap { envelope -> SignalProducer<CheckoutPageRequestEnvelope, CheckoutRetryError> in
                         return SignalProducer(value: envelope)
-                }
+                    
+                }.retry(upTo: 2)
             }
         }.materialize()
         
@@ -144,24 +170,12 @@ public final class HotelEmbedGuestFormViewModel: HotelEmbedGuestFormViewModelTyp
             print("WHAT STATUS CHECKOUT: \(envelope.diagnostic.status)")
         }
         
-        let errorCheckoutPage = checkoutPageRequestEnvelope.values().filter { $0.diagnostic.status == 204 }
-        
-        /*
-        let deleteOrderEvent =  myOrder.signal.map { $0.orderData }.filter { !$0.isEmpty }.map { $0.last!.deleteUri }.switchMap { orderData in
-            AppEnvironment.current.apiService.deleteOrder(url: orderData).materialize()
-        }.values().takeWhen(self.errorDismisssProperty.signal.ignoreValues())
-        
-        
-        deleteOrderEvent.signal.observe(on: UIScheduler()).observeValues { whats in
-            print("DELETING ORDER: \(whats.diagnostic)")
-        }
-        */
+        let errorCheckoutPage = Signal.merge(checkoutPageRequestEnvelope.values().filter { $0.diagnostic.status == .error }.ignoreValues(), addOrderEnvelope.values().filter { $0.diagnostic.status == .error }.ignoreValues())
         
         self.dismissAlert = self.errorDismisssProperty.signal.filter { $0 == true }.ignoreValues()
         
-        let takeCheckoutCustomer = checkoutPageRequestEnvelope.values().filter { $0.diagnostic.status == 200 }.map { $0.nextCheckoutURI }
+        let takeCheckoutCustomer = checkoutPageRequestEnvelope.values().filter { $0.diagnostic.status == .successful }.map { $0.nextCheckoutURI }
 
-        
         let checkoutLoginEvent = Signal.combineLatest(takeCheckoutCustomer, loginParams.values()).switchMap {
             
             AppEnvironment.current.apiService.checkoutLogin(url: $0.0, params: $0.1).ck_delay(AppEnvironment.current.apiDelayInterval, on: AppEnvironment.current.scheduler).on(starting: { isLoading.value = true }, completed: { isLoading.value = true }, terminated: { isLoading.value = false }).retry(upTo: 3).demoteErrors()
@@ -188,20 +202,28 @@ public final class HotelEmbedGuestFormViewModel: HotelEmbedGuestFormViewModelTyp
             }
             }.materialize()
         
-        
-        let checkoutErrorCustomer = checkoutCustomerRequestEnvelope.values().filter { $0.diagnostic.status != 200 }
+        let emailPick = checkoutCustomerRequestEnvelope.values().filter { $0.diagnostic.status == .successful }
+        let checkoutErrorCustomer = checkoutCustomerRequestEnvelope.values().filter { $0.diagnostic.status != .successful }
 
-        self.errorAlert = Signal.merge(errorCheckoutPage.ignoreValues(), falseCheckoutLoginEvent, checkoutErrorCustomer.ignoreValues()).map { Localizations.ConfirmerrorTitle }
+        self.errorAlert = Signal.merge(errorCheckoutPage.ignoreValues(), falseCheckoutLoginEvent, checkoutErrorCustomer.ignoreValues(), checkoutCustomerRequestEnvelope.errors().ignoreValues()).map { Localizations.ConfirmerrorTitle }
+        self.orderIsLoading = Signal.merge(self.viewDidLoadProperty.signal.mapConst(false), self.remindCheckoutProperty.signal.skipNil().filter(isTrue), checkoutCustomerRequestEnvelope.values().map { $0.diagnostic.status != .successful })
+        self.loadingOverlayIsHidden = Signal.merge(self.viewDidLoadProperty.signal.mapConst(true), self.remindCheckoutProperty.signal.skipNil().filter(isTrue).map { _ in return false },
+                                                   checkoutCustomerRequestEnvelope.values().map { $0.diagnostic.status == .successful })
         
-        self.orderIsLoading = Signal.merge(self.viewDidLoadProperty.signal.mapConst(false), self.remindCheckoutProperty.signal.mapConst(true), checkoutCustomerRequestEnvelope.values().map { $0.diagnostic.status != 200 })
-        self.loadingOverlayIsHidden = Signal.merge(self.viewDidLoadProperty.signal.mapConst(true), self.remindCheckoutProperty.signal.mapConst(false), checkoutCustomerRequestEnvelope.values().map { $0.diagnostic.status == 200 })
+        // Should be Side Effect 'On'
+        let decidedOrder = Signal.combineLatest(myOrder, emailPick).on(value: { saveIssuedOrder($0.0.orderId, email: $0.1.loginEmail) }).map(first)
         
-        self.goToPayments = myOrder.takeWhen(checkoutCustomerRequestEnvelope.values().filter { $0.diagnostic.status == 200 })
+        self.goToPayments = decidedOrder.takeWhen(emailPick)
     }
     
-    private let configDataProperty = MutableProperty<(HotelDirect, AvailableRoom, HotelBookingSummary)?>(nil)
+    fileprivate let configDataProperty = MutableProperty<(HotelDirect, AvailableRoom, HotelBookingSummary)?>(nil)
     public func configureWith(hotelDirect: HotelDirect, availableRoom: AvailableRoom, booking: HotelBookingSummary) {
         self.configDataProperty.value = (hotelDirect, availableRoom, booking)
+    }
+    
+    fileprivate let formFilledProperty = MutableProperty<Bool?>(nil)
+    public func isFormFilled(_ valid: Bool) {
+        self.formFilledProperty.value = valid
     }
     
     private let configFormOrderProperty = MutableProperty<CheckoutGuestParams?>(nil)
@@ -224,7 +246,7 @@ public final class HotelEmbedGuestFormViewModel: HotelEmbedGuestFormViewModelTyp
         self.errorDismisssProperty.value = shouldDismiss
     }
     
-    private let remindCheckoutProperty = MutableProperty(false)
+    private let remindCheckoutProperty = MutableProperty<Bool?>(nil)
     public func remindAlertTappedOK(shouldCheckOut: Bool) {
         self.remindCheckoutProperty.value = shouldCheckOut
     }
@@ -295,7 +317,7 @@ private func getLastOrderDetailId() -> SignalProducer<String, CheckoutRetryError
     
     return AppEnvironment.current.apiService.fetchHotelOrder().mapError { _ in CheckoutRetryError() }.flatMap { env -> SignalProducer<String, CheckoutRetryError> in
         
-        guard let myOrder = env.myOrder.orderData.last else { return .empty }
+        guard let myOrder = env.myOrder?.orderData.last else { return .empty }
         let selectedDetailId = myOrder.orderDetailId
         
         return SignalProducer(value: selectedDetailId)
@@ -308,34 +330,30 @@ private func getCheckoutLinkRequest() -> SignalProducer<String, CheckoutRetryErr
         
         let checkoutLink = env.checkout
         
-        return SignalProducer(value: checkoutLink)
+        return SignalProducer(value: checkoutLink!)
     }
 }
 
-private func isSimpleValid(title: String, name: String, email: String, phone: String) -> Bool {
-    return !title.isEmpty && !name.isEmpty && isValidEmail(email) && isValidPhone(phone)
+private func triggerIssuedEmail(_ email: String) {
+    if let index = AppEnvironment.current.userDefaults.emailDetailLogins.index(of: email) {
+        print("Trigger Issued Email Detail Logins on Removing")
+        AppEnvironment.current.userDefaults.emailDetailLogins.remove(at: index)
+    } else {
+        print("Appending")
+        AppEnvironment.current.userDefaults.emailDetailLogins.append(email)
+    }
 }
 
-private func isValid(title: String, firstname: String, lastname: String, email: String, phone: String) -> Bool {
-    return !title.isEmpty && !firstname.isEmpty && !lastname.isEmpty && isValidEmail(email) && isValidPhone(phone)
-}
-
-/*
-private func createCustomerCheckout(checkoutURI: String, customer: CheckoutGuestParams) -> SignalProducer<URLRequest, CheckoutRetryError> {
+private func saveIssuedOrder(_ orderId: String, email: String) {
+    let realm = try! Realm()
+    try! realm.write {
+        let issue = IssuedOrder()
+        issue.orderId = orderId
+        issue.email = email
+        let issueList = realm.objects(IssuedOrderList.self).first!
+        issueList.items.append(issue)
+        realm.add(issueList)
+        print("Realm Should Write something here \(orderId) \(email)")
+    }
     
-    return AppEnvironment.current.apiService
-        .checkoutHotelCustomer(url: checkoutURI,
-        params: customer
-        ).mapError { _ in CheckoutRetryError() }.flatMap { env -> SignalProducer<URLRequest, CheckoutRetryError> in
-            
-            let paymentURI = env.nextPaymentUrl
-            
-            guard let url = URL(string: paymentURI) else { return .empty }
-            
-            let request = URLRequest(url: url)
-            return SignalProducer(value: request)
-    }
 }
- */
-
-

@@ -14,14 +14,16 @@ import TiketKitModels
 
 public protocol HotelDiscoveryFiltersViewModelInputs {
     func configureWith(_ hotels: SearchHotelEnvelopes)
-    func sortFiltersTapped(_ sort: String)
+    func configureWith(_ sort: SearchHotelParams.Sort)
+    func sortFiltersTapped(_ sort: SearchHotelParams.Sort)
     func confirmFilterButtonTapped()
     func viewDidLoad()
 }
 
 public protocol HotelDiscoveryFiltersViewModelOutputs {
-    var loadFilterDataSources: Signal<SearchHotelEnvelopes, NoError> { get }
+    var loadFilterDataSources: Signal<(), NoError> { get }
     var filteredParams: Signal<SearchHotelParams, NoError> { get }
+    var selectedSorts: Signal<SearchHotelParams.Sort, NoError> { get }
     var hotelResultsText: Signal<String, NoError> { get }
 }
 
@@ -36,19 +38,27 @@ public final class HotelDiscoveryFiltersViewModel: HotelDiscoveryFiltersViewMode
         
         let currentParam = Signal.combineLatest(self.configHotelsEnvelopeProperty.signal.skipNil(), self.viewDidLoadProperty.signal).map(first)
         
+        let currentSort = Signal.combineLatest(self.configSortProperty.signal.skipNil(), self.viewDidLoadProperty.signal).map(first)
+        
         let clearResults = currentParam.map { $0.searchHotelResults }
         
 //        let fiveRating = clearResults.filterMap { $0.map { $0.starRating == "5" } }
         
-        self.loadFilterDataSources = currentParam
+        self.loadFilterDataSources = currentSort.ignoreValues()
+        
+        let queen = currentParam.map { $0.searchQueries }
+        
+        let customized = Signal.merge(queen.map { $0.sort! }, self.sortFilterTappedProperty.signal.skipNil())
         
         let updatedParams = Signal.combineLatest(currentParam, sortFilterTappedProperty.signal.skipNil()).switchMap { envelope, sortSelected -> SignalProducer<SearchHotelParams, NoError> in
             let updated = envelope.searchQueries
+//                |> SearchHotelParams.lens.query .~ envelope.searchQueries.mainCountry?.replacingOccurrences(of: " ", with: "%20")
+                |> SearchHotelParams.lens.query .~ "Jakarta"
                 |> SearchHotelParams.lens.sort .~ sortSelected
             return SignalProducer(value: updated)
         }.materialize()
         
-        
+        self.selectedSorts = Signal.merge(currentSort, self.sortFilterTappedProperty.signal.skipNil()).takeWhen(self.confirmFilterTappedProperty.signal)
         
         self.filteredParams = updatedParams.values().takeWhen(self.confirmFilterTappedProperty.signal)
         self.hotelResultsText = currentParam.map { " \(Localizations.ApplybuttonTitle) -\(Localizations.FilterHotelresultsTitle($0.pagination.totalFound))" }
@@ -59,8 +69,13 @@ public final class HotelDiscoveryFiltersViewModel: HotelDiscoveryFiltersViewMode
         self.configHotelsEnvelopeProperty.value = hotels
     }
     
-    fileprivate let sortFilterTappedProperty = MutableProperty<String?>(nil)
-    public func sortFiltersTapped(_ sort: String) {
+    fileprivate let configSortProperty = MutableProperty<SearchHotelParams.Sort?>(nil)
+    public func configureWith(_ sort: SearchHotelParams.Sort) {
+        self.configSortProperty.value = sort
+    }
+    
+    fileprivate let sortFilterTappedProperty = MutableProperty<SearchHotelParams.Sort?>(nil)
+    public func sortFiltersTapped(_ sort: SearchHotelParams.Sort) {
         self.sortFilterTappedProperty.value = sort
     }
     
@@ -74,8 +89,9 @@ public final class HotelDiscoveryFiltersViewModel: HotelDiscoveryFiltersViewMode
         self.viewDidLoadProperty.value = ()
     }
     
-    public let loadFilterDataSources: Signal<SearchHotelEnvelopes, NoError>
+    public let loadFilterDataSources: Signal<(), NoError>
     public let filteredParams: Signal<SearchHotelParams, NoError>
+    public let selectedSorts: Signal<SearchHotelParams.Sort, NoError>
     public let hotelResultsText: Signal<String, NoError>
     
     public var inputs: HotelDiscoveryFiltersViewModelInputs { return self }

@@ -72,6 +72,9 @@ internal final class DestinationHotelListVC: UIViewController, UITableViewDelega
             |> UITableView.lens.rowHeight .~ UITableViewAutomaticDimension
             |> UITableView.lens.estimatedRowHeight .~ 88.0
         
+        _ = self.searchBar
+            |> UISearchBar.lens.tintColor .~ .tk_official_green
+        
         _ = self.loadingIndicatorView
             |> baseActivityIndicatorStyle
         
@@ -89,12 +92,6 @@ internal final class DestinationHotelListVC: UIViewController, UITableViewDelega
         
         self.loadingIndicatorView.rac.animating = self.viewModel.outputs.resultsAreLoading
         
-        self.viewModel.outputs.fetchingLocation
-            .observe(on: UIScheduler())
-            .observeValues { [weak self] in
-                self?.getCurrentLocation()
-        }
-        
         self.viewModel.outputs.initialCurrentLocation
             .observe(on: UIScheduler())
             .observeValues { [weak self] current in
@@ -107,7 +104,7 @@ internal final class DestinationHotelListVC: UIViewController, UITableViewDelega
         self.viewModel.outputs.results
             .observe(on: UIScheduler())
             .observeValues { [weak self] results in
-                self?.getCurrentLocation()
+//                self?.getCurrentLocation()
                 self?.dataSource.load(results: results)
                 self?.hotelDestinationTableView.reloadData()
         }
@@ -129,8 +126,6 @@ internal final class DestinationHotelListVC: UIViewController, UITableViewDelega
         if let expandableRow = self.dataSource.destHotelRow(indexPath: indexPath) {
             print("WHAT SELECTED: \(expandableRow.category)")
             self.viewModel.inputs.tapped(hotelResult: expandableRow)
-        } else if let suggestLocation = self.dataSource.suggestLocationRow(indexPath: indexPath) {
-            
         }
 //        self.dismiss(animated: true, completion: nil)
     }
@@ -194,7 +189,6 @@ extension DestinationHotelListVC: CLLocationManagerDelegate {
     private func lookUpCurrentLocation(lastLocation: CLLocation, completionHandler: @escaping (GMSAddress?)
         -> Void ) {
         // Use the last reported location.
-        let geocoder = CLGeocoder()
         
         let googleGeocoder = GMSGeocoder()
         

@@ -24,17 +24,16 @@ internal final class HotelGuestFormDataSource: ValueCellDataSource {
         self.set(values: [summary], cellClass: OrderFirstViewCell.self, inSection: Section.orderSummary.rawValue)
         self.set(values: [1], cellClass: ContactInfoViewCell.self, inSection: Section.contactForm.rawValue)
         self.set(values: [1], cellClass: GuestOptionViewCell.self, inSection: Section.guestOption.rawValue)
+//        self.set(values: [1], cellClass: GuestFormTableViewCell.self, inSection: Section.guestForm.rawValue)
+
     }
     
-    internal func loadForAnotherGuest(_ param: CheckoutGuestParams) {
-        
-        self.appendRow(value: param, cellClass: GuestFormTableViewCell.self, toSection: Section.guestForm.rawValue)
+    internal func loadedSourceParams(_ params: CheckoutGuestParams) {
+        self.set(values: [params], cellClass: GuestFormTableViewCell.self, inSection: Section.guestForm.rawValue)
     }
     
     internal func removeForAnotherGuest() -> [IndexPath] {
-        
         self.clearValues(section: Section.guestForm.rawValue)
-        
         return [IndexPath(row: 0, section: Section.guestForm.rawValue)]
     }
 

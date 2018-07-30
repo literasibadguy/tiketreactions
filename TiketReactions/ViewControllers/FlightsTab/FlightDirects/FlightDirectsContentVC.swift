@@ -104,6 +104,11 @@ extension FlightDirectsContentVC: ContactInfoViewCellDelegate {
         self.present(passengerPickerVC, animated: true, completion: nil)
     }
     
+    func goToRegionalCodePhoneVC(phoneVC: PhoneCodeListVC) {
+        
+    }
+    
+    
     func getContactInfoParams(guestForm: CheckoutGuestParams) {
         
     }

@@ -48,10 +48,11 @@ public final class HotelPaymentsViewModel: HotelPaymentsViewModelType, HotelPaym
         let availables = self.viewDidLoadProperty.signal.switchMap { _ in
             AppEnvironment.current.apiService.availablePaymentsHotel().demoteErrors()
         }
+        let checkoutToken = AppEnvironment.current.apiService.tiketToken?.token ?? ""
         
         self.paymentsAvailable = Signal.combineLatest(currentCheckout, availables)
         
-        let payLink = self.paymentTapProperty.signal.skipNil().switchMap { payment in bankTransfer(payment: payment).map { $0 }.materialize() }
+        let payLink = self.paymentTapProperty.signal.skipNil().switchMap { payment in creditCard(token: checkoutToken).map { $0 }.materialize() }
         
         self.goToPayment = payLink.values()
     }
@@ -90,6 +91,12 @@ public final class HotelPaymentsViewModel: HotelPaymentsViewModelType, HotelPaym
 
 private func bankTransfer(payment: AvailablePaymentEnvelope.AvailablePayment) -> SignalProducer<URLRequest, NoError> {
     guard let url = URL(string: payment.link.appending("?btn_booking=1&currency=IDR")) else { return .empty }
+    let request = URLRequest(url: url)
+    return SignalProducer(value: request)
+}
+
+private func creditCard(token: String) -> SignalProducer<URLRequest, NoError> {
+    guard let url = URL(string: "https://sandbox.tiket.com/payment/checkout_payment?checkouttoken=\(token)") else { return .empty }
     let request = URLRequest(url: url)
     return SignalProducer(value: request)
 }

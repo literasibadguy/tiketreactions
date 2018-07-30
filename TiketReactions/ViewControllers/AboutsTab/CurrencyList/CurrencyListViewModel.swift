@@ -14,6 +14,7 @@ import TiketKitModels
 public protocol CurrencyListViewModelInputs {
     func configureWith(_ code: String)
     func selected(currency: CurrencyListEnvelope.Currency)
+    func searchBarChanged(_ text: String)
     func cancelButtonTapped()
     func viewDidLoad()
 }
@@ -40,7 +41,17 @@ public final class CurrencyListViewModel: CurrencyListViewModelType, CurrencyLis
         }
         self.currenciesAreLoading = serviceAreLoading.signal
         
-        self.currencies = currentService.values().map { $0.currencies }
+        let currencies = currentService.values().map { $0.currencies }
+        
+        let lowerCased = self.searchBarTextProperty.signal.filter { $0 != "" }.map { $0.lowercased() }
+        
+        let resultSearch = Signal.combineLatest(currencies, lowerCased).map { currencies, lowercase in
+            currencies.filter { currency in
+                return currency.name.lowercased().contains(lowercase.lowercased())
+            }
+        }
+        
+        self.currencies = Signal.merge(currencies, resultSearch)
         
         self.selectedCurrency = self.selectedCurrencyProperty.signal.skipNil()
         
@@ -57,10 +68,17 @@ public final class CurrencyListViewModel: CurrencyListViewModelType, CurrencyLis
         self.selectedCurrencyProperty.value = currency
     }
     
+    fileprivate let searchBarTextProperty = MutableProperty("")
+    public func searchBarChanged(_ text: String) {
+        self.searchBarTextProperty.value = text
+    }
+    
     fileprivate let cancelTappedProperty = MutableProperty(())
     public func cancelButtonTapped() {
         self.cancelTappedProperty.value = ()
     }
+    
+    
     
     fileprivate let viewDidLoadProperty = MutableProperty(())
     public func viewDidLoad() {

@@ -63,7 +63,7 @@ public final class PickDatesHotelViewModel: PickDatesHotelViewModelType, PickDat
         
         self.rangesNightText = Signal.merge(self.viewDidLoadProperty.signal.mapConst(Localizations.HowNightsTitle), rangedDate.signal.map { Localizations.CountNightsTitle($0) }.takeWhen(self.endDateProperty.signal.ignoreValues()), self.startDateProperty.signal.mapConst(Localizations.HowNightsTitle))
         
-        self.overNightAlertText = rangedDate.filter { $0 >= 11 }.map { _ in Localizations.MaximumNightsAlertTitle }
+        self.overNightAlertText = rangedDate.filter { $0 >= 15 }.map { _ in Localizations.MaximumNightsAlertTitle }
         
         self.checkInDateText = Signal.merge(displayFirstDate.skipNil(), initialDateText)
         self.checkOutDateText = Signal.merge(displayEndDate.skipNil(), checkoutSignText, initialDateText)
@@ -84,10 +84,11 @@ public final class PickDatesHotelViewModel: PickDatesHotelViewModelType, PickDat
             AppEnvironment.current.apiService.fetchHotelResults(params: hotelParam).demoteErrors()
         }
         
-        let tempSummary = Signal.combineLatest(self.checkInDateText.signal, self.checkOutDateText.signal, findHotelParam.signal.map { $0.adult! }).switchMap { startDate, endDate, guest -> SignalProducer<HotelBookingSummary, NoError> in
+        let tempSummary = Signal.combineLatest(self.checkInDateText.signal, self.checkOutDateText.signal, findHotelParam.signal.map { $0.adult! }, findHotelParam.signal.map { $0.room! }).switchMap { startDate, endDate, guest, room -> SignalProducer<HotelBookingSummary, NoError> in
             let summary = .defaults
                 |> HotelBookingSummary.lens.dateRange .~ "\(startDate) - \(endDate)"
-                |> HotelBookingSummary.lens.guestCount .~ "\(guest) \(Localizations.GuestTitle)"
+                |> HotelBookingSummary.lens.guestCount .~ "\(Localizations.GuestTitle(guest))"
+                |> HotelBookingSummary.lens.roomCount .~ "\(room)"
             return SignalProducer(value: summary)
         }.materialize()
         

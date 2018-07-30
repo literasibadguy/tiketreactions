@@ -77,13 +77,13 @@ public final class HotelDirectsVC: UITableViewController {
         }
         
         self.viewModel.outputs.goToRoomAvailable
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] hotel, room, summary in
                 self?.goToOrderGuestForm(hotelDirect: hotel, availableRoom: room, booking: summary)
         }
         
         self.viewModel.outputs.goToFacilities
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] facilities in
                 let vc = FacilityListVC.configureWith(facilities: facilities)
                 self?.navigationController?.pushViewController(vc, animated: true)

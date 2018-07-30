@@ -15,7 +15,7 @@ import TiketKitModels
 public protocol HotelDiscoveryEmbedViewModelInputs {
     func configureWith(selected: AutoHotelResult, params: SearchHotelParams, booking: HotelBookingSummary)
     func notifyResults(_ envelope: SearchHotelEnvelopes)
-    func filter(_ params: SearchHotelParams)
+    func filtering(_ sort: SearchHotelParams.Sort)
     func filterHasBeenDismissed()
     func viewDidLoad()
 }
@@ -25,6 +25,7 @@ public protocol HotelDiscoveryEmbedViewModelOutputs {
     var loadDataRange: Signal<(AutoHotelResult, String), NoError> { get }
     var loadResult: Signal<SearchHotelEnvelopes, NoError> { get }
     var loadParamsFromFilters: Signal<SearchHotelParams, NoError> { get }
+    var loadSortFromFilters: Signal<SearchHotelParams.Sort, NoError> { get }
     var filterDismiss: Signal<(), NoError> { get }
 }
 
@@ -43,7 +44,9 @@ public final class HotelDiscoveryEmbedViewModel:  HotelDiscoveryEmbedViewModelTy
         self.loadDataRange = Signal.combineLatest(currentParams.map { $0.0 }, currentParams.map { $0.2.dateRange })
         
         self.loadResult = self.configResultsProperty.signal.skipNil()
-        self.loadParamsFromFilters = self.filterParamsProperty.signal.skipNil()
+        self.loadParamsFromFilters = .empty
+        
+        self.loadSortFromFilters = self.filterSortProperty.signal.skipNil()
         
         self.filterDismiss = self.filterDismissProperty.signal
     }
@@ -58,9 +61,9 @@ public final class HotelDiscoveryEmbedViewModel:  HotelDiscoveryEmbedViewModelTy
         self.configResultsProperty.value = envelope
     }
     
-    fileprivate let filterParamsProperty = MutableProperty<SearchHotelParams?>(nil)
-    public func filter(_ params: SearchHotelParams) {
-        self.filterParamsProperty.value = params
+    fileprivate let filterSortProperty = MutableProperty<SearchHotelParams.Sort?>(nil)
+    public func filtering(_ sort: SearchHotelParams.Sort) {
+        self.filterSortProperty.value = sort
     }
     
     fileprivate let filterDismissProperty = MutableProperty(())
@@ -77,6 +80,7 @@ public final class HotelDiscoveryEmbedViewModel:  HotelDiscoveryEmbedViewModelTy
     public let loadDataRange: Signal<(AutoHotelResult, String), NoError>
     public let loadResult: Signal<SearchHotelEnvelopes, NoError>
     public let loadParamsFromFilters: Signal<SearchHotelParams, NoError>
+    public let loadSortFromFilters: Signal<SearchHotelParams.Sort, NoError>
     public let filterDismiss: Signal<(), NoError>
     
     public var inputs: HotelDiscoveryEmbedViewModelInputs { return self }

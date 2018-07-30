@@ -35,8 +35,10 @@ public protocol HotelDiscoveryViewModelOutputs {
     var hideEmptyState: Signal<(), NoError> { get }
     var notifyDelegate: Signal<SearchHotelEnvelopes, NoError> { get }
     var hotels: Signal<[HotelResult], NoError> { get }
+    var asyncReloadData: Signal<(), NoError> { get }
     var filtersHotels: Signal<[HotelResult], NoError> { get }
     var hotelsAreLoading: Signal<Bool, NoError> { get }
+    var filtersAreLoading: Signal<Bool, NoError> { get }
     var showEmptyState: Signal<EmptyState, NoError> { get }
     var goToHotel: Signal<(HotelResult, HotelBookingSummary), NoError> { get }
 }
@@ -53,7 +55,18 @@ public final class HotelDiscoveryViewModel: HotelDiscoveryViewModelType, HotelDi
         let currentStatus = Signal.combineLatest(self.selectedFilterProperty.signal.skipNil(), self.viewDidAppearProperty.signal).map(first)
         
         let mergeSelected = currentStatus.map(first)
-        let mergeParams = currentStatus.map(second)
+        
+        let mergeParams = Signal.merge(currentStatus.map(second), Signal.combineLatest(currentStatus.map(second), self.sortProperty.signal.skipNil()).map { (arg) -> SearchHotelParams in
+            let (param, sort) = arg
+            return param
+                |> SearchHotelParams.lens.sort .~ sort
+        })
+        
+        let paramsChanged = Signal.combineLatest(self.sortProperty.signal.skipNil(), currentStatus.map(second)).map(SearchHotelParams.lens.sort.set)
+        
+        paramsChanged.observe(on: UIScheduler()).observeValues { params in
+            print("MERGED PARAMS: \(params)")
+        }
         
         let isCloseToBottom = self.willDisplayRowProperty.signal.skipNil().map { row, total in
             row >= total - 3 && row > 0
@@ -73,19 +86,32 @@ public final class HotelDiscoveryViewModel: HotelDiscoveryViewModelType, HotelDi
         
         let requestFirstPageWith = Signal.combineLatest(mergeParams, isVisible).filter { _, visible in visible }.skipRepeats { lhs, rhs in lhs.0 == rhs.0 && lhs.1 == rhs.1 }.map(first)
         
+        let requestFilterPageWith = Signal.combineLatest(paramsChanged, self.filterDismissProperty.signal.mapConst(true)).filter { _, visible in visible }.map(first)
+        
         let paginatedHotels: Signal<[HotelResult], NoError>
-        let pageCount: Signal<Int, NoError>
-        (paginatedHotels, self.hotelsAreLoading, pageCount) = paginate(
+        (paginatedHotels, self.hotelsAreLoading, _) = paginate(
             requestFirstPageWith: requestFirstPageWith,
             requestNextPageWhen: isCloseToBottom,
             clearOnNewRequest: true,
             skipRepeats: false,
             valuesFromEnvelope: { $0.searchHotelResults },
-            cursorFromEnvelope: { $0.searchQueries },
+            cursorFromEnvelope: { ($0.pagination, $0.searchQueries) },
             requestFromParams: { params -> SignalProducer<SearchHotelEnvelopes, ErrorEnvelope> in  AppEnvironment.current.apiService.fetchHotelResults(params: params) },
-            requestFromCursor: { cursor -> SignalProducer<SearchHotelEnvelopes, ErrorEnvelope> in
-                
-                AppEnvironment.current.apiService.fetchHotelResults(params: cursor) },
+            requestFromCursor: { (page, cursor) -> SignalProducer<SearchHotelEnvelopes, ErrorEnvelope> in
+                AppEnvironment.current.apiService.fetchHotelResultsPagination(page, params: cursor) },
+            concater: { ($0 + $1).distincts() })
+        
+        let filteredHotels: Signal<[HotelResult], NoError>
+        (filteredHotels, self.filtersAreLoading, _) = paginate(
+            requestFirstPageWith: requestFilterPageWith,
+            requestNextPageWhen: isCloseToBottom,
+            clearOnNewRequest: true,
+            skipRepeats: false,
+            valuesFromEnvelope: { $0.searchHotelResults },
+            cursorFromEnvelope: { ($0.pagination, $0.searchQueries) },
+            requestFromParams: { params -> SignalProducer<SearchHotelEnvelopes, ErrorEnvelope> in  AppEnvironment.current.apiService.fetchHotelResults(params: params) },
+            requestFromCursor: { (page, cursor) -> SignalProducer<SearchHotelEnvelopes, ErrorEnvelope> in
+                AppEnvironment.current.apiService.fetchHotelResultsPagination(page, params: cursor) },
             concater: { ($0 + $1).distincts() })
         
         /*
@@ -111,12 +137,16 @@ public final class HotelDiscoveryViewModel: HotelDiscoveryViewModelType, HotelDi
         // requestHotelParams.values().map { $0.searchHotelResults }
         
         self.hotels = paginatedHotels
-        self.filtersHotels = .empty
+        
+        self.filtersHotels = filteredHotels
+        
+        
+        self.asyncReloadData = Signal.merge(self.hotels.take(first: 1).ignoreValues(), self.filtersHotels.take(first: 1).ignoreValues())
         
         self.hideEmptyState = Signal.merge(self.viewWillAppearProperty.signal.take(first: 1), self.hotels.filter { !$0.isEmpty }.ignoreValues())
-        self.showEmptyState = self.hotels.filter { $0.isEmpty }.map { _ in
-            emptyStateHotel()
-        }
+        self.showEmptyState = Signal.combineLatest(self.hotelsAreLoading, paginatedHotels).filter { hotelsAreLoading, hotels in
+            hotelsAreLoading == false && hotels.isEmpty
+        }.map { _ in emptyStateHotel() }.skipRepeats()
         
         let hotelCardTapped = self.tappedHotel.signal.skipNil()
         
@@ -171,8 +201,10 @@ public final class HotelDiscoveryViewModel: HotelDiscoveryViewModelType, HotelDi
     public let showEmptyState: Signal<EmptyState, NoError>
     public let notifyDelegate: Signal<SearchHotelEnvelopes, NoError>
     public let hotels: Signal<[HotelResult], NoError>
+    public let asyncReloadData: Signal<(), NoError>
     public let filtersHotels: Signal<[HotelResult], NoError>
-    public let hotelsAreLoading: Signal<Bool, NoError>
+    public var hotelsAreLoading: Signal<Bool, NoError>
+    public var filtersAreLoading: Signal<Bool, NoError>
     public let hideEmptyState: Signal<(), NoError>
     public let goToHotel: Signal<(HotelResult, HotelBookingSummary), NoError>
     

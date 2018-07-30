@@ -10,12 +10,13 @@ import Prelude
 import ReactiveSwift
 import Result
 import TiketKitModels
+import WebKit
 
 public protocol CheckoutPageViewModelInputs {
     func cancelButtonTapped()
     func configureWith(initialRequest: URLRequest)
     func failureAlertButtonTapped()
-    func shouldStartLoad(withRequest request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool
+    func webViewConfirm(_ isLoading: Bool)
     func viewDidLoad()
 }
 
@@ -24,6 +25,7 @@ public protocol CheckoutPageViewModelOutputs {
     var popViewController: Signal<Void, NoError> { get }
     var showAlert: Signal<String, NoError> { get }
     var webViewLoadRequest: Signal<URLRequest, NoError> { get }
+    var webIsLoading: Signal<Bool, NoError> { get }
 }
 
 public protocol CheckoutPageViewModelType: CheckoutPageViewModelInputs, CheckoutPageViewModelOutputs {
@@ -36,23 +38,17 @@ public final class CheckoutPageViewModel: CheckoutPageViewModelType {
     public init() {
         let configData = self.configRequestProperty.signal.skipNil().takeWhen(self.viewDidLoadProperty.signal)
         
-        let initialRequest = configData.map { $0 }
-        
-        let requestData = self.shouldStartLoadProperty.signal.skipNil()
-            .map { request, navigationType -> RequestData in
-                return RequestData(request: request, shouldStartLoad: true, webViewNavigationType: navigationType)
+        configData.observe(on: UIScheduler()).observeValues { data in
+            print("VIEW DID LOAD PROPERTY DETECTED: \(data)")
         }
         
-        let webViewRequest = requestData
-            .filter { requestData in
-                
-                !requestData.shouldStartLoad
-            }.map { $0.request }
+        let initialRequest = configData.map { $0 }
         
         self.popViewController = Signal.merge(self.failureAlertButtonTappedProperty.signal,
         self.cancelButtonTappedProperty.signal)
         
-        self.webViewLoadRequest = Signal.merge(initialRequest, webViewRequest).map(prepared(request:))
+        self.webViewLoadRequest = initialRequest
+        self.webIsLoading = self.webViewIsLoadingProperty.signal
         
         self.dismissViewController = .empty
         
@@ -74,11 +70,9 @@ public final class CheckoutPageViewModel: CheckoutPageViewModelType {
         self.failureAlertButtonTappedProperty.value = ()
     }
     
-    fileprivate let shouldStartLoadProperty = MutableProperty<(URLRequest, UIWebViewNavigationType)?>(nil)
-    fileprivate let shouldStartLoadResponseProperty = MutableProperty(false)
-    public func shouldStartLoad(withRequest request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        self.shouldStartLoadProperty.value = (request, navigationType)
-        return self.shouldStartLoadResponseProperty.value
+    fileprivate let webViewIsLoadingProperty = MutableProperty(false)
+    public func webViewConfirm(_ isLoading: Bool) {
+        self.webViewIsLoadingProperty.value = isLoading
     }
     
     fileprivate let viewDidLoadProperty = MutableProperty(())
@@ -90,15 +84,15 @@ public final class CheckoutPageViewModel: CheckoutPageViewModelType {
     public let popViewController: Signal<Void, NoError>
     public let showAlert: Signal<String, NoError>
     public let webViewLoadRequest: Signal<URLRequest, NoError>
+    public let webIsLoading: Signal<Bool, NoError>
     
     public var inputs: CheckoutPageViewModelInputs { return self }
     public var outputs: CheckoutPageViewModelOutputs { return self }
 }
 
-
 private func prepared(request baseRequest: URLRequest) -> URLRequest {
     
-    var request = AppEnvironment.current.apiService.preparedRequest(forRequest: baseRequest)
+    var request = AppEnvironment.current.apiService.preparedRequest(forURL: baseRequest.url!)
     request.allHTTPHeaderFields = (request.allHTTPHeaderFields ?? [:])
     
     return request
@@ -108,6 +102,6 @@ private struct RequestData {
     fileprivate let request: URLRequest
 //    fileprivate let navigation: Navigation?
     fileprivate let shouldStartLoad: Bool
-    fileprivate let webViewNavigationType: UIWebViewNavigationType
+    fileprivate let webViewNavigationType: WKWebViewConfiguration
 }
 

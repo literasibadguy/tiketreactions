@@ -61,7 +61,7 @@ public final class AvailableRoomListsVC: UITableViewController {
         }
         
         self.viewModel.outputs.goToCheckout
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] direct, summary, room in
                 self?.goToFormOrder(direct: direct, room: room, booking: summary)
         }

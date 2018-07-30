@@ -8,6 +8,7 @@
 
 import Prelude
 import ReactiveSwift
+import RealmSwift
 import Spring
 import TiketKitModels
 import UIKit
@@ -21,6 +22,12 @@ internal final class OrderListVC: UIViewController {
     
     @IBOutlet fileprivate weak var loadingOverlayView: UIView!
     @IBOutlet fileprivate weak var activityIndicatorView: UIActivityIndicatorView!
+
+    @IBOutlet fileprivate weak var navigationPaymentView: UIView!
+    @IBOutlet fileprivate weak var navigationSeparatorView: UIView!
+    
+    @IBOutlet fileprivate weak var paymentMethodButton: UIButton!
+    
     
     static func instantiate() -> OrderListVC {
         let vc = Storyboard.OrderList.instantiate(OrderListVC.self)
@@ -36,9 +43,19 @@ internal final class OrderListVC: UIViewController {
     internal override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "Keranjang"
+        self.navigationItem.title = Localizations.CartOrdersTitle
+        
+//        let bookingButton = UIBarButtonItem(title: "History", style: .plain, target: self, action: #selector(historyButtonTapped))
+        
+        let issuedButton = UIBarButtonItem(image: UIImage(named: "issued-order-icon"), style: .plain, target: self, action: #selector(historyButtonTapped))
+        issuedButton.tintColor = .tk_official_green
+        
+        self.paymentMethodButton.addTarget(self, action: #selector(paymentMethodButtonTapped), for: .touchUpInside)
+        
+        self.navigationItem.rightBarButtonItem = issuedButton
         
         self.orderTableView.dataSource = dataSource
+        self.orderTableView.delegate = self
         
         let emptyVC = EmptyStatesVC.configuredWith(emptyState: EmptyState.orderResult)
         self.emptyStatesController = emptyVC
@@ -55,6 +72,10 @@ internal final class OrderListVC: UIViewController {
         self.viewModel.inputs.viewWillAppear(animated: animated)
     }
     
+    internal override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+    
     internal override func bindStyles() {
         super.bindStyles()
         
@@ -69,6 +90,13 @@ internal final class OrderListVC: UIViewController {
         _ = self.loadingOverlayView
             |> UIView.lens.backgroundColor .~ UIColor(white: 1.0, alpha: 0.99)
             |> UIView.lens.isHidden .~ false
+        
+        _ = self.paymentMethodButton
+            |> UIButton.lens.backgroundColor(forState: .normal) .~ .tk_official_green
+            |> UIButton.lens.backgroundColor(forState: .disabled) .~ .tk_base_grey_100
+        
+        _ = self.navigationSeparatorView
+            |> UIView.lens.backgroundColor .~ .tk_base_grey_100
     }
     
     internal override func bindViewModel() {
@@ -87,7 +115,8 @@ internal final class OrderListVC: UIViewController {
         
         self.viewModel.outputs.showEmptyState
             .observe(on: UIScheduler())
-            .observeValues { [weak self] _ in
+            .observeValues { [weak self] showed in
+                
                 self?.orderTableView.bounces = false
                 if let emptyVC = self?.emptyStatesController {
                     self?.emptyStatesController?.view.isHidden = false
@@ -105,23 +134,77 @@ internal final class OrderListVC: UIViewController {
         self.viewModel.outputs.deleteOrderReminder
             .observe(on: UIScheduler())
             .observeValues { [weak self] remind in
-                self?.present(UIAlertController.alert(message: remind, confirm: { _ in self?.viewModel.inputs.confirmDeleteOrder(true) }), animated: true, completion: nil)
+                self?.present(UIAlertController.alert(message: remind, confirm: { _ in self?.viewModel.inputs.confirmDeleteOrder(true) }, cancel: { _ in self?.viewModel.inputs.confirmDeleteOrder(false) }), animated: true, completion: nil)
         }
         
         self.viewModel.outputs.deletedOrder
-            .observe(on: UIScheduler())
-            .observeValues { deleted in
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] deleted in
                 print("WHATS DIAGNOSTIC DELETED ORDER: \(deleted)")
+                self?.viewModel.inputs.shouldRefresh()
+                self?.orderTableView.reloadData()
         }
         
         self.viewModel.outputs.goToOrderDetail
             .observe(on: UIScheduler())
-            .observeValues {_ in
+            .observeValues { _ in
+                
+        }
+        
+        self.viewModel.outputs.goToBookingCompleted
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] in
+                self?.goToIssuedList()
+        }
+        
+        self.viewModel.outputs.goToPayment
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] myOrder in
+                self?.goToPayment(myOrder)
         }
     }
+
+    @objc fileprivate func historyButtonTapped() {
+        self.viewModel.inputs.historyButtonTapped()
+    }
     
+    @objc fileprivate func paymentMethodButtonTapped() {
+        self.viewModel.inputs.paymentMethodButtonTapped()
+    }
+    
+    fileprivate func goToPayment(_ order: MyOrder) {
+        let paymentVC = PaymentsListVC.configureWith(myorder: order)
+        let navPayment = UINavigationController(rootViewController: paymentVC)
+        self.present(navPayment, animated: true, completion: nil)
+    }
+    
+    @objc fileprivate func dismissPaymentMethod() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    /*
+    fileprivate func goToBookingCompleted() {
+        let bookingVC = BookingCompletedVC.instantiate()
+        self.navigationController?.pushViewController(bookingVC, animated: true)
+    }
+    */
+    
+    fileprivate func goToCheckOrderForm() {
+        let orderFormVC = CheckOrderFormVC.instantiate()
+        self.navigationController?.pushViewController(orderFormVC, animated: true)
+    }
+    
+    fileprivate func goToIssuedList() {
+        let issuedList = try! Realm().objects(IssuedOrderList.self).first!
+        let issuedListVC = IssuedListVC.instantiate(issuedList)
+        self.navigationController?.pushViewController(issuedListVC, animated: true)
+    }
+}
+
+extension OrderListVC: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? OrderListViewCell {
+            print("CELL DELEGATED FOR ORDER LIST")
             cell.delegate = self
         }
     }
@@ -131,20 +214,11 @@ internal final class OrderListVC: UIViewController {
             self.viewModel.inputs.tappedOrderDetail(order)
         }
     }
-    
-    fileprivate func goToOrderDetail() {
-        
-    }
-    
-    fileprivate func goToPayment() {
-        let paymentVC = HotelPaymentsVC.instantiate()
-        let navPayment = UINavigationController(rootViewController: paymentVC)
-        self.present(navPayment, animated: true, completion: nil)
-    }
 }
 
 extension OrderListVC: OrderListViewCellDelegate {
     func orderDeleteButtonTapped(_ listCell: OrderListViewCell, order: OrderData) {
+        print("ORDER LIST DELEGATE DETECTED: \(order)")
         self.viewModel.inputs.deletedOrderTapped(order)
     }
 }

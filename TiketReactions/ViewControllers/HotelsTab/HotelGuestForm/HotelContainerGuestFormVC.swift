@@ -113,7 +113,7 @@ public final class HotelContainerGuestFormVC: UIViewController {
         }
         
         self.viewModel.outputs.dismissAlert
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
         }
@@ -141,15 +141,16 @@ public final class HotelContainerGuestFormVC: UIViewController {
         }
         
         self.viewModel.outputs.goToPayments
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] myOrder in
                 self?.goToPayments(myOrder)
         }
     }
     
     fileprivate func goToPayments(_ order: MyOrder) {
-        let paymentVC = HotelPaymentsVC.configureWith(myorder: order)
-        self.navigationController?.pushViewController(paymentVC, animated: true)
+//        let paymentVC = HotelPaymentsVC.configureWith(myorder: order)
+        let listPaymentVC = PaymentsListVC.configureWith(myorder: order)
+        self.navigationController?.pushViewController(listPaymentVC, animated: true)
     }
 }
 
@@ -174,6 +175,10 @@ extension HotelContainerGuestFormVC: HotelNavGuestFormDelegate {
 }
 
 extension HotelContainerGuestFormVC: HotelGuestFormDelegate {
+    public func shouldFirstGuestForm(_ valid: Bool) {
+        self.viewModel.inputs.isFormFilled(valid)
+    }
+    
     public func shouldThereAnotherGuest(_ should: Bool) {
         self.viewModel.inputs.isThereAnotherGuest(should)
     }

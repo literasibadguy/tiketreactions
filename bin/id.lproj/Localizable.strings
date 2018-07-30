@@ -1,0 +1,44 @@
+/* 
+  Localizable.strings
+  TiketReactions
+
+  Created by Firas Rafislam on 31/01/18.
+  Copyright © 2018 Firas Rafislam. All rights reserved.
+*/
+
+"Destination_Hotel_Title_Form" = "Destinasi / Hotel";
+"Guest_Room_Title_Form" = "Tamu & Kamar";
+"Room_Title" = "Kamar";
+"Guest_Title" = "Tamu";
+"Pick_Date_Title_Form" = "Pilih Tanggal";
+"How_Nights_Title" = "Berapa Malam?";
+"CheckIn_Pick_Title" = "Pilih tanggal Check-In";
+"CheckOut_Pick_Title" = "Pilih tanggal Check-Out";
+"CheckOut_Date_Title" = "Tanggal Check-Out";
+"Find_Hotel_Title" = "Cari Hotel";
+"Filter_Button_Title" = "Filter";
+"Choose_Room_Title" = "Pilih Kamar";
+"Order_Room_Title" = "Pesan Kamar";
+"Facility_Hotel_Title" = "Fasilitas Hotel";
+"Facility_Room_Title" = "Fasilitas Kamar";
+"Address_Hotel_Title" = "Alamat";
+"Order_Hotel_Title" = "Pesan Kamar Hotel";
+"Guest_Contact_Form_Title" = "Form Tamu";
+"Title_Form_Data" = "Title";
+"Mr_Form_Data" = "Tuan";
+"Mrs_Form_Data" = "Nyonya";
+"Ms_Form_Data" = "Nona";
+"FirstName_Form_Data" = "Nama Depan";
+"LastName_Form_Data" = "Nama Belakang";
+"Email_Form_Data" = "Email";
+"PhoneNumber_Form_Data" = "No. Handphone";
+"AnotherGuest_Option_Form_Title" = "Atas Nama Orang Lain";
+"ChoosePayment_Title" = "Pilih Pembayaran";
+"ConfirmData_Title" = "Mohon Konfirmasi Apakah Data Benar?";
+"ConfirmError_Title" = "Oops.. Mohon Maaf, Silakan coba lagi";
+"CancelButton_Title" = "Batal";
+"DoneButton_Title" = "Selesai";
+"PriceTotal_Title" = "Total Harga";
+"OrderId_Title" = "Order Id";
+"CreditCard_Title" = "Kartu Kredit";
+"Transfer_Title" = "Transfer";

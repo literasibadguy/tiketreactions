@@ -22,13 +22,13 @@ public enum Styles {
 }
 
 public func baseControllerStyle<VC: UIViewControllerProtocol> () -> ((VC) -> VC) {
-    return VC.lens.view.backgroundColor .~ .black
+    return VC.lens.view.backgroundColor .~ .tk_base_grey_100
         <> (VC.lens.navigationController..navBarLens) %~ { view in view.map(baseNavigationBarStyle) }
 }
 
 public func baseTableControllerStyle<TVC: UITableViewControllerProtocol> (estimatedRowHeight: CGFloat = 480.0) -> ((TVC) -> TVC) {
     let style = baseControllerStyle()
-        <> TVC.lens.view.backgroundColor .~ .white
+        <> TVC.lens.view.backgroundColor .~ .tk_base_grey_100
         <> TVC.lens.tableView.rowHeight .~ UITableViewAutomaticDimension
         <> TVC.lens.tableView.estimatedRowHeight .~ estimatedRowHeight
     

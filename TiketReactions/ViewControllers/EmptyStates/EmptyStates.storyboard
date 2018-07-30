@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,29 +12,44 @@
         <!--Empty-->
         <scene sceneID="aXk-gU-HIb">
             <objects>
-                <viewController storyboardIdentifier="EmptyStatesVC" title="Empty" id="UJS-Dh-stz" customClass="EmptyStatesVC" customModule="TiketComponents" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EmptyStatesVC" title="Empty" id="UJS-Dh-stz" customClass="EmptyStatesVC" customModule="TripToZero" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Fq3-mO-2eq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Penerbangan tidak ditemukan" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GAb-4K-Gpq">
-                                <rect key="frame" x="16" y="171" width="257" height="77"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Penerbangan tidak ditemukan" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GAb-4K-Gpq">
+                                <rect key="frame" x="38.5" y="373" width="299.5" height="27.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cari penerbangan lain di hari lain" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="35a-Bb-tzr">
-                                <rect key="frame" x="16" y="256" width="257" height="77"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cari penerbangan lain di hari lain" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="35a-Bb-tzr">
+                                <rect key="frame" x="20" y="419" width="335" height="21.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="illustrator-emptystate" translatesAutoresizingMaskIntoConstraints="NO" id="0ep-4F-0lp">
+                                <rect key="frame" x="40" y="109" width="294" height="238"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="294" id="3Pw-c0-zyk"/>
+                                    <constraint firstAttribute="height" constant="238" id="MGx-dW-DNh"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="35a-Bb-tzr" firstAttribute="top" secondItem="GAb-4K-Gpq" secondAttribute="bottom" constant="18.5" id="GBu-Ll-OZ9"/>
+                            <constraint firstItem="0ep-4F-0lp" firstAttribute="top" secondItem="YzV-Hb-Czq" secondAttribute="top" constant="89" id="H7U-Th-CkD"/>
+                            <constraint firstItem="35a-Bb-tzr" firstAttribute="centerX" secondItem="Fq3-mO-2eq" secondAttribute="centerX" id="Rne-u9-hSp"/>
+                            <constraint firstItem="GAb-4K-Gpq" firstAttribute="centerX" secondItem="Fq3-mO-2eq" secondAttribute="centerX" id="Sq5-OX-5lP"/>
+                            <constraint firstItem="GAb-4K-Gpq" firstAttribute="top" secondItem="0ep-4F-0lp" secondAttribute="bottom" constant="26" id="VWm-qS-4ef"/>
+                            <constraint firstItem="0ep-4F-0lp" firstAttribute="centerX" secondItem="Fq3-mO-2eq" secondAttribute="centerX" id="WKA-D2-grz"/>
+                            <constraint firstItem="YzV-Hb-Czq" firstAttribute="trailing" secondItem="35a-Bb-tzr" secondAttribute="trailing" constant="20" id="mxE-di-uWh"/>
+                            <constraint firstItem="35a-Bb-tzr" firstAttribute="leading" secondItem="YzV-Hb-Czq" secondAttribute="leading" constant="20" id="tWF-Q5-jFU"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="YzV-Hb-Czq"/>
                     </view>
                     <connections>
@@ -48,4 +62,7 @@
             <point key="canvasLocation" x="-119.2" y="151.57421289355324"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="illustrator-emptystate" width="547" height="461"/>
+    </resources>
 </document>

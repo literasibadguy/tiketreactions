@@ -10,9 +10,11 @@ import GooglePlaces
 import UIKit
 import Prelude
 import ReactiveSwift
+import RealmSwift
 import Result
 import TiketKitModels
 import UIKit
+
 
 @UIApplicationMain
 internal final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -28,15 +30,18 @@ internal final class AppDelegate: UIResponder, UIApplicationDelegate {
         UIView.doBadSwizzleStuff()
         UIViewController.doBadSwizzleStuff()
         
+        self.window?.tintColor = .tk_official_green
+        
         AppEnvironment.replaceCurrentEnvironment(
             AppEnvironment.fromStorage(ubiquitousStore: NSUbiquitousKeyValueStore.default, userDefaults: UserDefaults.standard)
         )
         
         self.viewModel.outputs.tokenIntoEnvironment
             .observe(on: UIScheduler())
-            .observeValues { tokenEnvelope in
-                print("WHATS IN TOKEN ENVELOPE: \(tokenEnvelope)")
-                AppEnvironment.getToken(tokenEnvelope)
+            .observeValues { token in
+                print("TOKEN STORED ON SERVICE: \(token)")
+                AppEnvironment.getFirstToken(token)
+                setDefaultRealmForTiket()
                 GMSPlacesClient.provideAPIKey("AIzaSyDY06nW1UVnDikX07QDJfJYkPIqVVofxtM")
                 GMSServices.provideAPIKey("AIzaSyDY06nW1UVnDikX07QDJfJYkPIqVVofxtM")
         }
@@ -76,11 +81,15 @@ internal final class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return self.viewModel.outputs.applicationDidFinishLaunchingReturnValue
     }
-
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        self.viewModel.inputs.applicationWillEnterForeground()
+    }
+    
+    
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         return true
     }
-
 
 }
 

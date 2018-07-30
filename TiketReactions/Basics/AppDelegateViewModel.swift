@@ -14,13 +14,14 @@ import UserNotifications
 public protocol AppDelegateViewModelInputs {
     
     func applicationDidFinishLaunching(application: UIApplication?, launchOptions: [AnyHashable: Any]?)
+    
+    func applicationWillEnterForeground()
 }
 
 public protocol AppDelegateViewModelOutputs {
     var applicationDidFinishLaunchingReturnValue: Bool { get }
     
-    var tokenIntoEnvironment: Signal<GetTokenEnvelope, NoError> { get }
-    
+    var tokenIntoEnvironment: Signal<String, NoError> { get }
     var goToFlight: Signal<(), NoError> { get }
     var goToHotel: Signal<(), NoError> { get }
     var goToOrder: Signal<(), NoError> { get }
@@ -41,13 +42,17 @@ public final class AppDelegateViewModel: AppDelegateViewModelType, AppDelegateVi
     public init() {
 //        self.applicationDidFinishLaunchingReturnValue = true
         
+        let current = Signal.merge(self.appEnterForegroundProperty.signal, self.applicationLaunchOptionsProperty.signal.ignoreValues())
+        
         let clientAuth = ClientAuth(clientId: Secrets.Api.Client.production)
         
-        self.tokenIntoEnvironment = self.applicationLaunchOptionsProperty.signal.skipNil().switchMap { _ in
+        let tokenEnvelope = self.applicationLaunchOptionsProperty.signal.ignoreValues().filter { _ in !isTokenStored() }.switchMap { _ in
             AppEnvironment.current.apiService.getTokenEnvelope(clientAuth: clientAuth).materialize()
-        }.values()
+        }
         
-        print("SOMETHING INTO TOKEN INTO ENVIRONMENT: \(self.tokenIntoEnvironment)")
+        let tokenFromStorage = current.signal.map { _ in AppEnvironment.current.userDefaults.object(forKey: AppKeys.tokenSavedActivity.rawValue) as? String }
+        
+        self.tokenIntoEnvironment = Signal.merge(tokenEnvelope.values().map { $0.token }.on(value: { saveTokenStored($0) }), tokenFromStorage.skipNil())
         
         self.goToFlight = .empty
         self.goToHotel = .empty
@@ -68,7 +73,12 @@ public final class AppDelegateViewModel: AppDelegateViewModelType, AppDelegateVi
         self.applicationLaunchOptionsProperty.value = (application, launchOptions)
     }
     
-    public let tokenIntoEnvironment: Signal<GetTokenEnvelope, NoError>
+    fileprivate let appEnterForegroundProperty = MutableProperty(())
+    public func applicationWillEnterForeground() {
+        self.appEnterForegroundProperty.value = ()
+    }
+    
+    public let tokenIntoEnvironment: Signal<String, NoError>
     public let goToFlight: Signal<(), NoError>
     public let goToHotel: Signal<(), NoError>
     public let goToOrder: Signal<(), NoError>
@@ -85,3 +95,12 @@ public final class AppDelegateViewModel: AppDelegateViewModelType, AppDelegateVi
     public var outputs: AppDelegateViewModelOutputs { return self }
     
 }
+
+private func isTokenStored() -> Bool {
+    return AppEnvironment.current.userDefaults.object(forKey: AppKeys.tokenSavedActivity.rawValue) != nil
+}
+
+private func saveTokenStored(_ token: String) {
+    AppEnvironment.current.userDefaults.set(token, forKey: AppKeys.tokenSavedActivity.rawValue)
+}
+

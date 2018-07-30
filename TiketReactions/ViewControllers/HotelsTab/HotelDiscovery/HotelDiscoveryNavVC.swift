@@ -12,6 +12,7 @@ import UIKit
 
 public protocol HotelDiscoveryNavDelegate: class {
     func paramHaveUpdated(_ nav: HotelDiscoveryNavVC, param: SearchHotelParams)
+    func sortHaveUpdated(_ nav: HotelDiscoveryNavVC, sort: SearchHotelParams.Sort)
     func passHaveDismissed(_ nav: HotelDiscoveryNavVC)
 }
 
@@ -36,6 +37,10 @@ public final class HotelDiscoveryNavVC: UIViewController {
         self.viewModel.inputs.takingResults(envelope)
     }
     
+    internal func configureParamsReturn(_ param: SearchHotelParams) {
+        self.viewModel.inputs.extendingParam(param)
+    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -54,18 +59,38 @@ public final class HotelDiscoveryNavVC: UIViewController {
         
         self.viewModel.outputs.goFilters
             .observe(on: UIScheduler())
-            .observeValues { [weak self] results in
-                self?.goFilters(results)
+            .observeValues { [weak self] sort in
+                self?.goToFilter(sort)
         }
         
         self.viewModel.outputs.updatedParams
             .observe(on: UIScheduler())
             .observeValues { [weak self] updated in
-                print("Navigation Updated: \(updated)")
                 guard let _self = self else { return }
-                self?.delegate?.passHaveDismissed(_self)
                 self?.delegate?.paramHaveUpdated(_self, param: updated)
         }
+        
+        self.viewModel.outputs.liveSort
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] live in
+                guard let _self = self else { return }
+                print("Living Sort: \(live)")
+                self?.delegate?.sortHaveUpdated(_self, sort: live)
+                self?.delegate?.passHaveDismissed(_self)
+        }
+        
+        self.viewModel.outputs.dismissResults
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    fileprivate func goToFilter(_ sort: SearchHotelParams.Sort) {
+        let filtersVC = HotelDiscoveryFiltersVC.configureWith(sort: sort)
+        filtersVC.delegate = self
+        let nav = UINavigationController(rootViewController: filtersVC)
+        self.present(nav, animated: true, completion: nil)
     }
     
     fileprivate func goFilters(_ result: SearchHotelEnvelopes) {
@@ -76,8 +101,7 @@ public final class HotelDiscoveryNavVC: UIViewController {
     }
     
     @objc fileprivate func cancelButtonTapped() {
-//        self.viewModel.inputs.cancelButtonTapped()
-        self.navigationController?.popViewController(animated: true)
+        self.viewModel.inputs.cancelButtonTapped()
     }
     
     @objc fileprivate func filterButtonTapped() {
@@ -86,6 +110,10 @@ public final class HotelDiscoveryNavVC: UIViewController {
 }
 
 extension HotelDiscoveryNavVC: HotelDiscoveryFiltersDelegate {
+    public func filterSortChanged(_ discovery: HotelDiscoveryFiltersVC, sort: SearchHotelParams.Sort) {
+        self.viewModel.inputs.filtersSelected(sort)
+    }
+    
     public func filtersHaveDismissed(_ discovery: HotelDiscoveryFiltersVC) {
         self.viewModel.inputs.filtersHaveDismissed()
     }

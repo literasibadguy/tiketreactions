@@ -28,10 +28,11 @@ public final class HotelDiscoveryEmbedVC: UIViewController {
         super.viewDidLoad()
         
         
-        self.navDiscoveryVC = self.childViewControllers.flatMap { $0 as? HotelDiscoveryNavVC }.first
+        self.navDiscoveryVC = self.childViewControllers.compactMap { $0 as? HotelDiscoveryNavVC }.first
 //        self.navigationFlightVC.delegate = self
+        self.navDiscoveryVC.delegate = self
         
-        self.contentDiscoveryVC = self.childViewControllers.flatMap { $0 as? HotelDiscoveryVC }.first
+        self.contentDiscoveryVC = self.childViewControllers.compactMap { $0 as? HotelDiscoveryVC }.first
         self.contentDiscoveryVC.delegate = self
         
         
@@ -66,15 +67,16 @@ public final class HotelDiscoveryEmbedVC: UIViewController {
                 self?.navDiscoveryVC.configureEnvelope(result)
         }
         
-        self.viewModel.outputs.loadParamsFromFilters
+        self.viewModel.outputs.loadSortFromFilters
             .observe(on: UIScheduler())
-            .observeValues { [weak self] params in
-                self?.contentDiscoveryVC.filterUpdated(params)
+            .observeValues { [weak self] sort in
+                self?.contentDiscoveryVC.filterUpdated(sort)
         }
         
         self.viewModel.outputs.filterDismiss
             .observe(on: UIScheduler())
             .observeValues { [weak self] dismiss in
+                print("Filters Have Dismissed")
                 self?.contentDiscoveryVC.filterDismissed()
         }
     }
@@ -87,12 +89,17 @@ extension HotelDiscoveryEmbedVC: HotelDiscoveryDelegate {
 }
 
 extension HotelDiscoveryEmbedVC: HotelDiscoveryNavDelegate {
+    public func sortHaveUpdated(_ nav: HotelDiscoveryNavVC, sort: SearchHotelParams.Sort) {
+        print("Whats Updated from Nav: \(sort)")
+        self.viewModel.inputs.filtering(sort)
+    }
+    
     public func passHaveDismissed(_ nav: HotelDiscoveryNavVC) {
        self.viewModel.inputs.filterHasBeenDismissed()
     }
     
     public func paramHaveUpdated(_ nav: HotelDiscoveryNavVC, param: SearchHotelParams) {
-        self.viewModel.inputs.filter(param)
+        
     }
 }
 

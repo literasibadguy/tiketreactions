@@ -26,6 +26,10 @@ extension NSBundleType {
         return self.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
     }
     
+    public var buildNumber: String {
+        return self.infoDictionary?[String(kCFBundleVersionKey)] as? String ?? "Unknown"
+    }
+    
     public var isBeta: Bool {
         return self.identifier == Trip2ZeroBundleIdentifier.beta.rawValue
     }

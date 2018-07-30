@@ -51,7 +51,7 @@ public final class HotelFormViewModel: HotelFormViewModelType, HotelFormViewMode
         let initialRoom = self.viewDidLoadProperty.signal.mapConst(1)
         
         let destination = Signal.merge(self.destinationHotelSelectedProperty.signal.skipNil(), initialDestination)
-        let guest = Signal.merge(self.roomGuestSelectedProperty.signal.skipNil().map { Int($0.adult!) ?? 0 }, initialGuest)
+        let guest = Signal.merge(self.roomGuestSelectedProperty.signal.skipNil().map { Int($0.adult!)! }, initialGuest)
         let room = Signal.merge(self.roomGuestSelectedProperty.signal.skipNil().map { $0.room! }, initialRoom)
         
         let guestCount = Signal.merge(self.selectedCountsProperty.signal.skipNil().map { $0.0 }, initialGuest)
@@ -73,13 +73,14 @@ public final class HotelFormViewModel: HotelFormViewModelType, HotelFormViewMode
                 |> SearchHotelParams.lens.adult .~ String(guest)
                 |> SearchHotelParams.lens.room .~ room
                 |> SearchHotelParams.lens.query .~ hotelResult.category.replacingOccurrences(of: " ", with: "%20")
+                |> SearchHotelParams.lens.sort .~ .popular
             return SignalProducer(value: param)
         }.materialize()
         
         self.destinationHotelLabelText = self.destinationHotelSelectedProperty.signal.skipNil().map { selected in
             return selected.category
         }
-        self.guestHotelLabelText = Signal.combineLatest(guestCount, roomCount).map { "\(Localizations.GuestTitle($0)), \(Localizations.RoomTitle($1))" }
+        self.guestHotelLabelText = Signal.combineLatest(guestCount, roomCount).map { "\(Localizations.GuestPickTitle($0.0)), \(Localizations.RoomTitle($0.1))" }
         
         self.dismissDestinationHotelList = self.destinationHotelSelectedProperty.signal.ignoreValues().ck_delay(.milliseconds(400), on: AppEnvironment.current.scheduler)
         

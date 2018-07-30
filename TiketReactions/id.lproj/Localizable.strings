@@ -10,13 +10,14 @@
 "Welcome_To_TripToZero" = "Selamat Datang di triptozero";
 "Your_Location_Title" = "Lokasi Kamu";
 "Guest_Room_Title_Form" = "Tamu & Kamar";
+"Guest_Pick_Title" = "%d Tamu";
 "Room_Title" = "%d Kamar";
-"Guest_Title" = "%d Tamu";
+"Guest_Title" = "%@ Tamu";
 "Pick_Date_Title_Form" = "Pilih Tanggal";
 "How_Nights_Title" = "Berapa Malam?";
 "Count_Nights_Title" = "%d Malam";
-"Maximum_Nights_Alert_Title" = "Maaf Maksimal 11 Malam";
-"Maximum_Nights_Reminder_Title" = "Maksimal 11 Nights";
+"Maximum_Nights_Alert_Title" = "Maaf Maksimal 15 Malam";
+"Maximum_Nights_Reminder_Title" = "Maksimal 15 Malam";
 "CheckIn_Pick_Title" = "Pilih tanggal Check-In";
 "CheckOut_Pick_Title" = "Pilih tanggal Check-Out";
 "CheckOut_Date_Title" = "Tanggal Check-Out";
@@ -47,7 +48,7 @@
 "LastName_Form_Data" = "Nama Belakang";
 "Email_Form_Data" = "Email";
 "PhoneNumber_Form_Data" = "No. Handphone";
-"AnotherGuest_Option_Form_Title" = "Atas Nama Orang Lain";
+"AnotherGuest_Option_Form_Title" = "Booking ini untuk orang lain";
 "ChoosePayment_Title" = "Pilih Pembayaran";
 "ConfirmData_Title" = "Mohon Konfirmasi Apakah Data Benar?";
 "ConfirmError_Title" = "Oops.. Mohon Maaf, Silakan coba lagi";
@@ -61,3 +62,6 @@
 "OrderId_Title" = "Order Id";
 "CreditCard_Title" = "Kartu Kredit";
 "Transfer_Title" = "Transfer";
+"Cart_Orders_Title" = "Keranjang Order";
+"PayTotal_Title" = "Total Bayar: %@";
+"Issued_Order_Title" = "Issued - %@";

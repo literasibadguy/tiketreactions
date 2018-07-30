@@ -34,7 +34,7 @@ public final class HotelResultCardViewModel: HotelResultCardViewModelType, Hotel
     public init() {
         let configuredHotel = self.configHotelProperty.signal.skipNil()
         
-        self.hotelNameTitleLabelText = configuredHotel.map { $0.name }
+        self.hotelNameTitleLabelText = configuredHotel.map { $0.name ?? "" }
         self.hotelCityTitleLabelText = configuredHotel.map { $0.provinceName }
         self.hotelPriceTitleLabelText = configuredHotel.map { "\(symbolForCurrency(AppEnvironment.current.locale.currencyCode ?? "")) \(Format.currency($0.metadataHotel.totalPrice, country: "Rp"))" }
         

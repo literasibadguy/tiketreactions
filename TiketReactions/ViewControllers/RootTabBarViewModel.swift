@@ -42,11 +42,9 @@ internal protocol RootViewModelInputs {
 }
 
 internal protocol RootViewModelOutputs {
-    
+//    var tokenIntoEnvironment: Signal<String, NoError> { get }
     var selectedIndex: Signal<Int, NoError> { get }
-    
     var setViewControllers: Signal<[UIViewController], NoError> { get }
-    
     var tabBarItemsData: Signal<TabBarItemsData, NoError> { get }
 }
 
@@ -60,6 +58,7 @@ internal final class RootViewModel: RootViewModelType, RootViewModelInputs, Root
     internal init() {
 //        let standardViewControllers = self.view
         let currentUser = Signal.merge(self.viewDidLoadProperty.signal, self.userSessionStartedProperty.signal, self.userSessionEndedProperty.signal)
+        
         
         let standardViewControllers = self.viewDidLoadProperty.signal.map { _ in
             [HotelFormVC.instantiate(), OrderListVC.instantiate(), GeneralAboutVC.instantiate()]
@@ -122,6 +121,7 @@ internal final class RootViewModel: RootViewModelType, RootViewModelInputs, Root
         self.viewDidLoadProperty.value = ()
     }
     
+//    internal let tokenIntoEnvironment: Signal<String, NoError>
     internal let selectedIndex: Signal<Int, NoError>
     internal let setViewControllers: Signal<[UIViewController], NoError>
     internal let tabBarItemsData: Signal<TabBarItemsData, NoError>
@@ -163,5 +163,3 @@ private func first<VC: UIViewController>(_ viewController: VC.Type) -> ([UIViewC
             .flatMap { viewControllers[$0] as? VC }
     }
 }
-
-

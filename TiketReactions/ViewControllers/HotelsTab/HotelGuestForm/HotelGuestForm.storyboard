@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,13 +13,13 @@
         <!--Hotel Guest FormVC-->
         <scene sceneID="KSc-SA-H8C">
             <objects>
-                <tableViewController storyboardIdentifier="HotelGuestFormVC" id="Ga2-hR-hkh" customClass="HotelGuestFormVC" customModule="TiketReactions" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="HotelGuestFormVC" id="Ga2-hR-hkh" customClass="HotelGuestFormVC" customModule="TripToZero" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="gTa-be-i9H">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="650"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OrderFirstViewCell" rowHeight="83" id="i6S-so-fI2" customClass="OrderFirstViewCell" customModule="TiketReactions" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OrderFirstViewCell" rowHeight="83" id="i6S-so-fI2" customClass="OrderFirstViewCell" customModule="TripToZero" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="83"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="i6S-so-fI2" id="RS5-RJ-4mn">
@@ -82,7 +83,7 @@
                                     <outlet property="statusOrderDateLabel" destination="6ip-vN-ysD" id="jX2-EP-4jk"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="GuestOptionViewCell" rowHeight="64" id="cq2-Zz-qB5" customClass="GuestOptionViewCell" customModule="TiketReactions" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="GuestOptionViewCell" rowHeight="64" id="cq2-Zz-qB5" customClass="GuestOptionViewCell" customModule="TripToZero" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="111" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cq2-Zz-qB5" id="aWp-xV-EPg">
@@ -137,7 +138,7 @@
         <!--Booking-->
         <scene sceneID="sFY-U1-AlG">
             <objects>
-                <viewController storyboardIdentifier="HotelContainerGuestFormVC" title="Booking" id="wMP-NP-yvq" customClass="HotelContainerGuestFormVC" customModule="TiketReactions" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HotelContainerGuestFormVC" title="Booking" id="wMP-NP-yvq" customClass="HotelContainerGuestFormVC" customModule="TripToZero" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Vn8-j9-aLV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -196,7 +197,7 @@
         <!--Hotel Nav Guest FormVC-->
         <scene sceneID="jJN-lF-FQv">
             <objects>
-                <viewController storyboardIdentifier="HotelNavGuestFormVC" id="yZO-IK-jGd" customClass="HotelNavGuestFormVC" customModule="TiketReactions" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HotelNavGuestFormVC" id="yZO-IK-jGd" customClass="HotelNavGuestFormVC" customModule="TripToZero" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XHF-OG-qc9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -265,5 +266,141 @@
             </objects>
             <point key="canvasLocation" x="204" y="359"/>
         </scene>
+        <!--Phone Code ListVC-->
+        <scene sceneID="oKa-Tf-Onw">
+            <objects>
+                <viewController storyboardIdentifier="PhoneCodeListVC" id="iIF-tk-gwF" customClass="PhoneCodeListVC" customModule="TripToZero" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7MO-RL-r9b">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yGl-7Y-amu">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="163"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country Code" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OHz-z0-IFD">
+                                        <rect key="frame" x="20" y="40" width="202" height="38.5"/>
+                                        <viewLayoutGuide key="safeArea" id="g1N-xP-Ih4"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="32"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="djG-ac-1bo">
+                                        <rect key="frame" x="0.0" y="86.5" width="375" height="56"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="iIF-tk-gwF" id="VTd-J4-lwg"/>
+                                        </connections>
+                                    </searchBar>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6zw-ca-Y73">
+                                        <rect key="frame" x="337" y="28" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="T4B-I6-YiP"/>
+                                            <constraint firstAttribute="height" constant="30" id="oyz-a3-wpO"/>
+                                        </constraints>
+                                        <state key="normal" title="Cancel" image="cancel-button-saved"/>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nru-2h-tuo" userLabel="Phone Separator View">
+                                        <rect key="frame" x="0.0" y="162" width="375" height="1"/>
+                                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="4xI-CD-YFZ"/>
+                                            <constraint firstAttribute="width" constant="375" id="yK6-4J-clz"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="OHz-z0-IFD" secondAttribute="trailing" id="1J5-me-BUV"/>
+                                    <constraint firstItem="6zw-ca-Y73" firstAttribute="top" secondItem="E5A-LD-wLf" secondAttribute="top" constant="8" id="6lS-Kh-QmY"/>
+                                    <constraint firstItem="djG-ac-1bo" firstAttribute="leading" secondItem="E5A-LD-wLf" secondAttribute="leading" id="FAJ-Dy-m1z"/>
+                                    <constraint firstItem="OHz-z0-IFD" firstAttribute="leading" secondItem="E5A-LD-wLf" secondAttribute="leading" constant="20" id="IaS-0S-lwD"/>
+                                    <constraint firstItem="djG-ac-1bo" firstAttribute="trailing" secondItem="E5A-LD-wLf" secondAttribute="trailing" id="WeA-Qe-in8"/>
+                                    <constraint firstItem="E5A-LD-wLf" firstAttribute="trailing" secondItem="6zw-ca-Y73" secondAttribute="trailing" constant="8" id="YHi-pz-oLb"/>
+                                    <constraint firstItem="E5A-LD-wLf" firstAttribute="trailing" secondItem="Nru-2h-tuo" secondAttribute="trailing" id="ZVa-cp-fPe"/>
+                                    <constraint firstItem="djG-ac-1bo" firstAttribute="top" secondItem="OHz-z0-IFD" secondAttribute="bottom" constant="8" id="wzt-VS-Srf"/>
+                                    <constraint firstAttribute="bottom" secondItem="Nru-2h-tuo" secondAttribute="bottom" id="xMX-fw-kyw"/>
+                                    <constraint firstItem="Nru-2h-tuo" firstAttribute="leading" secondItem="E5A-LD-wLf" secondAttribute="leading" id="yMO-2d-toC"/>
+                                    <constraint firstItem="OHz-z0-IFD" firstAttribute="top" secondItem="E5A-LD-wLf" secondAttribute="top" constant="20" id="zsQ-LT-lgM"/>
+                                </constraints>
+                                <viewLayoutGuide key="safeArea" id="E5A-LD-wLf"/>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="83w-TU-Urt" userLabel="Phone Code Table View">
+                                <rect key="frame" x="0.0" y="163" width="375" height="504"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PhoneCodeViewCell" rowHeight="78" id="tdD-a4-KQQ" customClass="PhoneCodeViewCell" customModule="TripToZero" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="78"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tdD-a4-KQQ" id="oGZ-zz-vyK">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="77.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="10T-fX-0BK">
+                                                    <rect key="frame" x="16" y="11" width="343" height="54"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="oae-uy-2Ye" userLabel="City Title Label">
+                                                            <rect key="frame" x="0.0" y="0.0" width="343" height="54"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Jakarta" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QED-0m-QgL">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="34.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Soekarno Hatta" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3to-sa-qT6">
+                                                                    <rect key="frame" x="0.0" y="34.5" width="343" height="19.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="10T-fX-0BK" firstAttribute="leading" secondItem="oGZ-zz-vyK" secondAttribute="leading" constant="16" id="1JB-ms-7rc"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="10T-fX-0BK" secondAttribute="bottom" constant="2" id="Duz-Hb-BZo"/>
+                                                <constraint firstAttribute="trailing" secondItem="10T-fX-0BK" secondAttribute="trailing" constant="16" id="Vga-GX-4Ed"/>
+                                                <constraint firstItem="10T-fX-0BK" firstAttribute="centerY" secondItem="oGZ-zz-vyK" secondAttribute="centerY" id="gCk-UZ-L1d"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="countryCodeLabel" destination="3to-sa-qT6" id="p6X-8e-eP9"/>
+                                            <outlet property="countryNameLabel" destination="QED-0m-QgL" id="OFH-Kq-D7N"/>
+                                            <outlet property="phoneCodeStackView" destination="10T-fX-0BK" id="7UB-zg-7Zf"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="83w-TU-Urt" firstAttribute="trailing" secondItem="9NX-Ie-P1y" secondAttribute="trailing" id="Ekl-wR-6Lu"/>
+                            <constraint firstItem="83w-TU-Urt" firstAttribute="bottom" secondItem="9NX-Ie-P1y" secondAttribute="bottom" id="GR9-TQ-hgk"/>
+                            <constraint firstItem="yGl-7Y-amu" firstAttribute="top" secondItem="7MO-RL-r9b" secondAttribute="top" id="UiI-8K-k9M"/>
+                            <constraint firstItem="83w-TU-Urt" firstAttribute="top" secondItem="yGl-7Y-amu" secondAttribute="bottom" id="Uqx-tb-i87"/>
+                            <constraint firstAttribute="trailing" secondItem="yGl-7Y-amu" secondAttribute="trailing" id="buc-KL-rlQ"/>
+                            <constraint firstItem="yGl-7Y-amu" firstAttribute="leading" secondItem="7MO-RL-r9b" secondAttribute="leading" id="dxz-xz-2Xg"/>
+                            <constraint firstItem="83w-TU-Urt" firstAttribute="top" secondItem="9NX-Ie-P1y" secondAttribute="top" constant="143" id="g5l-M4-UOt"/>
+                            <constraint firstItem="83w-TU-Urt" firstAttribute="leading" secondItem="9NX-Ie-P1y" secondAttribute="leading" id="jeI-aI-vKv"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="9NX-Ie-P1y"/>
+                    </view>
+                    <connections>
+                        <outlet property="cancelButton" destination="6zw-ca-Y73" id="dUd-Kl-KuV"/>
+                        <outlet property="headerDestinationView" destination="yGl-7Y-amu" id="nlM-Mw-kAz"/>
+                        <outlet property="phoneCodeTableView" destination="83w-TU-Urt" id="ZFa-MX-XgP"/>
+                        <outlet property="phoneSearchBar" destination="djG-ac-1bo" id="1Vl-R0-B06"/>
+                        <outlet property="phoneSeparatorView" destination="Nru-2h-tuo" id="ij6-Tl-KmE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JlO-uj-jGI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2582" y="205"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="cancel-button-saved" width="40" height="40"/>
+    </resources>
 </document>

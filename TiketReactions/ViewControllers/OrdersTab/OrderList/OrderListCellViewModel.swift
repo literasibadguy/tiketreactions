@@ -36,12 +36,12 @@ public final class OrderListCellViewModel: OrderListCellViewModelType, OrderList
     public init() {
         let order = self.configOrderProperty.signal.skipNil()
         
-        self.orderTypeText = order.signal.map { $0.orderType }
+        self.orderTypeText = order.signal.map { "\($0.orderType)" }
         self.orderNameText = order.signal.map { $0.orderName  }
         self.orderNameDetailText = order.signal.map { $0.orderNameDetail }
         self.startDateText = order.signal.map { "\($0.detail.startdate)-\($0.detail.enddate), \($0.detail.nights) Malam" }
         
-        self.notifyToDeleteOrder = order.sample(on: self.deleteOrderTappedProperty.signal)
+        self.notifyToDeleteOrder = order.takeWhen(self.deleteOrderTappedProperty.signal)
     }
     
     fileprivate let configOrderProperty = MutableProperty<OrderData?>(nil)

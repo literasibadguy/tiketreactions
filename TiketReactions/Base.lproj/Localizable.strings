@@ -10,13 +10,14 @@
 "Welcome_To_TripToZero" = "Welcome to triptozero";
 "Your_Location_Title" = "Your Location";
 "Guest_Room_Title_Form" = "Guest & Room";
+"Guest_Pick_Title" = "%d Guests";
 "Room_Title" = "%d Rooms";
-"Guest_Title" = "%d Guests";
+"Guest_Title" = "%@ Guests";
 "Pick_Date_Title_Form" = "Pick Dates";
 "How_Nights_Title" = "How Many Nights?";
 "Count_Nights_Title" = "%d Nights";
-"Maximum_Nights_Alert_Title" = "Only Maximum 11 Nights";
-"Maximum_Nights_Reminder_Title" = "Maximum 11 Nights";
+"Maximum_Nights_Alert_Title" = "Only Maximum 15 Nights";
+"Maximum_Nights_Reminder_Title" = "Maximum 15 Nights";
 "CheckIn_Pick_Title" = "Choose Check-In Date";
 "CheckOut_Pick_Title" = "Choose Check-Out Date";
 "CheckOut_Date_Title" = "Check-Out Date";
@@ -47,7 +48,7 @@
 "LastName_Form_Data" = "Last Name";
 "Email_Form_Data" = "Email";
 "PhoneNumber_Form_Data" = "Phone Number";
-"AnotherGuest_Option_Form_Title" = "Is It For Another Person?";
+"AnotherGuest_Option_Form_Title" = "This booking for someone else";
 "ChoosePayment_Title" = "Choose Payment";
 "ConfirmData_Title" = "Please Confirm Data Is It True?";
 "ConfirmError_Title" = "Oops.. There's error a found. Please try again";
@@ -61,3 +62,6 @@
 "OrderId_Title" = "Order Id";
 "CreditCard_Title" = "Credit Card";
 "Transfer_Title" = "Transfer";
+"Cart_Orders_Title" = "Order Cart";
+"PayTotal_Title" = "Payment Total: %@";
+"Issued_Order_Title" = "Issued - %@";

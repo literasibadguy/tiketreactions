@@ -34,7 +34,7 @@ public final class HotelLiveFeedViewModel: HotelLiveFeedViewModelType, HotelLive
         |> SearchHotelParams.lens.query .~ "Indonesia"
         |> SearchHotelParams.lens.startDate .~ "2018-05-11"
         |> SearchHotelParams.lens.endDate .~ "2018-05-12"
-        |> SearchHotelParams.lens.sort .~ "popular"
+        |> SearchHotelParams.lens.sort .~ .popular
         |> SearchHotelParams.lens.room .~ 1
         |> SearchHotelParams.lens.adult .~ "2"
     

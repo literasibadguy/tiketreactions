@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -17,13 +18,69 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="2OM-fW-Nlp">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OrderFirstViewCell" rowHeight="83" id="fLd-aV-X6u" customClass="OrderFirstViewCell" customModule="TripToZero" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="83"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2OM-fW-Nlp" id="ysJ-L1-9Qx">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fLd-aV-X6u" id="NXp-zt-wNs">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="82.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="ugo-44-o3Y" userLabel="Order First Stack View">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="83"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pesan Hotel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6p-Ni-J6b" userLabel="Order Hotel Label">
+                                                    <rect key="frame" x="0.0" y="0.0" width="82.5" height="17"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="The Trans Luxury Bandung" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nhl-0R-O8o">
+                                                    <rect key="frame" x="0.0" y="17" width="231.5" height="32"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="24 September 2018, 5 Malam" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lmm-Aw-DiX">
+                                                    <rect key="frame" x="0.0" y="49" width="195" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 Tamu, Junior Suites Room" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xP0-QF-JU9">
+                                                    <rect key="frame" x="0.0" y="66" width="184" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VBp-cM-fYo">
+                                            <rect key="frame" x="0.0" y="82" width="375" height="1"/>
+                                            <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="1" id="0GA-e1-Qwp"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Kf1-NU-nNd" firstAttribute="trailing" secondItem="VBp-cM-fYo" secondAttribute="trailing" id="5Oa-1a-PzK"/>
+                                        <constraint firstItem="ugo-44-o3Y" firstAttribute="leading" secondItem="Kf1-NU-nNd" secondAttribute="leading" id="6Ib-je-yZf"/>
+                                        <constraint firstAttribute="bottom" secondItem="ugo-44-o3Y" secondAttribute="bottom" id="IOn-Oi-1gh"/>
+                                        <constraint firstAttribute="bottom" secondItem="VBp-cM-fYo" secondAttribute="bottom" id="Str-7h-hV8"/>
+                                        <constraint firstItem="ugo-44-o3Y" firstAttribute="top" secondItem="NXp-zt-wNs" secondAttribute="top" id="ccF-Nn-0zC"/>
+                                        <constraint firstItem="Kf1-NU-nNd" firstAttribute="trailing" secondItem="ugo-44-o3Y" secondAttribute="trailing" id="ldG-eh-jKa"/>
+                                        <constraint firstItem="VBp-cM-fYo" firstAttribute="leading" secondItem="Kf1-NU-nNd" secondAttribute="leading" id="rrC-iM-38V"/>
+                                    </constraints>
+                                    <viewLayoutGuide key="safeArea" id="Kf1-NU-nNd"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="guestRoomLabel" destination="xP0-QF-JU9" id="znT-rj-8Sq"/>
+                                    <outlet property="hotelNameOrderLabel" destination="nhl-0R-O8o" id="z4A-Za-hKb"/>
+                                    <outlet property="orderFirstSeparatorView" destination="VBp-cM-fYo" id="zXw-ht-nw3"/>
+                                    <outlet property="orderFirstStackView" destination="ugo-44-o3Y" id="ccL-0d-4gZ"/>
+                                    <outlet property="orderHotelTitleLabel" destination="R6p-Ni-J6b" id="oF9-If-mXt"/>
+                                    <outlet property="statusOrderDateLabel" destination="lmm-Aw-DiX" id="wmW-T3-QlF"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

@@ -12,7 +12,8 @@ public struct HotelBookingSummary {
     public let hotelName: String
     public let dateRange: String
     public let guestCount: String
+    public let roomCount: String
     public let roomType: String
     
-    public static let defaults = HotelBookingSummary(hotelName: "", dateRange: "", guestCount: "", roomType: "")
+    public static let defaults = HotelBookingSummary(hotelName: "", dateRange: "", guestCount: "", roomCount: "", roomType: "")
 }

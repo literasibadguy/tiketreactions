@@ -143,32 +143,44 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/ARChromeActivity/ARChromeActivity.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Argo/Argo.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CalendarDateRangePickerViewController/CalendarDateRangePickerViewController.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Curry/Curry.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FSPagerView/FSPagerView.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/KINWebBrowser/KINWebBrowser.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Kickstarter-Prelude/Prelude.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/PDFReader/PDFReader.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PhoneNumberKit/PhoneNumberKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Realm/Realm.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Result/Result.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Runes/Runes.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Spring/Spring.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/ARChromeActivity/ARChromeActivity.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Argo/Argo.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CalendarDateRangePickerViewController/CalendarDateRangePickerViewController.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Curry/Curry.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FSPagerView/FSPagerView.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/KINWebBrowser/KINWebBrowser.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Kickstarter-Prelude/Prelude.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/PDFReader/PDFReader.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PhoneNumberKit/PhoneNumberKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Realm/Realm.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Result/Result.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Runes/Runes.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Spring/Spring.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait

@@ -32,7 +32,10 @@ public protocol AnotherGuestFormViewModelOutputs {
     var dismissSalutationPicker: Signal<(), NoError> { get }
     var isGuestFormValid: Signal<Bool, NoError> { get }
     var notifyGuestParam: Signal<CheckoutGuestParams, NoError> { get }
-    var fullnameTextFieldText: Signal<String, NoError> { get }
+    var firstnameFirstResponder: Signal<(), NoError> { get }
+    var lastnameFirstResponder: Signal<(), NoError> { get }
+    var firstnameTextFieldText: Signal<String, NoError> { get }
+    var lastnameTextFieldText: Signal<String, NoError> { get }
 }
 
 public protocol AnotherGuestFormViewModelType {
@@ -66,7 +69,11 @@ public final class AnotherGuestFormViewModel: AnotherGuestFormViewModelType, Ano
         
         self.dismissSalutationPicker = self.titleCanceledProperty.signal
         
-        self.fullnameTextFieldText = firstNameText
+        self.firstnameFirstResponder = self.titleChangedTextProperty.signal.ignoreValues()
+        self.lastnameFirstResponder = self.firstNameTextDidEndProperty.signal
+        
+        self.firstnameTextFieldText = firstNameText
+        self.lastnameTextFieldText = lastNameText
         
         self.isGuestFormValid = Signal.combineLatest(titleText, firstNameText, lastNameText).map(isValid(title:firstName:lastName:))
         
@@ -118,7 +125,10 @@ public final class AnotherGuestFormViewModel: AnotherGuestFormViewModelType, Ano
     public let dismissSalutationPicker: Signal<(), NoError>
     public let isGuestFormValid: Signal<Bool, NoError>
     public let notifyGuestParam: Signal<CheckoutGuestParams, NoError>
-    public let fullnameTextFieldText: Signal<String, NoError>
+    public let firstnameFirstResponder: Signal<(), NoError>
+    public let lastnameFirstResponder: Signal<(), NoError>
+    public let firstnameTextFieldText: Signal<String, NoError>
+    public let lastnameTextFieldText: Signal<String, NoError>
     
     public var inputs: AnotherGuestFormViewModelInputs { return self }
     public var outputs: AnotherGuestFormViewModelOutputs { return self }

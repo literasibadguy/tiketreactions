@@ -69,6 +69,6 @@ class OrderFirstViewCell: UITableViewCell, ValueCell {
         _ = self.statusOrderDateLabel
             |> UILabel.lens.text .~ "\(value.dateRange)"
         _ = self.guestRoomLabel
-            |> UILabel.lens.text .~ "\(value.guestCount), \(value.roomType)"
+            |> UILabel.lens.text .~ "\(Localizations.GuestTitle(value.guestCount)), \(value.roomCount) \(value.roomType)"
     }
 }

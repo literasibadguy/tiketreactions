@@ -27,6 +27,7 @@ public protocol HotelGuestPickViewModelOutputs {
     var roomValueText: Signal<String, NoError> { get }
     var guestValue: Signal<Double, NoError> { get }
     var roomValue: Signal<Double, NoError> { get }
+    var doneButtonDisabled: Signal<Bool, NoError> { get }
     var dismissPickGuest: Signal<SearchHotelParams, NoError> { get }
     var dismissCounts: Signal<(Int, Int), NoError> { get }
 }
@@ -46,10 +47,14 @@ public final class HotelGuestPickViewModel: HotelGuestPickViewModelType, HotelGu
         let guestChanged = Signal.merge(countChanged.map { Double($0.0) }, self.guestStepperValueProperty.signal.skipNil()).map { Int($0) }
         let roomChanged = Signal.merge(countChanged.map { Double($0.1) }, self.roomStepperValueProperty.signal.skipNil()).map { Int($0) }
         
-        self.guestValue = countChanged.map { Double($0.0) }
-        self.roomValue = countChanged.map { Double($0.1) }
+        let guestAdaptRoom = Signal.combineLatest(guestChanged, roomChanged).map { $0.0 < $0.1 }
         
-        self.guestValueText = guestChanged.map { "\(Int($0)) Tamu" }
+        let guestUpdatedMax = roomChanged.filter { $0 == 8 }.map { _ in Double(8) }
+        
+        self.guestValue = Signal.merge(guestChanged.map { Double($0) }, guestUpdatedMax)
+        self.roomValue = roomChanged.map { Double($0) }
+        
+        self.guestValueText = Signal.merge(guestChanged.map { Double($0) }, guestUpdatedMax).map { "\(Int($0)) Tamu" }
         self.roomValueText = roomChanged.map { "\(Int($0)) Kamar" }
         
         self.dismissPickGuest = Signal.combineLatest(paramsChanged, guestChanged, roomChanged).map { param, guest, room in
@@ -60,7 +65,10 @@ public final class HotelGuestPickViewModel: HotelGuestPickViewModelType, HotelGu
             return custom
         }.takeWhen(self.continueButtonProperty.signal)
         
+        
         self.dismissCounts = Signal.combineLatest(guestChanged, roomChanged).takeWhen(self.continueButtonProperty.signal)
+        
+        self.doneButtonDisabled = guestAdaptRoom.negate()
     }
     
     fileprivate let configCountProperty = MutableProperty<(Int, Int)?>(nil)
@@ -97,6 +105,7 @@ public final class HotelGuestPickViewModel: HotelGuestPickViewModelType, HotelGu
     public let roomValueText: Signal<String, NoError>
     public let guestValue: Signal<Double, NoError>
     public let roomValue: Signal<Double, NoError>
+    public let doneButtonDisabled: Signal<Bool, NoError>
     public let dismissPickGuest: Signal<SearchHotelParams, NoError>
     public let dismissCounts: Signal<(Int, Int), NoError>
     

@@ -17,9 +17,11 @@ public protocol GuestRoomPickerDelegate: class {
 
 public final class GuestRoomPickerVC: UIViewController {
     fileprivate var dataSource: [[String]] = [[String]]()
+    
+    fileprivate var sourceGuests: [String] = [String]()
+    fileprivate var sourceRooms: [String] = [String]()
+    
     fileprivate let viewModel: GuestRoomPickerViewModelType = GuestRoomPickerViewModel()
-    
-    
     
     @IBOutlet fileprivate weak var guestPickerView: UIPickerView!
     @IBOutlet fileprivate weak var guestInputTitleLabel: UILabel!
@@ -94,14 +96,29 @@ public final class GuestRoomPickerVC: UIViewController {
         self.viewModel.outputs.selectRow
             .observe(on: UIScheduler())
             .observeValues { [weak self] row in
-                self?.guestPickerView.selectRow(row.0, inComponent: 0, animated: true)
-                self?.guestPickerView.selectRow(row.1, inComponent: 1, animated: true)
+                self?.guestPickerView.selectRow(row.1, inComponent: 0, animated: true)
+                self?.guestPickerView.selectRow(row.0, inComponent: 1, animated: true)
+        }
+        
+        self.viewModel.outputs.updateGuests
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] guest in
+                self?.guestPickerView.selectRow(guest - 1, inComponent: 0, animated: true)
+                self?.guestPickerView.reloadComponent(0)
+        }
+        
+        self.viewModel.outputs.updateRooms
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] room in
+                self?.guestPickerView.selectRow(room - 1, inComponent: 1, animated: true)
+                self?.guestPickerView.reloadComponent(1)
         }
         
         self.viewModel.outputs.notifyDelegateToChoseGuestRoom
             .observe(on: UIScheduler())
             .observeValues { [weak self] guest, room in
                 guard let _self = self else { return }
+                print("GUEST & ROOM CHOSEN: \(guest) GUESTS, \(room) ROOM")
                 _self.delegate?.guestRoomPickerVC(_self, guest: guest, room: room)
         }
     }
@@ -127,8 +144,14 @@ extension GuestRoomPickerVC: UIPickerViewDelegate {
     }
     
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print("WHAT PICKED: \(self.dataSource[component][row])")
-        self.viewModel.inputs.pickerView(didSelectRow: row, component: component)
+        switch component {
+        case 0:
+            self.viewModel.inputs.pickerGuestView(didSelectRow: row, component: 0)
+        case 1:
+            self.viewModel.inputs.pickerRoomView(didSelectRow: row, component: 1)
+        default:
+            break
+        }
     }
     
     public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {

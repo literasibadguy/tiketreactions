@@ -12,6 +12,7 @@ import TiketKitModels
 import UIKit
 
 public protocol HotelGuestFormDelegate: class {
+    func shouldFirstGuestForm(_ valid: Bool)
     func shouldThereAnotherGuest(_ should: Bool)
     func preparedFinalCheckoutParam(_ param: CheckoutGuestParams)
 }
@@ -57,18 +58,37 @@ internal final class HotelGuestFormVC: UITableViewController {
                 self?.tableView.reloadData()
         }
         
+        self.viewModel.outputs.guestFirstFormValid
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] valid in
+                print("Guest First Form Valid: \(valid)")
+                self?.delegate?.shouldFirstGuestForm(valid)
+        }
+        
         self.viewModel.outputs.loadExtendingParam
             .observe(on: UIScheduler())
             .observeValues { [weak self] param in
-                self?.dataSource.loadForAnotherGuest(param)
-                self?.tableView.reloadData()
-                self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 4), at: UITableViewScrollPosition.bottom, animated: true)
+                
+        }
+        
+        self.viewModel.outputs.expandGuestCell
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] params, expanded in
+                print("EXPANDING GUEST CELL: \(expanded)")
+                if expanded == true {
+                    self?.dataSource.loadedSourceParams(params)
+                    self?.tableView.reloadData()
+                    self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 3), at: .bottom, animated: true)
+                } else {
+                    self?.deleteAnotherGuestForm()
+                    self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .middle, animated: true)
+                }
         }
         
         self.viewModel.outputs.hideExtendingParam
             .observe(on: UIScheduler())
             .observeValues { [weak self] _ in
-                self?.deleteAnotherGuestForm()
+//                self?.deleteAnotherGuestForm()
         }
         
         self.viewModel.outputs.finalCheckoutData
@@ -114,13 +134,18 @@ extension HotelGuestFormVC: ContactInfoViewCellDelegate {
         self.present(passengerPickerVC, animated: true, completion: nil)
     }
     
+    func goToRegionalCodePhoneVC(phoneVC: PhoneCodeListVC) {
+        self.present(phoneVC, animated: true, completion: nil)
+    }
+    
+    
     func getContactInfoParams(guestForm: CheckoutGuestParams) {
         print("WHAT IS IT ABOUT: ??: \(guestForm)")
         self.viewModel.inputs.configureExtendParam(guestForm)
     }
     
     func getFinishedForm(_ completed: Bool) {
-        
+        self.viewModel.inputs.contactFormValid(completed)
     }
 }
 

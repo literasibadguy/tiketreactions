@@ -56,11 +56,11 @@ internal final class GuestFormTableViewCell: UITableViewCell, ValueCell {
         
         self.titlePickButton.addTarget(self, action: #selector(titleSalutationButtonTapped), for: .touchUpInside)
         
-        self.firstNameTextField.addTarget(self, action: #selector(firstNameTextFieldChanged(_:)), for: .editingChanged)
-        self.firstNameTextField.addTarget(self, action: #selector(firstNameTextFieldDoneEditing), for: [.editingDidEndOnExit, .editingDidEnd])
+        self.firstNameTextField.addTarget(self, action: #selector(firstNameTextFieldChanged(_:)), for: [.editingDidEndOnExit, .editingChanged])
+        self.firstNameTextField.addTarget(self, action: #selector(firstNameTextFieldDoneEditing), for: .editingDidEndOnExit)
         
-        self.lastNameTextField.addTarget(self, action: #selector(lastNameTextFieldChanged(_:)), for: .editingChanged)
-        self.lastNameTextField.addTarget(self, action: #selector(lastNameTextFieldDoneEditing), for: [.editingDidEndOnExit, .editingDidEnd])
+        self.lastNameTextField.addTarget(self, action: #selector(lastNameTextFieldChanged(_:)), for: [.editingDidEndOnExit, .editingChanged])
+        self.lastNameTextField.addTarget(self, action: #selector(lastNameTextFieldDoneEditing), for: .editingDidEndOnExit)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -83,13 +83,17 @@ internal final class GuestFormTableViewCell: UITableViewCell, ValueCell {
                     : .init(top: Styles.grid(2), left: Styles.grid(4), bottom: Styles.grid(3), right: Styles.grid(4))
             }
             |> UIStackView.lens.isLayoutMarginsRelativeArrangement .~ true
-            |> UIStackView.lens.spacing .~ Styles.grid(2)
+            |> UIStackView.lens.spacing .~ Styles.grid(1)
         
         _ = self.guestDataTitleLabel
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
+            |> UILabel.lens.text .~ Localizations.GuestContactFormTitle
         
         _ = titleInputStackView
             |> UIStackView.lens.spacing .~ Styles.grid(1)
+        
+        _ = titleInputLabel
+            |> UILabel.lens.text .~ Localizations.TitleFormData
         
         _ = titleContainerView
             |> UIView.lens.backgroundColor .~ .white
@@ -105,9 +109,14 @@ internal final class GuestFormTableViewCell: UITableViewCell, ValueCell {
         _ = firstNameInputStackView
             |> UIStackView.lens.spacing .~ Styles.grid(1)
         
+        _ = firstNameInputLabel
+            |> UILabel.lens.text .~ Localizations.FirstnameFormData
+        
         _ = firstNameTextField
             |> UITextField.lens.returnKeyType .~ .next
+            |> UITextField.lens.tintColor .~ .tk_official_green
             |> UITextField.lens.borderStyle .~ .roundedRect
+            |> UITextField.lens.keyboardType .~ .default
         
         _ = firstNameSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_official_green
@@ -115,9 +124,14 @@ internal final class GuestFormTableViewCell: UITableViewCell, ValueCell {
         _ = lastNameInputStackView
             |> UIStackView.lens.spacing .~ Styles.grid(1)
         
+        _ = lastNameInputLabel
+            |> UILabel.lens.text .~ Localizations.LastnameFormData
+        
         _ = lastNameTextField
             |> UITextField.lens.returnKeyType .~ .done
+            |> UITextField.lens.tintColor .~ .tk_official_green
             |> UITextField.lens.borderStyle .~ .roundedRect
+            |> UITextField.lens.keyboardType .~ .default
         
         _ = lastNameSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_official_green
@@ -126,8 +140,12 @@ internal final class GuestFormTableViewCell: UITableViewCell, ValueCell {
     override func bindViewModel() {
         super.bindViewModel()
         
+        self.firstNameTextField.rac.becomeFirstResponder = self.viewModel.outputs.firstnameFirstResponder
+        self.lastNameTextField.rac.becomeFirstResponder = self.viewModel.outputs.lastnameFirstResponder
+        
         self.titleLabel.rac.text = self.viewModel.outputs.titleLabelText
-        self.firstNameTextField.rac.text = self.viewModel.outputs.fullnameTextFieldText
+        self.firstNameTextField.rac.text = self.viewModel.outputs.firstnameTextFieldText
+        self.lastNameTextField.rac.text = self.viewModel.outputs.lastnameTextFieldText
         
         self.viewModel.outputs.goToTitleSalutationPicker
             .observe(on: UIScheduler())
@@ -159,9 +177,10 @@ internal final class GuestFormTableViewCell: UITableViewCell, ValueCell {
     }
     
     @objc fileprivate func goToPickerTitlePassenger() {
-        let titles = ["Tuan", "Nyonya", "Nona"]
-        let titlePickerVC = PassengerTitlePickerVC.instantiate(titles: titles, selectedTitle: "Tuan", delegate: self)
-        titlePickerVC.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        let titles = [Localizations.MrFormData, Localizations.MsFormData, Localizations.MsFormData]
+        let titlePickerVC = PassengerTitlePickerVC.instantiate(titles: titles, selectedTitle: Localizations.MrFormData, delegate: self)
+        titlePickerVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        titlePickerVC.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
         self.delegate?.goToPassengerPickerVC(passengerPickerVC: titlePickerVC)
         print("Passenger Title Picker VC Delegate")
     }
@@ -175,7 +194,7 @@ internal final class GuestFormTableViewCell: UITableViewCell, ValueCell {
         self.viewModel.inputs.firstNameTextFieldChange(textField.text)
     }
     
-    @objc fileprivate func firstNameTextFieldDoneEditing() {
+    @objc fileprivate func firstNameTextFieldDoneEditing(_ textField: UITextField) {
         self.viewModel.inputs.firstNameTextFieldDidEndEditing()
     }
     
@@ -183,8 +202,9 @@ internal final class GuestFormTableViewCell: UITableViewCell, ValueCell {
         self.viewModel.inputs.lastNameTextFieldChange(textField.text)
     }
     
-    @objc fileprivate func lastNameTextFieldDoneEditing() {
+    @objc fileprivate func lastNameTextFieldDoneEditing(_ textField: UITextField) {
         self.viewModel.inputs.lastNameTextFieldDidEndEditing()
+        self.lastNameTextField.resignFirstResponder()
     }
 }
 

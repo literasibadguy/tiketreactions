@@ -21,6 +21,10 @@ public struct AppEnvironment {
         replaceCurrentEnvironment(apiService: current.apiService.getToken(TiketToken(token: envelope.token)))
     }
     
+    public static func getFirstToken(_ token: String) {
+        replaceCurrentEnvironment(apiService: current.apiService.getToken(TiketToken(token: token)))
+    }
+    
     public static func replaceCurrency(_ currency: String) {
         replaceCurrentEnvironment(apiService: current.apiService.selectedCurrency(currency))
     }
@@ -30,6 +34,7 @@ public struct AppEnvironment {
     }
     
     public static func pushEnvironment(_ env: Environment) {
+        saveEnvironment(environment: env, ubiquitousStore: env.ubiquitousStore, userDefaults: env.userDefaults)
         stack.append(env)
     }
     
@@ -93,11 +98,10 @@ public struct AppEnvironment {
         let data = userDefaults.dictionary(forKey: environmentStorageKey) ?? [:]
         var service = current.apiService
         
-        print("FETCHING SERVICE: \(type(of: service))")
-        
         let config: Config? = data["config"].flatMap(decode)
         
         if let tiketToken = data["apiService.tiketToken.token"] as? String {
+            print("Is THERE ANY TOKEN STORED: \(tiketToken)")
             service = service.getToken(TiketToken(token: tiketToken))
             removeLegacyTiketToken(fromUserDefaults: userDefaults)
         } else if let tiketToken = legacyTiketToken(forUserDefaults: userDefaults) {
@@ -115,11 +119,7 @@ public struct AppEnvironment {
             service = TiketServices(serverConfig: TiketServerConfig(apiBaseUrl: apiBaseUrl, webBaseUrl: webBaseUrl, apiClientAuth: service.serverConfig.apiClientAuth), language: current.language.rawValue)
             print("RESTORING THE BASE URL: \(type(of: apiBaseUrl))")
         }
-        
-        if service.tiketToken != nil {
-            
-        }
-        
+
         return Environment(apiService: service, config: config)
     }
     

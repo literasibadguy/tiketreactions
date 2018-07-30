@@ -28,8 +28,8 @@ public final class HotelDiscoveryVC: UITableViewController {
         self.viewModel.inputs.selectedFilter(hotelSelected, param: sort, summary: summary)
     }
     
-    public func filterUpdated(_ param: SearchHotelParams) {
-        self.viewModel.inputs.filtersUpdated(param)
+    public func filterUpdated(_ sort: SearchHotelParams.Sort) {
+        self.viewModel.inputs.configureWith(sort: sort)
     }
     
     public func filterDismissed() {
@@ -101,6 +101,7 @@ public final class HotelDiscoveryVC: UITableViewController {
         print("[HOTEL DISCOVERY VC]: Hotel Discovery VC Bind View Model")
         
         self.loadingIndicatorView.rac.animating = self.viewModel.outputs.hotelsAreLoading
+        self.loadingIndicatorView.rac.animating = self.viewModel.outputs.filtersAreLoading
         
         self.viewModel.outputs.notifyDelegate
             .observe(on: UIScheduler())
@@ -115,6 +116,14 @@ public final class HotelDiscoveryVC: UITableViewController {
                 self?.dataSource.load(hotelResult: hotels)
                 self?.tableView.reloadData()
          }
+        
+        self.viewModel.outputs.asyncReloadData
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] in
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                }
+        }
         
         self.viewModel.outputs.filtersHotels
             .observe(on: UIScheduler())
@@ -137,11 +146,16 @@ public final class HotelDiscoveryVC: UITableViewController {
         }
         
         self.viewModel.outputs.goToHotel
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] hotelResult, summary in
 //                print("GET ME LINK: \(hotelResult.businessURI)")
                 self?.goTo(hotel: hotelResult, summary: summary)
         }
+    }
+    
+    public override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        self.viewModel.inputs.willDisplayRow(self.dataSource.itemIndexAt(indexPath), outOf: self.dataSource.numberOfItems())
     }
     
     public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

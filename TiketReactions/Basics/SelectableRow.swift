@@ -48,13 +48,13 @@ public extension Lens where Whole == SelectableRow, Part == SearchHotelParams {
     public var child: Lens<SelectableRow, Int?> {
         return SelectableRow.lens.params..SearchHotelParams.lens.child
     }
-    public var sort: Lens<SelectableRow, String?> {
+    public var sort: Lens<SelectableRow, SearchHotelParams.Sort?> {
         return SelectableRow.lens.params..SearchHotelParams.lens.sort
     }
     public var minStar: Lens<SelectableRow, Int?> {
         return SelectableRow.lens.params..SearchHotelParams.lens.minStar
     }
-    public var maxStar: Lens<SelectableRow, String?> {
+    public var maxStar: Lens<SelectableRow, Int?> {
         return SelectableRow.lens.params..SearchHotelParams.lens.maxStar
     }
     public var minPrice: Lens<SelectableRow, String?> {
@@ -63,7 +63,7 @@ public extension Lens where Whole == SelectableRow, Part == SearchHotelParams {
     public var maxPrice: Lens<SelectableRow, String?> {
         return SelectableRow.lens.params..SearchHotelParams.lens.maxPrice
     }
-    public var distance: Lens<SelectableRow, String?> {
+    public var distance: Lens<SelectableRow, Int?> {
         return SelectableRow.lens.params..SearchHotelParams.lens.distance
     }
 }

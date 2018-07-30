@@ -34,7 +34,7 @@ public final class HotelDetailsNavViewModel: HotelDetailsNavViewModelType, Hotel
         
         let selectedHotel = Signal.combineLatest(self.configDataProperty.signal.skipNil(), self.viewDidLoadProperty.signal).map(first)
         
-        self.hotelNameText = Signal.merge(self.viewDidLoadProperty.signal.mapConst(""), selectedHotel.map { $0.name })
+        self.hotelNameText = Signal.merge(self.viewDidLoadProperty.signal.mapConst(""), selectedHotel.map { $0.name ?? "" })
         self.dismissViewController = self.tappedCancelProperty.signal.ignoreValues()
     }
     

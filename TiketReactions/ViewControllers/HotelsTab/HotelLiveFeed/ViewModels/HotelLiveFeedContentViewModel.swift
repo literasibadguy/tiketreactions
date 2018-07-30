@@ -70,7 +70,7 @@ public final class HotelLiveFeedContentViewModel: HotelLiveFeedContentViewModelT
         
         self.hotels = hotelServices.values().map { $0.searchHotelResults }.skip { $0.isEmpty }.skipRepeats(==)
         
-        self.showEmptyState = hotelServices.values().filter { $0.diagnostic.status != 200 && $0.searchHotelResults.isEmpty }.map { _ in
+        self.showEmptyState = hotelServices.values().filter { $0.diagnostic.status != .successful && $0.searchHotelResults.isEmpty }.map { _ in
             EmptyState.hotelResult
         }
     }

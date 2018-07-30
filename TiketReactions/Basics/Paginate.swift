@@ -8,7 +8,6 @@
 import ReactiveSwift
 import Result
 import Prelude
-
 /*
 public func paginateHotel<Cursor, Value: Equatable, SearchHotelEnvelopes, ErrorEnvelope, RequestParams>(requestFirstPageWith requestFirstPage: Signal<RequestParams, NoError>) {
     
@@ -17,34 +16,33 @@ public func paginateHotel<Cursor, Value: Equatable, SearchHotelEnvelopes, ErrorE
 public func paginate(
     requestFirstPageWith requestFirstPage: Signal<SearchHotelParams, NoError>,
     requestNextPageWhen requestNextPage: Signal<(), NoError>,
-    clearOnNewRequest: Bool,
+    clearOnNewRequest: Bool = true,
     skipRepeats: Bool = true,
     valuesFromEnvelope: @escaping ((SearchHotelEnvelopes) -> [HotelResult]),
-    cursorFromEnvelope: @escaping ((SearchHotelEnvelopes) -> SearchHotelParams),
+    cursorFromEnvelope: @escaping ((SearchHotelEnvelopes) -> (HotelPagination, SearchHotelParams)),
     requestFromParams: @escaping ((SearchHotelParams) -> SignalProducer<SearchHotelEnvelopes, ErrorEnvelope>),
-    requestFromCursor: @escaping ((SearchHotelParams) -> SignalProducer<SearchHotelEnvelopes, ErrorEnvelope>),
+    requestFromCursor: @escaping ((Int, SearchHotelParams) -> SignalProducer<SearchHotelEnvelopes, ErrorEnvelope>),
     concater: @escaping (([HotelResult], [HotelResult]) -> [HotelResult]) = (+))
     ->
     (paginatedValues: Signal<[HotelResult], NoError>,
     isLoading: Signal<Bool, NoError>,
     pageCount: Signal<Int, NoError>) {
     
-    let cursor = MutableProperty<SearchHotelParams?>(nil)
+    let cursor = MutableProperty<(HotelPagination, SearchHotelParams)?>(nil)
     let isLoading = MutableProperty<Bool>(false)
+    
         
-        let cursorOnNextPage = cursor.producer.skipNil().switchMap { params -> SignalProducer<SearchHotelParams, NoError> in
-            let customized = params
-                |> SearchHotelParams.lens.page .~ (1 + 1)
-            
-            return SignalProducer(value: customized)
-        }.sample(on: requestNextPage)
+    let cursorOnNextPage = cursor.producer.skipNil().switchMap { (arg) -> SignalProducer<(Int, SearchHotelParams), NoError> in
+            let (pagination, params) = arg
+            let nextPage = pagination.currentPage + 1
+            return SignalProducer.init(value: (nextPage, params))
+    }.sample(on: requestNextPage)
     
         
     let paginatedValues = requestFirstPage.switchMap { requestParams in
         
         cursorOnNextPage.map(Either.right).prefix(value: .left(requestParams)).switchMap {
             paramsOrCursor in
-            
             
             paramsOrCursor.ifLeft(requestFromParams, ifRight: requestFromCursor).ck_delay(AppEnvironment.current.apiDelayInterval, on: AppEnvironment.current.scheduler)
                 .on(

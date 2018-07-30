@@ -19,14 +19,14 @@ public struct Localizations {
     /// Base translation: Check-Out Date
     public static var CheckoutDateTitle : String = NSLocalizedString("CheckOut_Date_Title", comment: "")
 
-    /// Base translation: Book Room
-    public static var OrderRoomTitle : String = NSLocalizedString("Order_Room_Title", comment: "")
-
-    /// Base translation: Transfer
-    public static var TransferTitle : String = NSLocalizedString("Transfer_Title", comment: "")
+    /// Base translation: Highest Price
+    public static var FilterHighpriceTitle : String = NSLocalizedString("Filter_HighPrice_Title", comment: "")
 
     /// Base translation: Room Facility
     public static var FacilityRoomTitle : String = NSLocalizedString("Facility_Room_Title", comment: "")
+
+    /// Base translation: Email
+    public static var EmailFormData : String = NSLocalizedString("Email_Form_Data", comment: "")
 
     /// Base translation: Mr
     public static var MrFormData : String = NSLocalizedString("Mr_Form_Data", comment: "")
@@ -39,6 +39,11 @@ public struct Localizations {
 
     /// Base translation: Pick Dates
     public static var PickDateTitleForm : String = NSLocalizedString("Pick_Date_Title_Form", comment: "")
+
+    /// Base translation: Issued - %@
+    public static func IssuedOrderTitle(_ value1 : String) -> String {
+        return String(format: NSLocalizedString("Issued_Order_Title", comment: ""), value1)
+    }
 
     /// Base translation: Hotel Facility
     public static var FacilityHotelTitle : String = NSLocalizedString("Facility_Hotel_Title", comment: "")
@@ -83,11 +88,16 @@ public struct Localizations {
     /// Base translation: Credit Card
     public static var CreditcardTitle : String = NSLocalizedString("CreditCard_Title", comment: "")
 
+    /// Base translation: %d Guests
+    public static func GuestPickTitle(_ value1 : Int) -> String {
+        return String(format: NSLocalizedString("Guest_Pick_Title", comment: ""), value1)
+    }
+
     /// Base translation: No
     public static var ConfirmnoTitle : String = NSLocalizedString("ConfirmNo_Title", comment: "")
 
-    /// Base translation: %d Guests
-    public static func GuestTitle(_ value1 : Int) -> String {
+    /// Base translation: %@ Guests
+    public static func GuestTitle(_ value1 : String) -> String {
         return String(format: NSLocalizedString("Guest_Title", comment: ""), value1)
     }
 
@@ -97,7 +107,7 @@ public struct Localizations {
     /// Base translation: Guest Form
     public static var GuestContactFormTitle : String = NSLocalizedString("Guest_Contact_Form_Title", comment: "")
 
-    /// Base translation: Maximum 11 Nights
+    /// Base translation: Maximum 15 Nights
     public static var MaximumNightsReminderTitle : String = NSLocalizedString("Maximum_Nights_Reminder_Title", comment: "")
 
     /// Base translation: Choose Check-In Date
@@ -121,11 +131,11 @@ public struct Localizations {
     /// Base translation: Price Total
     public static var PricetotalTitle : String = NSLocalizedString("PriceTotal_Title", comment: "")
 
-    /// Base translation: Is It For Another Person?
-    public static var AnotherguestOptionFormTitle : String = NSLocalizedString("AnotherGuest_Option_Form_Title", comment: "")
-
     /// Base translation: Destination / Hotel
     public static var DestinationHotelTitleForm : String = NSLocalizedString("Destination_Hotel_Title_Form", comment: "")
+
+    /// Base translation: This booking for someone else
+    public static var AnotherguestOptionFormTitle : String = NSLocalizedString("AnotherGuest_Option_Form_Title", comment: "")
 
     /// Base translation: Lowest Price
     public static var FilterLowpriceTitle : String = NSLocalizedString("Filter_LowPrice_Title", comment: "")
@@ -135,6 +145,9 @@ public struct Localizations {
 
     /// Base translation: Mrs
     public static var MrsFormData : String = NSLocalizedString("Mrs_Form_Data", comment: "")
+
+    /// Base translation: Order Cart
+    public static var CartOrdersTitle : String = NSLocalizedString("Cart_Orders_Title", comment: "")
 
     /// Base translation: Welcome to triptozero
     public static var WelcomeToTriptozero : String = NSLocalizedString("Welcome_To_TripToZero", comment: "")
@@ -160,6 +173,11 @@ public struct Localizations {
     /// Base translation: Address
     public static var AddressHotelTitle : String = NSLocalizedString("Address_Hotel_Title", comment: "")
 
+    /// Base translation: Payment Total: %@
+    public static func PaytotalTitle(_ value1 : String) -> String {
+        return String(format: NSLocalizedString("PayTotal_Title", comment: ""), value1)
+    }
+
     /// Base translation: Ms
     public static var MsFormData : String = NSLocalizedString("Ms_Form_Data", comment: "")
 
@@ -181,16 +199,16 @@ public struct Localizations {
     /// Base translation: Last Name
     public static var LastnameFormData : String = NSLocalizedString("LastName_Form_Data", comment: "")
 
-    /// Base translation: Highest Price
-    public static var FilterHighpriceTitle : String = NSLocalizedString("Filter_HighPrice_Title", comment: "")
-
     /// Base translation: Populer
     public static var FilterPopulerTitle : String = NSLocalizedString("Filter_Populer_Title", comment: "")
 
-    /// Base translation: Email
-    public static var EmailFormData : String = NSLocalizedString("Email_Form_Data", comment: "")
+    /// Base translation: Book Room
+    public static var OrderRoomTitle : String = NSLocalizedString("Order_Room_Title", comment: "")
 
-    /// Base translation: Only Maximum 11 Nights
+    /// Base translation: Transfer
+    public static var TransferTitle : String = NSLocalizedString("Transfer_Title", comment: "")
+
+    /// Base translation: Only Maximum 15 Nights
     public static var MaximumNightsAlertTitle : String = NSLocalizedString("Maximum_Nights_Alert_Title", comment: "")
 
 }

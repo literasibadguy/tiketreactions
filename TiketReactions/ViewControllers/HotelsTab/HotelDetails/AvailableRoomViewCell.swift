@@ -51,6 +51,7 @@ public final class AvailableRoomViewCell: UITableViewCell, ValueCell {
         _ = self.roomPriceLabel
             |> UILabel.lens.font .~ UIFont.boldSystemFont(ofSize: 14.0)
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
+            |> UILabel.lens.numberOfLines .~ 2
         
         _ = self.availableRoomSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_base_grey_100

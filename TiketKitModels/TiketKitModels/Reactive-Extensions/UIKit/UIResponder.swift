@@ -1,9 +1,46 @@
-//
-//  UIResponder.swift
-//  TiketKitModels
-//
-//  Created by Firas Rafislam on 01/06/18.
-//  Copyright © 2018 Firas Rafislam. All rights reserved.
-//
+import ReactiveSwift
+import Result
+import UIKit
 
-import Foundation
+private enum Associations {
+    fileprivate static var becomeFirstResponder = 0
+    fileprivate static var firstResponder = 1
+}
+
+public extension Rac where Object: UIResponder {
+    public var becomeFirstResponder: Signal<(), NoError> {
+        nonmutating set {
+            let prop: MutableProperty<()> = lazyMutableProperty(
+                object,
+                key: &Associations.becomeFirstResponder,
+                setter: { [weak object] in
+                    object?.becomeFirstResponder()
+                },
+                getter: { () })
+            
+            prop <~ newValue.observe(on: UIScheduler())
+        }
+        
+        get {
+            return .empty
+        }
+    }
+    
+    public var isFirstResponder: Signal<Bool, NoError> {
+        nonmutating set {
+            let prop: MutableProperty<Bool> = lazyMutableProperty(
+                object,
+                key: &Associations.firstResponder,
+                setter: { [weak object] in
+                    _ = $0 ? object?.becomeFirstResponder() : object?.resignFirstResponder()
+                },
+                getter: { [weak object] in object?.isFirstResponder ?? false })
+            
+            prop <~ newValue.observe(on: UIScheduler())
+        }
+        
+        get {
+            return .empty
+        }
+    }
+}

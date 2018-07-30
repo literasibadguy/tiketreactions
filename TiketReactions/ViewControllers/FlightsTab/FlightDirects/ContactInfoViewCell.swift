@@ -6,6 +6,7 @@
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 
+import PhoneNumberKit
 import Prelude
 import ReactiveSwift
 import TiketKitModels
@@ -13,6 +14,7 @@ import UIKit
 
 protocol ContactInfoViewCellDelegate: class {
     func goToPassengerPickerVC(passengerPickerVC: PassengerTitlePickerVC)
+    func goToRegionalCodePhoneVC(phoneVC: PhoneCodeListVC)
     func getContactInfoParams(guestForm: CheckoutGuestParams)
     func getFinishedForm(_ completed: Bool)
     func canceledTitlePick()
@@ -53,10 +55,10 @@ internal final class ContactInfoViewCell: UITableViewCell, ValueCell {
     @IBOutlet fileprivate weak var emailSeparatorView: UIView!
     
     @IBOutlet fileprivate weak var phoneInputStackView: UIStackView!
-    @IBOutlet var phoneCodeButton: UIButton!
+    @IBOutlet fileprivate weak var phoneCodeButton: UIButton!
     @IBOutlet fileprivate weak var phoneArrangeStackView: UIStackView!
     @IBOutlet fileprivate weak var phoneInputTitleLabel: UILabel!
-    @IBOutlet fileprivate weak var phoneTextField: UITextField!
+    @IBOutlet fileprivate weak var phoneTextField: PhoneNumberTextField!
     @IBOutlet fileprivate weak var phoneSeparatorView: UIView!
     
     override public func awakeFromNib() {
@@ -73,18 +75,20 @@ internal final class ContactInfoViewCell: UITableViewCell, ValueCell {
         
         self.titlePickButton.addTarget(self, action: #selector(titleSalutationButtonTapped), for: .touchUpInside)
         
-        self.firstNameTextField.addTarget(self, action: #selector(firstNameTextFieldChanged(_:)), for: .editingChanged)
-        self.firstNameTextField.addTarget(self, action: #selector(firstNameTextFieldDoneEditing), for: [.editingDidEndOnExit, .editingDidEnd])
+        self.firstNameTextField.addTarget(self, action: #selector(firstNameTextFieldChanged(_:)), for: [.editingDidEndOnExit, .editingChanged])
+        self.firstNameTextField.addTarget(self, action: #selector(firstNameTextFieldDoneEditing), for: .editingDidEndOnExit)
         
-        self.lastNameTextField.addTarget(self, action: #selector(lastNameTextFieldChanged(_:)), for: .editingChanged)
-        self.lastNameTextField.addTarget(self, action: #selector(lastNameTextFieldDoneEditing), for: [.editingDidEndOnExit, .editingDidEnd])
+        self.lastNameTextField.addTarget(self, action: #selector(lastNameTextFieldChanged(_:)), for: [.editingDidEndOnExit, .editingChanged])
+        self.lastNameTextField.addTarget(self, action: #selector(lastNameTextFieldDoneEditing), for: .editingDidEndOnExit)
         
-        self.emailTextField.addTarget(self, action: #selector(emailTextFieldChanged(_:)), for: .editingChanged)
-        self.emailTextField.addTarget(self, action: #selector(emailTextFieldDoneEditing), for: [.editingDidEndOnExit, .editingDidEnd])
+        self.emailTextField.addTarget(self, action: #selector(emailTextFieldChanged(_:)), for: [.editingDidEndOnExit, .editingChanged])
+        self.emailTextField.addTarget(self, action: #selector(emailTextFieldDoneEditing), for: .editingDidEndOnExit)
         
-        self.phoneTextField.addTarget(self, action: #selector(phoneTextFieldChanged(_:)), for: .editingChanged)
-        self.phoneTextField.addTarget(self, action: #selector(phoneTextFieldDoneEditing), for: [.editingDidEndOnExit, .editingDidEnd])
+        self.phoneTextField.addTarget(self, action: #selector(phoneTextFieldChanged(_:)), for: [.editingDidEndOnExit, .editingChanged])
+        self.phoneTextField.addTarget(self, action: #selector(phoneTextFieldDoneEditing), for: .editingDidEndOnExit)
         self.phoneTextField.inputAccessoryView = doneToolbar
+        
+        self.phoneCodeButton.addTarget(self, action: #selector(phoneRegionalCodeButtonTapped), for: .touchUpInside)
     }
 
     override public func bindStyles() {
@@ -184,6 +188,8 @@ internal final class ContactInfoViewCell: UITableViewCell, ValueCell {
             |> UITextField.lens.borderStyle .~ .roundedRect
             |> UITextField.lens.keyboardType .~ .phonePad
         
+        self.phoneTextField.isPartialFormatterEnabled = false
+        
         _ = phoneArrangeStackView
             |> UIStackView.lens.spacing .~ Styles.grid(1)
         
@@ -196,20 +202,32 @@ internal final class ContactInfoViewCell: UITableViewCell, ValueCell {
         
         print("BIND VIEW MODEL")
         
+        self.firstNameTextField.rac.becomeFirstResponder = self.viewModel.outputs.firstNameFirstResponder
+        self.lastNameTextField.rac.becomeFirstResponder = self.viewModel.outputs.lastNameFirstResponder
+        self.emailTextField.rac.becomeFirstResponder = self.viewModel.outputs.emailFirstResponder
+        self.phoneTextField.rac.becomeFirstResponder = self.viewModel.outputs.phoneFirstResponder
+        
         self.titlePickedLabel.rac.text = self.viewModel.outputs.titleLabelText
         self.firstNameTextField.rac.text = self.viewModel.outputs.firstNameTextFieldText
         self.emailTextField.rac.text = self.viewModel.outputs.emailTextFieldText
         self.phoneTextField.rac.text = self.viewModel.outputs.phoneTextFieldText
+        self.phoneCodeButton.rac.title = self.viewModel.outputs.phoneCodeLabelText
  
         self.viewModel.outputs.goToTitleSalutationPicker
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] in
                 print("Picker Title passenger Tapped Observable")
                  self?.goToPickerTitlePassenger()
         }
         
+        self.viewModel.outputs.goToPhoneCodePicker
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] in
+                self?.goToRegionalCode()
+        }
+        
         self.viewModel.outputs.dismissSalutationPicker
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] in
                 self?.delegate?.canceledTitlePick()
         }
@@ -232,7 +250,7 @@ internal final class ContactInfoViewCell: UITableViewCell, ValueCell {
         
     }
     
-    @objc fileprivate func goToPickerTitlePassenger() {
+    fileprivate func goToPickerTitlePassenger() {
         let titles = ["Tuan", "Nyonya", "Nona"]
         let titlePickerVC = PassengerTitlePickerVC.instantiate(titles: titles, selectedTitle: "", delegate: self)
         titlePickerVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
@@ -241,16 +259,26 @@ internal final class ContactInfoViewCell: UITableViewCell, ValueCell {
         print("Passenger Title Picker VC Delegate")
     }
     
+    fileprivate func goToRegionalCode() {
+        let phoneListVC = PhoneCodeListVC.instantiate()
+        phoneListVC.delegate = self
+        self.delegate?.goToRegionalCodePhoneVC(phoneVC: phoneListVC)
+    }
+    
     @objc fileprivate func titleSalutationButtonTapped() {
         print("Title Salutation Button Tapped")
         self.viewModel.inputs.titleSalutationButtonTapped()
+    }
+    
+    @objc fileprivate func phoneRegionalCodeButtonTapped() {
+        self.viewModel.inputs.phoneCodeButtonTapped()
     }
     
     @objc fileprivate func firstNameTextFieldChanged(_ textField: UITextField) {
         self.viewModel.inputs.firstNameTextFieldChange(textField.text)
     }
     
-    @objc fileprivate func firstNameTextFieldDoneEditing() {
+    @objc fileprivate func firstNameTextFieldDoneEditing(_ textField: UITextField) {
         self.viewModel.inputs.firstNameTextFieldDidEndEditing()
     }
     
@@ -258,7 +286,7 @@ internal final class ContactInfoViewCell: UITableViewCell, ValueCell {
         self.viewModel.inputs.lastNameTextFieldChange(textField.text)
     }
     
-    @objc fileprivate func lastNameTextFieldDoneEditing() {
+    @objc fileprivate func lastNameTextFieldDoneEditing(_ textField: UITextField) {
         self.viewModel.inputs.lastNameTextFieldDidEndEditing()
     }
     
@@ -266,13 +294,13 @@ internal final class ContactInfoViewCell: UITableViewCell, ValueCell {
         self.viewModel.inputs.emailTextFieldChange(textField.text)
     }
     
-    @objc fileprivate func emailTextFieldDoneEditing() {
+    @objc fileprivate func emailTextFieldDoneEditing(_ textField: UITextField) {
         self.viewModel.inputs.emailTextFieldDidEndEditing()
 
     }
     
-    @objc fileprivate func phoneTextFieldChanged(_ textField: UITextField) {
-        self.viewModel.inputs.phoneTextFieldChange(textField.text)
+    @objc fileprivate func phoneTextFieldChanged(_ textField: PhoneNumberTextField) {
+        self.viewModel.inputs.phoneTextFieldChange(textField.text?.description, code: textField.defaultRegion)
     }
     
     @objc fileprivate func phoneTextFieldDoneEditing() {
@@ -289,6 +317,11 @@ extension ContactInfoViewCell: PassengerTitlePickerVCDelegate {
     func passengerTitlePickerVCCancelled(_ controller: PassengerTitlePickerVC) {
         self.viewModel.inputs.titleSalutationCanceled()
     }
-    
-    
+}
+
+
+extension ContactInfoViewCell: PhoneCodeListDelegate {
+    func selectedCountryCode(_ listVC: PhoneCodeListVC, country: Country) {
+        self.viewModel.inputs.phoneCodeChanged(country)
+    }
 }

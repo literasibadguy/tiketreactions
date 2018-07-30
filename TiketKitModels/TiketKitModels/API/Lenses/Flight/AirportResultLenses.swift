@@ -7,3 +7,15 @@
 //
 
 import Foundation
+import Prelude
+
+extension AirportResult {
+    public enum lens {
+        
+        
+        public static let airportName = Lens<AirportResult, String>(
+            view: { $0.airportName },
+            set: { some, thing in AirportResult(airportName: some, airportCode: thing.airportCode, locationName: thing.locationName, countryId: thing.countryId, countryName: thing.countryName) }
+        )
+    }
+}

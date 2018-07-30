@@ -14,6 +14,7 @@ import TiketKitModels
 public protocol HotelGuestFormViewModelInputs {
     func configureWith(hotelDirect: HotelDirect, availableRoom: AvailableRoom, booking: HotelBookingSummary)
     func configureExtendParam(_ param: CheckoutGuestParams)
+    func contactFormValid(_ valid: Bool)
     func contactFormDataChange(salutation: String, fullname: String, email: String, phone: String)
     func anotherGuestFormDataChange(_ param: CheckoutGuestParams)
     func guestOptionChanged(_ option: Bool)
@@ -26,8 +27,9 @@ public protocol HotelGuestFormViewModelOutputs {
     var loadHotelAndAvailableRoomIntoDataSource: Signal<(HotelDirect, AvailableRoom, HotelBookingSummary), NoError> { get }
     var loadExtendingParam: Signal<CheckoutGuestParams, NoError> { get }
     var hideExtendingParam: Signal<(), NoError> { get }
+    var guestFirstFormValid: Signal<Bool, NoError> { get }
     var guestOptionState: Signal<Bool, NoError> { get }
-    var expandGuestCell: Signal<Bool, NoError> { get }
+    var expandGuestCell: Signal<(CheckoutGuestParams, Bool), NoError> { get }
     var finalCheckoutData: Signal<CheckoutGuestParams, NoError> { get }
 }
 
@@ -42,14 +44,16 @@ public final class HotelGuestFormViewModel: HotelGuestFormViewModelType, HotelGu
         
         self.loadHotelAndAvailableRoomIntoDataSource = self.configDataProperty.signal.skipNil()
         
-        self.loadExtendingParam = self.extendParamProperty.signal.skipNil().takeWhen(self.guestOptionProperty.signal.skipNil().filter { $0 == true })
+        self.loadExtendingParam = .empty
         
-        self.guestOptionState = self.guestOptionProperty.signal.skipNil().take(first: 1)
+        self.guestFirstFormValid = self.contactFormProperty.signal
         
-        self.expandGuestCell = self.guestOptionProperty.signal.skipNil()
+        self.guestOptionState = self.guestOptionProperty.signal.take(first: 1)
+        
+        self.expandGuestCell = Signal.combineLatest(self.extendParamProperty.signal.skipNil(), self.guestOptionProperty.signal.map { $0 == true })
         
         self.finalCheckoutData = Signal.merge(self.anotherGuestFormDataProperty.signal.skipNil(), self.extendParamProperty.signal.skipNil())
-        self.hideExtendingParam = self.guestOptionProperty.signal.skipNil().filterMap { $0 == true }.ignoreValues()
+        self.hideExtendingParam = self.guestOptionProperty.signal.filterMap { $0 == true }.ignoreValues()
     }
     
     fileprivate let configDataProperty = MutableProperty<(HotelDirect, AvailableRoom, HotelBookingSummary)?>(nil)
@@ -62,6 +66,11 @@ public final class HotelGuestFormViewModel: HotelGuestFormViewModelType, HotelGu
         self.extendParamProperty.value = param
     }
     
+    fileprivate let contactFormProperty = MutableProperty(false)
+    public func contactFormValid(_ valid: Bool) {
+        self.contactFormProperty.value = valid
+    }
+    
     fileprivate let contactFormDataProperty = MutableProperty<(String, String, String, String)?>(nil)
     public func contactFormDataChange(salutation: String, fullname: String, email: String, phone: String) {
         self.contactFormDataProperty.value = (salutation, fullname, email, phone)
@@ -72,7 +81,7 @@ public final class HotelGuestFormViewModel: HotelGuestFormViewModelType, HotelGu
         self.anotherGuestFormDataProperty.value = param
     }
     
-    fileprivate let guestOptionProperty = MutableProperty<Bool?>(nil)
+    fileprivate let guestOptionProperty = MutableProperty(false)
     public func guestOptionChanged(_ option: Bool) {
         self.guestOptionProperty.value = option
     }
@@ -95,7 +104,8 @@ public final class HotelGuestFormViewModel: HotelGuestFormViewModelType, HotelGu
     public let loadHotelAndAvailableRoomIntoDataSource: Signal<(HotelDirect, AvailableRoom, HotelBookingSummary), NoError>
     public let loadExtendingParam: Signal<CheckoutGuestParams, NoError>
     public let hideExtendingParam: Signal<(), NoError>
-    public let expandGuestCell: Signal<Bool, NoError>
+    public let expandGuestCell: Signal<(CheckoutGuestParams, Bool), NoError>
+    public let guestFirstFormValid: Signal<Bool, NoError>
     public let guestOptionState: Signal<Bool, NoError>
     public let finalCheckoutData: Signal<CheckoutGuestParams, NoError>
     

@@ -1,9 +1,26 @@
-//
-//  WKWebViewLenses.swift
-//  TiketReactions
-//
-//  Created by Firas Rafislam on 20/06/18.
-//  Copyright © 2018 Firas Rafislam. All rights reserved.
-//
+#if os(iOS)
+import Prelude
+import WebKit
 
-import Foundation
+public protocol WKWebViewProtocol: UIViewProtocol {
+    var scrollView: UIScrollView { get }
+}
+
+extension WKWebView: WKWebViewProtocol {}
+
+public extension LensHolder where Object: WKWebViewProtocol {
+    
+    public var scrollView: Lens<Object, UIScrollView> {
+        return Lens(
+            view: { $0.scrollView },
+            set: { $1 }
+        )
+    }
+}
+
+extension Lens where Whole: WKWebViewProtocol, Part == UIScrollView {
+    public var delaysContentTouches: Lens<Whole, Bool> {
+        return Whole.lens.scrollView..Part.lens.delaysContentTouches
+    }
+}
+#endif

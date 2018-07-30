@@ -9,6 +9,7 @@ import CalendarDateRangePickerViewController
 import FSPagerView
 import Prelude
 import ReactiveSwift
+import RealmSwift
 import Spring
 import TiketKitModels
 import UIKit
@@ -77,6 +78,16 @@ class FlightFormVC: UIViewController {
 
         // Do any additional setup after loading the view.
 //        self.view.backgroundColor = .red
+        let syncServerURL = URL(string: "realm://triptozero-issued-orders.us1.cloud.realm.io")!
+        let realm = try! Realm(configuration: .defaultConfiguration)
+        
+        let latestIssued = IssuedOrder()
+        latestIssued.email = "firasrafislam@live.com"
+        latestIssued.orderId = "1234567"
+        
+        try! realm.write {
+            realm.add(latestIssued)
+        }
         
         self.bannerPagerView.itemSize = CGSize(width: self.view.frame.size.width, height: 250)
         

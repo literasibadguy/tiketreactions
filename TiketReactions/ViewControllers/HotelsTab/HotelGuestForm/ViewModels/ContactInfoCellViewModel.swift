@@ -27,16 +27,21 @@ public protocol ContactInfoCellViewModelInputs {
     func emailTextFieldDidEndEditing()
     
     func phoneCodeButtonTapped()
-    func phoneCodeChanged(_ text: String?)
+    func phoneCodeChanged(_ text: Country?)
     
-    func phoneTextFieldChange(_ text: String?)
+    func phoneTextFieldChange(_ text: String?, code: String?)
     func phoneTextFieldDidEndEditing()
 }
 
 public protocol ContactInfoCellViewModelOutputs {
     var titleLabelText: Signal<String, NoError> { get }
     var goToTitleSalutationPicker: Signal<(), NoError> { get }
+    var goToPhoneCodePicker: Signal<(), NoError> { get }
     var dismissSalutationPicker: Signal<(), NoError> { get }
+    var firstNameFirstResponder: Signal<(), NoError> { get }
+    var lastNameFirstResponder: Signal<(), NoError> { get }
+    var emailFirstResponder: Signal<(), NoError> { get }
+    var phoneFirstResponder: Signal<(), NoError> { get }
     var firstNameTextFieldText: Signal<String, NoError> { get }
     var lastNameTextFieldText: Signal<String, NoError> { get }
     var emailTextFieldText: Signal<String, NoError> { get }
@@ -58,7 +63,13 @@ public final class ContactInfoCellViewModel: ContactInfoCellViewModelType, Conta
         let initialText = self.salutationChangedProperty.signal.mapConst("")
         
         self.goToTitleSalutationPicker = self.salutationButtonTappedProperty.signal
+        self.goToPhoneCodePicker = self.phoneCodeButtonTappedProperty.signal
         self.dismissSalutationPicker = self.salutationCanceledProperty.signal
+        
+        self.firstNameFirstResponder = self.salutationChangedProperty.signal.ignoreValues()
+        self.lastNameFirstResponder = self.firstNameEndEditingProperty.signal
+        self.emailFirstResponder = self.lastNameEndEditingProperty.signal
+        self.phoneFirstResponder = self.emailTextFieldDidEndEditingProperty.signal
         
         let title = Signal.merge(self.salutationChangedProperty.signal.skipNil(), initialText)
         let firstname = Signal.merge(self.firstNameTextFieldChangeProperty.signal.skipNil(), initialText)
@@ -66,24 +77,21 @@ public final class ContactInfoCellViewModel: ContactInfoCellViewModelType, Conta
         let email = Signal.merge(self.emailTextFieldChangeProperty.signal.skipNil(), initialText)
         let phone = Signal.merge(self.phoneTextFieldChangeProperty.signal.skipNil(), initialText)
         
-        let titleIsPresent = title.map { $0 != "" }
-        let firstnameIsPresent = firstname.map { $0 != "" }
-        let lastnameIsPresent = lastname.map { $0 != "" }
-        let emailIsPresent = email.map { $0 != "" }
-        let phoneIsPresent = phone.map { $0 != "" }
+        let codeMerge = Signal.merge(self.phoneTextFieldChangeProperty.signal.mapConst("ID"), self.phoneCodeChangedProperty.signal.skipNil().map { $0.code! })
         
-        let contactForm = Signal.combineLatest(title, firstname, lastname, email, phone)
+        let contactForm = Signal.combineLatest(title, firstname, lastname, email, phone, codeMerge)
         
         self.titleLabelText = title
         self.firstNameTextFieldText = .empty
         self.lastNameTextFieldText = .empty
         self.emailTextFieldText = .empty
-        self.phoneCodeLabelText = .empty
+        self.phoneCodeLabelText = self.phoneCodeChangedProperty.signal.skipNil().map { $0.phoneCode! }
         self.phoneTextFieldText = .empty
         
-        self.contactFormIsCompleted = Signal.combineLatest(titleIsPresent, firstnameIsPresent, lastnameIsPresent, emailIsPresent, phoneIsPresent).map { $0 && $1 && $2 && $3 && $4 }.skipRepeats()
+
+        self.contactFormIsCompleted = contactForm.map(isValid(title:firstname:lastname:email:phone:code:))
         
-        let contactInfoParams = contactForm.switchMap { title, first, last, email, phone -> SignalProducer<CheckoutGuestParams, NoError> in
+        let contactInfoParams = contactForm.switchMap { title, first, last, email, phone, _ -> SignalProducer<CheckoutGuestParams, NoError> in
             
             let param = .defaults
                 |> CheckoutGuestParams.lens.conSalutation .~ "Mr"
@@ -153,13 +161,13 @@ public final class ContactInfoCellViewModel: ContactInfoCellViewModelType, Conta
         self.phoneCodeButtonTappedProperty.value = ()
     }
     
-    fileprivate let phoneCodeChangedProperty = MutableProperty<String?>(nil)
-    public func phoneCodeChanged(_ text: String?) {
+    fileprivate let phoneCodeChangedProperty = MutableProperty<Country?>(nil)
+    public func phoneCodeChanged(_ text: Country?) {
         self.phoneCodeChangedProperty.value = text
     }
     
     fileprivate let phoneTextFieldChangeProperty = MutableProperty<String?>(nil)
-    public func phoneTextFieldChange(_ text: String?) {
+    public func phoneTextFieldChange(_ text: String?, code: String?) {
         self.phoneTextFieldChangeProperty.value = text
     }
     
@@ -170,7 +178,12 @@ public final class ContactInfoCellViewModel: ContactInfoCellViewModelType, Conta
     
     public let titleLabelText: Signal<String, NoError>
     public let goToTitleSalutationPicker: Signal<(), NoError>
+    public let goToPhoneCodePicker: Signal<(), NoError>
     public let dismissSalutationPicker: Signal<(), NoError>
+    public let firstNameFirstResponder: Signal<(), NoError>
+    public let lastNameFirstResponder: Signal<(), NoError>
+    public let emailFirstResponder: Signal<(), NoError>
+    public let phoneFirstResponder: Signal<(), NoError>
     public let firstNameTextFieldText: Signal<String, NoError>
     public let lastNameTextFieldText: Signal<String, NoError>
     public let emailTextFieldText: Signal<String, NoError>
@@ -183,6 +196,7 @@ public final class ContactInfoCellViewModel: ContactInfoCellViewModelType, Conta
     public var outputs: ContactInfoCellViewModelOutputs { return self }
 }
 
-private func isValid(title: String, email: String, fullname: String, phone: String) -> Bool {
-    return isValidEmail(email) && !title.isEmpty
+private func isValid(title: String, firstname: String, lastname: String, email: String, phone: String, code: String) -> Bool {
+    return !title.isEmpty && !firstname.isEmpty && !lastname.isEmpty && isValidEmail(email) && isValidPhone(phone, code: code)
 }
+

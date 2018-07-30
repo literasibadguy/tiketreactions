@@ -83,6 +83,7 @@ public final class OrderListViewCell: UITableViewCell, ValueCell {
             .observe(on: UIScheduler())
             .observeValues { [weak self] order in
               guard let _self = self else { return }
+              print("NOTIFY TO DELETE ORDER")
               _self.delegate?.orderDeleteButtonTapped(_self, order: order)
         }
     }
@@ -90,18 +91,10 @@ public final class OrderListViewCell: UITableViewCell, ValueCell {
     public func configureWith(value: OrderData) {
         
         self.viewModel.inputs.configureWith(value)
-        
-        _ = self.orderTypeLabel
-            |> UILabel.lens.text .~ value.orderType
-        _ = self.orderNameLabel
-            |> UILabel.lens.text .~ value.orderName
-        _ = self.orderNameDetailLabel
-            |> UILabel.lens.text .~ value.orderNameDetail
-        _ = self.startDateLabel
-            |> UILabel.lens.text .~ value.detail.startdate
     }
     
     @objc fileprivate func deleteOrderButtonTapped() {
+        print("DELETE ORDER BUTTON TAPPED")
         self.viewModel.inputs.deleteOrderButtonTapped()
     }
 }

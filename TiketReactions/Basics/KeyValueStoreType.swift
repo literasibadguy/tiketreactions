@@ -1,6 +1,10 @@
-
-
 import Foundation
+
+public enum AppKeys: String {
+    case tokenSavedActivity = "firasrafislam.TiketReactions.KeyValueStoreType.tokenSaved"
+    case orderDetailIds = "order_detail_ids"
+    case emailDetailLogins = "email_detail_logins"
+}
 
 public protocol KeyValueStoreType: class {
     func set(_ value: Bool, forKey defaultName: String)
@@ -15,6 +19,48 @@ public protocol KeyValueStoreType: class {
     func synchronize() -> Bool
     
     func removeObject(forKey defaultName: String)
+    
+    var tokenSaved: String { get set }
+}
+
+
+extension KeyValueStoreType {
+    /*
+    public var favoriteCategoryIds: [Int] {
+        get {
+            return self.object(forKey: AppKeys.favoriteCategoryIds.rawValue) as? [Int] ?? []
+        }
+        set {
+            self.set(newValue, forKey: AppKeys.favoriteCategoryIds.rawValue)
+        }
+    }
+    */
+    
+    public var tokenSaved: String {
+        get {
+            return self.object(forKey: AppKeys.tokenSavedActivity.rawValue) as? String ?? ""
+        } set {
+            self.set(newValue, forKey: AppKeys.tokenSavedActivity.rawValue)
+        }
+    }
+    
+    public var orderDetailIds: [String] {
+        get {
+            return self.object(forKey: AppKeys.orderDetailIds.rawValue) as? [String] ?? []
+        }
+        set {
+            self.set(newValue, forKey: AppKeys.orderDetailIds.rawValue)
+        }
+    }
+    
+    public var emailDetailLogins: [String] {
+        get {
+            return self.object(forKey: AppKeys.emailDetailLogins.rawValue) as? [String] ?? []
+        }
+        set {
+            return self.set(newValue, forKey: AppKeys.emailDetailLogins.rawValue)
+        }
+    }
 }
 
 extension UserDefaults: KeyValueStoreType {

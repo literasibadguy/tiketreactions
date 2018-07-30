@@ -14,13 +14,17 @@ import Result
 public protocol GuestRoomPickerViewModelInputs {
     func configureWith(guest: Int, room: Int)
     func doneButtonTapped()
-    func pickerView(didSelectRow row: Int, component: Int)
+    func pickerGuestView(didSelectRow row: Int, component: Int)
+    func pickerRoomView(didSelectRow row: Int, component: Int)
+    func selectedGuestPicker(_ row: Int)
     func viewDidLoad()
     func viewWillAppear()
 }
 
 public protocol GuestRoomPickerViewModelOutputs {
     var dataSource: Signal<[[String]], NoError> { get }
+    var updateGuests: Signal<Int, NoError> { get }
+    var updateRooms: Signal<Int, NoError> { get }
     var notifyDelegateToChoseGuestRoom: Signal<(Int, Int), NoError> { get }
     var selectRow: Signal<(Int, Int), NoError> { get }
 }
@@ -36,8 +40,6 @@ public final class GuestRoomPickerViewModel: GuestRoomPickerViewModelType, Guest
         
         let currentGuestRooms = Signal.combineLatest(self.configGuestRoomProperty.signal.skipNil(), self.viewDidLoadProperty.signal).map(first)
         
-        let defaultGuest = self.viewDidLoadProperty.signal.mapConst(2)
-        let defaultRoom = self.viewDidLoadProperty.signal.mapConst(1)
         let guests = self.viewDidLoadProperty.signal.mapConst(Array(1...16))
         let rooms = self.viewDidLoadProperty.signal.mapConst(Array(1...8))
         
@@ -50,29 +52,26 @@ public final class GuestRoomPickerViewModel: GuestRoomPickerViewModelType, Guest
             rooms.index(of: current) ?? 1
         }
         
-        
         let totalSuggest = Signal.combineLatest(guestSuggest, roomSuggest)
-        let totals = Signal.combineLatest(guests, rooms, currentGuestRooms)
         
-        self.selectRow = totalSuggest.takeWhen(self.viewWillAppearProperty.signal)
+        self.selectRow = totalSuggest.takeWhen(self.viewDidLoadProperty.signal)
         
         let mixed = Signal.combineLatest(guests, rooms).map(guestRoomTitles(guest:room:))
         
-        let selectedGuest = Signal.combineLatest(guests, self.pickerRowSelectedProperty.signal.filter { $0.1 == 0 }).map { return $0.0[$0.1.0] }
+        let guestEvents = Signal.combineLatest(guests, self.pickerGuestRowSelectedProperty.signal).map { return $0.0[$0.1.0] }
         
-        selectedGuest.observe(on: UIScheduler()).observeValues { guest in
-            print("SELECTED GUEST: \(guest)")
-        }
+        let selectedGuest = self.pickerGuestRowSelectedProperty.signal.map { $0.0 + 1 }
+        let selectedRoom = self.pickerRoomRowSelectedProperty.signal.map { $0.0 + 1 }
         
-        let selectedRoom = Signal.combineLatest(rooms, self.pickerRowSelectedProperty.signal.filter { $0.1 == 1 }).map { return $0.0[$0.1.0] }
-        
-        selectedRoom.observe(on: UIScheduler()).observeValues { room in
-            print("SELECTED ROOM: \(room)")
-        }
+//        let selectedRoom = Signal.combineLatest(rooms, self.pickerRoomRowSelectedProperty.signal.skipNil()).map { return $0.0[$0.1.0] }
         
         let selectedRow = Signal.merge(Signal.combineLatest(selectedGuest, selectedRoom), self.selectRow)
         
         self.dataSource = mixed
+        
+        self.updateGuests = .empty
+        self.updateRooms = .empty
+        
         self.notifyDelegateToChoseGuestRoom =  selectedRow.takeWhen(self.doneButtonTappedProperty.signal)
     }
     
@@ -86,9 +85,19 @@ public final class GuestRoomPickerViewModel: GuestRoomPickerViewModelType, Guest
         self.doneButtonTappedProperty.value = ()
     }
     
-    fileprivate let pickerRowSelectedProperty = MutableProperty<(Int, Int)>((-1, -1))
-    public func pickerView(didSelectRow row: Int, component: Int) {
-        self.pickerRowSelectedProperty.value = (row, component)
+    fileprivate let pickerGuestRowSelectedProperty = MutableProperty<(Int, Int)>((-1, 0))
+    public func pickerGuestView(didSelectRow row: Int, component: Int) {
+        self.pickerGuestRowSelectedProperty.value = (row, component)
+    }
+    
+    fileprivate let pickerRoomRowSelectedProperty = MutableProperty<(Int, Int)>((-1, 1))
+    public func pickerRoomView(didSelectRow row: Int, component: Int) {
+        self.pickerRoomRowSelectedProperty.value = (row, component)
+    }
+    
+    fileprivate let selectedGuestPickProperty = MutableProperty<Int?>(nil)
+    public func selectedGuestPicker(_ row: Int) {
+        self.selectedGuestPickProperty.value = row
     }
     
     fileprivate let viewDidLoadProperty = MutableProperty(())
@@ -102,6 +111,8 @@ public final class GuestRoomPickerViewModel: GuestRoomPickerViewModelType, Guest
     }
     
     public let dataSource: Signal<[[String]], NoError>
+    public let updateGuests: Signal<Int, NoError>
+    public let updateRooms: Signal<Int, NoError>
     public let notifyDelegateToChoseGuestRoom: Signal<(Int, Int), NoError>
     public let selectRow: Signal<(Int, Int), NoError>
     
@@ -110,6 +121,6 @@ public final class GuestRoomPickerViewModel: GuestRoomPickerViewModelType, Guest
 }
 
 private func guestRoomTitles(guest: [Int], room: [Int]) -> [[String]] {
-    return [guest.map { Localizations.GuestTitle($0) }, room.map { Localizations.RoomTitle($0) }]
+    return [guest.map { Localizations.GuestPickTitle($0) }, room.map { Localizations.RoomTitle($0) }]
 }
 

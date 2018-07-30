@@ -22,12 +22,16 @@ public enum Storyboard: String {
     case FacilityList
     case HotelGuestForm
     case HotelPaymentsVC
+    case PaymentsList
     case AvailableRoomLists
     case OrderList
     case OrderDetails
+    case BookingCompleted
     case CheckoutPage
     case GeneralAbout
     case EmptyStates
+    case BankTransfers
+    case CheckOrderForm
     
     public func instantiate<VC: UIViewController>(_ vc: VC.Type, inBundle bundle: Bundle = .framework) -> VC {
         guard let vc = UIStoryboard(name: self.rawValue, bundle: Bundle(identifier: bundle.bundleIdentifier!)).instantiateViewController(withIdentifier: VC.storyboardIdentifier) as? VC

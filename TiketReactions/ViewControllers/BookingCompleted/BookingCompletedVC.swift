@@ -6,90 +6,115 @@
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 
+import PDFReader
+import Prelude
+import ReactiveSwift
+import TiketKitModels
 import UIKit
 
-class BookingCompletedVC: UITableViewController {
+public final class BookingCompletedVC: UITableViewController {
 
-    override func viewDidLoad() {
+    fileprivate let dataSource = BookingCompletedDataSource()
+    fileprivate let loadingIndicatorView = UIActivityIndicatorView()
+    
+    fileprivate let viewModel: BookingCompletedViewModelType = BookingCompletedViewModel()
+    
+    public static func configureWith(_ orderId: String, email: String) -> BookingCompletedVC {
+        let vc = Storyboard.BookingCompleted.instantiate(BookingCompletedVC.self)
+        vc.viewModel.inputs.configureWith(orderId, email: email)
+        return vc
+    }
+
+    public override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.title = Localizations.IssuedOrderTitle("#")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissPDFView))
+        
+        self.tableView.addSubview(self.loadingIndicatorView)
+        self.tableView.dataSource = dataSource
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        self.viewModel.inputs.viewDidLoad()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        self.loadingIndicatorView.center = self.tableView.center
     }
-
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+    
+    public override func bindStyles() {
+        super.bindStyles()
+        
+        _ = self
+            |> baseTableControllerStyle(estimatedRowHeight: 180.0)
+        
+        _ = self.loadingIndicatorView
+            |> baseActivityIndicatorStyle
     }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+    
+    public override func bindViewModel() {
+        super.bindViewModel()
+        
+        self.loadingIndicatorView.rac.animating = self.viewModel.outputs.resultsAreLoading
+        
+        self.viewModel.outputs.orderCartDetail
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] orderDetail in
+                self?.dataSource.load(orderDetail: orderDetail)
+                self?.tableView.reloadData()
+        }
+        
+        self.viewModel.outputs.showAlert
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] alert in
+                let alertVC = UIAlertController.genericError(message: alert, cancel: { _ in
+                    self?.viewModel.inputs.confirmDismissError()
+                })
+                self?.present(alertVC, animated: true, completion: nil)
+        }
+        
+        self.viewModel.outputs.generatePDF
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] voucher in
+                self?.goToPDFView(voucher)
+        }
+        
+        self.viewModel.outputs.dismissError
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] in
+                self?.dismiss(animated: true, completion: nil)
+        }
     }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
+    
+    public override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? ThirdIssueViewCell {
+            cell.delegate = self
+        }
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    fileprivate func goToPDFView(_ document: PDFDocument) {
+        let dismissButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(dismissPDFView))
+        let readerController = PDFViewController.createNew(with: document, title: document.fileName, actionStyle: .activitySheet, backButton: dismissButton)
+        readerController.backgroundColor = .tk_base_grey_100
+        let navVC = UINavigationController(rootViewController: readerController)
+        navVC.navigationBar.tintColor = .tk_official_green
+        self.present(navVC, animated: true, completion: nil)
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    @objc fileprivate func dismissPDFView() {
+        self.dismiss(animated: true, completion: nil)
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }
+
+extension BookingCompletedVC: ThirdIssueCellDelegate {
+    public func emailVoucherButtonTapped(_ cell: ThirdIssueViewCell) {
+        self.viewModel.inputs.sendVoucherTapped()
+    }
+    
+    public func printVoucherButtonTapped(_ cell: ThirdIssueViewCell, document: PDFDocument) {
+        self.viewModel.inputs.printVoucherTapped(document)
+    }
+}
+

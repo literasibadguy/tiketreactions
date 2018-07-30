@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -12,16 +12,16 @@
         <!--Order ListVC-->
         <scene sceneID="ttc-RU-fvH">
             <objects>
-                <viewController storyboardIdentifier="OrderListVC" id="0k6-dI-eLL" customClass="OrderListVC" customModule="TiketReactions" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OrderListVC" id="0k6-dI-eLL" customClass="OrderListVC" customModule="TripToZero" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vRU-Tc-rST">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3GS-Wb-yi1">
-                                <rect key="frame" x="0.0" y="20" width="375" height="626"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="547"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OrderListViewCell" rowHeight="120" id="gAC-hd-6Ln" customClass="OrderListViewCell" customModule="TiketReactions" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="OrderListViewCell" rowHeight="120" id="gAC-hd-6Ln" customClass="OrderListViewCell" customModule="TripToZero" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gAC-hd-6Ln" id="HPr-U3-IqD">
@@ -32,36 +32,36 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Hotel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eyH-wi-Saq">
-                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="66"/>
-                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="61.5"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The 101 Legian" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwX-FO-bnP">
-                                                            <rect key="frame" x="0.0" y="66" width="375" height="19.5"/>
-                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                                            <rect key="frame" x="0.0" y="61.5" width="375" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Superior Room (Only), 3 Malam " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J3E-P7-3ne">
-                                                            <rect key="frame" x="0.0" y="85.5" width="375" height="17"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <rect key="frame" x="0.0" y="82" width="375" height="19.5"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 Maret 2018" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgY-a5-wdL">
-                                                            <rect key="frame" x="0.0" y="102.5" width="375" height="17"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <rect key="frame" x="0.0" y="101.5" width="375" height="18"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                 </stackView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5JX-Sc-bRe">
-                                                    <rect key="frame" x="323" y="10" width="37" height="37"/>
+                                                    <rect key="frame" x="335" y="10" width="30" height="30"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="37" id="BeV-iZ-sgN"/>
-                                                        <constraint firstAttribute="width" constant="37" id="yEc-61-oVE"/>
+                                                        <constraint firstAttribute="height" constant="30" id="BeV-iZ-sgN"/>
+                                                        <constraint firstAttribute="width" constant="30" id="yEc-61-oVE"/>
                                                     </constraints>
                                                     <state key="normal" title="Hapus" image="icon-delete-button"/>
                                                 </button>
@@ -81,7 +81,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="YWH-B5-aM9" secondAttribute="bottom" id="S9N-70-AVY"/>
                                                 <constraint firstAttribute="trailing" secondItem="YWH-B5-aM9" secondAttribute="trailing" id="UdJ-wc-qlC"/>
                                                 <constraint firstAttribute="bottom" secondItem="rAq-DJ-4WW" secondAttribute="bottom" id="k8E-dg-JsV"/>
-                                                <constraint firstAttribute="trailing" secondItem="5JX-Sc-bRe" secondAttribute="trailing" constant="15" id="kUm-1P-Nxe"/>
+                                                <constraint firstAttribute="trailing" secondItem="5JX-Sc-bRe" secondAttribute="trailing" constant="10" id="kUm-1P-Nxe"/>
                                                 <constraint firstAttribute="trailing" secondItem="rAq-DJ-4WW" secondAttribute="trailing" id="qZ3-CJ-i4H"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -97,11 +97,45 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nfj-TO-DS9" userLabel="Navigation Payment Button">
+                                <rect key="frame" x="0.0" y="567" width="375" height="100"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vlp-5f-odM" userLabel="Navigation Separator View">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="sTa-as-sH6"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q64-dy-FNI" userLabel="Payment Method Button">
+                                        <rect key="frame" x="20" y="29" width="335" height="42"/>
+                                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="42" id="UJF-7T-vGK"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                        <state key="normal" title="Pilih Pembayaran">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Q64-dy-FNI" firstAttribute="centerY" secondItem="Nfj-TO-DS9" secondAttribute="centerY" id="0hn-BN-Z1Y"/>
+                                    <constraint firstItem="Q64-dy-FNI" firstAttribute="centerX" secondItem="Nfj-TO-DS9" secondAttribute="centerX" id="260-W3-HGM"/>
+                                    <constraint firstAttribute="trailing" secondItem="Q64-dy-FNI" secondAttribute="trailing" constant="20" id="JhN-eC-od5"/>
+                                    <constraint firstItem="Q64-dy-FNI" firstAttribute="leading" secondItem="Nfj-TO-DS9" secondAttribute="leading" constant="20" id="Nib-UE-miI"/>
+                                    <constraint firstAttribute="trailing" secondItem="Vlp-5f-odM" secondAttribute="trailing" id="SSb-Nn-aEp"/>
+                                    <constraint firstItem="Vlp-5f-odM" firstAttribute="top" secondItem="Nfj-TO-DS9" secondAttribute="top" id="Ski-xF-hXC"/>
+                                    <constraint firstItem="Vlp-5f-odM" firstAttribute="leading" secondItem="Nfj-TO-DS9" secondAttribute="leading" id="WHx-Dx-hWx"/>
+                                    <constraint firstAttribute="height" constant="100" id="zCa-uD-Q0r"/>
+                                </constraints>
+                            </view>
                             <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QHB-eP-LJR" userLabel="Loading Overlay View">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="3lE-g7-BJK">
-                                        <rect key="frame" x="177" y="313" width="20" height="20"/>
+                                        <rect key="frame" x="177.5" y="313" width="20" height="20"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -114,12 +148,15 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="cov-H0-9i5" firstAttribute="bottom" secondItem="QHB-eP-LJR" secondAttribute="bottom" id="AFz-eI-ZCE"/>
+                            <constraint firstItem="Nfj-TO-DS9" firstAttribute="leading" secondItem="cov-H0-9i5" secondAttribute="leading" id="HcU-XT-fTj"/>
+                            <constraint firstItem="cov-H0-9i5" firstAttribute="trailing" secondItem="Nfj-TO-DS9" secondAttribute="trailing" id="NXP-uu-NeA"/>
                             <constraint firstItem="3GS-Wb-yi1" firstAttribute="leading" secondItem="cov-H0-9i5" secondAttribute="leading" id="QBh-bv-cBs"/>
                             <constraint firstItem="cov-H0-9i5" firstAttribute="trailing" secondItem="3GS-Wb-yi1" secondAttribute="trailing" id="QI7-9C-IDH"/>
+                            <constraint firstItem="cov-H0-9i5" firstAttribute="bottom" secondItem="Nfj-TO-DS9" secondAttribute="bottom" id="RPJ-P3-esz"/>
                             <constraint firstItem="QHB-eP-LJR" firstAttribute="top" secondItem="cov-H0-9i5" secondAttribute="top" id="RSt-4Z-RtK"/>
                             <constraint firstItem="cov-H0-9i5" firstAttribute="trailing" secondItem="QHB-eP-LJR" secondAttribute="trailing" id="WMd-Y0-mEO"/>
                             <constraint firstItem="3GS-Wb-yi1" firstAttribute="top" secondItem="cov-H0-9i5" secondAttribute="top" id="cSF-eT-dO9"/>
-                            <constraint firstItem="3GS-Wb-yi1" firstAttribute="centerY" secondItem="vRU-Tc-rST" secondAttribute="centerY" id="w4f-Rc-ksX"/>
+                            <constraint firstItem="Nfj-TO-DS9" firstAttribute="top" secondItem="3GS-Wb-yi1" secondAttribute="bottom" id="nS0-wS-SsI"/>
                             <constraint firstItem="QHB-eP-LJR" firstAttribute="leading" secondItem="cov-H0-9i5" secondAttribute="leading" id="yiY-XM-KZg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="cov-H0-9i5"/>
@@ -127,7 +164,10 @@
                     <connections>
                         <outlet property="activityIndicatorView" destination="3lE-g7-BJK" id="eTx-LV-2rZ"/>
                         <outlet property="loadingOverlayView" destination="QHB-eP-LJR" id="FLy-Wo-aMB"/>
+                        <outlet property="navigationPaymentView" destination="Nfj-TO-DS9" id="He8-sk-dlD"/>
+                        <outlet property="navigationSeparatorView" destination="Vlp-5f-odM" id="VtA-L5-8NN"/>
                         <outlet property="orderTableView" destination="3GS-Wb-yi1" id="ujQ-Tq-GSp"/>
+                        <outlet property="paymentMethodButton" destination="Q64-dy-FNI" id="SLW-Qb-6ur"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YCS-ot-bd7" userLabel="First Responder" sceneMemberID="firstResponder"/>

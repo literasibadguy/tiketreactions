@@ -6,19 +6,38 @@
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 
+import Prelude
 import UIKit
 
-class PhoneCodeViewCell: UITableViewCell {
-
-    override func awakeFromNib() {
+public final class PhoneCodeViewCell: UITableViewCell, ValueCell {
+    
+    public typealias Value = Country
+    
+    @IBOutlet fileprivate weak var phoneCodeStackView: UIStackView!
+    @IBOutlet fileprivate weak var countryNameLabel: UILabel!
+    @IBOutlet fileprivate weak var countryCodeLabel: UILabel!
+    
+    public override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    public override func bindStyles() {
+        super.bindStyles()
+        
+        _ = self.countryNameLabel
+            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
+        
+        _ = self.countryCodeLabel
+            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
     }
-
+    
+    public func configureWith(value: Country) {
+        
+        _ = self.countryNameLabel
+            |> UILabel.lens.text .~ value.name!
+        
+        _ = self.countryCodeLabel
+            |> UILabel.lens.text .~ value.phoneCode!
+    }
 }

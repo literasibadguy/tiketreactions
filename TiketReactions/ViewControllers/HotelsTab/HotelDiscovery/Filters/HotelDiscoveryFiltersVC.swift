@@ -13,6 +13,7 @@ import TiketKitModels
 
 public protocol HotelDiscoveryFiltersDelegate: class {
     func filterParamChanged(_ discovery: HotelDiscoveryFiltersVC, param: SearchHotelParams)
+    func filterSortChanged(_ discovery: HotelDiscoveryFiltersVC, sort: SearchHotelParams.Sort)
     func filtersHaveDismissed(_ discovery: HotelDiscoveryFiltersVC)
     
 }
@@ -35,6 +36,12 @@ public final class HotelDiscoveryFiltersVC: UIViewController, UITableViewDelegat
     public static func configureWith(envelope: SearchHotelEnvelopes) -> HotelDiscoveryFiltersVC {
         let vc = Storyboard.HotelDiscoveryFilters.instantiate(HotelDiscoveryFiltersVC.self)
         vc.viewModel.inputs.configureWith(envelope)
+        return vc
+    }
+    
+    public static func configureWith(sort: SearchHotelParams.Sort) -> HotelDiscoveryFiltersVC {
+        let vc = Storyboard.HotelDiscoveryFilters.instantiate(HotelDiscoveryFiltersVC.self)
+        vc.viewModel.inputs.configureWith(sort)
         return vc
     }
     
@@ -84,14 +91,15 @@ public final class HotelDiscoveryFiltersVC: UIViewController, UITableViewDelegat
             .observeValues { [weak self] filters in
                 self?.dataSource.load()
                 self?.filtersTableView.reloadData()
+                self?.filtersTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .top)
         }
         
-        self.viewModel.outputs.filteredParams
+        self.viewModel.outputs.selectedSorts
             .observe(on: UIScheduler())
-            .observeValues { [weak self] params in
-                print("FILTERED PARAMS RESULT: \(params)")
+            .observeValues { [weak self] sort in
                 guard let _self = self else { return }
-                _self.delegate?.filterParamChanged(_self, param: params)
+                print("What Sort Selected: \(sort)")
+                _self.delegate?.filterSortChanged(_self, sort: sort)
                 _self.dismiss(animated: true, completion: {
                     _self.delegate?.filtersHaveDismissed(_self)
                 })

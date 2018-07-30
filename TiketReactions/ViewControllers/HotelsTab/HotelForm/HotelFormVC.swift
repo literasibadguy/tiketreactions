@@ -37,6 +37,7 @@ public final class HotelFormVC: UIViewController {
     @IBOutlet fileprivate weak var guestInputStackView: UIStackView!
     
     @IBOutlet fileprivate weak var guestMenuStackView: UIStackView!
+    @IBOutlet fileprivate weak var guestRoomTitleLabel: UILabel!
     @IBOutlet fileprivate weak var guestInputLabel: UILabel!
     @IBOutlet fileprivate weak var guestInputContainerView: UIView!
     @IBOutlet fileprivate weak var guestInputSeparatorView: UIView!
@@ -106,11 +107,13 @@ public final class HotelFormVC: UIViewController {
         _ = self.guestMenuStackView
             |> UIView.lens.isUserInteractionEnabled .~ false
         
+        _ = self.guestRoomTitleLabel
+            |> UILabel.lens.text .~ Localizations.GuestRoomTitleForm
+        
         _ = self.guestInputLabel
             |> UILabel.lens.isUserInteractionEnabled .~ false
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
             |> UILabel.lens.font .~ UIFont.systemFont(ofSize: 20.0)
-            |> UILabel.lens.text .~ Localizations.GuestRoomTitleForm
         
         _ = self.guestInputContainerView
             |> UIView.lens.backgroundColor .~ .white
@@ -130,13 +133,13 @@ public final class HotelFormVC: UIViewController {
         self.guestInputLabel.rac.text = self.viewModel.outputs.guestHotelLabelText
         
         self.viewModel.outputs.showDestinationHotelList
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] in
                 self?.showDestinationHotelVC()
         }
         
         self.viewModel.outputs.showGuestRoomPick
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] guest, room in
                 print("WHAT GUEST ROOM: \(guest, room)")
                 self?.goToPickGuestHotel(guest: guest, room: room)
@@ -152,7 +155,7 @@ public final class HotelFormVC: UIViewController {
         }
         
         self.viewModel.outputs.goToPickDate
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] selected, params in
                 print("WHICH LOCATION ID: \(selected.id)")
                 print("WHICH PARAMS ID: \(params.mainCountry ?? "")")
@@ -169,7 +172,7 @@ public final class HotelFormVC: UIViewController {
     }
     
     fileprivate func goToPickGuestHotel(guest: Int, room: Int) {
-        let pickGuestVC = GuestRoomPickerVC.configuredWith(guest: guest, room: room)
+        let pickGuestVC = GuestRoomStepperVC.configureWith(guest: guest, room: room)
         pickGuestVC.delegate = self
         pickGuestVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         pickGuestVC.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
@@ -218,21 +221,9 @@ extension HotelFormVC: DestinationHotelListVCDelegate {
     }
 }
 
-extension HotelFormVC: GuestRoomPickerDelegate {
-    public func guestRoomPickerVC(_ controller: GuestRoomPickerVC, guest: Int, room: Int) {
-        controller.dismiss(animated: true, completion: {
-            self.viewModel.inputs.selectedCounts(guest: guest, room: room)
-        })
-    }
-}
-
-extension HotelFormVC: HotelGuestPickDelegate {
+extension HotelFormVC: GuestRoomStepperDelegate {
     public func didDismissCounting(_ guest: Int, room: Int) {
         self.viewModel.inputs.selectedCounts(guest: guest, room: room)
-    }
-    
-    public func didDismissGuestPick(_ pickGuestVC: HotelGuestPickVC, param: SearchHotelParams) {
-        self.viewModel.inputs.roomGuestSelected(param: param)
     }
 }
 

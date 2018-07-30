@@ -8,10 +8,11 @@
 
 import UIKit
 import Prelude
+import TiketKitModels
 
 public final class SortFilterViewCell: UITableViewCell, ValueCell {
     
-    public typealias Value = String
+    public typealias Value = SearchHotelParams.Sort
     
     @IBOutlet fileprivate weak var sortLabel: UILabel!
     @IBOutlet fileprivate weak var sortCheckImageView: UIImageView!
@@ -45,21 +46,24 @@ public final class SortFilterViewCell: UITableViewCell, ValueCell {
             |> UIView.lens.backgroundColor .~ .tk_base_grey_100
     }
     
-    public func configureWith(value: String) {
+    public func configureWith(value: SearchHotelParams.Sort) {
         _ = self.sortLabel
             |> UILabel.lens.text .~ sortFilterLists(value)
     }
-    
 }
 
-fileprivate func sortFilterLists(_ sort: String) -> String {
+fileprivate func sortFilterLists(_ sort: SearchHotelParams.Sort) -> String {
     switch sort {
-    case "popular":
+    case .popular:
         return Localizations.FilterPopulerTitle
-    case "priceasc":
+    case .priceLowToHigh:
         return Localizations.FilterLowpriceTitle
-    case "pricedesc":
+    case .priceHighToLow:
         return Localizations.FilterHighpriceTitle
+    case .starLowToHigh:
+        return Localizations.FilterLowstarTitle
+    case .starHighToLow:
+        return Localizations.FilterHighstarTitle
     default:
         return ""
     }

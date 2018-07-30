@@ -9,21 +9,103 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Check Order FormVC-->
         <scene sceneID="nK1-8k-b9f">
             <objects>
-                <viewController id="nJa-KF-YFp" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CheckOrderFormVC" id="nJa-KF-YFp" customClass="CheckOrderFormVC" customModule="TripToZero" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PKu-Ah-xqp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Order ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sgo-HN-5WR" userLabel="OrderID Text Field">
+                                <rect key="frame" x="35" y="113" width="305" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="n8S-cL-XBH"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ddA-2B-SCt" userLabel="Email Text Field">
+                                <rect key="frame" x="35" y="193" width="305" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="PFG-5q-xo7"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R1f-OC-cct">
+                                <rect key="frame" x="20" y="281" width="335" height="45"/>
+                                <color key="backgroundColor" red="0.2297994894" green="0.6889167746" blue="0.26791298930000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="169-xD-orO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                <state key="normal" title="Check Order">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v8v-Tu-amV" userLabel="Order Form Separator View">
+                                <rect key="frame" x="20" y="261" width="335" height="1"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="JU3-XW-Bm6"/>
+                                </constraints>
+                            </view>
+                            <view alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Knd-ig-pph" userLabel="Loading Overlay View">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="a89-I8-uyM">
+                                        <rect key="frame" x="177" y="291" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="a89-I8-uyM" firstAttribute="centerX" secondItem="Knd-ig-pph" secondAttribute="centerX" id="2lE-yr-pCZ"/>
+                                    <constraint firstItem="a89-I8-uyM" firstAttribute="centerY" secondItem="Knd-ig-pph" secondAttribute="centerY" id="w5K-0t-Sj7"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="R1f-OC-cct" firstAttribute="top" secondItem="ddA-2B-SCt" secondAttribute="bottom" constant="43" id="Cft-Sf-Goy"/>
+                            <constraint firstItem="Sgo-HN-5WR" firstAttribute="leading" secondItem="30O-PW-G7l" secondAttribute="leading" constant="35" id="Jng-Io-M1V"/>
+                            <constraint firstItem="ddA-2B-SCt" firstAttribute="top" secondItem="Sgo-HN-5WR" secondAttribute="bottom" constant="35" id="Juk-dw-I2m"/>
+                            <constraint firstItem="ddA-2B-SCt" firstAttribute="centerX" secondItem="PKu-Ah-xqp" secondAttribute="centerX" id="Qcv-eD-TYa"/>
+                            <constraint firstItem="Knd-ig-pph" firstAttribute="trailing" secondItem="30O-PW-G7l" secondAttribute="trailing" id="Qxk-CS-dmT"/>
+                            <constraint firstItem="Sgo-HN-5WR" firstAttribute="top" secondItem="30O-PW-G7l" secondAttribute="top" constant="49" id="WKx-6u-Crv"/>
+                            <constraint firstItem="Knd-ig-pph" firstAttribute="leading" secondItem="30O-PW-G7l" secondAttribute="leading" id="XqX-TI-vaN"/>
+                            <constraint firstItem="v8v-Tu-amV" firstAttribute="leading" secondItem="30O-PW-G7l" secondAttribute="leading" constant="20" id="bDR-Pt-uLW"/>
+                            <constraint firstItem="Knd-ig-pph" firstAttribute="bottom" secondItem="30O-PW-G7l" secondAttribute="bottom" id="eaY-uT-iGM"/>
+                            <constraint firstItem="Sgo-HN-5WR" firstAttribute="centerX" secondItem="PKu-Ah-xqp" secondAttribute="centerX" id="ejK-Nh-unm"/>
+                            <constraint firstItem="v8v-Tu-amV" firstAttribute="top" secondItem="ddA-2B-SCt" secondAttribute="bottom" constant="23" id="iWp-ou-7eW"/>
+                            <constraint firstItem="ddA-2B-SCt" firstAttribute="leading" secondItem="30O-PW-G7l" secondAttribute="leading" constant="35" id="kFU-1F-78G"/>
+                            <constraint firstItem="R1f-OC-cct" firstAttribute="leading" secondItem="30O-PW-G7l" secondAttribute="leading" constant="20" id="smm-27-nDJ"/>
+                            <constraint firstItem="Knd-ig-pph" firstAttribute="top" secondItem="30O-PW-G7l" secondAttribute="top" id="sxc-3v-xaL"/>
+                            <constraint firstItem="R1f-OC-cct" firstAttribute="centerX" secondItem="PKu-Ah-xqp" secondAttribute="centerX" id="t04-hC-7cH"/>
+                            <constraint firstItem="30O-PW-G7l" firstAttribute="trailing" secondItem="v8v-Tu-amV" secondAttribute="trailing" constant="20" id="wPl-wz-WyZ"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="30O-PW-G7l"/>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="checkOrderButton" destination="R1f-OC-cct" id="MUv-T4-Ebf"/>
+                        <outlet property="emailTextField" destination="ddA-2B-SCt" id="k7C-Wx-EGH"/>
+                        <outlet property="loadingIndicatorView" destination="a89-I8-uyM" id="sk5-0Q-kOf"/>
+                        <outlet property="loadingOverlayView" destination="Knd-ig-pph" id="vvp-8E-KHk"/>
+                        <outlet property="orderFormSeparatorView" destination="v8v-Tu-amV" id="hPj-a5-bvn"/>
+                        <outlet property="orderIdTextField" destination="Sgo-HN-5WR" id="tv0-eD-LBq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Asm-Vh-sVe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2382" y="326"/>
+            <point key="canvasLocation" x="-2322.4000000000001" y="314.39280359820094"/>
         </scene>
     </scenes>
 </document>

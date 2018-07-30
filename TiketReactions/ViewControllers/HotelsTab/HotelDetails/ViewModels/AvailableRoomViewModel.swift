@@ -39,7 +39,7 @@ public final class AvailableRoomViewModel: AvailableRoomViewModelType, Available
         
         self.titleRoomText = room.map { $0.roomName }
         self.descriptionRoomText = room.map { includedBreakfast($0.withBreakfasts) }
-        self.priceRoomText = room.map { "\(Format.symbolForCurrency($0.currency)) \(Format.currency($0.price, country: "Rp"))" }
+        self.priceRoomText = room.map { "\(Format.symbolForCurrency($0.currency)) \(Format.currency($0.price, country: "Rp")) / malam" }
         self.availableRoomText = room.map { Localizations.AvailableroomTitle($0.roomAvailable) }
         self.imageRoomUrl = room.map { $0.photoUrl }.map { URL.init(string: $0)! }
         

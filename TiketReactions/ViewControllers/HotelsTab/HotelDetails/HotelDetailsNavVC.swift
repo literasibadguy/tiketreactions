@@ -47,7 +47,7 @@ public final class HotelDetailsNavVC: UIViewController {
         self.titleDetailLabel.rac.text = self.viewModel.outputs.hotelNameText
         
         self.viewModel.outputs.dismissViewController
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] in
                 self?.dismiss(animated: true, completion: nil)
         }

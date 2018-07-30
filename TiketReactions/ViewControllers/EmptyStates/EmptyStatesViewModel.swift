@@ -14,6 +14,7 @@ public enum EmptyState: String {
     case flightResult = "flight_result"
     case hotelResult = "hotel_result"
     case orderResult = "order_result"
+    case issueResult = "issue_result"
 }
 
 public protocol EmptyStatesViewModelInputs {
@@ -73,6 +74,8 @@ private func textForTitle(emptyState: EmptyState) -> String {
         return "Tidak ada hotel di sekitar ini"
     case .orderResult:
         return "Tidak ada order"
+    case .issueResult:
+        return "Tidak ada Booking"
     }
 }
 
@@ -84,6 +87,8 @@ private func textForSubtitle(emptyState: EmptyState) -> String {
         return "Silakan cari hotel di tempat berbeda"
     case .orderResult:
         return "Silakan melakukan booking terlebih dahulu"
+    case .issueResult:
+        return "Silakan Melakukan booking terlebih dahulu"
     }
 }
 

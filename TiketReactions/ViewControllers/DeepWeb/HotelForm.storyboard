@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -13,7 +13,7 @@
         <!--Flight-->
         <scene sceneID="Teh-zz-KVk">
             <objects>
-                <viewController storyboardIdentifier="HotelFormVC" title="Flight" automaticallyAdjustsScrollViewInsets="NO" id="rpJ-eN-6lC" customClass="HotelFormVC" customModule="TiketReactions" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HotelFormVC" title="Flight" automaticallyAdjustsScrollViewInsets="NO" id="rpJ-eN-6lC" customClass="HotelFormVC" customModule="TripToZero" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZT2-Xc-uYU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -172,7 +172,7 @@
                                             </view>
                                         </subviews>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bHN-1z-yv8" customClass="DesignableButton" customModule="Spring">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bHN-1z-yv8">
                                         <rect key="frame" x="20" y="471" width="335" height="50"/>
                                         <color key="backgroundColor" red="0.4297707778" green="0.93670528880000004" blue="0.48656967540000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
@@ -234,6 +234,7 @@
                         <outlet property="guestInputSeparatorView" destination="eQR-TC-2qa" id="uaa-GQ-9at"/>
                         <outlet property="guestInputStackView" destination="7vy-4d-bNx" id="dC2-fv-bVj"/>
                         <outlet property="guestMenuStackView" destination="rW0-OO-7Va" id="mrM-wd-mmO"/>
+                        <outlet property="guestRoomTitleLabel" destination="w3G-9R-ITa" id="khr-Hr-NKy"/>
                         <outlet property="pickDateButton" destination="bHN-1z-yv8" id="P2b-Le-JB2"/>
                         <outlet property="titleFormLabel" destination="SkS-x3-8ht" id="7UB-d2-59I"/>
                     </connections>
@@ -245,7 +246,7 @@
         <!--Hotel Guest PickVC-->
         <scene sceneID="oZ3-Jq-ddm">
             <objects>
-                <viewController storyboardIdentifier="HotelGuestPickVC" id="m7t-DA-ec6" customClass="HotelGuestPickVC" customModule="TiketReactions" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HotelGuestPickVC" id="m7t-DA-ec6" customClass="HotelGuestPickVC" customModule="TripToZero" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OLG-kK-9c3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -306,7 +307,7 @@
                                             <constraint firstAttribute="trailing" secondItem="CnE-j9-BMt" secondAttribute="trailing" constant="20" id="zYi-Sn-Ga6"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gcp-qV-oRP" customClass="DesignableButton" customModule="Spring">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gcp-qV-oRP">
                                         <rect key="frame" x="20" y="359" width="335" height="50"/>
                                         <color key="backgroundColor" red="0.3368430416" green="0.68521292099999997" blue="0.56773633560000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
@@ -370,7 +371,7 @@
         <!--Guest Room PickerVC-->
         <scene sceneID="GXS-Hp-2yk">
             <objects>
-                <viewController storyboardIdentifier="GuestRoomPickerVC" id="WhT-ic-Gdb" customClass="GuestRoomPickerVC" customModule="TiketReactions" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GuestRoomPickerVC" id="WhT-ic-Gdb" customClass="GuestRoomPickerVC" customModule="TripToZero" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pDV-rI-AYM"/>
                         <viewControllerLayoutGuide type="bottom" id="ZAr-eM-MQH"/>
@@ -401,7 +402,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tho-CP-rhE" userLabel="Navigation Picker View">
                                 <rect key="frame" x="0.0" y="302" width="400" height="64"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aMt-Lv-OXT" customClass="DesignableButton" customModule="Spring">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aMt-Lv-OXT">
                                         <rect key="frame" x="312" y="12" width="72" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Zpf-8X-KrC"/>
@@ -478,7 +479,169 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QPy-hU-chr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1230.4000000000001" y="-800.2463054187192"/>
+            <point key="canvasLocation" x="-1990" y="-756"/>
+        </scene>
+        <!--Guest Room StepperVC-->
+        <scene sceneID="tpE-2P-0Z8">
+            <objects>
+                <viewController storyboardIdentifier="GuestRoomStepperVC" id="frq-Va-h8t" customClass="GuestRoomStepperVC" customModule="TripToZero" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="WDT-Vb-h3U"/>
+                        <viewControllerLayoutGuide type="bottom" id="fgE-Cs-5hj"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ffM-bQ-Wt0">
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tDr-dh-3Jj" userLabel="Range Picker View">
+                                <rect key="frame" x="0.0" y="366" width="400" height="200"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="caC-JG-HBK">
+                                        <rect key="frame" x="0.0" y="19" width="400" height="84"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Guests" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2O-30-cKX">
+                                                <rect key="frame" x="19.999999999999996" y="32" width="59.666666666666657" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="m6w-Xv-7S0">
+                                                <rect key="frame" x="290" y="28" width="94" height="29"/>
+                                                <connections>
+                                                    <action selector="guestValueStepper:" destination="frq-Va-h8t" eventType="valueChanged" id="TuE-mK-G6d"/>
+                                                </connections>
+                                            </stepper>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="K2O-30-cKX" firstAttribute="centerY" secondItem="caC-JG-HBK" secondAttribute="centerY" id="4By-2H-XoI"/>
+                                            <constraint firstItem="K2O-30-cKX" firstAttribute="leading" secondItem="caC-JG-HBK" secondAttribute="leading" constant="20" id="M9g-hL-7om"/>
+                                            <constraint firstItem="m6w-Xv-7S0" firstAttribute="centerY" secondItem="caC-JG-HBK" secondAttribute="centerY" id="gIi-fU-WNO"/>
+                                            <constraint firstAttribute="trailing" secondItem="m6w-Xv-7S0" secondAttribute="trailing" constant="16" id="pGU-Hj-uUy"/>
+                                            <constraint firstItem="K2O-30-cKX" firstAttribute="top" secondItem="caC-JG-HBK" secondAttribute="top" constant="32" id="qeD-0w-b5q"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uJk-Ac-YBJ">
+                                        <rect key="frame" x="3" y="106" width="397" height="69"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rooms" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Im-Ho-u4h">
+                                                <rect key="frame" x="20" y="24" width="58" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="cDz-hh-vpg">
+                                                <rect key="frame" x="287" y="20" width="94" height="29"/>
+                                                <connections>
+                                                    <action selector="roomValueStepper:" destination="frq-Va-h8t" eventType="valueChanged" id="mV1-Oy-wlO"/>
+                                                </connections>
+                                            </stepper>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="5Im-Ho-u4h" firstAttribute="leading" secondItem="uJk-Ac-YBJ" secondAttribute="leading" constant="20" id="Bc3-4E-jmd"/>
+                                            <constraint firstAttribute="trailing" secondItem="cDz-hh-vpg" secondAttribute="trailing" constant="16" id="XUl-Sb-w35"/>
+                                            <constraint firstItem="cDz-hh-vpg" firstAttribute="centerY" secondItem="uJk-Ac-YBJ" secondAttribute="centerY" id="dDy-Du-zFf"/>
+                                            <constraint firstItem="5Im-Ho-u4h" firstAttribute="centerY" secondItem="uJk-Ac-YBJ" secondAttribute="centerY" id="qXS-k2-iea"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="caC-JG-HBK" firstAttribute="leading" secondItem="tDr-dh-3Jj" secondAttribute="leading" id="E1F-Cx-MpO"/>
+                                    <constraint firstItem="caC-JG-HBK" firstAttribute="top" secondItem="tDr-dh-3Jj" secondAttribute="top" constant="19" id="FOj-2c-MeI"/>
+                                    <constraint firstItem="caC-JG-HBK" firstAttribute="trailing" secondItem="uJk-Ac-YBJ" secondAttribute="trailing" id="FvZ-9G-6jo"/>
+                                    <constraint firstItem="uJk-Ac-YBJ" firstAttribute="top" secondItem="caC-JG-HBK" secondAttribute="bottom" constant="3" id="PIc-XR-90t"/>
+                                    <constraint firstAttribute="trailing" secondItem="caC-JG-HBK" secondAttribute="trailing" id="Vc8-Ui-fI4"/>
+                                    <constraint firstAttribute="bottom" secondItem="uJk-Ac-YBJ" secondAttribute="bottom" constant="25" id="aFk-y7-lAn"/>
+                                    <constraint firstAttribute="height" constant="200" id="d7x-e9-bA4"/>
+                                    <constraint firstItem="uJk-Ac-YBJ" firstAttribute="leading" secondItem="tDr-dh-3Jj" secondAttribute="leading" constant="3" id="zgk-f6-W9D"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ozA-e0-fyR" userLabel="Navigation Picker View">
+                                <rect key="frame" x="0.0" y="302" width="400" height="64"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B6O-0N-WJB">
+                                        <rect key="frame" x="312" y="12" width="72" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="Uzl-ZX-ln2"/>
+                                            <constraint firstAttribute="width" constant="72" id="uyM-7k-Mqq"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                        <state key="normal" title="Selesai">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kamar dan Tamu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b1Y-y6-fgb">
+                                        <rect key="frame" x="14" y="22" width="134" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E9l-No-Dje" userLabel="Top Separator View">
+                                        <rect key="frame" x="0.0" y="0.0" width="400" height="1"/>
+                                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="zSQ-O7-DdT"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UmO-2j-86a" userLabel="Bottom Separator View">
+                                        <rect key="frame" x="0.0" y="63" width="400" height="1"/>
+                                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="85X-Ae-iiY"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="E9l-No-Dje" firstAttribute="leading" secondItem="ozA-e0-fyR" secondAttribute="leading" id="1WP-9E-B3n"/>
+                                    <constraint firstAttribute="bottom" secondItem="UmO-2j-86a" secondAttribute="bottom" id="5lk-lT-QBA"/>
+                                    <constraint firstAttribute="trailing" secondItem="E9l-No-Dje" secondAttribute="trailing" id="CDf-LU-moK"/>
+                                    <constraint firstItem="b1Y-y6-fgb" firstAttribute="centerY" secondItem="ozA-e0-fyR" secondAttribute="centerY" id="GPH-es-k9p"/>
+                                    <constraint firstItem="B6O-0N-WJB" firstAttribute="centerY" secondItem="ozA-e0-fyR" secondAttribute="centerY" id="WBY-YT-VNV"/>
+                                    <constraint firstAttribute="trailing" secondItem="UmO-2j-86a" secondAttribute="trailing" id="Ywh-Bn-HnJ"/>
+                                    <constraint firstAttribute="height" constant="64" id="iKO-RO-Gbt"/>
+                                    <constraint firstItem="b1Y-y6-fgb" firstAttribute="leading" secondItem="ozA-e0-fyR" secondAttribute="leading" constant="14" id="mOh-uD-M2g"/>
+                                    <constraint firstItem="E9l-No-Dje" firstAttribute="top" secondItem="ozA-e0-fyR" secondAttribute="top" id="qhw-xo-Fu6"/>
+                                    <constraint firstAttribute="trailing" secondItem="B6O-0N-WJB" secondAttribute="trailing" constant="16" id="tG7-7q-Lin"/>
+                                    <constraint firstItem="UmO-2j-86a" firstAttribute="leading" secondItem="ozA-e0-fyR" secondAttribute="leading" id="wZI-xe-iMa"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="tDr-dh-3Jj" firstAttribute="trailing" secondItem="ozA-e0-fyR" secondAttribute="trailing" id="1iG-h1-kyf"/>
+                            <constraint firstItem="tDr-dh-3Jj" firstAttribute="top" secondItem="ozA-e0-fyR" secondAttribute="bottom" id="CvV-ON-swD"/>
+                            <constraint firstItem="fgE-Cs-5hj" firstAttribute="top" secondItem="tDr-dh-3Jj" secondAttribute="bottom" id="ZSJ-BH-Dr4"/>
+                            <constraint firstItem="tDr-dh-3Jj" firstAttribute="leading" secondItem="ffM-bQ-Wt0" secondAttribute="leading" id="cZr-k1-1AT"/>
+                            <constraint firstAttribute="trailing" secondItem="tDr-dh-3Jj" secondAttribute="trailing" id="htC-DI-La9"/>
+                            <constraint firstItem="tDr-dh-3Jj" firstAttribute="leading" secondItem="ozA-e0-fyR" secondAttribute="leading" id="phg-Wz-wuw"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="yMW-KB-gBU"/>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="400" height="600"/>
+                    <connections>
+                        <outlet property="bottomSeparatorView" destination="UmO-2j-86a" id="m4J-dp-iYL"/>
+                        <outlet property="doneButton" destination="B6O-0N-WJB" id="e40-9i-emb"/>
+                        <outlet property="guestInputTitleLabel" destination="b1Y-y6-fgb" id="cBq-Oa-n2i"/>
+                        <outlet property="guestStepper" destination="m6w-Xv-7S0" id="HnL-g4-jxy"/>
+                        <outlet property="guestsLabel" destination="K2O-30-cKX" id="zi8-hf-jzS"/>
+                        <outlet property="navigationPickerView" destination="ozA-e0-fyR" id="tY1-XH-NSF"/>
+                        <outlet property="roomStepper" destination="cDz-hh-vpg" id="5dL-dF-BVQ"/>
+                        <outlet property="roomsLabel" destination="5Im-Ho-u4h" id="T6Q-rh-YYr"/>
+                        <outlet property="topSeparatorView" destination="E9l-No-Dje" id="glc-mM-QmR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rnc-w2-kcM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1116.8" y="-678.32512315270935"/>
         </scene>
     </scenes>
     <resources>

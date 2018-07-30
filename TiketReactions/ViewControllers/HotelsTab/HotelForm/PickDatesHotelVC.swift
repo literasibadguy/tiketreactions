@@ -93,14 +93,14 @@ public final class PickDatesHotelVC: UIViewController {
         }
         
         self.viewModel.outputs.goToResults
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] selected, param, summary in
                 guard let _self = self else { return }
                 _self.goToHotelResults(selected: selected, param: param, summary: summary)
         }
         
         self.viewModel.outputs.dismissPickDate
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] in
                 self?.dismiss(animated: true,  completion: nil)
         }

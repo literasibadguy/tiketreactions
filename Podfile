@@ -25,7 +25,10 @@ target 'TiketReactions' do
   pod 'FSPagerView'
   pod 'GoogleMaps'
   pod 'GooglePlaces'
+  pod 'KINWebBrowser'
+  pod 'PDFReader'
   pod 'PhoneNumberKit'
+  pod 'RealmSwift'
   pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
 
   target 'TiketReactionsTests' do

@@ -1,7 +1,89 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13142" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12042"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <scenes/>
+    <scenes>
+        <!--Bank TransfersVC-->
+        <scene sceneID="C3S-Rn-Ut6">
+            <objects>
+                <tableViewController storyboardIdentifier="BankTransfersVC" id="vNG-tt-g8e" customClass="BankTransfersVC" customModule="TripToZero" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="n0V-r5-mCu">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ListBankViewCell" rowHeight="105" id="3Nu-uY-nwo" customClass="ListBankViewCell" customModule="TripToZero" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="105"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3Nu-uY-nwo" id="Sk3-rX-4Po">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="105"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s8x-GG-3re" userLabel="Bank Transfer Separator View">
+                                            <rect key="frame" x="0.0" y="104" width="375" height="1"/>
+                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="1" id="F4I-Gu-xzT"/>
+                                            </constraints>
+                                        </view>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="iwu-pt-VkM">
+                                            <rect key="frame" x="16" y="11" width="333" height="83"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Bank Mandiri" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d8c-sy-fbd">
+                                                    <rect key="frame" x="0.0" y="0.0" width="333" height="44"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="a/n PT. Global Tiket Network" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ll-bK-XnU">
+                                                    <rect key="frame" x="0.0" y="44" width="333" height="19.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No. Rek: 420001206" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x7x-TH-JAx">
+                                                    <rect key="frame" x="0.0" y="63.5" width="333" height="19.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="s8x-GG-3re" firstAttribute="leading" secondItem="Sk3-rX-4Po" secondAttribute="leading" id="4Ni-gc-qGP"/>
+                                        <constraint firstItem="s8x-GG-3re" firstAttribute="top" secondItem="iwu-pt-VkM" secondAttribute="bottom" constant="10" id="L9R-Ug-47y"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="iwu-pt-VkM" secondAttribute="trailing" constant="10" id="UxF-lF-o46"/>
+                                        <constraint firstAttribute="trailing" secondItem="s8x-GG-3re" secondAttribute="trailing" id="VJA-th-9uX"/>
+                                        <constraint firstItem="iwu-pt-VkM" firstAttribute="top" secondItem="Sk3-rX-4Po" secondAttribute="topMargin" id="q7b-eI-FXR"/>
+                                        <constraint firstItem="iwu-pt-VkM" firstAttribute="leading" secondItem="Sk3-rX-4Po" secondAttribute="leadingMargin" id="sKA-U8-cZv"/>
+                                        <constraint firstAttribute="bottom" secondItem="s8x-GG-3re" secondAttribute="bottom" id="zLb-Wp-Rnf"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="cabangBankLabel" destination="d8c-sy-fbd" id="2yq-6W-aXn"/>
+                                    <outlet property="nameBankLabel" destination="9Ll-bK-XnU" id="wbm-mm-BeY"/>
+                                    <outlet property="noRekLabel" destination="x7x-TH-JAx" id="vov-fU-yKM"/>
+                                    <outlet property="transferSeparatorView" destination="Sk3-rX-4Po" id="d76-IP-2UW"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="vNG-tt-g8e" id="daw-6W-ukg"/>
+                            <outlet property="delegate" destination="vNG-tt-g8e" id="gp6-KE-sO1"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c5b-gc-kIe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-138.40000000000001" y="158.77061469265368"/>
+        </scene>
+    </scenes>
 </document>

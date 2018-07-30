@@ -37,7 +37,7 @@ public final class PickRoomNavViewModel: PickRoomNavViewModelType, PickRoomNavVi
         let hotel = self.configHotelProperty.signal.skipNil()
         let firstRoom = hotel.map { $0.0.availableRooms.roomResults.first! }
         
-        self.startPriceRoomTitleText = Signal.merge(firstRoom.map { "\(Format.symbolForCurrency($0.currency)) \(Localizations.PricepernightHotelTitle(Format.currency($0.price, country: "Rp"))) per malam" }, initial)
+        self.startPriceRoomTitleText = Signal.merge(firstRoom.map { "\(Format.symbolForCurrency($0.currency)) \(Localizations.PricepernightHotelTitle(Format.currency($0.price, country: "Rp")))" }, initial)
         
         self.goToAvailableRooms = hotel.takeWhen(self.roomButtonTapped.signal)
     }

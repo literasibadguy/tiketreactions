@@ -1,0 +1,45 @@
+/* 
+  Localizable.strings
+  TiketReactions
+
+  Created by Firas Rafislam on 31/01/18.
+  Copyright © 2018 Firas Rafislam. All rights reserved.
+*/
+
+"Destination_Hotel_Title_Form" = "Destination / Hotel";
+"Guest_Room_Title_Form" = "Guest & Room";
+"Room_Title" = "Rooms";
+"Guest_Title" = "Guests";
+"Pick_Date_Title_Form" = "Pick Dates";
+"How_Nights_Title" = "How Many Nights?";
+"CheckIn_Pick_Title" = "Choose Check-In Date";
+"CheckOut_Pick_Title" = "Choose Check-Out Date";
+"CheckOut_Date_Title" = "Check-Out Date";
+"Find_Hotel_Title" = "Search Hotels";
+"Filter_Button_Title" = "Filter";
+"Choose_Room_Title" = "Choose Room";
+"Order_Room_Title" = "Order Room";
+"Facility_Hotel_Title" = "Hotel Facility";
+"Facility_Room_Title" = "Room Facility";
+"Address_Hotel_Title" = "Address";
+"Order_Hotel_Title" = "Order Hotel Room";
+"Guest_Contact_Form_Title" = "Guest Form";
+"Title_Form_Data" = "Title";
+"Mr_Form_Data" = "Mr";
+"Mrs_Form_Data" = "Mrs";
+"Ms_Form_Data" = "Ms";
+"FirstName_Form_Data" = "First Name";
+"LastName_Form_Data" = "Last Name";
+"Email_Form_Data" = "Email";
+"PhoneNumber_Form_Data" = "Phone Number";
+"AnotherGuest_Option_Form_Title" = "Is It For Another Person?";
+"ChoosePayment_Title" = "Choose Payment";
+"ConfirmData_Title" = "Please Confirm Data Is It True?";
+"ConfirmError_Title" = "Oops.. There's error a found. Please try again";
+"CancelButton_Title" = "Cancel";
+"DoneButton_Title" = "Done";
+"PriceTotal_Title" = "Price Total";
+"OrderId_Title" = "Order Id";
+"CreditCard_Title" = "Credit Card";
+"Transfer_Title" = "Transfer";
+
