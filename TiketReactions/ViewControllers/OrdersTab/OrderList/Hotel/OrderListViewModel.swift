@@ -74,7 +74,6 @@ public final class OrderListViewModel: OrderListViewModelType, OrderListViewMode
         
         self.orders = ordersAvailable.skipNil()
         self.showEmptyState = Signal.merge(self.orders.map { $0.isEmpty }, ordersRequest.map { $0.diagnostic.status == .empty }).skipRepeats(==).mapConst(true)
-        
         self.hideEmptyState = Signal.merge(self.viewDidLoadProperty.signal.ignoreValues(), self.orders.filter { orders in
             !orders.isEmpty
         }.ignoreValues())

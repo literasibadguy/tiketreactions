@@ -29,7 +29,7 @@ internal final class OrderListVC: UIViewController {
     @IBOutlet fileprivate weak var paymentMethodButton: UIButton!
     
     
-    static func instantiate() -> OrderListVC {
+    internal static func instantiate() -> OrderListVC {
         let vc = Storyboard.OrderList.instantiate(OrderListVC.self)
         return vc
     }
@@ -116,10 +116,10 @@ internal final class OrderListVC: UIViewController {
         self.viewModel.outputs.showEmptyState
             .observe(on: UIScheduler())
             .observeValues { [weak self] showed in
-                
-                self?.orderTableView.bounces = false
+                print("[OrderListVC] Show Empty State: \(showed)")
+                self?.orderTableView.bounces = showed
                 if let emptyVC = self?.emptyStatesController {
-                    self?.emptyStatesController?.view.isHidden = false
+                    self?.emptyStatesController?.view.isHidden = showed
                     self?.view.bringSubview(toFront: emptyVC.view)
                 }
         }
@@ -132,7 +132,7 @@ internal final class OrderListVC: UIViewController {
         }
         
         self.viewModel.outputs.deleteOrderReminder
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] remind in
                 self?.present(UIAlertController.alert(message: remind, confirm: { _ in self?.viewModel.inputs.confirmDeleteOrder(true) }, cancel: { _ in self?.viewModel.inputs.confirmDeleteOrder(false) }), animated: true, completion: nil)
         }
