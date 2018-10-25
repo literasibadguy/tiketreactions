@@ -16,6 +16,8 @@ public final class BankTransfersVC: UITableViewController {
     fileprivate let viewModel: BankTransfersViewModelType = BankTransfersViewModel()
     fileprivate let dataSource = BankTransfersDataSource()
     
+    fileprivate let activityIndicator = UIActivityIndicatorView()
+    
     public static func instantiate() -> BankTransfersVC {
         let vc = Storyboard.BankTransfers.instantiate(BankTransfersVC.self)
         return vc
@@ -26,9 +28,17 @@ public final class BankTransfersVC: UITableViewController {
         
         navigationItem.title = "Bank Transfer"
         
+        self.tableView.register(nib: .NoticeSummaryViewCell)
+        self.tableView.addSubview(self.activityIndicator)
         self.tableView.dataSource = dataSource
         
         self.viewModel.inputs.viewDidLoad()
+    }
+    
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        self.activityIndicator.center = self.tableView.center
     }
     
     public override func bindStyles() {
@@ -36,10 +46,15 @@ public final class BankTransfersVC: UITableViewController {
         
         _ = self
             |> baseTableControllerStyle(estimatedRowHeight: 105.0)
+        
+        _ = self.activityIndicator
+            |> baseActivityIndicatorStyle
     }
     
     public override func bindViewModel() {
         super.bindViewModel()
+        
+        self.activityIndicator.rac.animating = self.viewModel.outputs.banksAreAnimating
         
         self.viewModel.outputs.banks
             .observe(on: UIScheduler())

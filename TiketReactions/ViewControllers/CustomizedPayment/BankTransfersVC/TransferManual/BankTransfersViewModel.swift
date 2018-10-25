@@ -16,7 +16,8 @@ public protocol BankTransfersViewModelInputs {
 }
 
 public protocol BankTransfersViewModelOutputs {
-    var banks: Signal<[BankTransferPaymentEnvelope.Bank], NoError> { get }
+    var banks: Signal<BankTransferPaymentEnvelope, NoError> { get }
+    var banksAreAnimating: Signal<Bool, NoError> { get }
 }
 
 public protocol BankTransfersViewModelType {
@@ -27,11 +28,13 @@ public protocol BankTransfersViewModelType {
 public final class BankTransfersViewModel: BankTransfersViewModelType, BankTransfersViewModelInputs, BankTransfersViewModelOutputs {
     
     public init() {
+        let banksAreLoading = MutableProperty(false)
         let bankTransferEvent = self.viewDidLoadProperty.signal.switchMap { _ in
-            AppEnvironment.current.apiService.bankTransferRequest(currency: AppEnvironment.current.apiService.currency, token: AppEnvironment.current.apiService.tiketToken?.token ?? "").materialize()
+            AppEnvironment.current.apiService.bankTransferRequest(currency: AppEnvironment.current.apiService.currency, token: AppEnvironment.current.apiService.tiketToken?.token ?? "").on(started: { banksAreLoading.value = true }, terminated: { banksAreLoading.value = false }).materialize()
         }
         
-        self.banks = bankTransferEvent.values().map { $0.banks }
+        self.banks = bankTransferEvent.values()
+        self.banksAreAnimating = banksAreLoading.signal
     }
     
     fileprivate let configBanksProperty = MutableProperty<[BankTransferPaymentEnvelope.Bank]?>(nil)
@@ -44,7 +47,8 @@ public final class BankTransfersViewModel: BankTransfersViewModelType, BankTrans
         self.viewDidLoadProperty.value = ()
     }
     
-    public let banks: Signal<[BankTransferPaymentEnvelope.Bank], NoError>
+    public let banks: Signal<BankTransferPaymentEnvelope, NoError>
+    public let banksAreAnimating: Signal<Bool, NoError>
     
     public var inputs: BankTransfersViewModelInputs { return self }
     public var outputs: BankTransfersViewModelOutputs { return self }

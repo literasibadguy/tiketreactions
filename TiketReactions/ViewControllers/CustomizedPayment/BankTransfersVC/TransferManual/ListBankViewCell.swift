@@ -19,6 +19,7 @@ public final class ListBankViewCell: UITableViewCell, ValueCell {
     @IBOutlet fileprivate weak var noRekLabel: UILabel!
     
     @IBOutlet fileprivate weak var transferSeparatorView: UIView!
+    @IBOutlet fileprivate weak var bankTransferSeparatorView: UIView!
     
     
     public override func awakeFromNib() {
@@ -42,9 +43,12 @@ public final class ListBankViewCell: UITableViewCell, ValueCell {
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
         
         _ = self.noRekLabel
-            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
+            |> UILabel.lens.textColor .~ .black
         
         _ = self.transferSeparatorView
+            |> UIView.lens.backgroundColor .~ .white
+        
+        _ = self.bankTransferSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_base_grey_100
     }
     
@@ -53,10 +57,10 @@ public final class ListBankViewCell: UITableViewCell, ValueCell {
         print("Configured With: \(value)")
         
         _ = self.cabangBankLabel
-            |> UILabel.lens.text .~ value.cabang
+            |> UILabel.lens.text .~ "an \(value.nameRekening)"
         
         _ = self.nameBankLabel
-            |> UILabel.lens.text .~ value.nameBank
+            |> UILabel.lens.text .~ "\(value.nameBank) Cab: \(value.cabang)"
         
         _ = self.noRekLabel
             |> UILabel.lens.text .~ "No. Rek: \(value.noRekening)"
