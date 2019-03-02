@@ -17,6 +17,7 @@ public protocol BookingCompletedViewModelInputs {
     func configureWith(_ orderId: String, email: String)
     func sendVoucherTapped()
     func printVoucherTapped(_ document: PDFDocument)
+    func printVoucherError(_ description: String)
     func confirmDismissError()
     func viewDidLoad()
 }
@@ -26,6 +27,7 @@ public protocol BookingCompletedViewModelOutputs {
     var generatePDF: Signal<PDFDocument, NoError> { get }
     var resultsAreLoading: Signal<Bool, NoError> { get }
     var showAlert: Signal<String, NoError> { get }
+    var errorPDFPrint: Signal<String, NoError> { get }
     var dismissError: Signal<(), NoError> { get }
 }
 
@@ -51,7 +53,9 @@ public final class BookingCompletedViewModel: BookingCompletedViewModelType, Boo
         
         self.resultsAreLoading = isLoading.signal
         
-        self.showAlert = fetchBooked.errors().map { _ in "Order tidak valid atau pesanan belum terbayar" }
+        self.showAlert = Signal.merge(fetchBooked.errors().map { _ in "Order tidak valid atau pesanan belum terbayar" })
+        
+        self.errorPDFPrint =  self.printVoucherErrorProperty.signal
         
         self.dismissError = self.confirmDismissProperty.signal.ignoreValues()
     }
@@ -72,6 +76,11 @@ public final class BookingCompletedViewModel: BookingCompletedViewModelType, Boo
         self.printVoucherTappedProperty.value = document
     }
     
+    fileprivate let printVoucherErrorProperty = MutableProperty("")
+    public func printVoucherError(_ description: String) {
+        self.printVoucherErrorProperty.value = description
+    }
+    
     fileprivate let confirmDismissProperty = MutableProperty(())
     public func confirmDismissError() {
         self.confirmDismissProperty.value = ()
@@ -86,7 +95,9 @@ public final class BookingCompletedViewModel: BookingCompletedViewModelType, Boo
     public let generatePDF: Signal<PDFDocument, NoError>
     public let resultsAreLoading: Signal<Bool, NoError>
     public let showAlert: Signal<String, NoError>
+    public let errorPDFPrint: Signal<String, NoError>
     public let dismissError: Signal<(), NoError>
+    
     
     public var inputs: BookingCompletedViewModelInputs { return self }
     public var outputs: BookingCompletedViewModelOutputs { return self }

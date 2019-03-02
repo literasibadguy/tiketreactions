@@ -12,8 +12,13 @@ import UIKit
 
 internal final class EmptyStatesVC: UIViewController {
     
+    
+    @IBOutlet fileprivate weak var illustratorEmptyStateImageView: UIImageView!
     @IBOutlet fileprivate weak var titleLabel: UILabel!
     @IBOutlet fileprivate weak var subtitleLabel: UILabel!
+    
+    @IBOutlet fileprivate weak var widthConstraintEmptyImageView: NSLayoutConstraint!
+    @IBOutlet fileprivate weak var heightConstraintEmptyImageView: NSLayoutConstraint!
     
     fileprivate let viewModel: EmptyStatesViewModelType = EmptyStatesViewModel()
     
@@ -38,8 +43,15 @@ internal final class EmptyStatesVC: UIViewController {
     override func bindViewModel() {
         super.bindViewModel()
         
+        
         self.titleLabel.rac.text = self.viewModel.outputs.titleLabelText
         self.subtitleLabel.rac.text = self.viewModel.outputs.subtitleLabelText
+    
+        self.viewModel.outputs.imageEmptyState
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] imageState in
+                self?.illustratorEmptyStateImageView.image = imageState
+        }
     }
     
     override func bindStyles() {
@@ -48,6 +60,16 @@ internal final class EmptyStatesVC: UIViewController {
         _ = self.view
             |> UIView.lens.backgroundColor .~ .white
             |> UIView.lens.layoutMargins .~ (self.traitCollection.isRegularRegular ? .init(top: 0, left: Styles.grid(4), bottom: Styles.grid(5), right: Styles.grid(4)) : .init(top: 0, left: Styles.grid(2), bottom: Styles.grid(3), right: Styles.grid(2)))
+        
+        if UIDevice.current.screenType == .iPhones_5_5s_5c_SE {
+            self.heightConstraintEmptyImageView.constant = 200.0
+            
+            _ = self.titleLabel
+                |> UILabel.lens.font .~ UIFont.systemFont(ofSize: 20.0)
+            
+            _ = self.subtitleLabel
+                |> UILabel.lens.font .~ UIFont.systemFont(ofSize: 18.0)
+        }
     }
     
     internal func setEmptyState(_ emptyState: EmptyState) {

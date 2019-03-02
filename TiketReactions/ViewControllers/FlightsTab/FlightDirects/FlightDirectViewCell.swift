@@ -9,92 +9,78 @@ import Prelude
 import TiketKitModels
 import UIKit
 
-class FlightDirectViewCell: UITableViewCell, ValueCell {
+public final class FlightDirectViewCell: UITableViewCell, ValueCell {
     
-    typealias Value = Flight
+    public typealias Value = Flight
+    
+    fileprivate let viewModel: FlightDirectsCellViewModelType = FlightDirectsCellViewModel()
     
     // STACK MAINTAINED
-    @IBOutlet fileprivate weak var flightDirectInfoStackView: UIStackView!
+    @IBOutlet fileprivate weak var summaryContainerView: UIView!
+    @IBOutlet fileprivate weak var flightSummaryStackView: UIStackView!
+    @IBOutlet fileprivate weak var dateFlightLabel: UILabel!
+    @IBOutlet fileprivate weak var flightRouteNameLabel: UILabel!
+    @IBOutlet fileprivate weak var logoFlightImageView: UIImageView!
     
-    @IBOutlet fileprivate weak var flightInfoStackView: UIStackView!
+    @IBOutlet fileprivate weak var flightDirectStackView: UIStackView!
+    @IBOutlet fileprivate weak var flightNameLabel: UILabel!
+    @IBOutlet fileprivate weak var flightTimeLabel: UILabel!
     
-    @IBOutlet fileprivate weak var numberFlightTitleLabel: UILabel!
-    @IBOutlet fileprivate weak var numberFlightLabel: UILabel!
+    @IBOutlet fileprivate weak var flightStatusStackView: UIStackView!
+    @IBOutlet fileprivate weak var flightStatusLabel: UILabel!
+    @IBOutlet fileprivate weak var flightDurationLabel: UILabel!
     
-    @IBOutlet fileprivate weak var departureInfoStackView: UIStackView!
-    @IBOutlet fileprivate weak var arrivalInfoStackView: UIStackView!
+    @IBOutlet fileprivate weak var summarySeparatorView: UIView!
     
-    @IBOutlet fileprivate weak var departureTitleLabel: UILabel!
-    @IBOutlet fileprivate weak var departureTimeLabel: UILabel!
-    @IBOutlet fileprivate weak var departureDateLabel: UILabel!
-    @IBOutlet fileprivate weak var departureCityLabel: UILabel!
-    @IBOutlet fileprivate weak var departureCodeLabel: UILabel!
-    
-    @IBOutlet fileprivate weak var arrivalTitleLabel: UILabel!
-    @IBOutlet fileprivate weak var arrivalTimeLabel: UILabel!
-    @IBOutlet fileprivate weak var arrivalDateLabel: UILabel!
-    @IBOutlet fileprivate weak var arrivalCityLabel: UILabel!
-    @IBOutlet fileprivate weak var arrivalCodeLabel: UILabel!
-    
-    override func awakeFromNib() {
+    override public func awakeFromNib() {
         super.awakeFromNib()
         
         // Initialization code
         
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
+    override public func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
-    override func bindStyles() {
+    override public func bindStyles() {
         super.bindStyles()
         
-        _ = self.flightDirectInfoStackView
-            |> UIStackView.lens.layoutMargins %~~ { _, stackView in
-                stackView.traitCollection.isRegularRegular
-                    ? .init(topBottom: Styles.grid(2), leftRight: Styles.grid(14))
-                    : .init(top: Styles.grid(2), left: Styles.grid(4), bottom: Styles.grid(2), right: Styles.grid(2))
-            }
-            |> UIStackView.lens.isLayoutMarginsRelativeArrangement .~ true
-            |> UIStackView.lens.spacing .~ Styles.grid(2)
+        _ = self.contentView
+            |> UIView.lens.backgroundColor .~ .white
         
-        _ = self.flightInfoStackView
-            |> UIStackView.lens.spacing .~ Styles.grid(4)
+        _ = self.summaryContainerView
+            |> UIView.lens.backgroundColor .~ .tk_fade_green_grey
         
-        _ = self.departureInfoStackView
-            |> UIStackView.lens.spacing .~ Styles.grid(4)
+        _ = self.dateFlightLabel
+            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
+        _ = self.flightRouteNameLabel
+            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
         
-        _ = self.arrivalInfoStackView
-            |> UIStackView.lens.spacing .~ Styles.grid(4)
+        _ = self.flightNameLabel
+            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
+        _ = self.flightTimeLabel
+            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
         
-        _ = self.departureDateLabel
-            |> UILabel.lens.numberOfLines .~ 2
-        
-        _ = self.arrivalDateLabel
-            |> UILabel.lens.numberOfLines .~ 2
+        _ = self.summarySeparatorView
+            |> UIView.lens.backgroundColor .~ .tk_base_grey_100
     }
     
-    func configureWith(value: Flight) {
-        _ = self.numberFlightLabel
-            |> UILabel.lens.text .~ value.flightNumber
+    override public func bindViewModel() {
+        super.bindViewModel()
         
-        _ = self.departureTimeLabel
-            |> UILabel.lens.text .~ value.flightDetail.simpleDepartureTime
-        _ = self.arrivalTimeLabel
-            |> UILabel.lens.text .~ value.flightDetail.simpleArrivalTime
-        
-        _ = self.departureDateLabel
-            |> UILabel.lens.text .~ value.inner.departureFlightDateStrShort
-        _ = self.arrivalDateLabel
-            |> UILabel.lens.text .~ value.inner.arrivalFlightDateStrShort
-        
-        _ = self.departureCityLabel
-            |> UILabel.lens.text .~ value.departureCity
-        _ = self.arrivalCityLabel
-            |> UILabel.lens.text .~ value.arrivalCity
-        
+        self.dateFlightLabel.rac.text = self.viewModel.outputs.dateDirectFlightText
+        self.flightRouteNameLabel.rac.text = self.viewModel.outputs.flightRouteNameText
+        self.flightNameLabel.rac.text = self.viewModel.outputs.flightNameText
+        self.flightTimeLabel.rac.text = self.viewModel.outputs.flightTimeText
+        self.flightStatusLabel.rac.text = self.viewModel.outputs.flightStatusText
+        self.flightDurationLabel.rac.text = self.viewModel.outputs.flightDurationText
+    }
+    
+    public func configureWith(value: Flight) {
+        self.viewModel.inputs.configureWith(value)
+        self.logoFlightImageView.ck_setImageWithURL(URL(string: value.flightInfos.flightInfo.first!.timing.imageSrc)!)
     }
 }

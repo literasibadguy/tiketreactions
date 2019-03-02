@@ -47,7 +47,7 @@ class HotelDirectMainViewCell: UITableViewCell, ValueCell {
 
         _ = self.hotelTitleLabel
             |> UILabel.lens.numberOfLines .~ 2
-            |> UILabel.lens.textColor .~ UIColor.tk_typo_green_grey_600
+            |> UILabel.lens.textColor .~ UIColor.black
         
         _ = self.hotelCityLabel
             |> UILabel.lens.font %~~ { _, label in
@@ -71,6 +71,7 @@ class HotelDirectMainViewCell: UITableViewCell, ValueCell {
         
         self.hotelTitleLabel.rac.text = self.viewModel.outputs.hotelnameTitleText
         self.hotelCityLabel.rac.text = self.viewModel.outputs.hotelProvinceTitleText
+        self.hotelCrumbLabel.rac.text = self.viewModel.outputs.firstRoomDescription
         
         self.viewModel.outputs.starRating
             .observe(on: UIScheduler())
@@ -84,13 +85,6 @@ class HotelDirectMainViewCell: UITableViewCell, ValueCell {
                 self?.photoSource.load(photos: photos)
                 self?.photosCollectionView.reloadData()
         }
-        
-        self.viewModel.outputs.firstRooms
-            .observe(on: UIScheduler())
-            .observeValues { [weak self] first in
-                self?.hotelCrumbLabel.text = first.roomDescription
-        }
-        
     }
     
     func configureWith(value: HotelDirect) {

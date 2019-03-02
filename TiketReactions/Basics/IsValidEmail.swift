@@ -30,7 +30,7 @@ public func isValidPhone(_ phone: String, code: String) -> Bool {
     
     let kitNumber = PhoneNumberKit()
     do {
-        let _ = try kitNumber.parse(phone, withRegion: code)
+        let _ = try kitNumber.parse(phone)
         return true
     } catch {
         return false

@@ -49,16 +49,6 @@ public final class HotelLiveFeedContentViewModel: HotelLiveFeedContentViewModelT
         
         let isVisible = Signal.merge(self.viewDidAppearProperty.signal.mapConst(true), self.viewDidDisappearProperty.signal.mapConst(false)).skipRepeats()
         
-        print("\(AppEnvironment.current.apiService.tiketToken?.token)")
-        
-        let customs = .defaults
-            |> SearchHotelParams.lens.query .~ "Indonesia"
-            |> SearchHotelParams.lens.startDate .~ "2018-05-11"
-            |> SearchHotelParams.lens.endDate .~ "2018-05-12"
-            |> SearchHotelParams.lens.room .~ 1
-            |> SearchHotelParams.lens.adult .~ "2"
-            |> SearchHotelParams.lens.night .~ 1
-        
         let hotelServices = Signal.combineLatest(self.viewDidLoadProperty.signal.filter { AppEnvironment.current.apiService.tiketToken?.token != "" }, self.selectedFilterProperty.signal.skipNil(), isVisible).filter { _, _, visible in visible }.skipRepeats { lhs, rhs in lhs.0 == rhs.0 && lhs.1 == rhs.1 }.map(second).switchMap { params in
             return AppEnvironment.current.apiService.fetchHotelResults(params: params).retry(upTo: 3).on(started: { isLoading.value = true }, completed: { isLoading.value = false }, terminated: { isLoading.value = false }).materialize()
             }

@@ -28,10 +28,15 @@ public protocol TiketServiceType {
     func getTokenEnvelope(clientAuth: ClientAuthType) -> SignalProducer<GetTokenEnvelope, ErrorEnvelope>
     
     func listCurrencyEnvelope() -> SignalProducer<CurrencyListEnvelope, ErrorEnvelope>
+    
+    func listCountryEnvelope() -> SignalProducer<CountryListEnvelope, ErrorEnvelope>
 
     func fetchAirports(query: String) -> SignalProducer<SearchAirportsEnvelope, ErrorEnvelope>
     func fetchFlightResults(params: SearchFlightParams) -> SignalProducer<SearchFlightEnvelope, ErrorEnvelope>
     func fetchSingleFlightResults(params: SearchSingleFlightParams) -> SignalProducer<SearchSingleFlightEnvelope, ErrorEnvelope>
+    
+    func getFlightData(params: GetFlightDataParams) -> SignalProducer<GetFlightDataEnvelope, ErrorEnvelope>
+    
     func addOrderFlight(params: GroupPassengersParam) -> SignalProducer<AddOrderFlightEnvelope, ErrorEnvelope>
     
     func fetchHotelResults(paginationUrl: String) -> SignalProducer<SearchHotelEnvelopes, ErrorEnvelope>
@@ -52,6 +57,8 @@ public protocol TiketServiceType {
     
     func checkoutLogin(url: String, params: CheckoutLoginParams) -> SignalProducer<CheckoutLoginEnvelope, ErrorEnvelope>
     
+    func checkoutFlightLogin(url: String, params: CheckoutLoginParams) -> SignalProducer<CheckoutFlightLoginEnvelope, ErrorEnvelope>
+    
     func checkoutHotelCustomer(url: String, params: CheckoutGuestParams) -> SignalProducer<CheckoutHotelCustomerEnvelope, ErrorEnvelope>
     
     func availablePaymentsHotel() -> SignalProducer<AvailablePaymentEnvelope, ErrorEnvelope>
@@ -64,17 +71,21 @@ public protocol TiketServiceType {
     
     func deleteOrder(url: String) -> SignalProducer<DeleteOrderEnvelope, ErrorEnvelope>
     
+    func deleteFlightOrder(url: String) -> SignalProducer<FlightOrderDeleteEnvelope, ErrorEnvelope>
+    
     func checkHistoryOrder(_ orderId: String, email: String) -> SignalProducer<CheckHistoryOrderEnvelope, ErrorEnvelope>
     
     // Payment Methods
     
-    func bankTransferRequest(currency: String, token: String) -> SignalProducer<BankTransferPaymentEnvelope, ErrorEnvelope>
+    func bankTransferRequest(currency: String) -> SignalProducer<BankTransferPaymentEnvelope, ErrorEnvelope>
+    
+    func atmTransferRequest(currency: String) -> SignalProducer<InstantTransferPaymentEnvelope, ErrorEnvelope>
+    
+    func klikBCARequest(_ user: String) -> SignalProducer<KlikBCAPaymentEnvelope, ErrorEnvelope>
     
     func createCreditCardRequest(token: String) -> SignalProducer<URLRequest, NoError>
     
     func sandboxCreditCard(_ token: String) -> SignalProducer<URLRequest, NoError>
-    
-    func klikBCARequest(_ user: String) -> SignalProducer<URLRequest, NoError>
     
     func bcaKlikpayRequest(_ token: String) -> SignalProducer<URLRequest, NoError>
     
@@ -94,11 +105,25 @@ public func != (lhs: TiketServiceType, rhs: TiketServiceType) -> Bool {
     return !(lhs == rhs)
 }
 
+public enum ArrayEncoding {
+    case brackets, noBrackets
+    
+    func encode(key: String) -> String {
+        switch self {
+        case .brackets:
+            return "\(key)[]"
+        case .noBrackets:
+            return key
+        }
+    }
+}
+
 extension TiketServiceType {
+
     
     fileprivate var defaultHeaders: [String: String] {
         var headers: [String: String] = [:]
-        headers["User-Agent"] = "twh:[27029614];[Jajanan Online];"
+        headers["User-Agent"] = "twh:27029614;Jajanan Online;"
         return headers
     }
     
@@ -115,14 +140,14 @@ extension TiketServiceType {
         
         if let dictionary = value as? [String: Any] {
             for (nestedKey, value) in dictionary {
-                components += queryComponents("\(key)[\(nestedKey)]", value)
+                components += queryComponents("\(key)[\(nestedKey)]", escapePhone("\(value)"))
             }
         } else if let array = value as? [Any] {
             for value in array {
                 components += queryComponents("\(key)[]", value)
             }
         } else {
-            components.append((key, String(describing: value)))
+            components.append((key, escapePhone("\(value)")))
         }
         
         return components
@@ -133,7 +158,6 @@ extension TiketServiceType {
         guard let URL = request.url else {
             return originalRequest
         }
-        
         var headers = self.defaultHeaders
         
         let method = request.httpMethod?.uppercased()
@@ -181,5 +205,12 @@ extension TiketServiceType {
         */
         
         return request
+    }
+    
+    public func escapePhone(_ value: String) -> String {
+        let customAllowedSet =  NSCharacterSet(charactersIn:"+").inverted
+        let escapedString = value.addingPercentEncoding(withAllowedCharacters: customAllowedSet)
+        
+        return escapedString!
     }
 }

@@ -79,7 +79,7 @@ public let feedTableViewCellStyle = baseTableViewCellStyle()
 
 
 public let separatorStyle =
-    UIView.lens.backgroundColor .~ .gray
+    UIView.lens.backgroundColor .~ .tk_base_grey_100
         <> UIView.lens.accessibilityElementsHidden .~ true
 
 

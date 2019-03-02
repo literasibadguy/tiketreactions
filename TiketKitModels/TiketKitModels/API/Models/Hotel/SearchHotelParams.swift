@@ -22,8 +22,8 @@ public struct SearchHotelParams {
     public let sort: Sort?
     public let minStar: Int?
     public let maxStar: Int?
-    public let minPrice: String?
-    public let maxPrice: String?
+    public let minPrice: String
+    public let maxPrice: String
     public let distance: Int?
     public let page: Int?
     
@@ -36,7 +36,7 @@ public struct SearchHotelParams {
         case starHighToLow = "stardesc"
     }
     
-    public static let defaults = SearchHotelParams(mainCountry: nil, uid: nil, startDate: nil, endDate: nil, night: nil, room: nil, adult: nil, child: nil, sort: nil, minStar: nil, maxStar: nil, minPrice: nil, maxPrice: nil, distance: nil, page: nil)
+    public static let defaults = SearchHotelParams(mainCountry: nil, uid: nil, startDate: nil, endDate: nil, night: nil, room: nil, adult: nil, child: nil, sort: nil, minStar: nil, maxStar: nil, minPrice: "0", maxPrice: "0", distance: nil, page: nil)
     
     /*
     public static let customized = SearchHotelParams(mainCountry: "Indonesia", uid: "", startDate: "2018-02-13", endDate: "2018-02-18", night: 1, room: 1, adult: "1", child: 0, sort: .popular, minStar: 0, maxStar: "5", minPrice: "", maxPrice: "", distance:
@@ -115,12 +115,15 @@ extension SearchHotelParams: Argo.Decodable {
         // ((json <|? "sort" >>- boolToString) as Decoded<SearchHotelParams.Sort?>)
         return tmp2
             <*> json <|? "sort"
-            <*> json <|? "minstar"
-            <*> json <|? "maxstar"
-            <*> json <|? "minprice"
-            <*> json <|? "maxprice"
+            <*> (json <|? "minstar" <|> .success(nil))
+            <*> (json <|? "maxstar" <|> .success(nil))
+            <*> ((json <| "minprice" >>- doubleToString) <|> (json <| "minprice"))
+            <*> ((json <| "maxprice" >>- doubleToString) <|> (json <| "maxprice"))
             <*> (json <|? "distance" <|> .success(nil))
             <*> .success(nil)
     }
 }
 
+public func doubleToString(_ value: Double) -> Decoded<String> {
+    return Decoded.success(String(value))
+}

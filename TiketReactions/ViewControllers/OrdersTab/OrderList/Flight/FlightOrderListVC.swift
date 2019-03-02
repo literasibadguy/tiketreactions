@@ -7,11 +7,16 @@
 //
 
 import Prelude
+import ReactiveSwift
+import TiketKitModels
 import UIKit
 
 internal final class FlightOrderListVC: UIViewController {
     
     fileprivate let viewModel: FlightOrderListViewModelType = FlightOrderListViewModel()
+    fileprivate let dataSource = FlightOrderListDataSource()
+    
+    fileprivate var emptyStatesController: EmptyStatesVC?
     
     @IBOutlet fileprivate weak var orderTableView: UITableView!
     @IBOutlet fileprivate weak var loadingOverlayView: UIView!
@@ -30,6 +35,18 @@ internal final class FlightOrderListVC: UIViewController {
     internal override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.paymentMethodButton.addTarget(self, action: #selector(paymentButtonTapped), for: .touchUpInside)
+        
+        self.orderTableView.dataSource = dataSource
+        self.orderTableView.delegate = self
+        
+        let emptyVC = EmptyStatesVC.configuredWith(emptyState: EmptyState.flightResult)
+        self.emptyStatesController = emptyVC
+        self.addChildViewController(emptyVC)
+        self.view.addSubview(emptyVC.view)
+        emptyVC.didMove(toParentViewController: self)
+        
+        self.viewModel.inputs.viewDidLoad()
     }
     
     internal override func viewWillAppear(_ animated: Bool) {
@@ -61,4 +78,71 @@ internal final class FlightOrderListVC: UIViewController {
             |> UIView.lens.backgroundColor .~ .tk_base_grey_100
     }
     
+    internal override func bindViewModel() {
+        super.bindViewModel()
+        
+        self.activityIndicatorView.rac.animating = self.viewModel.outputs.flightsAreLoading
+        self.loadingOverlayView.rac.hidden = self.viewModel.outputs.loadingOverlaysIsHidden
+        
+        self.viewModel.outputs.flightOrders
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] orders in
+                self?.dataSource.load(orders: orders)
+                self?.orderTableView.reloadData()
+        }
+        
+        self.viewModel.outputs.showEmptyState
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] _ in
+                self?.orderTableView.bounces = false
+                if let emptyVC = self?.emptyStatesController {
+                    self?.emptyStatesController?.view.isHidden = false
+                    self?.view.bringSubview(toFront: emptyVC.view)
+                }
+        }
+        
+        self.viewModel.outputs.hideEmptyState
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] in
+                self?.orderTableView.bounces = true
+                self?.emptyStatesController?.view.isHidden = true
+        }
+        
+        self.viewModel.outputs.deleteOrderReminder
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] remind in
+                self?.present(UIAlertController.alert(message: remind, confirm: { _ in self?.viewModel.inputs.confirmDeleteOrder(true) }, cancel: { _ in self?.viewModel.inputs.confirmDeleteOrder(false) }), animated: true, completion: nil)
+        }
+        
+        self.viewModel.outputs.goToPayments
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] order in
+                self?.goToPayment(order)
+        }
+    }
+    
+    fileprivate func goToPayment(_ order: FlightMyOrder) {
+        let paymentVC = PaymentsListVC.configureFlightWith(myorder: order)
+        let navPayment = UINavigationController(rootViewController: paymentVC)
+        self.present(navPayment, animated: true, completion: nil)
+    }
+    
+    @objc fileprivate func paymentButtonTapped() {
+        self.viewModel.inputs.paymentButtonTapped()
+    }
+}
+
+extension FlightOrderListVC: UITableViewDelegate {
+    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? FlightOrderListViewCell {
+            print("CELL DELEGATED FOR ORDER LIST")
+            cell.delegate = self
+        }
+    }
+}
+
+extension FlightOrderListVC: FlightOrderListViewCellDelegate {
+    func orderDeleteButtonTapped(_ listCell: FlightOrderListViewCell, order: FlightOrderData) {
+        self.viewModel.inputs.deleteOrderTapped(order)
+    }
 }

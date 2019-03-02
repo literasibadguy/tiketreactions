@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,13 +13,13 @@
         <!--Pick Dates HotelVC-->
         <scene sceneID="yji-ED-mse">
             <objects>
-                <viewController storyboardIdentifier="PickDatesHotelVC" id="c67-XT-I5H" customClass="PickDatesHotelVC" customModule="TiketReactions" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PickDatesHotelVC" id="c67-XT-I5H" customClass="PickDatesHotelVC" customModule="TripToZero" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FbD-sO-htO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NGd-IK-b2G">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="142"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="148"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L9U-N1-cOf">
                                         <rect key="frame" x="20" y="40" width="65" height="33.5"/>
@@ -36,7 +37,7 @@
                                         <state key="normal" title="Cancel" image="cancel-button-saved"/>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H6b-Dx-O4d">
-                                        <rect key="frame" x="20" y="101.5" width="335" height="19.5"/>
+                                        <rect key="frame" x="20" y="107.5" width="335" height="19.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Tanggal Check-In" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gvr-tr-3Kk">
                                                 <rect key="frame" x="0.0" y="0.0" width="191" height="19.5"/>
@@ -53,7 +54,7 @@
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4gr-z9-cN6" userLabel="Date Separator View">
-                                        <rect key="frame" x="0.0" y="141" width="375" height="1"/>
+                                        <rect key="frame" x="0.0" y="147" width="375" height="1"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="tcc-Cx-0mh"/>
@@ -86,6 +87,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="xni-dl-Wzf"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <state key="normal" title="Button"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -114,7 +116,7 @@
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XrE-ha-2E4">
-                                <rect key="frame" x="0.0" y="142" width="375" height="429"/>
+                                <rect key="frame" x="0.0" y="148" width="375" height="423"/>
                                 <connections>
                                     <segue destination="PZL-Ia-9AW" kind="embed" id="BRq-Ty-Rjd"/>
                                 </connections>
@@ -152,7 +154,7 @@
         <!--Date RangesVC-->
         <scene sceneID="sjb-Q9-Rbb">
             <objects>
-                <collectionViewController storyboardIdentifier="DateRangesVC" id="PZL-Ia-9AW" customClass="DateRangesVC" customModule="TiketReactions" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="DateRangesVC" id="PZL-Ia-9AW" customClass="DateRangesVC" customModule="TripToZero" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="XQg-kG-v6E">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="429"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

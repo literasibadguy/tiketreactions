@@ -6,19 +6,25 @@
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 
+import Prelude
 import UIKit
 
-class LoungeDeviceIDViewCell: UITableViewCell {
-
+class LoungeDeviceIDViewCell: UITableViewCell, ValueCell {
+    
+    typealias Value = String
+    
+    @IBOutlet private weak var deviceIDTitleLabel: UILabel!
+    @IBOutlet private weak var deviceIDValueLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    func configureWith(value: String) {
+        _ = self.deviceIDValueLabel
+            |> UILabel.lens.text .~ value
     }
-
+    
 }

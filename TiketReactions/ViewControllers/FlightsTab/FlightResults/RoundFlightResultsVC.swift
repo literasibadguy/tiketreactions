@@ -48,10 +48,10 @@ public final class RoundFlightResultsVC: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        self.navigationFlightVC = self.childViewControllers.flatMap { $0 as? FlightResultsNavVC }.first
+        self.navigationFlightVC = self.childViewControllers.compactMap { $0 as? FlightResultsNavVC }.first
         self.navigationFlightVC.delegate = self
         
-        self.resultsFlightVC = self.childViewControllers.flatMap { $0 as? FlightResultsContentVC }.first
+        self.resultsFlightVC = self.childViewControllers.compactMap { $0 as? FlightResultsContentVC }.first
         self.resultsFlightVC.delegate = self
         
         self.nextInteractionButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)

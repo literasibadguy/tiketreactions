@@ -69,6 +69,11 @@ public final class HotelFormVC: UIViewController {
     public override func bindStyles() {
         super.bindStyles()
         
+        if UIDevice.current.screenType == .iPhones_5_5s_5c_SE {
+            _ = self.frontBackgroundImageView
+                |> UIImageView.lens.contentMode .~ .scaleToFill
+        }
+        
         if appHasWideScreenForView(view) {
             _ = self.frontBackgroundImageView
                 |> UIImageView.lens.contentMode .~ .scaleAspectFill
@@ -79,7 +84,7 @@ public final class HotelFormVC: UIViewController {
         
         _ = self.destinationHotelStackView
             |> UIStackView.lens.layoutMargins .~ .init(topBottom: Styles.grid(6), leftRight: Styles.grid(2))
-            |> UIStackView.lens.spacing .~ Styles.grid(2)
+            |> UIStackView.lens.spacing .~ Styles.grid(4)
             |> UIStackView.lens.isLayoutMarginsRelativeArrangement .~ true
         
         _ = self.titleFormLabel

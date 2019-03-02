@@ -43,6 +43,8 @@ public final class CurrencyListVC: UIViewController {
         
         self.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         
+        self.searchBar.becomeFirstResponder()
+        
         self.viewModel.inputs.viewDidLoad()
     }
 
@@ -78,7 +80,7 @@ public final class CurrencyListVC: UIViewController {
         }
         
         self.viewModel.outputs.selectedCurrency
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] selected in
                 guard let _self = self else { return }
                 AppEnvironment.replaceCurrency(selected.code)
@@ -87,7 +89,7 @@ public final class CurrencyListVC: UIViewController {
         }
         
         self.viewModel.outputs.dismissList
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] in
                 self?.dismiss(animated: true, completion: nil)
         }

@@ -21,6 +21,7 @@ public protocol HotelResultCardViewModelOutputs {
     var hotelCityTitleLabelText: Signal<String, NoError> { get }
     var hotelPriceTitleLabelText: Signal<String, NoError> { get }
     var ratingImage: Signal<UIImage, NoError> { get }
+    var ratingReviewTitleLabelText: Signal<String, NoError> { get }
     var hotelImageURL: Signal<URL?, NoError> { get }
 }
 
@@ -36,12 +37,14 @@ public final class HotelResultCardViewModel: HotelResultCardViewModelType, Hotel
         
         self.hotelNameTitleLabelText = configuredHotel.map { $0.name ?? "" }
         self.hotelCityTitleLabelText = configuredHotel.map { $0.provinceName }
-        self.hotelPriceTitleLabelText = configuredHotel.map { "\(symbolForCurrency(AppEnvironment.current.locale.currencyCode ?? "")) \(Format.currency($0.metadataHotel.totalPrice, country: "Rp"))" }
+        self.hotelPriceTitleLabelText = configuredHotel.map { "\(symbolForCurrency(AppEnvironment.current.apiService.currency)) \(Format.currency($0.metadataHotel.totalPrice, country: AppEnvironment.current.locale.currencyCode ?? "IDR"))" }
         
         print("LOCALE RESULT: \(AppEnvironment.current.locale.identifier)")
         
-        self.hotelImageURL = configuredHotel.map { $0.photoPrimary }.map(URL.init(string:))
+        self.hotelImageURL = configuredHotel.map { $0.photoPrimary.replacingOccurrences(of: ".sq2", with: ".l") }.map(URL.init(string:))
         self.ratingImage = configuredHotel.map { $0.starRating }.map(ratingForStar(rating:))
+        
+        self.ratingReviewTitleLabelText = configuredHotel.filter { !$0.rating.isEmpty }.map { "Rating: \($0.rating)" }
     }
     
     fileprivate let configHotelProperty = MutableProperty<HotelResult?>(nil)
@@ -53,13 +56,14 @@ public final class HotelResultCardViewModel: HotelResultCardViewModelType, Hotel
     public let hotelCityTitleLabelText: Signal<String, NoError>
     public let hotelPriceTitleLabelText: Signal<String, NoError>
     public let ratingImage: Signal<UIImage, NoError>
+    public let ratingReviewTitleLabelText: Signal<String, NoError>
     public let hotelImageURL: Signal<URL?, NoError>
     
     public var inputs: HotelResultCardViewModelInputs { return self }
     public var outputs: HotelResultCardViewModelOutputs { return self }
 }
 
-private func symbolForCurrency(_ currency: String) -> String {
+public func symbolForCurrency(_ currency: String) -> String {
     switch currency {
     case "IDR":
         return "Rp"

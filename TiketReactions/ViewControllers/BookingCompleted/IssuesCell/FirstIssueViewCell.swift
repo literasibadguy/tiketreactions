@@ -12,60 +12,31 @@ import TiketKitModels
 
 public final class FirstIssueViewCell: UITableViewCell, ValueCell {
     
-    @IBOutlet fileprivate weak var firstIssueStackView: UIStackView!
+    public typealias Value = String
     
-    @IBOutlet fileprivate weak var paymentStatusLabel: UILabel!
-    @IBOutlet fileprivate weak var orderNameTitleLabel: UILabel!
-    @IBOutlet fileprivate weak var orderDetailTitleLabel: UILabel!
-    @IBOutlet fileprivate weak var orderSubTitleLabel: UILabel!
+    @IBOutlet private weak var noticeStackView: UIStackView!
+    @IBOutlet private weak var thankYouLabel: UILabel!
+    @IBOutlet private weak var confirmedLabel: UILabel!
     
-    @IBOutlet fileprivate weak var firstIssueSeparatorView: UIView!
-    
-    
-    public typealias Value = OrderCartDetail
     
    public override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
-    public override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
     public override func bindStyles() {
         super.bindStyles()
         
-        _ = self.firstIssueStackView
-            |> UIStackView.lens.layoutMargins %~~ { _, stackView in
-                stackView.traitCollection.isRegularRegular
-                    ? .init(topBottom: Styles.grid(6), leftRight: Styles.grid(4))
-                    : .init(top: Styles.grid(4), left: Styles.grid(4), bottom: Styles.grid(3), right: Styles.grid(2))
-            }
-            |> UIStackView.lens.isLayoutMarginsRelativeArrangement .~ true
-            |> UIStackView.lens.spacing .~ 3
+        _ = self
+            |> UIView.lens.backgroundColor .~ .tk_fade_green_grey
         
-        _ = self.paymentStatusLabel
-            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
-        _ = self.orderNameTitleLabel
-            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
-        _ = self.orderDetailTitleLabel
-            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
-        _ = self.orderSubTitleLabel
-            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
-        
-        _ = self.firstIssueSeparatorView
-            |> UIView.lens.backgroundColor .~ .tk_base_grey_100
     }
     
-    public func configureWith(value: OrderCartDetail) {
+    public func configureWith(value: String) {
         
-        _ = self.orderNameTitleLabel
-            |> UILabel.lens.text .~ value.orderName
-        
-        _ = self.orderDetailTitleLabel
-            |> UILabel.lens.text .~ value.orderDetailId
+        _ = self.thankYouLabel
+            |> UILabel.lens.text .~ Localizations.ThankyouNotice
+        _ = self.confirmedLabel
+            |> UILabel.lens.text .~ Localizations.ConfirmedNotice
     }
 }

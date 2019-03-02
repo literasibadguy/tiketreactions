@@ -21,6 +21,12 @@ class HotelPhotoViewCell: UICollectionViewCell, ValueCell {
     }
     
     func configureWith(value: HotelDirect.Photo) {
-        self.hotelPhotoImageView.ck_setImageWithURL(URL(string: value.fileName)!)
+        if let someURL = URL(string: value.fileName.replacingOccurrences(of: ".s", with: ".l")) {
+            print("Whats Hotel Direct Here: \(value.fileName)")
+            self.hotelPhotoImageView.ck_setImageWithURL(someURL)
+        } else {
+            self.hotelPhotoImageView.af_cancelImageRequest()
+            self.hotelPhotoImageView.image = nil
+        }
     }
 }

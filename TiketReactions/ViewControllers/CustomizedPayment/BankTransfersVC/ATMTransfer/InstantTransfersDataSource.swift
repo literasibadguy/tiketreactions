@@ -14,7 +14,7 @@ internal final class InstantTransfersDataSource: ValueCellDataSource {
     
     internal func load(instant: InstantTransferPaymentEnvelope) {
         self.set(values: [instant], cellClass: ReceiptOrderViewCell.self, inSection: 0)
-        self.set(values: [instant.message], cellClass: NoticeSummaryViewCell.self, inSection: 1)
+        self.set(values: ["\(instant.message) -- \(Localizations.NoticescreenshotTitle)"], cellClass: NoticeSummaryViewCell.self, inSection: 1)
         self.set(values: instant.steps, cellClass: ATMTransferStepsViewCell.self, inSection: 2)
     }
     

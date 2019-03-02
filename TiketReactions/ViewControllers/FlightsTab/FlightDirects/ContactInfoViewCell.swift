@@ -20,12 +20,21 @@ protocol ContactInfoViewCellDelegate: class {
     func canceledTitlePick()
 }
 
+protocol ContactFlightInfoViewCellDelegate: class {
+    func goToPassengerPickerVC(passengerPickerVC: PassengerTitlePickerVC)
+    func goToRegionalCodePhoneVC(phoneVC: PhoneCodeListVC)
+    func getContactInfoParams(guestForm: GroupPassengersParam)
+    func getFinishedForm(_ completed: Bool)
+    func canceledTitlePick()
+}
+
 internal final class ContactInfoViewCell: UITableViewCell, ValueCell {
     
-    public typealias Value = Int
+    public typealias Value = ContactFormState
     internal let viewModel: ContactInfoCellViewModelType = ContactInfoCellViewModel()
     
     weak var delegate: ContactInfoViewCellDelegate?
+    weak var flightDelegate: ContactFlightInfoViewCellDelegate?
     
     @IBOutlet fileprivate weak var contactInfoStackView: UIStackView!
     @IBOutlet fileprivate weak var contactContainerView: UIView!
@@ -33,37 +42,40 @@ internal final class ContactInfoViewCell: UITableViewCell, ValueCell {
     
     @IBOutlet fileprivate weak var titleInputStackView: UIStackView!
     @IBOutlet fileprivate weak var titleSeparatorView: UIView!
-    @IBOutlet fileprivate weak var titleInputTextLabel: UILabel!
+  //  @IBOutlet fileprivate weak var titleInputTextLabel: UILabel!
     @IBOutlet fileprivate weak var titleContainerView: UIView!
-    @IBOutlet weak var titleMenuStackView: UIStackView!
-    @IBOutlet var titlePickedLabel: UILabel!
+    @IBOutlet fileprivate weak var titleMenuStackView: UIStackView!
+    @IBOutlet fileprivate weak var titlePickedLabel: UILabel!
     
     @IBOutlet fileprivate weak var firstNameInputStackView: UIStackView!
     @IBOutlet fileprivate weak var firstNameSeparatorView: UIView!
-    @IBOutlet fileprivate weak var firstNameInputTextLabel: UILabel!
+ //   @IBOutlet fileprivate weak var firstNameInputTextLabel: UILabel!
     @IBOutlet fileprivate weak var firstNameTextField: UITextField!
     @IBOutlet fileprivate weak var titlePickButton: UIButton!
     
     @IBOutlet fileprivate weak var lastNameInputStackView: UIStackView!
-    @IBOutlet fileprivate weak var lastNameInputLabel: UILabel!
+ //   @IBOutlet fileprivate weak var lastNameInputLabel: UILabel!
     @IBOutlet fileprivate weak var lastNameTextField: UITextField!
     @IBOutlet fileprivate weak var lastNameSeparatorView: UIView!
     
     @IBOutlet fileprivate weak var emailInputStackView: UIStackView!
-    @IBOutlet fileprivate weak var emailInputTitleLabel: UILabel!
+ //   @IBOutlet fileprivate weak var emailInputTitleLabel: UILabel!
     @IBOutlet fileprivate weak var emailTextField: UITextField!
     @IBOutlet fileprivate weak var emailSeparatorView: UIView!
     
     @IBOutlet fileprivate weak var phoneInputStackView: UIStackView!
     @IBOutlet fileprivate weak var phoneCodeButton: UIButton!
     @IBOutlet fileprivate weak var phoneArrangeStackView: UIStackView!
-    @IBOutlet fileprivate weak var phoneInputTitleLabel: UILabel!
+    @IBOutlet fileprivate weak var countryCodePhoneStackView: UIStackView!
+ //   @IBOutlet fileprivate weak var phoneInputTitleLabel: UILabel!
+    @IBOutlet fileprivate weak var countryCodeInputTitleLabel: UILabel!
     @IBOutlet fileprivate weak var phoneTextField: PhoneNumberTextField!
     @IBOutlet fileprivate weak var phoneSeparatorView: UIView!
     
     override public func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
         
         let doneToolbar:UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0,  width: self.contentView.frame.size.width, height: 30))
         //create left side empty space so that done button set on right side
@@ -94,26 +106,29 @@ internal final class ContactInfoViewCell: UITableViewCell, ValueCell {
     override public func bindStyles() {
         super.bindStyles()
         
+        
         _ = self.contentView
-            |> UIView.lens.backgroundColor .~ .tk_base_grey_100
+            |> UIView.lens.backgroundColor .~ .white
+        
+        _ = self.contactContainerView
+            |> UIView.lens.layer.borderColor .~ UIColor.tk_official_green.cgColor
+            |> UIView.lens.layer.borderWidth .~ 1.5
         
         _ = self.contactInfoStackView
             |> UIStackView.lens.layoutMargins %~~ { _, stackView in
                 stackView.traitCollection.isRegularRegular
-                    ? .init(topBottom: Styles.grid(6), leftRight: Styles.grid(16))
-                    : .init(top: Styles.grid(2), left: Styles.grid(4), bottom: Styles.grid(3), right: Styles.grid(4))
+                    ? .init(topBottom: Styles.grid(4), leftRight: Styles.grid(16))
+                    : .init(top: Styles.grid(2), left: Styles.grid(4), bottom: Styles.grid(6), right: Styles.grid(4))
             }
             |> UIStackView.lens.isLayoutMarginsRelativeArrangement .~ true
-            |> UIStackView.lens.spacing .~ Styles.grid(1)
         
-        _ = self.contactInfoLabel
-            |> UILabel.lens.text .~ Localizations.GuestContactFormTitle
-        
+        /*
         _ = titleInputStackView
             |> UIStackView.lens.spacing .~ Styles.grid(1)
         
         _ = titleInputTextLabel
             |> UILabel.lens.text .~ Localizations.TitleFormData
+        */
         
         _ = titleMenuStackView
             |> UIStackView.lens.spacing .~ Styles.grid(1)
@@ -131,67 +146,84 @@ internal final class ContactInfoViewCell: UITableViewCell, ValueCell {
             |> UILabel.lens.text .~ Localizations.TitleFormData
             |> UILabel.lens.textColor .~ .darkGray
         
+        /*
+
         _ = firstNameInputStackView
             |> UIStackView.lens.spacing .~ Styles.grid(1)
         
         _ = firstNameInputTextLabel
             |> UILabel.lens.text .~ Localizations.FirstnameFormData
+        */
         
         _ = firstNameTextField
             |> UITextField.lens.returnKeyType .~ .next
             |> UITextField.lens.tintColor .~ .tk_official_green
-            |> UITextField.lens.borderStyle .~ .roundedRect
             |> UITextField.lens.keyboardType .~ .default
+            |> UITextField.lens.placeholder .~ Localizations.FirstnameFormData
+            |> UITextField.lens.autocapitalizationType .~ .sentences
         
         _ = firstNameSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_official_green
         
+        /*
         _ = lastNameInputStackView
             |> UIStackView.lens.spacing .~ Styles.grid(1)
         
         _ = lastNameInputLabel
             |> UILabel.lens.text .~ Localizations.LastnameFormData
+        */
         
         _ = lastNameTextField
             |> UITextField.lens.returnKeyType .~ .next
             |> UITextField.lens.tintColor .~ .tk_official_green
-            |> UITextField.lens.borderStyle .~ .roundedRect
             |> UITextField.lens.keyboardType .~ .default
+            |> UITextField.lens.placeholder .~ Localizations.LastnameFormData
+            |> UITextField.lens.autocapitalizationType .~ .sentences
         
         _ = lastNameSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_official_green
         
+        /*
         _ = emailInputStackView
             |> UIStackView.lens.spacing .~ Styles.grid(1)
         
         _ = emailInputTitleLabel
             |> UILabel.lens.text .~ Localizations.EmailFormData
+        */
         
         _ = emailTextField
             |> UITextField.lens.returnKeyType .~ .next
             |> UITextField.lens.tintColor .~ .tk_official_green
-            |> UITextField.lens.borderStyle .~ .roundedRect
             |> UITextField.lens.keyboardType .~ .default
+            |> UITextField.lens.placeholder .~ Localizations.EmailFormData
         
         _ = emailSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_official_green
         
-        _ = phoneInputStackView
-            |> UIStackView.lens.spacing .~ Styles.grid(1)
+        _ = countryCodePhoneStackView
+            |> UIStackView.lens.spacing .~ 8
         
+        /*
         _ = phoneInputTitleLabel
             |> UILabel.lens.text .~ Localizations.PhonenumberFormData
+        */
+        
+        _ = countryCodeInputTitleLabel
+            |> UILabel.lens.text .~ Localizations.CountrycodeTitle
         
         _ = phoneTextField
             |> UITextField.lens.returnKeyType .~ .done
             |> UITextField.lens.tintColor .~ .tk_official_green
-            |> UITextField.lens.borderStyle .~ .roundedRect
             |> UITextField.lens.keyboardType .~ .phonePad
+            |> UITextField.lens.placeholder .~ Localizations.PhonetextfieldPlaceholder
+        
+        _ = self.phoneCodeButton
+            |> UIButton.lens.titleColor(forState: .normal) .~ .tk_official_green
         
         self.phoneTextField.isPartialFormatterEnabled = false
         
         _ = phoneArrangeStackView
-            |> UIStackView.lens.spacing .~ Styles.grid(1)
+            |> UIStackView.lens.spacing .~ Styles.grid(2)
         
         _ = phoneSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_official_green
@@ -202,6 +234,7 @@ internal final class ContactInfoViewCell: UITableViewCell, ValueCell {
         
         print("BIND VIEW MODEL")
         
+        self.contactInfoLabel.rac.text = self.viewModel.outputs.statusFormText
         self.firstNameTextField.rac.becomeFirstResponder = self.viewModel.outputs.firstNameFirstResponder
         self.lastNameTextField.rac.becomeFirstResponder = self.viewModel.outputs.lastNameFirstResponder
         self.emailTextField.rac.becomeFirstResponder = self.viewModel.outputs.emailFirstResponder
@@ -212,6 +245,15 @@ internal final class ContactInfoViewCell: UITableViewCell, ValueCell {
         self.emailTextField.rac.text = self.viewModel.outputs.emailTextFieldText
         self.phoneTextField.rac.text = self.viewModel.outputs.phoneTextFieldText
         self.phoneCodeButton.rac.title = self.viewModel.outputs.phoneCodeLabelText
+        
+        self.viewModel.outputs.titleLabelText
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] picked in
+                guard let _self = self else { return }
+                _ = _self.titlePickedLabel
+                    |> UILabel.lens.text .~ picked
+                    |> UILabel.lens.textColor .~ .black
+        }
  
         self.viewModel.outputs.goToTitleSalutationPicker
             .observe(on: QueueScheduler.main)
@@ -230,32 +272,42 @@ internal final class ContactInfoViewCell: UITableViewCell, ValueCell {
             .observe(on: QueueScheduler.main)
             .observeValues { [weak self] in
                 self?.delegate?.canceledTitlePick()
+                self?.flightDelegate?.canceledTitlePick()
+        }
+        
+        self.viewModel.outputs.collectForContactFlight
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] contactForm in
+                guard let _self = self else { return }
+                _self.flightDelegate?.getContactInfoParams(guestForm: contactForm)
         }
         
         self.viewModel.outputs.collectForCheckout
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] guestForm in
-//                print("WHO IS THE GUEST: \(guestForm)")
-                self?.delegate?.getContactInfoParams(guestForm: guestForm)
+                guard let _self = self else { return }
+                _self.delegate?.getContactInfoParams(guestForm: guestForm)
         }
         
         self.viewModel.outputs.contactFormIsCompleted
             .observe(on: UIScheduler())
             .observeValues { [weak self] completed in
                 self?.delegate?.getFinishedForm(completed)
+                self?.flightDelegate?.getFinishedForm(completed)
         }
     }
     
-    public func configureWith(value: Int) {
-        
+    public func configureWith(value: ContactFormState) {
+        self.viewModel.inputs.contactCellDidLoad(value)
     }
     
     fileprivate func goToPickerTitlePassenger() {
-        let titles = ["Tuan", "Nyonya", "Nona"]
+        let titles = [Localizations.MrFormData, Localizations.MrsFormData, Localizations.MsFormData]
         let titlePickerVC = PassengerTitlePickerVC.instantiate(titles: titles, selectedTitle: "", delegate: self)
         titlePickerVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         titlePickerVC.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
         self.delegate?.goToPassengerPickerVC(passengerPickerVC: titlePickerVC)
+        self.flightDelegate?.goToPassengerPickerVC(passengerPickerVC: titlePickerVC)
         print("Passenger Title Picker VC Delegate")
     }
     
@@ -263,6 +315,7 @@ internal final class ContactInfoViewCell: UITableViewCell, ValueCell {
         let phoneListVC = PhoneCodeListVC.instantiate()
         phoneListVC.delegate = self
         self.delegate?.goToRegionalCodePhoneVC(phoneVC: phoneListVC)
+        self.flightDelegate?.goToRegionalCodePhoneVC(phoneVC: phoneListVC)
     }
     
     @objc fileprivate func titleSalutationButtonTapped() {

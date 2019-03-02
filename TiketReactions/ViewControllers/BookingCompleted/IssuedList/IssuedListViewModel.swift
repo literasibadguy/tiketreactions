@@ -19,8 +19,11 @@ public protocol IssuedListViewModelInputs {
     func issuedOrderDeleted(_ issue: IssuedOrder)
     func confirmDeletedOrder(_ confirm: Bool)
     func getNotifiedToken(_ token: NotificationToken)
+    func isEditingIssuedOrder(_ edit: Bool)
+    func currencyRowSelected()
     func noticeAlertDelete()
     func viewDidLoad()
+    func viewWillAppear()
 }
 
 public protocol IssuedListViewModelOutputs {
@@ -31,6 +34,7 @@ public protocol IssuedListViewModelOutputs {
     var commitWrite: Signal<(NotificationToken, List<IssuedOrder>), NoError> { get }
     var showEmptyState: Signal<EmptyState, NoError> { get }
     var hideEmptyState: Signal<(), NoError> { get }
+    var goToCurrency: Signal<String, NoError> { get }
 }
 
 
@@ -42,9 +46,11 @@ public protocol IssuedListViewModelType {
 public final class IssuedListViewModel: IssuedListViewModelType, IssuedListViewModelInputs, IssuedListViewModelOutputs {
     
     public init() {
-        let current = Signal.combineLatest(self.viewDidLoadProperty.signal, self.configIssuesProperty.signal.skipNil()).map(second)
+        let current = Signal.combineLatest(Signal.merge(self.viewWillAppearProperty.signal, self.viewDidLoadProperty.signal), self.configIssuesProperty.signal.skipNil()).map(second)
         
-        self.issues = current
+        let pleaseCurrency = self.viewDidLoadProperty.signal.map { AppEnvironment.current.apiService.currency }
+        
+        self.issues = current.signal
         self.goToIssue = self.issueOrderSelectedProperty.signal.skipNil()
         
         self.issueObserver = .empty
@@ -53,6 +59,8 @@ public final class IssuedListViewModel: IssuedListViewModelType, IssuedListViewM
         
         self.showEmptyState = current.map { $0.items }.filter { $0.isEmpty }.map { _ in emptyStateIssue() }
         self.hideEmptyState = current.map { $0.items }.filter { !$0.isEmpty }.ignoreValues()
+        
+        self.goToCurrency = pleaseCurrency.signal.takeWhen(self.currencyRowSelectedProperty.signal)
         
         self.commitWrite = Signal.combineLatest(self.notifiedTokenProperty.signal.skipNil(), self.issues.signal.map { $0.items })
     }
@@ -82,9 +90,19 @@ public final class IssuedListViewModel: IssuedListViewModelType, IssuedListViewM
         self.notifiedTokenProperty.value = token
     }
     
+    fileprivate let editingOrderProperty = MutableProperty(false)
+    public func isEditingIssuedOrder(_ edit: Bool) {
+        self.editingOrderProperty.value = edit
+    }
+    
     fileprivate let alertDeletedProperty = MutableProperty(())
     public func noticeAlertDelete() {
         self.alertDeletedProperty.value = ()
+    }
+    
+    fileprivate let currencyRowSelectedProperty = MutableProperty(())
+    public func currencyRowSelected() {
+        self.currencyRowSelectedProperty.value = ()
     }
     
     fileprivate let shouldRefreshProperty = MutableProperty(())
@@ -97,6 +115,11 @@ public final class IssuedListViewModel: IssuedListViewModelType, IssuedListViewM
         self.viewDidLoadProperty.value = ()
     }
     
+    fileprivate let viewWillAppearProperty = MutableProperty(())
+    public func viewWillAppear() {
+        self.viewWillAppearProperty.value = ()
+    }
+    
     public let issues: Signal<IssuedOrderList, NoError>
     public let issueObserver: Signal<RealmCollectionChange<IssuedOrder>, NoError>
     public let goToIssue: Signal<IssuedOrder, NoError>
@@ -104,6 +127,7 @@ public final class IssuedListViewModel: IssuedListViewModelType, IssuedListViewM
     public let commitWrite: Signal<(NotificationToken, List<IssuedOrder>), NoError>
     public let showEmptyState: Signal<EmptyState, NoError>
     public let hideEmptyState: Signal<(), NoError>
+    public let goToCurrency: Signal<String, NoError>
     
     public var inputs: IssuedListViewModelInputs { return self }
     public var outputs: IssuedListViewModelOutputs { return self }

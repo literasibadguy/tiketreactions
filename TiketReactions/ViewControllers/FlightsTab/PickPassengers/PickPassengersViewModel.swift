@@ -29,6 +29,7 @@ public protocol PickPassengersViewModelOutputs {
     var childValue: Signal<Double, NoError> { get }
     var infantValue: Signal<Double, NoError> { get }
     var dismissPickPassengers: Signal<(Int, Int, Int), NoError> { get }
+    var doneButtonDisabled: Signal<Bool, NoError> { get }
 }
 
 public protocol PickPassengersViewModelType {
@@ -43,7 +44,10 @@ public final class PickPassengersViewModel: PickPassengersViewModelType, PickPas
         
         let adultChanged = Signal.merge(countChanged.map { Double($0.0) }, self.adultChangedProperty.signal.skipNil()).map { Int($0) }
         let childChanged = Signal.merge(countChanged.map { Double($0.1) }, self.childChangedProperty.signal.skipNil()).map { Int($0) }
+        
         let infantChanged = Signal.merge(countChanged.map { Double($0.2) }, self.infantChangedProperty.signal.skipNil()).map { Int($0) }
+        
+        let passengerAdapted = Signal.combineLatest(adultChanged, childChanged, infantChanged).map { $0.0 < $0.1 && $0.0 < $0.2 }
         
         self.adultValueText = adultChanged.map { "\(Int($0)) Dewasa" }
         self.childValueText = childChanged.map { "\(Int($0)) Anak" }
@@ -58,6 +62,8 @@ public final class PickPassengersViewModel: PickPassengersViewModelType, PickPas
         self.passengerTotalValueText = totalValue.map { "\($0) Penumpang" }
         
         self.dismissPickPassengers = Signal.combineLatest(adultChanged, childChanged, infantChanged).takeWhen(self.confirmButtonProperty.signal)
+        
+        self.doneButtonDisabled = passengerAdapted.negate()
     }
     
     fileprivate let configCountProperty = MutableProperty<(Int, Int, Int)?>(nil)
@@ -98,6 +104,7 @@ public final class PickPassengersViewModel: PickPassengersViewModelType, PickPas
     public let childValue: Signal<Double, NoError>
     public let infantValue: Signal<Double, NoError>
     public let dismissPickPassengers: Signal<(Int, Int, Int), NoError>
+    public let doneButtonDisabled: Signal<Bool, NoError>
     
     public var inputs: PickPassengersViewModelInputs { return self }
     public var outputs: PickPassengersViewModelOutputs { return self }

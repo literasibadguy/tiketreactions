@@ -1,6 +1,7 @@
 import Foundation
 
 public enum AppKeys: String {
+    case temporaryCartFlights = "temporary_cart_flights"
     case tokenSavedActivity = "firasrafislam.TiketReactions.KeyValueStoreType.tokenSaved"
     case orderDetailIds = "order_detail_ids"
     case emailDetailLogins = "email_detail_logins"
@@ -25,16 +26,15 @@ public protocol KeyValueStoreType: class {
 
 
 extension KeyValueStoreType {
-    /*
-    public var favoriteCategoryIds: [Int] {
+    
+    public var temporaryCartFlights: [Flight] {
         get {
-            return self.object(forKey: AppKeys.favoriteCategoryIds.rawValue) as? [Int] ?? []
+            return self.object(forKey: AppKeys.temporaryCartFlights.rawValue) as? [Flight] ?? []
         }
         set {
-            self.set(newValue, forKey: AppKeys.favoriteCategoryIds.rawValue)
+            self.set(newValue, forKey: AppKeys.temporaryCartFlights.rawValue)
         }
     }
-    */
     
     public var tokenSaved: String {
         get {

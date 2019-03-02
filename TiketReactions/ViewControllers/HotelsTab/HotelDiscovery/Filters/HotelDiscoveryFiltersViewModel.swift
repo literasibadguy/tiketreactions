@@ -40,15 +40,11 @@ public final class HotelDiscoveryFiltersViewModel: HotelDiscoveryFiltersViewMode
         
         let currentSort = Signal.combineLatest(self.configSortProperty.signal.skipNil(), self.viewDidLoadProperty.signal).map(first)
         
-        let clearResults = currentParam.map { $0.searchHotelResults }
-        
 //        let fiveRating = clearResults.filterMap { $0.map { $0.starRating == "5" } }
         
         self.loadFilterDataSources = currentSort.ignoreValues()
         
-        let queen = currentParam.map { $0.searchQueries }
-        
-        let customized = Signal.merge(queen.map { $0.sort! }, self.sortFilterTappedProperty.signal.skipNil())
+//        let queen = currentParam.map { $0.searchQueries }
         
         let updatedParams = Signal.combineLatest(currentParam, sortFilterTappedProperty.signal.skipNil()).switchMap { envelope, sortSelected -> SignalProducer<SearchHotelParams, NoError> in
             let updated = envelope.searchQueries

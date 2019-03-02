@@ -31,49 +31,31 @@ public final class PickFlightResultsVC: UIViewController {
     @IBOutlet fileprivate weak var footerContainerView: UIView!
     @IBOutlet fileprivate weak var nextStepsButton: DesignableButton!
     
-    public static func instantiate() -> PickFlightResultsVC {
-        let vc = Storyboard.PickFlight.instantiate(PickFlightResultsVC.self)
-        let sampleParams = .defaults
-            |> SearchFlightParams.lens.departDate .~ "2018-03-22"
-            |> SearchFlightParams.lens.returnDate .~ "2018-03-23"
-            |> SearchFlightParams.lens.adult .~ 1
-            |> SearchFlightParams.lens.child .~ 0
-            |> SearchFlightParams.lens.infant .~ 0
-            |> SearchFlightParams.lens.fromAirport .~ "CGK"
-            |> SearchFlightParams.lens.toAirport .~ "DPS"
-        
-        print("PICK FLIGHT RESULTS VC INSTANTIATE")
-        vc.viewModel.inputs.configureWith(params: sampleParams)
-        return vc
+    public static func configureWith(_ envelope: SearchFlightEnvelope) -> PickFlightResultsVC {
+        let resultsVC = Storyboard.PickFlight.instantiate(PickFlightResultsVC.self)
+        resultsVC.viewModel.inputs.configureWith(envelope)
+        return resultsVC
     }
     
-    public static func configureSingleWith(param: SearchSingleFlightParams) -> PickFlightResultsVC {
-        let vc = Storyboard.PickFlight.instantiate(PickFlightResultsVC.self)
-        vc.viewModel.inputs.configureSingleWith(params: param)
-        return vc
+    public static func configureWith(_ param: SearchFlightParams) -> PickFlightResultsVC {
+        let resultsVC = Storyboard.PickFlight.instantiate(PickFlightResultsVC.self)
+        resultsVC.viewModel.inputs.configureWith(param)
+        return resultsVC
     }
     
-    public static func configureWith(param: SearchFlightParams) -> PickFlightResultsVC {
-        let vc = Storyboard.PickFlight.instantiate(PickFlightResultsVC.self)
-        vc.viewModel.inputs.configureWith(params: param)
-        return vc
+    public static func configureWith(flights: [Flight]) -> PickFlightResultsVC {
+         let returnedVC = Storyboard.PickFlight.instantiate(PickFlightResultsVC.self)
+        return returnedVC
     }
-    
-    public static func configureWith(params: SearchFlightParams, selected: Flight, returns: [Flight]) -> PickFlightResultsVC {
-        let vc = Storyboard.PickFlight.instantiate(PickFlightResultsVC.self)
-        vc.viewModel.inputs.configureReturn(params: params, selected: selected, returns: returns)
-        return vc
-    }
-    
+
     public override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         
         self.dismissButton.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
         self.nextStepsButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
         
         self.flightsTableView.addSubview(self.loadingIndicatorView)
+        self.flightsTableView.register(nib: .PickFlightNoticeViewCell)
         self.flightsTableView.register(nib: .FlightResultViewCell)
         self.flightsTableView.dataSource = dataSource
         self.flightsTableView.delegate = self
@@ -87,27 +69,25 @@ public final class PickFlightResultsVC: UIViewController {
             emptyVC.view.leadingAnchor.constraint(equalTo: self.flightsTableView.leadingAnchor),
             emptyVC.view.bottomAnchor.constraint(equalTo: self.flightsTableView.bottomAnchor),
             emptyVC.view.trailingAnchor.constraint(equalTo: self.flightsTableView.trailingAnchor)
-        ])
+            ])
         emptyVC.didMove(toParentViewController: self)
+        
+        self.viewModel.inputs.viewDidLoad()
     }
 
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
-        
         self.viewModel.inputs.viewWillAppear(animated)
     }
     
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         self.viewModel.inputs.viewDidAppear()
     }
     
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         self.loadingIndicatorView.center = self.flightsTableView.center
     }
     
@@ -119,7 +99,7 @@ public final class PickFlightResultsVC: UIViewController {
     
     public override func bindStyles() {
         super.bindStyles()
-
+        
         _ = self.flightsTableView
             |> UITableView.lens.backgroundColor .~ .white
             |> UITableView.lens.rowHeight .~ UITableViewAutomaticDimension
@@ -146,102 +126,76 @@ public final class PickFlightResultsVC: UIViewController {
         
         _ = self.nextStepsButton
             |> UIButton.lens.backgroundColor .~ .tk_official_green
+        
+        _ = self.separatorContainerView
+            |> UIView.lens.backgroundColor .~ .tk_base_grey_100
     }
     
     public override func bindViewModel() {
         super.bindViewModel()
         
-        self.loadingIndicatorView.rac.animating = self.viewModel.outputs.flightsAreLoading
-        self.footerContainerView.rac.hidden = self.viewModel.outputs.showNextSteps
-        self.destinationMainLabel.rac.text = self.viewModel.outputs.destinationTitleText
-        self.datesMainLabel.rac.text = self.viewModel.outputs.dateTitleText
         
-        self.viewModel.outputs.dismissFlightResults
-            .observe(on: UIScheduler())
-            .observeValues { [weak self] in
-                self?.navigationController?.popViewController(animated: true)
-        }
+        self.loadingIndicatorView.rac.animating = self.viewModel.outputs.flightsAreLoading
+        
+//        self.loadingIndicatorView.rac.animating = self.viewModel.outputs.flightsAreLoading
+        self.datesMainLabel.rac.text = self.viewModel.outputs.showDateText
+        self.destinationMainLabel.rac.text = self.viewModel.outputs.showDestinationText
         
         self.viewModel.outputs.flights
             .observe(on: UIScheduler())
-            .observeValues { [weak self] flights in
-                print("FLIGHTS AVAILABLE: \(flights)")
-                self?.dataSource.load(flights: flights)
+            .observeValues { [weak self] flights, notice in
+                self?.dataSource.load(flights: flights, notice: notice)
                 self?.flightsTableView.reloadData()
         }
-
-        self.viewModel.outputs.goToSingleFlights
+        
+        self.viewModel.outputs.showNextSteps
             .observe(on: UIScheduler())
-            .observeValues { [weak self] param, depart in
-                print("ONLY SINGLE FLIGHTS AVAILABLE")
-                self?.goToSingleFlight(param: param, flight: depart)
+            .observeValues { [weak self] showed in
+                self?.footerContainerView.isHidden = false
         }
         
         self.viewModel.outputs.goToReturnFlights
-            .observe(on: UIScheduler())
-            .observeValues { [weak self] params, depart, returns in
-                self?.goToRoundFlights(param: params, flight: depart, returnResults: returns)
-                print("DEPARTS FLIGHT SELECTED: \(depart)")
+            .observe(on: QueueScheduler.main) 
+            .observeValues { [weak self] envelope, departed in
+                self?.goToReturnFlights(envelope, selectedDepart: departed)
         }
         
-        self.viewModel.outputs.returnFlights
-            .observe(on: UIScheduler())
-            .observeValues { [weak self] results in
-                print("RETURNS AVAILABLE")
-                self?.dataSource.load(flights: results)
-                self?.flightsTableView.reloadData()
-        }
-        
-        self.viewModel.outputs.showReturnDirectText
-            .observe(on: UIScheduler())
-            .observeValues { [weak self] valueText in
-                self?.nextStepsButton.titleLabel?.text = valueText
-        }
-        
-        self.viewModel.outputs.goToDirectReturnFlights
-            .observe(on: UIScheduler())
-            .observeValues { [weak self] param, depart, returned in
-                print("DIRECT RETURN FLIGHTS: \(depart) \(returned)")
-                self?.goToDirectReturns(param: param, depart: depart, returned: returned)
-        }
-        
-        self.viewModel.outputs.showEmptyState
-            .observe(on: UIScheduler())
-            .observeValues { [weak self] emptyState in
-                print("EMPTY STATE IS DECLARED")
-                self?.showEmptyState(emptyState)
+        self.viewModel.outputs.goToFlight
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] selectedFlight in
+                print("Go To Flights")
+                self?.goToFlight(flight: selectedFlight)
         }
         
         self.viewModel.outputs.hideEmptyState
             .observe(on: UIScheduler())
             .observeValues { [weak self] in
+                print("HIDE EMPTY STATE")
                 self?.emptyStatesController?.view.alpha = 0
                 self?.emptyStatesController?.view.isHidden = true
-                
-                
+        }
+        
+        self.viewModel.outputs.showEmptyState
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] emptyState in
+                print("SHOW EMPTY STATE")
+                self?.showEmptyState(emptyState)
+        }
+        
+        self.viewModel.outputs.dismissToPickDate
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] in
+                self?.dismiss(animated: true, completion: nil)
         }
     }
-    
-    fileprivate func goToSingleFlight(param: SearchSingleFlightParams, flight: Flight) {
-        let vc = FlightDirectsVC.configureSingleWith(param: param, flight: flight)
-        self.navigationController?.pushViewController(vc, animated: true)
+    fileprivate func goToFlight(flight: Flight) {
+        let singleSummaries = FlightSummariesVC.configureSingleWith(flight)
+        self.navigationController?.pushViewController(singleSummaries, animated: true)
     }
     
-    fileprivate func goToRoundFlights(param: SearchFlightParams, flight: Flight, returnResults: [Flight]) {
-        let vc = PickFlightResultsVC.configureWith(params: param, selected: flight, returns: returnResults)
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-
-    
-    fileprivate func goToDirectReturns(depart: Flight, returned: Flight) {
-        print("GO TO DIRECT RETURNS: \(depart) \(returned)")
-//        let vc = FlightDirectsVC.configureWith(param: nil, flight: depart, returnedFlight: returned)
-//        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    fileprivate func goToDirectReturns(param: SearchFlightParams, depart: Flight, returned: Flight) {
-        let vc = FlightDirectsVC.configureWith(param: param, flight: depart, returnedFlight: returned)
-        self.navigationController?.pushViewController(vc, animated: true)
+    fileprivate func goToReturnFlights(_ envelope: SearchFlightEnvelope, selectedDepart: Flight) {
+        let returnVC = PickFlightReturnsVC.configureWith(envelope, selectedDepart: selectedDepart)
+        self.navigationController?.pushViewController(returnVC, animated: true)
     }
     
     fileprivate func showEmptyState(_ emptyState: EmptyState) {

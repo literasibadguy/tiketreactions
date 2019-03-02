@@ -22,14 +22,14 @@ public final class BookingCompletedVC: UITableViewController {
     public static func configureWith(_ orderId: String, email: String) -> BookingCompletedVC {
         let vc = Storyboard.BookingCompleted.instantiate(BookingCompletedVC.self)
         vc.viewModel.inputs.configureWith(orderId, email: email)
+        vc.navigationItem.title = Localizations.IssuedOrderTitle(orderId)
         return vc
-    }
+    } 
 
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = Localizations.IssuedOrderTitle("#")
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissPDFView))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissToOrders))
         
         self.tableView.addSubview(self.loadingIndicatorView)
         self.tableView.dataSource = dataSource
@@ -74,6 +74,14 @@ public final class BookingCompletedVC: UITableViewController {
                 self?.present(alertVC, animated: true, completion: nil)
         }
         
+        self.viewModel.outputs.errorPDFPrint
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] failed in
+                print("FPDF Error")
+                let alertVC = UIAlertController.genericError(message: failed, cancel: nil)
+                self?.present(alertVC, animated: true, completion: nil)
+        }
+        
         self.viewModel.outputs.generatePDF
             .observe(on: QueueScheduler.main)
             .observeValues { [weak self] voucher in
@@ -88,18 +96,28 @@ public final class BookingCompletedVC: UITableViewController {
     }
     
     public override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? ThirdIssueViewCell {
+        if let cell = cell as? SecondIssueViewCell {
             cell.delegate = self
         }
     }
     
     fileprivate func goToPDFView(_ document: PDFDocument) {
         let dismissButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(dismissPDFView))
+        
         let readerController = PDFViewController.createNew(with: document, title: document.fileName, actionStyle: .activitySheet, backButton: dismissButton)
         readerController.backgroundColor = .tk_base_grey_100
         let navVC = UINavigationController(rootViewController: readerController)
         navVC.navigationBar.tintColor = .tk_official_green
         self.present(navVC, animated: true, completion: nil)
+    }
+    
+    @objc fileprivate func dismissToOrders() {
+        self.view.window?.rootViewController.flatMap { $0 as? RootTabBarVC }.doIfSome { root in
+            root.dismiss(animated: true, completion: nil)
+            UIView.transition(with: root.view, duration: 0.3, options: [.transitionCrossDissolve], animations: {
+                root.switchToLounge()
+            }, completion:nil)
+        }
     }
     
     @objc fileprivate func dismissPDFView() {
@@ -108,13 +126,20 @@ public final class BookingCompletedVC: UITableViewController {
     
 }
 
-extension BookingCompletedVC: ThirdIssueCellDelegate {
-    public func emailVoucherButtonTapped(_ cell: ThirdIssueViewCell) {
+extension BookingCompletedVC: SecondIssueCelLDelegate {
+    public func emailVoucherButtonTapped(_ cell: SecondIssueViewCell) {
         self.viewModel.inputs.sendVoucherTapped()
     }
     
-    public func printVoucherButtonTapped(_ cell: ThirdIssueViewCell, document: PDFDocument) {
-        self.viewModel.inputs.printVoucherTapped(document)
+    public func printVoucherButtonTapped(_ cell: SecondIssueViewCell, document: PDFDocument?) {
+        if let documentGranted = document {
+            self.viewModel.inputs.printVoucherTapped(documentGranted)
+        }
+    }
+    
+    public func printVoucherErrorDetected(_ cell: SecondIssueViewCell, description: String) {
+        print("Is there any error Print Voucher PDF: \(description)")
+        self.viewModel.inputs.printVoucherError(description)
     }
 }
 

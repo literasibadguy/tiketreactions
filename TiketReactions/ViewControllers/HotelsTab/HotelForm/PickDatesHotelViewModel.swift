@@ -44,8 +44,6 @@ public final class PickDatesHotelViewModel: PickDatesHotelViewModelType, PickDat
         let current = Signal.combineLatest(self.configDataProperty.signal.skipNil(), self.viewDidLoadProperty.signal).map(first)
         let param = current.signal.map(second)
         let selectedContent = current.signal.map(first)
-        
-        let initialDate = self.viewDidLoadProperty.signal.mapConst(Date())
         let initialDateText = self.viewDidLoadProperty.signal.mapConst("")
         
         let textFirstDate = self.startDateProperty.signal.skipNil().map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "yyyy-MM-dd") }
@@ -68,21 +66,20 @@ public final class PickDatesHotelViewModel: PickDatesHotelViewModelType, PickDat
         self.checkInDateText = Signal.merge(displayFirstDate.skipNil(), initialDateText)
         self.checkOutDateText = Signal.merge(displayEndDate.skipNil(), checkoutSignText, initialDateText)
         
-        let findHotelParam = Signal.combineLatest(param, textFirstDate.skipNil(), textEndDate.skipNil(), rangedDate).map { (arg) -> SearchHotelParams in
-            let (current, first, end, ranged) = arg
+        let guestList = param.signal.map { $0.adult }.skipNil()
+        
+        let findHotelParam = Signal.combineLatest(param, guestList, textFirstDate.skipNil(), textEndDate.skipNil(), rangedDate).map { (arg) -> SearchHotelParams in
+            let (current, guest, first, end, ranged) = arg
             return current
                 |> SearchHotelParams.lens.startDate .~ first
                 |> SearchHotelParams.lens.endDate .~ end
                 |> SearchHotelParams.lens.night .~ ranged
+                |> SearchHotelParams.lens.adult .~ guest
         }
         
         self.enabledHotelResultsButton = Signal.merge(self.startDateProperty.signal.mapConst(false), self.endDateProperty.signal.map { !$0.isNil }, self.clearDateProperty.signal)
         
         self.bookingText = Signal.merge(self.viewDidLoadProperty.signal.mapConst(Localizations.CheckinPickTitle), self.startDateProperty.signal.mapConst(Localizations.CheckoutPickTitle), self.endDateProperty.signal.mapConst(Localizations.FindHotelTitle), self.clearDateProperty.signal.mapConst(Localizations.MaximumNightsReminderTitle))
-        
-        let findHotelEvent = findHotelParam.switchMap { hotelParam in
-            AppEnvironment.current.apiService.fetchHotelResults(params: hotelParam).demoteErrors()
-        }
         
         let tempSummary = Signal.combineLatest(self.checkInDateText.signal, self.checkOutDateText.signal, findHotelParam.signal.map { $0.adult! }, findHotelParam.signal.map { $0.room! }).switchMap { startDate, endDate, guest, room -> SignalProducer<HotelBookingSummary, NoError> in
             let summary = .defaults

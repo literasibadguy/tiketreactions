@@ -99,7 +99,7 @@ extension AvailableRoom {
                 id: set.id, roomAvailable: set.roomAvailable, extSource: set.extSource, roomId: set.roomId, currency: set.currency, minimumStays: set.minimumStays, withBreakfasts: set.withBreakfasts, roomDescription: set.roomDescription, allPhotoRoom: set.allPhotoRoom, photoUrl: set.photoUrl, roomName: set.roomName, oldprice: set.oldprice, price: set.price, bookURI: set.bookURI, RoomFacility: view, additionalSurchargeCurrency: set.additionalSurchargeCurrency) }
         )
         
-        public static let additionalSurchargeCurrency = Lens<AvailableRoom, String>(
+        public static let additionalSurchargeCurrency = Lens<AvailableRoom, String?>(
             view: { view in view.additionalSurchargeCurrency },
             set:{ view, set in AvailableRoom(
                 id: set.id, roomAvailable: set.roomAvailable, extSource: set.extSource, roomId: set.roomId, currency: set.currency, minimumStays: set.minimumStays, withBreakfasts: set.withBreakfasts, roomDescription: set.roomDescription, allPhotoRoom: set.allPhotoRoom, photoUrl: set.photoUrl, roomName: set.roomName, oldprice: set.oldprice, price: set.price, bookURI: set.bookURI, RoomFacility: set.RoomFacility, additionalSurchargeCurrency: view) }

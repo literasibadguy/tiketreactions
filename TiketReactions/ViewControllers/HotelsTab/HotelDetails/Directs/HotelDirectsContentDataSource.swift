@@ -31,6 +31,10 @@ class HotelDirectsContentDataSource: ValueCellDataSource {
         return IndexPath(item: 0, section: Section.main.rawValue)
     }
     
+    internal func indexPathForMapCell() -> IndexPath {
+        return IndexPath(item: 0, section: Section.summaryMap.rawValue)
+    }
+    
     override func configureCell(tableCell cell: UITableViewCell, withValue value: Any) {
         switch (cell, value) {
         case let (cell as HotelDirectMainViewCell, value as HotelDirect):

@@ -36,7 +36,7 @@ internal final class ReceiptOrderViewCell: UITableViewCell, ValueCell {
             |> UILabel.lens.text .~ "Order ID: \(value.orderId)"
         
         _ = self.totalPriceLabel
-            |> UILabel.lens.text .~ "\(Format.currency(value.grandTotal, country: AppEnvironment.current.apiService.currency ))"
+            |> UILabel.lens.text .~ "\(Format.symbolForCurrency(AppEnvironment.current.apiService.currency)) \(Format.currency(value.grandTotal, country: AppEnvironment.current.apiService.currency ))"
         
     }
 

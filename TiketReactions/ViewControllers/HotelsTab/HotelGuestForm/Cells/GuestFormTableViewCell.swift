@@ -14,7 +14,7 @@ import UIKit
 protocol GuestFormTableCellDelegate: class {
     func goToPassengerPickerVC(passengerPickerVC: PassengerTitlePickerVC)
     func putAnotherParams(_ guestForm: CheckoutGuestParams)
-    func getFinishedForm(_ completed: Bool)
+    func getAnotherFinishedForm(_ completed: Bool)
     func canceledTitlePick()
 }
 
@@ -28,10 +28,10 @@ internal final class GuestFormTableViewCell: UITableViewCell, ValueCell {
     
     @IBOutlet weak var guestFormStackView: UIStackView!
     @IBOutlet fileprivate weak var guestDataTitleLabel: UILabel!
-    
+    @IBOutlet fileprivate weak var guestContainerView: UIView!
     @IBOutlet fileprivate weak var titleInputStackView: UIStackView!
     
-    @IBOutlet fileprivate weak var titleInputLabel: UILabel!
+//    @IBOutlet fileprivate weak var titleInputLabel: UILabel!
     @IBOutlet fileprivate weak var titleContainerView: UIView!
     @IBOutlet fileprivate weak var titlePickButton: UIButton!
     @IBOutlet fileprivate weak var titleMenuStackView: UIStackView!
@@ -39,13 +39,13 @@ internal final class GuestFormTableViewCell: UITableViewCell, ValueCell {
     @IBOutlet fileprivate weak var titleSeparatorView: UIView!
     
     @IBOutlet fileprivate weak var firstNameInputStackView: UIStackView!
-    @IBOutlet fileprivate weak var firstNameInputLabel: UILabel!
+//    @IBOutlet fileprivate weak var firstNameInputLabel: UILabel!
     @IBOutlet fileprivate weak var firstNameTextField: UITextField!
     @IBOutlet fileprivate weak var firstNameSeparatorView: UIView!
     
     
     @IBOutlet fileprivate weak var lastNameInputStackView: UIStackView!
-    @IBOutlet fileprivate weak var lastNameInputLabel: UILabel!
+//    @IBOutlet fileprivate weak var lastNameInputLabel: UILabel!
     @IBOutlet fileprivate weak var lastNameTextField: UITextField!
     @IBOutlet fileprivate weak var lastNameSeparatorView: UIView!
     
@@ -74,64 +74,69 @@ internal final class GuestFormTableViewCell: UITableViewCell, ValueCell {
         super.bindStyles()
         
         _ = self.contentView
-            |> UIView.lens.backgroundColor .~ .tk_base_grey_100
+            |> UIView.lens.backgroundColor .~ .white
+        
+        _ = self.guestContainerView
+            |> UIView.lens.layer.borderColor .~ UIColor.tk_official_green.cgColor
+            |> UIView.lens.layer.borderWidth .~ 1.5
         
         _ = self.guestFormStackView
             |> UIStackView.lens.layoutMargins %~~ { _, stackView in
                 stackView.traitCollection.isRegularRegular
-                    ? .init(topBottom: Styles.grid(6), leftRight: Styles.grid(16))
+                    ? .init(topBottom: Styles.grid(4), leftRight: Styles.grid(16))
                     : .init(top: Styles.grid(2), left: Styles.grid(4), bottom: Styles.grid(3), right: Styles.grid(4))
             }
             |> UIStackView.lens.isLayoutMarginsRelativeArrangement .~ true
-            |> UIStackView.lens.spacing .~ Styles.grid(1)
         
         _ = self.guestDataTitleLabel
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
             |> UILabel.lens.text .~ Localizations.GuestContactFormTitle
         
-        _ = titleInputStackView
-            |> UIStackView.lens.spacing .~ Styles.grid(1)
-        
+        /*
         _ = titleInputLabel
             |> UILabel.lens.text .~ Localizations.TitleFormData
+        */
         
         _ = titleContainerView
             |> UIView.lens.backgroundColor .~ .white
         
         _ = titleMenuStackView
-            |> UIStackView.lens.spacing .~ Styles.grid(1)
             |> UIStackView.lens.alignment .~ .center
             |> UIStackView.lens.isUserInteractionEnabled .~ false
         
         _ = titleSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_official_green
         
+        /*
         _ = firstNameInputStackView
             |> UIStackView.lens.spacing .~ Styles.grid(1)
         
         _ = firstNameInputLabel
             |> UILabel.lens.text .~ Localizations.FirstnameFormData
+        */
         
         _ = firstNameTextField
             |> UITextField.lens.returnKeyType .~ .next
             |> UITextField.lens.tintColor .~ .tk_official_green
-            |> UITextField.lens.borderStyle .~ .roundedRect
             |> UITextField.lens.keyboardType .~ .default
+            |> UITextField.lens.placeholder .~ Localizations.FirstnameFormData
         
         _ = firstNameSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_official_green
         
+        /*
         _ = lastNameInputStackView
             |> UIStackView.lens.spacing .~ Styles.grid(1)
         
         _ = lastNameInputLabel
             |> UILabel.lens.text .~ Localizations.LastnameFormData
+        */
         
         _ = lastNameTextField
             |> UITextField.lens.returnKeyType .~ .done
             |> UITextField.lens.tintColor .~ .tk_official_green
-            |> UITextField.lens.borderStyle .~ .roundedRect
             |> UITextField.lens.keyboardType .~ .default
+            |> UITextField.lens.placeholder .~ Localizations.LastnameFormData
         
         _ = lastNameSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_official_green
@@ -162,7 +167,8 @@ internal final class GuestFormTableViewCell: UITableViewCell, ValueCell {
         self.viewModel.outputs.isGuestFormValid
             .observe(on: UIScheduler())
             .observeValues { [weak self] valid in
-                self?.delegate?.getFinishedForm(valid)
+                print("Is Another Guest Form Valid: \(valid)")
+                self?.delegate?.getAnotherFinishedForm(valid)
         }
         
         self.viewModel.outputs.notifyGuestParam

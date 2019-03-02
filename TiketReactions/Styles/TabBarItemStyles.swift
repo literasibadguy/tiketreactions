@@ -21,6 +21,7 @@ public func flightTabBarItemStyle() -> (UITabBarItem) -> UITabBarItem {
         <> UITabBarItem.lens.title %~ { _ in "Flight" }
         <> UITabBarItem.lens.image .~ image(named: "flight-tabbar-icon")
         <> UITabBarItem.lens.selectedImage .~ image(named: "flight-tabbar-icon-selected")
+        <> UITabBarItem.lens.accessibilityLabel .~ "Flight"
 }
 
 public func hotelTabBarItemStyle() -> (UITabBarItem) -> UITabBarItem {
@@ -28,6 +29,7 @@ public func hotelTabBarItemStyle() -> (UITabBarItem) -> UITabBarItem {
         <> UITabBarItem.lens.title %~ { _ in "Hotel" }
         <> UITabBarItem.lens.image .~ image(named: "hotel-tabbar-icon")
         <> UITabBarItem.lens.selectedImage .~ image(named: "hotel-tabbar-icon-selected")
+        <> UITabBarItem.lens.accessibilityLabel .~ "Hotel"
 }
 
 public func orderTabBarItemStyle() -> (UITabBarItem) -> UITabBarItem {
@@ -35,6 +37,15 @@ public func orderTabBarItemStyle() -> (UITabBarItem) -> UITabBarItem {
         <> UITabBarItem.lens.title %~ { _ in "Order" }
         <> UITabBarItem.lens.image .~ image(named: "order-tabbar-icon")
         <> UITabBarItem.lens.selectedImage .~ image(named: "order-tabbar-icon-selected")
+        <> UITabBarItem.lens.accessibilityLabel .~ "Order"
+}
+
+public func issueTabBarItemStyle() -> (UITabBarItem) -> UITabBarItem {
+    return baseTabBarItemStyle
+        <> UITabBarItem.lens.title %~ { _ in "Lounge" }
+        <> UITabBarItem.lens.image .~ image(named: "lounge-tabbar-icon")
+        <> UITabBarItem.lens.selectedImage .~ image(named: "lounge-tabbar-icon-selected")
+        <> UITabBarItem.lens.accessibilityLabel .~ "Order"
 }
 
 public func aboutTabBarItemStyle() -> (UITabBarItem) -> UITabBarItem {
@@ -42,4 +53,5 @@ public func aboutTabBarItemStyle() -> (UITabBarItem) -> UITabBarItem {
         <> UITabBarItem.lens.title %~ { _ in "About" }
         <> UITabBarItem.lens.image .~ image(named: "about-tabbar-icon")
         <> UITabBarItem.lens.selectedImage .~ image(named: "about-tabbar-icon-selected")
+        <> UITabBarItem.lens.accessibilityLabel .~ "About"
 }

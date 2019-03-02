@@ -16,199 +16,361 @@ import Foundation
 
 public struct Localizations {
 
-    /// Base translation: Check-Out Date
-    public static var CheckoutDateTitle : String = NSLocalizedString("CheckOut_Date_Title", comment: "")
+    /// Base translation: Issued Passport
+    public static var IssuedpassportPassengerForm : String = NSLocalizedString("IssuedPassport_Passenger_Form", comment: "")
+
+    /// Base translation: e.g:81355XXXXX
+    public static var PhonetextfieldPlaceholder : String = NSLocalizedString("PhoneTextField_Placeholder", comment: "")
+
+    /// Base translation: First Name
+    public static var FirstnameFormData : String = NSLocalizedString("FirstName_Form_Data", comment: "")
+
+    /// Base translation: Show this detail and your ID to front desk for checkin
+    public static var ConfirmedNotice : String = NSLocalizedString("Confirmed_Notice", comment: "")
+
+    /// Base translation: Citizenship
+    public static var CitizenTitlePassengerForm : String = NSLocalizedString("Citizen_Title_Passenger_Form", comment: "")
 
     /// Base translation: Highest Price
     public static var FilterHighpriceTitle : String = NSLocalizedString("Filter_HighPrice_Title", comment: "")
 
-    /// Base translation: Room Facility
-    public static var FacilityRoomTitle : String = NSLocalizedString("Facility_Room_Title", comment: "")
+    /// Base translation: Fill Data
+    public static var FillDataTitlePassengerForm : String = NSLocalizedString("Fill_Data_Title_Passenger_Form", comment: "")
 
-    /// Base translation: Email
-    public static var EmailFormData : String = NSLocalizedString("Email_Form_Data", comment: "")
-
-    /// Base translation: Mr
-    public static var MrFormData : String = NSLocalizedString("Mr_Form_Data", comment: "")
-
-    /// Base translation: Highest Star
-    public static var FilterHighstarTitle : String = NSLocalizedString("Filter_HighStar_Title", comment: "")
-
-    /// Base translation: Please Confirm Data Is It True?
-    public static var ConfirmdataTitle : String = NSLocalizedString("ConfirmData_Title", comment: "")
-
-    /// Base translation: Pick Dates
-    public static var PickDateTitleForm : String = NSLocalizedString("Pick_Date_Title_Form", comment: "")
-
-    /// Base translation: Issued - %@
-    public static func IssuedOrderTitle(_ value1 : String) -> String {
-        return String(format: NSLocalizedString("Issued_Order_Title", comment: ""), value1)
-    }
-
-    /// Base translation: Hotel Facility
-    public static var FacilityHotelTitle : String = NSLocalizedString("Facility_Hotel_Title", comment: "")
-
-    /// Base translation: Including Breakfast
-    public static var AvailablebreakfastTitle : String = NSLocalizedString("AvailableBreakfast_Title", comment: "")
-
-    /// Base translation: Available Rooms: %@
-    public static func AvailableroomTitle(_ value1 : String) -> String {
-        return String(format: NSLocalizedString("AvailableRoom_Title", comment: ""), value1)
-    }
-
-    /// Base translation: Back
-    public static var BackbuttonTitle : String = NSLocalizedString("BackButton_Title", comment: "")
-
-    /// Base translation: Apply
-    public static var ApplybuttonTitle : String = NSLocalizedString("ApplyButton_Title", comment: "")
-
-    /// Base translation: Cancel
-    public static var CancelbuttonTitle : String = NSLocalizedString("CancelButton_Title", comment: "")
-
-    /// Base translation: Search Hotels
-    public static var FindHotelTitle : String = NSLocalizedString("Find_Hotel_Title", comment: "")
-
-    /// Base translation: Title
-    public static var TitleFormData : String = NSLocalizedString("Title_Form_Data", comment: "")
-
-    /// Base translation: Choose Payment
-    public static var ChoosepaymentTitle : String = NSLocalizedString("ChoosePayment_Title", comment: "")
-
-    /// Base translation: Order Hotel Room
-    public static var OrderHotelTitle : String = NSLocalizedString("Order_Hotel_Title", comment: "")
-
-    /// Base translation: %d Hotels Found
-    public static func FilterHotelresultsTitle(_ value1 : Int) -> String {
-        return String(format: NSLocalizedString("Filter_HotelResults_Title", comment: ""), value1)
-    }
-
-    /// Base translation: Not Included Breakfast
-    public static var UnavailablebreakfastTitle : String = NSLocalizedString("UnavailableBreakfast_Title", comment: "")
-
-    /// Base translation: Credit Card
-    public static var CreditcardTitle : String = NSLocalizedString("CreditCard_Title", comment: "")
-
-    /// Base translation: %d Guests
-    public static func GuestPickTitle(_ value1 : Int) -> String {
-        return String(format: NSLocalizedString("Guest_Pick_Title", comment: ""), value1)
-    }
-
-    /// Base translation: No
-    public static var ConfirmnoTitle : String = NSLocalizedString("ConfirmNo_Title", comment: "")
-
-    /// Base translation: %@ Guests
-    public static func GuestTitle(_ value1 : String) -> String {
-        return String(format: NSLocalizedString("Guest_Title", comment: ""), value1)
-    }
+    /// Base translation: Order Cart
+    public static var CartOrdersTitle : String = NSLocalizedString("Cart_Orders_Title", comment: "")
 
     /// Base translation: Yes
     public static var ConfirmyesTitle : String = NSLocalizedString("ConfirmYes_Title", comment: "")
 
-    /// Base translation: Guest Form
-    public static var GuestContactFormTitle : String = NSLocalizedString("Guest_Contact_Form_Title", comment: "")
+    /// Base translation: Ms
+    public static var MsFormData : String = NSLocalizedString("Ms_Form_Data", comment: "")
 
-    /// Base translation: Maximum 15 Nights
-    public static var MaximumNightsReminderTitle : String = NSLocalizedString("Maximum_Nights_Reminder_Title", comment: "")
-
-    /// Base translation: Choose Check-In Date
-    public static var CheckinPickTitle : String = NSLocalizedString("CheckIn_Pick_Title", comment: "")
-
-    /// Base translation: %d Nights
-    public static func CountNightsTitle(_ value1 : Int) -> String {
-        return String(format: NSLocalizedString("Count_Nights_Title", comment: ""), value1)
+    /// Base translation: Order - %@
+    public static func IssuedOrderTitle(_ value1 : String) -> String {
+        return String(format: NSLocalizedString("Issued_Order_Title", comment: ""), value1)
     }
 
-    /// Base translation: %d Rooms
-    public static func RoomTitle(_ value1 : Int) -> String {
-        return String(format: NSLocalizedString("Room_Title", comment: ""), value1)
+    /// Base translation: Guest & Room
+    public static var GuestRoomTitleForm : String = NSLocalizedString("Guest_Room_Title_Form", comment: "")
+
+    /// Base translation: Apply
+    public static var ApplybuttonTitle : String = NSLocalizedString("ApplyButton_Title", comment: "")
+
+    /// Base translation: Order this flight
+    public static var OrderTitleButtonPickFlight : String = NSLocalizedString("Order_Title_Button_Pick_Flight", comment: "")
+
+    /// Base translation: Please Wait, Booking is in process
+    public static var BookingattentionTitle : String = NSLocalizedString("BookingAttention_Title", comment: "")
+
+    /// Base translation: Please reschedule your flight again
+    public static var NoflightDescription : String = NSLocalizedString("NoFlight_Description", comment: "")
+
+    /// Base translation: Currency
+    public static var CurrencyTitle : String = NSLocalizedString("Currency_Title", comment: "")
+
+    /// Base translation: Please check your flight first before take an order
+    public static var CheckFlightNoticeSummary : String = NSLocalizedString("Check_Flight_Notice_Summary", comment: "")
+
+    /// Base translation: Passenger (Adult) %d
+    public static func PassengerAdultStatusList(_ value1 : Int) -> String {
+        return String(format: NSLocalizedString("Passenger_Adult_Status_list", comment: ""), value1)
     }
+
+    /// Base translation: No Booking
+    public static var NobookingTitle : String = NSLocalizedString("NoBooking_Title", comment: "")
+
+    /// Base translation: Choose Payment
+    public static var ChoosepaymentTitle : String = NSLocalizedString("ChoosePayment_Title", comment: "")
+
+    /// Base translation: Country Code & Phone Number
+    public static var CountrycodeTitle : String = NSLocalizedString("CountryCode_Title", comment: "")
+
+    /// Base translation: Cancel
+    public static var CancelbuttonTitle : String = NSLocalizedString("CancelButton_Title", comment: "")
 
     /// Base translation: %@ per night
     public static func PricepernightHotelTitle(_ value1 : String) -> String {
         return String(format: NSLocalizedString("PricePerNight_Hotel_Title", comment: ""), value1)
     }
 
-    /// Base translation: Price Total
-    public static var PricetotalTitle : String = NSLocalizedString("PriceTotal_Title", comment: "")
+    /// Base translation: Room Facility
+    public static var FacilityRoomTitle : String = NSLocalizedString("Facility_Room_Title", comment: "")
+
+    /// Base translation: Pick Dates
+    public static var PickDateTitleForm : String = NSLocalizedString("Pick_Date_Title_Form", comment: "")
+
+    /// Base translation: Sorry, This transfer payment is not available temporarily
+    public static var TransfernotavailableNotice : String = NSLocalizedString("TransferNotAvailable_Notice", comment: "")
+
+    /// Base translation: Maximum 15 Nights
+    public static var MaximumNightsReminderTitle : String = NSLocalizedString("Maximum_Nights_Reminder_Title", comment: "")
+
+    /// Base translation: Origin
+    public static var OriginFlightTitleForm : String = NSLocalizedString("Origin_Flight_Title_Form", comment: "")
 
     /// Base translation: Destination / Hotel
     public static var DestinationHotelTitleForm : String = NSLocalizedString("Destination_Hotel_Title_Form", comment: "")
 
-    /// Base translation: This booking for someone else
-    public static var AnotherguestOptionFormTitle : String = NSLocalizedString("AnotherGuest_Option_Form_Title", comment: "")
-
-    /// Base translation: Lowest Price
-    public static var FilterLowpriceTitle : String = NSLocalizedString("Filter_LowPrice_Title", comment: "")
-
-    /// Base translation: Choose Check-Out Date
-    public static var CheckoutPickTitle : String = NSLocalizedString("CheckOut_Pick_Title", comment: "")
-
-    /// Base translation: Mrs
-    public static var MrsFormData : String = NSLocalizedString("Mrs_Form_Data", comment: "")
-
-    /// Base translation: Order Cart
-    public static var CartOrdersTitle : String = NSLocalizedString("Cart_Orders_Title", comment: "")
-
-    /// Base translation: Welcome to triptozero
-    public static var WelcomeToTriptozero : String = NSLocalizedString("Welcome_To_TripToZero", comment: "")
-
-    /// Base translation: First Name
-    public static var FirstnameFormData : String = NSLocalizedString("FirstName_Form_Data", comment: "")
-
-    /// Base translation: Guest & Room
-    public static var GuestRoomTitleForm : String = NSLocalizedString("Guest_Room_Title_Form", comment: "")
-
-    /// Base translation: Oops.. There's error a found. Please try again
-    public static var ConfirmerrorTitle : String = NSLocalizedString("ConfirmError_Title", comment: "")
-
-    /// Base translation: Order Id
-    public static var OrderidTitle : String = NSLocalizedString("OrderId_Title", comment: "")
-
-    /// Base translation: Phone Number
-    public static var PhonenumberFormData : String = NSLocalizedString("PhoneNumber_Form_Data", comment: "")
-
-    /// Base translation: Your Location
-    public static var YourLocationTitle : String = NSLocalizedString("Your_Location_Title", comment: "")
-
-    /// Base translation: Address
-    public static var AddressHotelTitle : String = NSLocalizedString("Address_Hotel_Title", comment: "")
-
-    /// Base translation: Payment Total: %@
-    public static func PaytotalTitle(_ value1 : String) -> String {
-        return String(format: NSLocalizedString("PayTotal_Title", comment: ""), value1)
-    }
-
-    /// Base translation: Ms
-    public static var MsFormData : String = NSLocalizedString("Ms_Form_Data", comment: "")
-
-    /// Base translation: Done
-    public static var DonebuttonTitle : String = NSLocalizedString("DoneButton_Title", comment: "")
-
-    /// Base translation: Choose Room
-    public static var ChooseRoomTitle : String = NSLocalizedString("Choose_Room_Title", comment: "")
-
-    /// Base translation: Filter
-    public static var FilterButtonTitle : String = NSLocalizedString("Filter_Button_Title", comment: "")
-
-    /// Base translation: Lowest Star
-    public static var FilterLowstarTitle : String = NSLocalizedString("Filter_LowStar_Title", comment: "")
-
-    /// Base translation: How Many Nights?
-    public static var HowNightsTitle : String = NSLocalizedString("How_Nights_Title", comment: "")
-
-    /// Base translation: Last Name
-    public static var LastnameFormData : String = NSLocalizedString("LastName_Form_Data", comment: "")
-
-    /// Base translation: Populer
-    public static var FilterPopulerTitle : String = NSLocalizedString("Filter_Populer_Title", comment: "")
+    /// Base translation: Round Flights
+    public static var ReturnStatusTitlePickDate : String = NSLocalizedString("Return_Status_Title_Pick_Date", comment: "")
 
     /// Base translation: Book Room
     public static var OrderRoomTitle : String = NSLocalizedString("Order_Room_Title", comment: "")
 
+    /// Base translation: Please find another different location
+    public static var NohotelDescription : String = NSLocalizedString("NoHotel_Description", comment: "")
+
+    /// Base translation: This booking for someone else
+    public static var AnotherguestOptionFormTitle : String = NSLocalizedString("AnotherGuest_Option_Form_Title", comment: "")
+
+    /// Base translation: Passport No.
+    public static var PassportnoTitlePassengerForm : String = NSLocalizedString("PassportNo_Title_Passenger_Form", comment: "")
+
+    /// Base translation: Hotel Facility
+    public static var FacilityHotelTitle : String = NSLocalizedString("Facility_Hotel_Title", comment: "")
+
+    /// Base translation: Order Hotel Room
+    public static var OrderHotelTitle : String = NSLocalizedString("Order_Hotel_Title", comment: "")
+
+    /// Base translation: Choose Check-In Date
+    public static var CheckinPickTitle : String = NSLocalizedString("CheckIn_Pick_Title", comment: "")
+
+    /// Base translation: Populer
+    public static var FilterPopulerTitle : String = NSLocalizedString("Filter_Populer_Title", comment: "")
+
+    /// Base translation: Including Breakfast
+    public static var AvailablebreakfastTitle : String = NSLocalizedString("AvailableBreakfast_Title", comment: "")
+
+    /// Base translation: Passenger
+    public static var PassengerFlightTitleForm : String = NSLocalizedString("Passenger_Flight_Title_Form", comment: "")
+
+    /// Base translation: Choose Check-Out Date
+    public static var CheckoutPickTitle : String = NSLocalizedString("CheckOut_Pick_Title", comment: "")
+
+    /// Base translation: Mr
+    public static var MrFormData : String = NSLocalizedString("Mr_Form_Data", comment: "")
+
+    /// Base translation: No Order
+    public static var NoorderTitle : String = NSLocalizedString("NoOrder_title", comment: "")
+
+    /// Base translation: Address
+    public static var AddressHotelTitle : String = NSLocalizedString("Address_Hotel_Title", comment: "")
+
+    /// Base translation: Filter
+    public static var FilterButtonTitle : String = NSLocalizedString("Filter_Button_Title", comment: "")
+
+    /// Base translation: Welcome to triptozero
+    public static var WelcomeTriptozero : String = NSLocalizedString("Welcome_TripToZero", comment: "")
+
+    /// Base translation: Phone Number
+    public static var PhonenumberFormData : String = NSLocalizedString("PhoneNumber_Form_Data", comment: "")
+
+    /// Base translation: Please Confirm Data Is It True?
+    public static var ConfirmdataTitle : String = NSLocalizedString("ConfirmData_Title", comment: "")
+
+    /// Base translation: Book hotel now and pay here
+    public static var NoorderDescription : String = NSLocalizedString("NoOrder_Description", comment: "")
+
+    /// Base translation: Country Code
+    public static var CountrycodepickTitle : String = NSLocalizedString("CountryCodePick_Title", comment: "")
+
+    /// Base translation: Not Included Breakfast
+    public static var UnavailablebreakfastTitle : String = NSLocalizedString("UnavailableBreakfast_Title", comment: "")
+
     /// Base translation: Transfer
     public static var TransferTitle : String = NSLocalizedString("Transfer_Title", comment: "")
 
+    /// Base translation: Guest Form
+    public static var GuestContactFormTitle : String = NSLocalizedString("Guest_Contact_Form_Title", comment: "")
+
+    /// Base translation: Order Id
+    public static var OrderidTitle : String = NSLocalizedString("OrderId_Title", comment: "")
+
+    /// Base translation: No Trips
+    public static var NoissueTitle : String = NSLocalizedString("NoIssue_Title", comment: "")
+
+    /// Base translation: No Hotel here
+    public static var NohotelTitle : String = NSLocalizedString("NoHotel_Title", comment: "")
+
     /// Base translation: Only Maximum 15 Nights
     public static var MaximumNightsAlertTitle : String = NSLocalizedString("Maximum_Nights_Alert_Title", comment: "")
+
+    /// Base translation: Back
+    public static var BackbuttonTitle : String = NSLocalizedString("BackButton_Title", comment: "")
+
+    /// Base translation: Title (Mr, Mrs, Ms)
+    public static var TitleFormData : String = NSLocalizedString("Title_Form_Data", comment: "")
+
+    /// Base translation: Find Flights
+    public static var FindFlightsButtonPickDate : String = NSLocalizedString("Find_Flights_Button_Pick_Date", comment: "")
+
+    /// Base translation: Available Rooms: %@
+    public static func AvailableroomTitle(_ value1 : String) -> String {
+        return String(format: NSLocalizedString("AvailableRoom_Title", comment: ""), value1)
+    }
+
+    /// Base translation: Price Total
+    public static var PricetotalTitle : String = NSLocalizedString("PriceTotal_Title", comment: "")
+
+    /// Base translation: Birthdate
+    public static var BirthdateTitlePassengerForm : String = NSLocalizedString("Birthdate_Title_Passenger_Form", comment: "")
+
+    /// Base translation: Choose this flight
+    public static var ChooseTitleButtonPickFlight : String = NSLocalizedString("Choose_Title_Button_Pick_Flight", comment: "")
+
+    /// Base translation: %d Rooms
+    public static func RoomTitle(_ value1 : Int) -> String {
+        return String(format: NSLocalizedString("Room_Title", comment: ""), value1)
+    }
+
+    /// Base translation: Thank You
+    public static var ThankyouNotice : String = NSLocalizedString("ThankYou_Notice", comment: "")
+
+    /// Base translation: Choose Room
+    public static var ChooseRoomTitle : String = NSLocalizedString("Choose_Room_Title", comment: "")
+
+    /// Base translation: Lowest Price
+    public static var FilterLowpriceTitle : String = NSLocalizedString("Filter_LowPrice_Title", comment: "")
+
+    /// Base translation: No Flight
+    public static var NoflightTitle : String = NSLocalizedString("NoFlight_Title", comment: "")
+
+    /// Base translation: Passenger (Infant) %d
+    public static func PassengerInfantStatusList(_ value1 : Int) -> String {
+        return String(format: NSLocalizedString("Passenger_Infant_Status_list", comment: ""), value1)
+    }
+
+    /// Base translation: Lowest Star
+    public static var FilterLowstarTitle : String = NSLocalizedString("Filter_LowStar_Title", comment: "")
+
+    /// Base translation: Please Write your Klik BCA ID!
+    public static var KlikbcaNoticeconfirm : String = NSLocalizedString("KlikBCA_NoticeConfirm", comment: "")
+
+    /// Base translation: Single Flight
+    public static var SingleStatusTitlePickDate : String = NSLocalizedString("Single_Status_Title_Pick_Date", comment: "")
+
+    /// Base translation: Done
+    public static var DonebuttonTitle : String = NSLocalizedString("DoneButton_Title", comment: "")
+
+    /// Base translation: Same as Contact Detail
+    public static var OptionTitlePassengerForm : String = NSLocalizedString("Option_Title_Passenger_Form", comment: "")
+
+    /// Base translation: %@ Guests
+    public static func GuestTitle(_ value1 : String) -> String {
+        return String(format: NSLocalizedString("Guest_Title", comment: ""), value1)
+    }
+
+    /// Base translation: Your order has saved, Please check your booking after did the transfer
+    public static var PaymentdoneNotice : String = NSLocalizedString("PaymentDone_Notice", comment: "")
+
+    /// Base translation: Credit Card
+    public static var CreditcardTitle : String = NSLocalizedString("CreditCard_Title", comment: "")
+
+    /// Base translation: Mrs
+    public static var MrsFormData : String = NSLocalizedString("Mrs_Form_Data", comment: "")
+
+    /// Base translation: Check-Out Date
+    public static var CheckoutDateTitle : String = NSLocalizedString("CheckOut_Date_Title", comment: "")
+
+    /// Base translation: Are you sure to cancel this order?
+    public static var CancelorderTitle : String = NSLocalizedString("CancelOrder_Title", comment: "")
+
+    /// Base translation: Outbound
+    public static var OutboundTitlePickDate : String = NSLocalizedString("Outbound_Title_Pick_Date", comment: "")
+
+    /// Base translation: Your Location
+    public static var YourLocationTitle : String = NSLocalizedString("Your_Location_Title", comment: "")
+
+    /// Base translation: %@ Nights
+    public static func OrderNightsTitle(_ value1 : String) -> String {
+        return String(format: NSLocalizedString("Order_Nights_title", comment: ""), value1)
+    }
+
+    /// Base translation: No
+    public static var ConfirmnoTitle : String = NSLocalizedString("ConfirmNo_Title", comment: "")
+
+    /// Base translation: Return to %@
+    public static func ReturnNoticePickFlight(_ value1 : String) -> String {
+        return String(format: NSLocalizedString("Return_Notice_Pick_Flight", comment: ""), value1)
+    }
+
+    /// Base translation: Welcome to triptozero
+    public static var WelcomeToTriptozero : String = NSLocalizedString("Welcome_To_TripToZero", comment: "")
+
+    /// Base translation: Return
+    public static var ReturnTitlePickDate : String = NSLocalizedString("Return_Title_Pick_Date", comment: "")
+
+    /// Base translation: Expired Date
+    public static var ExpiredTitlePassengerForm : String = NSLocalizedString("Expired_Title_Passenger_Form", comment: "")
+
+    /// Base translation: Oops.. There's error a found. Please try again
+    public static var ConfirmerrorTitle : String = NSLocalizedString("ConfirmError_Title", comment: "")
+
+    /// Base translation: Last Name
+    public static var LastnameFormData : String = NSLocalizedString("LastName_Form_Data", comment: "")
+
+    /// Base translation: Check Booking
+    public static var CheckbookingTitle : String = NSLocalizedString("CheckBooking_Title", comment: "")
+
+    /// Base translation: How Many Nights?
+    public static var HowNightsTitle : String = NSLocalizedString("How_Nights_Title", comment: "")
+
+    /// Base translation: Destination
+    public static var DestinationFlightTitleForm : String = NSLocalizedString("Destination_Flight_Title_Form", comment: "")
+
+    /// Base translation: Search Hotels
+    public static var FindHotelTitle : String = NSLocalizedString("Find_Hotel_Title", comment: "")
+
+    /// Base translation: %d Nights
+    public static func CountNightsTitle(_ value1 : Int) -> String {
+        return String(format: NSLocalizedString("Count_Nights_Title", comment: ""), value1)
+    }
+
+    /// Base translation: Fill this form with your identity
+    public static var FormNoticeReminder : String = NSLocalizedString("Form_Notice_Reminder", comment: "")
+
+    /// Base translation: %d Hotels Found
+    public static func FilterHotelresultsTitle(_ value1 : Int) -> String {
+        return String(format: NSLocalizedString("Filter_HotelResults_Title", comment: ""), value1)
+    }
+
+    /// Base translation: A Problem have occured. Please try again.
+    public static var KlikbcaNoticeerror : String = NSLocalizedString("KlikBCA_NoticeError", comment: "")
+
+    /// Base translation: Passenger (Child) %d
+    public static func PassengerChildStatusList(_ value1 : Int) -> String {
+        return String(format: NSLocalizedString("Passenger_Child_Status_list", comment: ""), value1)
+    }
+
+    /// Base translation: Outbound to %@
+    public static func OutboundNoticePickFlight(_ value1 : String) -> String {
+        return String(format: NSLocalizedString("Outbound_Notice_Pick_Flight", comment: ""), value1)
+    }
+
+    /// Base translation: Take a screenshot this page if It's necessary
+    public static var NoticescreenshotTitle : String = NSLocalizedString("NoticeScreenshot_Title", comment: "")
+
+    /// Base translation: Total: %@
+    public static func PaytotalTitle(_ value1 : String) -> String {
+        return String(format: NSLocalizedString("PayTotal_Title", comment: ""), value1)
+    }
+
+    /// Base translation: Please all information matches your travel ID!
+    public static var NoticematchformTitle : String = NSLocalizedString("NoticeMatchForm_Title", comment: "")
+
+    /// Base translation: Email
+    public static var EmailFormData : String = NSLocalizedString("Email_Form_Data", comment: "")
+
+    /// Base translation: %d Guests
+    public static func GuestPickTitle(_ value1 : Int) -> String {
+        return String(format: NSLocalizedString("Guest_Pick_Title", comment: ""), value1)
+    }
+
+    /// Base translation: Your trip or business start here
+    public static var NoissueDescription : String = NSLocalizedString("NoIssue_Description", comment: "")
+
+    /// Base translation: Highest Star
+    public static var FilterHighstarTitle : String = NSLocalizedString("Filter_HighStar_Title", comment: "")
 
 }

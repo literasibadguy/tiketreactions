@@ -104,14 +104,11 @@ internal final class RoundTripSortVC: UIViewController {
         self.separatorSelectedWidthConstraint.constant = widthConstant
     }
     
+    /*
     fileprivate func updateSortStyle(sorts: [SearchFlightParams], animated: Bool) {
         let zipped = zip(sorts, self.roundTripStackView.arrangedSubviews)
-        for (sort, view) in zipped {
-            let index = sorts.index(of: sort)
-            
-        }
     }
-    
+    */
     
     @objc fileprivate func departButtonTapped() {
         self.viewModel.inputs.departureButtonTapped(index: 0)

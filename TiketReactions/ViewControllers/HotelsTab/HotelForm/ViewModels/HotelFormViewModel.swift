@@ -23,6 +23,7 @@ public protocol HotelFormViewModelInputs {
     func selectDatePressed()
     
     func viewDidLoad()
+    func viewWillAppear()
 }
 
 public protocol HotelFormViewModelOutputs {
@@ -32,6 +33,7 @@ public protocol HotelFormViewModelOutputs {
     var roomGuestFilledParam: Signal<(Int, Int), NoError> { get }
     var showDestinationHotelList: Signal<(), NoError> { get }
     var showGuestRoomPick: Signal<(Int, Int), NoError> { get }
+    var currentDateText: Signal<String, NoError> { get }
     var goToPickDate: Signal<(AutoHotelResult, SearchHotelParams), NoError> { get }
 }
 
@@ -44,28 +46,16 @@ public final class HotelFormViewModel: HotelFormViewModelType, HotelFormViewMode
     
     public init() {
         
-        let initialParam = SearchHotelParams.defaults
         let defaultDestination = AutoHotelResult.defaults
         let initialDestination = self.viewDidLoadProperty.signal.mapConst(defaultDestination)
         let initialGuest = self.viewDidLoadProperty.signal.mapConst(2)
         let initialRoom = self.viewDidLoadProperty.signal.mapConst(1)
         
         let destination = Signal.merge(self.destinationHotelSelectedProperty.signal.skipNil(), initialDestination)
-        let guest = Signal.merge(self.roomGuestSelectedProperty.signal.skipNil().map { Int($0.adult!)! }, initialGuest)
-        let room = Signal.merge(self.roomGuestSelectedProperty.signal.skipNil().map { $0.room! }, initialRoom)
         
         let guestCount = Signal.merge(self.selectedCountsProperty.signal.skipNil().map { $0.0 }, initialGuest)
         let roomCount = Signal.merge(self.selectedCountsProperty.signal.skipNil().map { $0.1 }, initialRoom)
-        
-        let pickDateEvent = Signal.combineLatest(destination, guest, room).takeWhen(self.selectDatePressedProperty.signal).map { (arg) -> SearchHotelParams in
-            
-            let (hotelResult, guest, room) = arg
-            return SearchHotelParams.defaults
-                |> SearchHotelParams.lens.adult .~ String(guest)
-                |> SearchHotelParams.lens.room .~ room
-                |> SearchHotelParams.lens.query .~ hotelResult.category.components(separatedBy: " ").first!
-        }
-        
+
         let pickDateRequest = Signal.combineLatest(destination, guestCount, roomCount).switchMap { (arg) -> SignalProducer<SearchHotelParams, NoError> in
             
             let (hotelResult, guest, room) = arg
@@ -77,7 +67,7 @@ public final class HotelFormViewModel: HotelFormViewModelType, HotelFormViewMode
             return SignalProducer(value: param)
         }.materialize()
         
-        self.destinationHotelLabelText = self.destinationHotelSelectedProperty.signal.skipNil().map { selected in
+        self.destinationHotelLabelText = Signal.merge(initialDestination ,self.destinationHotelSelectedProperty.signal.skipNil()).map { selected in
             return selected.category
         }
         self.guestHotelLabelText = Signal.combineLatest(guestCount, roomCount).map { "\(Localizations.GuestPickTitle($0.0)), \(Localizations.RoomTitle($0.1))" }
@@ -86,6 +76,8 @@ public final class HotelFormViewModel: HotelFormViewModelType, HotelFormViewMode
         
         self.showDestinationHotelList = self.destinationButtonTappedProperty.signal
         self.showGuestRoomPick = Signal.combineLatest(guestCount, roomCount).takeWhen(self.guestButtonTappedProperty.signal)
+    
+        self.currentDateText = Signal.merge(self.viewWillAppearProperty.signal, self.viewDidLoadProperty.signal).map { _ in getCurrentDateDay() }
         
         self.roomGuestFilledParam = .empty
         self.goToPickDate = Signal.combineLatest(destination, pickDateRequest.values()).takeWhen(self.selectDatePressedProperty.signal)
@@ -126,14 +118,28 @@ public final class HotelFormViewModel: HotelFormViewModelType, HotelFormViewMode
         self.viewDidLoadProperty.value = ()
     }
     
+    fileprivate let viewWillAppearProperty = MutableProperty(())
+    public func viewWillAppear() {
+        self.viewWillAppearProperty.value = ()
+    }
+    
     public let dismissDestinationHotelList: Signal<(), NoError>
     public let destinationHotelLabelText: Signal<String, NoError>
     public let guestHotelLabelText: Signal<String, NoError>
     public let showDestinationHotelList: Signal<(), NoError>
     public let roomGuestFilledParam: Signal<(Int, Int), NoError>
     public let showGuestRoomPick: Signal<(Int, Int), NoError>
+    public let currentDateText: Signal<String, NoError>
     public let goToPickDate: Signal<(AutoHotelResult, SearchHotelParams), NoError>
     
     public var inputs: HotelFormViewModelInputs { return self }
     public var outputs: HotelFormViewModelOutputs { return self }
+}
+
+private func getCurrentDateDay() -> String {
+    let date = Date()
+    let formatter = DateFormatter()
+    formatter.dateFormat = "d MMMM"
+    let result = formatter.string(from: date)
+    return result
 }

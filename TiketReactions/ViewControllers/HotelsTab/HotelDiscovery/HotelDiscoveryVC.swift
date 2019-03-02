@@ -82,7 +82,7 @@ public final class HotelDiscoveryVC: UITableViewController {
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        self.loadingIndicatorView.center = self.tableView.center
+        self.loadingIndicatorView.center = self.view.center
     }
     
     public override func bindStyles() {
@@ -102,6 +102,12 @@ public final class HotelDiscoveryVC: UITableViewController {
         
         self.loadingIndicatorView.rac.animating = self.viewModel.outputs.hotelsAreLoading
         self.loadingIndicatorView.rac.animating = self.viewModel.outputs.filtersAreLoading
+        
+        self.viewModel.outputs.hotelsAreLoading
+            .observe(on: UIScheduler())
+            .observeValues { loading in
+                UIApplication.shared.isNetworkActivityIndicatorVisible = loading
+        }
         
         self.viewModel.outputs.notifyDelegate
             .observe(on: UIScheduler())

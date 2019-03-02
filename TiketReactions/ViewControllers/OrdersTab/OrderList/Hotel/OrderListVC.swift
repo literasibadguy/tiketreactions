@@ -3,7 +3,7 @@
 //  TiketComponents
 //
 //  Created by Firas Rafislam on 08/02/18.
-//  Copyright © 2018 Firas Rafislam. All rights reserved.
+//  Co pyright © 2018 Firas Rafislam. All rights reserved.
 //
 
 import Prelude
@@ -52,8 +52,6 @@ internal final class OrderListVC: UIViewController {
         
         self.paymentMethodButton.addTarget(self, action: #selector(paymentMethodButtonTapped), for: .touchUpInside)
         
-        self.navigationItem.rightBarButtonItem = issuedButton
-        
         self.orderTableView.dataSource = dataSource
         self.orderTableView.delegate = self
         
@@ -79,6 +77,10 @@ internal final class OrderListVC: UIViewController {
     internal override func bindStyles() {
         super.bindStyles()
         
+        _ = (self.navigationController?.navigationBar)!
+            |> UINavigationBar.lens.barTintColor .~ .white
+            |> UINavigationBar.lens.shadowImage .~ UIImage()
+        
         _ = self.orderTableView
             |> UITableView.lens.rowHeight .~ UITableViewAutomaticDimension
             |> UITableView.lens.estimatedRowHeight .~ 160.0
@@ -94,6 +96,7 @@ internal final class OrderListVC: UIViewController {
         _ = self.paymentMethodButton
             |> UIButton.lens.backgroundColor(forState: .normal) .~ .tk_official_green
             |> UIButton.lens.backgroundColor(forState: .disabled) .~ .tk_base_grey_100
+            |> UIButton.lens.title(forState: .normal) .~ Localizations.ChoosepaymentTitle
         
         _ = self.navigationSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_base_grey_100
@@ -115,11 +118,10 @@ internal final class OrderListVC: UIViewController {
         
         self.viewModel.outputs.showEmptyState
             .observe(on: UIScheduler())
-            .observeValues { [weak self] showed in
-                print("[OrderListVC] Show Empty State: \(showed)")
-                self?.orderTableView.bounces = showed
+            .observeValues { [weak self] _ in
+                self?.orderTableView.bounces = false
                 if let emptyVC = self?.emptyStatesController {
-                    self?.emptyStatesController?.view.isHidden = showed
+                    self?.emptyStatesController?.view.isHidden = false
                     self?.view.bringSubview(toFront: emptyVC.view)
                 }
         }
@@ -182,21 +184,8 @@ internal final class OrderListVC: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    /*
-    fileprivate func goToBookingCompleted() {
-        let bookingVC = BookingCompletedVC.instantiate()
-        self.navigationController?.pushViewController(bookingVC, animated: true)
-    }
-    */
-    
-    fileprivate func goToCheckOrderForm() {
-        let orderFormVC = CheckOrderFormVC.instantiate()
-        self.navigationController?.pushViewController(orderFormVC, animated: true)
-    }
-    
     fileprivate func goToIssuedList() {
-        let issuedList = try! Realm().objects(IssuedOrderList.self).first!
-        let issuedListVC = IssuedListVC.instantiate(issuedList)
+        let issuedListVC = IssuedListVC.instantiate()
         self.navigationController?.pushViewController(issuedListVC, animated: true)
     }
 }

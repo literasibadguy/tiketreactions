@@ -95,7 +95,7 @@ internal final class DestinationHotelListVC: UIViewController, UITableViewDelega
         self.viewModel.outputs.initialCurrentLocation
             .observe(on: UIScheduler())
             .observeValues { [weak self] current in
-                self?.locationManager.stopUpdatingLocation()
+//                self?.locationManager.stopUpdatingLocation()
                 print("CURRENT CITY: \(current.locality ?? "")")
                 self?.dataSource.initialDestination(current)
                 self?.hotelDestinationTableView.reloadData()
@@ -118,7 +118,6 @@ internal final class DestinationHotelListVC: UIViewController, UITableViewDelega
                 _self.searchBar.resignFirstResponder()
                 _self.dismiss(animated: true, completion: nil)
                 _self.delegate?.destinationHotelList(_self, selectedRow: selectedRow)
-                
         }
     }
     

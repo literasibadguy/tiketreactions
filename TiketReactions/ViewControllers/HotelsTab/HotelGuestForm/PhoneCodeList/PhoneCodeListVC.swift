@@ -23,9 +23,9 @@ public final class PhoneCodeListVC: UIViewController {
     @IBOutlet fileprivate weak var cancelButton: UIButton!
     @IBOutlet fileprivate weak var phoneSearchBar: UISearchBar!
     @IBOutlet fileprivate weak var phoneSeparatorView: UIView!
+    @IBOutlet fileprivate weak var countryCodeLabel: UILabel!
     
     public weak var delegate: PhoneCodeListDelegate?
-    
     
     public static func instantiate() -> PhoneCodeListVC {
         let vc = Storyboard.HotelGuestForm.instantiate(PhoneCodeListVC.self)
@@ -58,6 +58,9 @@ public final class PhoneCodeListVC: UIViewController {
         
         _ = self.phoneSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_base_grey_100
+        
+        _ = self.countryCodeLabel
+            |> UILabel.lens.text .~ Localizations.CountrycodepickTitle
         
     }
     

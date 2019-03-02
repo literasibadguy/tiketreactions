@@ -24,6 +24,7 @@ goToCheckout()
 
 public protocol HotelPaymentsViewModelInputs {
     func configureWith(myOrder: MyOrder)
+    func configureWith(flightOrder: FlightMyOrder)
     func configureWith(envelope: HotelOrderEnvelope)
     func bankTransferTapped()
     func paymentTapped(_ row: AvailablePaymentEnvelope.AvailablePayment)
@@ -43,7 +44,7 @@ public protocol HotelPaymentsViewModelType {
 public final class HotelPaymentsViewModel: HotelPaymentsViewModelType, HotelPaymentsViewModelInputs, HotelPaymentsViewModelOutputs {
     
     public init() {
-        let currentCheckout = self.configDataProperty.signal.skipNil().takeWhen(self.viewDidLoadProperty.signal)
+        let currentCheckout  = self.configDataProperty.signal.skipNil().takeWhen(self.viewDidLoadProperty.signal)
         
         let availables = self.viewDidLoadProperty.signal.switchMap { _ in
             AppEnvironment.current.apiService.availablePaymentsHotel().demoteErrors()
@@ -60,6 +61,11 @@ public final class HotelPaymentsViewModel: HotelPaymentsViewModelType, HotelPaym
     fileprivate let configDataProperty = MutableProperty<MyOrder?>(nil)
     public func configureWith(myOrder: MyOrder) {
         self.configDataProperty.value = myOrder
+    }
+    
+    fileprivate let configFlightOrderProperty = MutableProperty<FlightMyOrder?>(nil)
+    public func configureWith(flightOrder: FlightMyOrder) {
+        self.configFlightOrderProperty.value = flightOrder
     }
     
     fileprivate let configEnvelopeProperty = MutableProperty<HotelOrderEnvelope?>(nil)

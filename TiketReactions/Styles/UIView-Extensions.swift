@@ -67,3 +67,12 @@ public func appHasWideScreenForView(_ view: UIView) -> Bool {
     }
 }
 
+public func appHasPhone47(_ view: UIView) -> Bool {
+    let height = view.bounds.height
+    if height < 700 {
+        print("Whose Height is this: \(height)")
+        return true
+    } else {
+        return false
+    }
+}

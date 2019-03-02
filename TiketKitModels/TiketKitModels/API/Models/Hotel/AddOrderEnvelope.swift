@@ -22,14 +22,25 @@ public struct DeleteOrderEnvelope {
     public let loginEmail: String
 }
 
+public struct FlightOrderDeleteEnvelope {
+    public let diagnostic: Diagnostic
+}
+
 extension DeleteOrderEnvelope: Argo.Decodable {
     public static func decode(_ json: JSON) -> Decoded<DeleteOrderEnvelope> {
         return curry(DeleteOrderEnvelope.init)
             <^> json <| "diagnostic"
             <*> json <| "updateStatus"
             <*> json <| "login_status"
-            <*> json <| "guest_id"
+            <*> (json <| "guest_id" <|> json <| "id")
             <*> json <| "login_email"
+    }
+}
+
+extension FlightOrderDeleteEnvelope: Argo.Decodable {
+    public static func decode(_ json: JSON) -> Decoded<FlightOrderDeleteEnvelope> {
+        return curry(FlightOrderDeleteEnvelope.init)
+            <^> json <| "diagnostic"
     }
 }
 

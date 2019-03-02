@@ -21,14 +21,14 @@ public struct AvailableRoom {
     
     public let bookURI: String
     public let RoomFacility: [String]
-    public let additionalSurchargeCurrency: String
+    public let additionalSurchargeCurrency: String?
 }
 
 extension AvailableRoom: Argo.Decodable {
     public static func decode(_ json: JSON) -> Decoded<AvailableRoom> {
         let tmp1 = curry(AvailableRoom.init)
             <^> json <| "id"
-            <*> json <| "room_available"
+            <*> ((json <| "room_available" >>- intToString) <|> (json <| "room_available"))
             <*> json <| "ext_source"
             <*> json <| "room_id"
             <*> json <| "currency"
@@ -48,7 +48,7 @@ extension AvailableRoom: Argo.Decodable {
         return tmp3
             <*> json <| "bookUri"
             <*> json <|| "room_facility"
-            <*> json <| "additional_surcharge_currency"
+            <*> json <|? "additional_surcharge"
     }
 }
 

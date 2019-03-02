@@ -7,16 +7,22 @@
 //
 
 import Foundation
+import Prelude
 import ReactiveSwift
 import Result
 import TiketKitModels
 
 public protocol InstantTransfersViewModelInputs {
+    func doneButtonItemTapped()
+    func prepareToDismiss(_ confirm: Bool)
     func viewDidLoad()
 }
 
 public protocol InstantTransfersViewModelOutputs {
     var instantsAreLoading: Signal<Bool, NoError> { get }
+    var doneEnabled: Signal<Bool, NoError> { get }
+    var confirmOrder: Signal<(), NoError> { get }
+    var dismissToIssue: Signal<(), NoError> { get }
     var envelopeInstant: Signal<InstantTransferPaymentEnvelope, NoError> { get }
 }
 
@@ -30,11 +36,25 @@ public final class InstantTransfersViewModel: InstantTransfersViewModelType, Ins
     public init() {
         let requestLoading = MutableProperty(false)
         let currentRequest = self.viewDidLoadProperty.signal.switchMap { _ in
-            AppEnvironment.current.apiService.atmTransferRequest(currency: AppEnvironment.current.apiService.currency, token: "").ck_delay(AppEnvironment.current.apiDelayInterval, on: AppEnvironment.current.scheduler).on(started: { requestLoading.value = true }, terminated: { requestLoading.value = false }).materialize()
+            AppEnvironment.current.apiService.atmTransferRequest(currency: AppEnvironment.current.apiService.currency).ck_delay(AppEnvironment.current.apiDelayInterval, on: AppEnvironment.current.scheduler).on(started: { requestLoading.value = true }, terminated: { requestLoading.value = false }).materialize()
         }
+        
+        self.doneEnabled = requestLoading.signal
+        self.confirmOrder = self.doneButtonTappedProperty.signal
+        self.dismissToIssue = self.preparedToDismissProperty.signal.filter(isTrue).ignoreValues()
         
         self.instantsAreLoading = requestLoading.signal
         self.envelopeInstant = currentRequest.values()
+    }
+    
+    fileprivate let doneButtonTappedProperty = MutableProperty(())
+    public func doneButtonItemTapped() {
+        self.doneButtonTappedProperty.value = ()
+    }
+    
+    fileprivate let preparedToDismissProperty = MutableProperty(false)
+    public func prepareToDismiss(_ confirm: Bool) {
+        self.preparedToDismissProperty.value = confirm
     }
     
     fileprivate let viewDidLoadProperty = MutableProperty(())
@@ -44,6 +64,9 @@ public final class InstantTransfersViewModel: InstantTransfersViewModelType, Ins
     
     
     public let instantsAreLoading: Signal<Bool, NoError>
+    public let doneEnabled: Signal<Bool, NoError>
+    public let confirmOrder: Signal<(), NoError>
+    public let dismissToIssue: Signal<(), NoError>
     public let envelopeInstant: Signal<InstantTransferPaymentEnvelope, NoError>
     
     

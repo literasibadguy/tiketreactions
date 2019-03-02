@@ -19,7 +19,6 @@ public extension Bundle {
 }
 
 public struct TiketServices: TiketServiceType {
-    
     public let language: String
     public let serverConfig: TiketServerConfigType
     public let tiketToken: TiketTokenType?
@@ -46,6 +45,10 @@ public struct TiketServices: TiketServiceType {
         return request(.listCurrency())
     }
     
+    public func listCountryEnvelope() -> SignalProducer<CountryListEnvelope, ErrorEnvelope> {
+        return request(.listCountry())
+    }
+    
     public func getTokenEnvelope(clientAuth: ClientAuthType) -> SignalProducer<GetTokenEnvelope, ErrorEnvelope> {
         return requestToken(.getToken(clientAuth))
     }
@@ -62,8 +65,16 @@ public struct TiketServices: TiketServiceType {
         return request(.searchSingleFlights(params))
     }
     
+    public func getFlightData(params: GetFlightDataParams) -> SignalProducer<GetFlightDataEnvelope, ErrorEnvelope> {
+        return request(.getFlightData(params))
+    }
+    
+    public func forceUpdate(params: GetFlightDataParams) -> SignalProducer<URLRequest, NoError> {
+        return getRequestPayment(.forceUpdateFlight(params, "3"))
+    }
+    
     public func addOrderFlight(params: GroupPassengersParam) -> SignalProducer<AddOrderFlightEnvelope, ErrorEnvelope> {
-        return request(.addOrderFlight(params))
+        return request(.addOrderFlight(contact: params))
     }
     
     public func fetchHotelResults(paginationUrl: String) -> SignalProducer<SearchHotelEnvelopes, ErrorEnvelope> {
@@ -102,8 +113,12 @@ public struct TiketServices: TiketServiceType {
         return request(.checkoutLogin(params))
     }
     
+    public func checkoutFlightLogin(url: String, params: CheckoutLoginParams) -> SignalProducer<CheckoutFlightLoginEnvelope, ErrorEnvelope> {
+        return request(.checkoutLogin(params))
+    }
+    
     public func checkoutHotelCustomer(url: String, params: CheckoutGuestParams) -> SignalProducer<CheckoutHotelCustomerEnvelope, ErrorEnvelope> {
-        return request(.checkoutHotelCustomer(params))
+        return requestCheckoutCustomer(.checkoutHotelCustomer(params))
     }
     
     public func availablePaymentsHotel() -> SignalProducer<AvailablePaymentEnvelope, ErrorEnvelope> {
@@ -126,20 +141,28 @@ public struct TiketServices: TiketServiceType {
         return request(.deleteOrderHotel(url))
     }
     
+    public func deleteFlightOrder(url: String) -> SignalProducer<FlightOrderDeleteEnvelope, ErrorEnvelope> {
+        return request(.deleteOrderHotel(url))
+    }
+    
     public func checkHistoryOrder(_ orderId: String, email: String) -> SignalProducer<CheckHistoryOrderEnvelope, ErrorEnvelope> {
         return request(.checkHistoryOrder(orderId, email))
     }
     
-    public func bankTransferRequest(currency: String, token: String) -> SignalProducer<BankTransferPaymentEnvelope, ErrorEnvelope> {
-        return request(.bankTransfer(currency, token))
+    public func bankTransferRequest(currency: String) -> SignalProducer<BankTransferPaymentEnvelope, ErrorEnvelope> {
+        return request(.bankTransfer(currency))
+    }
+    
+    public func atmTransferRequest(currency: String) -> SignalProducer<InstantTransferPaymentEnvelope, ErrorEnvelope> {
+        return request(.instantBankTransfer(currency))
+    }
+    
+    public func klikBCARequest(_ user: String) -> SignalProducer<KlikBCAPaymentEnvelope, ErrorEnvelope> {
+        return request(.klikBCA(user))
     }
     
     public func createCreditCardRequest(token: String) -> SignalProducer<URLRequest, NoError> {
         return getRequestPayment(.creditCard(token))
-    }
-    
-    public func klikBCARequest(_ user: String) -> SignalProducer<URLRequest, NoError> {
-        return getRequestPayment(.klikBCA(user))
     }
     
     public func bcaKlikpayRequest(_ token: String) -> SignalProducer<URLRequest, NoError> {
@@ -155,7 +178,7 @@ public struct TiketServices: TiketServiceType {
     }
     
     public func sandboxCreditCard(_ token: String) -> SignalProducer<URLRequest, NoError> {
-        guard let url = URL(string: "http://sandbox.tiket.com/payment/checkout_payment?checkouttoken=\(token)") else {
+        guard let url = URL(string: "https://tiket.com/payment/checkout_payment?checkouttoken=\(token)") else {
             fatalError()
         }
         
@@ -166,7 +189,7 @@ public struct TiketServices: TiketServiceType {
     private func getRequestPayment(_ route: Route) -> SignalProducer<URLRequest, NoError> {
         let properties = route.requestProperties
         
-        let sandboxRelative = URL(string: "https://sandbox.tiket.com/")!
+        let sandboxRelative = URL(string: "https://tiket.com/")!
         
         guard let url = URL(string: properties.path, relativeTo: sandboxRelative as URL) else {
             fatalError(
@@ -219,6 +242,19 @@ public struct TiketServices: TiketServiceType {
         return TiketServices.session.rac_JSONResponse(preparedRequest(forURL: paginationUrl)).flatMap(decodeModel)
     }
     
+    private func requestCheckoutCustomer<M: Argo.Decodable>(_ route: Route) -> SignalProducer<M, ErrorEnvelope> where M == M.DecodedType {
+        
+        let properties = route.requestProperties
+        
+        guard let URL = URL(string: properties.path, relativeTo: self.serverConfig.apiBaseUrl as URL) else {
+            fatalError(
+                "URL(string: \(properties.path), relativeToURL: \(self.serverConfig.apiBaseUrl)) == nil"
+            )
+        }
+        
+        return TiketServices.session.rac_JSONResponse(preparedRequest(forURL: URL, method: properties.method, query: properties.query)).flatMap(decodeModel)
+    }
+    
     private func request<M: Argo.Decodable>(_ route: Route)
         -> SignalProducer<M, ErrorEnvelope> where M == M.DecodedType {
             
@@ -230,6 +266,7 @@ public struct TiketServices: TiketServiceType {
                 )
             }
             
+            print("Whats Final URL here: \(URL.description)")
             return TiketServices.session.rac_JSONResponse(preparedRequest(forURL: URL, method: properties.method, query: properties.query)).flatMap(decodeModel)
     }
     
@@ -280,4 +317,6 @@ public struct TiketServices: TiketServiceType {
         return SignalProducer(value: json)
             .map { json in decode(json) as M? }
     }
+    
+
 }

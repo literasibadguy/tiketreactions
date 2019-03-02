@@ -39,10 +39,28 @@ public struct CheckoutLoginEnvelope {
 }
 
 
+public struct CheckoutFlightLoginEnvelope {
+    public let diagnostic: Diagnostic
+    public let username: String
+    public let loginStatus: String
+    public let guestId: String
+}
+
 extension CheckoutLoginEnvelope: Argo.Decodable {
     public static func decode(_ json: JSON) -> Decoded<CheckoutLoginEnvelope> {
         return curry(CheckoutLoginEnvelope.init)
             <^> json <| "diagnostic"
             <*> json <| "login_status"
+        
+    }
+}
+
+extension CheckoutFlightLoginEnvelope: Argo.Decodable {
+    public static func decode(_ json: JSON) -> Decoded<CheckoutFlightLoginEnvelope> {
+        return curry(CheckoutFlightLoginEnvelope.init)
+            <^> json <| "diagnostic"
+            <*> json <| ["user_account", "username"]
+            <*> json <| "login_status"
+            <*> (json <| "guest_id" <|> json <| "id")
     }
 }

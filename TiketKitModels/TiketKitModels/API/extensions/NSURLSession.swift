@@ -25,7 +25,7 @@ private let scheduler = QueueScheduler(qos: .background, name: "firasrafislam.Ti
 internal extension URLSession {
     
     internal func rac_dataResponse(_ request: URLRequest, uploading file: (url: URL, name: String)? = nil) -> SignalProducer<Data, ErrorEnvelope> {
-        
+    
         let producer = file.map { self.rac_dataWithRequest(request, uploading: $0, named: $1) } ?? self.reactive.data(with: request)
         
         return producer
@@ -53,7 +53,7 @@ internal extension URLSession {
                             return SignalProducer(error: .couldNotParseErrorEnvelopeJSON)
                         }
                 }
-                
+                print("[TiketReactions] Success \(self.sanitized(request))")
                 return SignalProducer(value: data)
         }
     }
@@ -71,11 +71,10 @@ internal extension URLSession {
     }
     
     fileprivate static let sanitationRules = [
-        "client_id=[REDACTED]":
-            try! NSRegularExpression(pattern: "client_id=([a-zA-Z0-9]*)", options: .caseInsensitive),
-        "access_token=[REDACTED]":
-            try! NSRegularExpression(pattern: "access_token=([a-zA-Z0-9]*)", options: .caseInsensitive),
-        ]
+        "token=[REDACTED]":
+            try! NSRegularExpression(pattern: "token=([a-zA-Z0-9]*)", options: .caseInsensitive),
+        "secretkey=[REDACTED]": try! NSRegularExpression(pattern: "token=([a-zA-Z0-9]*)", options: .caseInsensitive)
+    ]
     
     fileprivate func sanitized(_ request: URLRequest) -> String {
         guard let urlString = request.url?.absoluteString else { return "" }
@@ -96,7 +95,7 @@ extension URLSession {
         
         var mutableRequest = request
         
-        mutableRequest.setValue("multipart/fortm-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        mutableRequest.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         
         return SignalProducer { observer, _ in
             let task = self.dataTask(with: mutableRequest) {data , response , error in

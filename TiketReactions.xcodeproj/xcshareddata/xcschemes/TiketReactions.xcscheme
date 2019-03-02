@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CDC648BF2019F85F00D11772"
-               BuildableName = "TripToZero.app"
+               BuildableName = "triptozero.app"
                BlueprintName = "TiketReactions"
                ReferencedContainer = "container:TiketReactions.xcodeproj">
             </BuildableReference>
@@ -74,7 +74,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CDC648BF2019F85F00D11772"
-            BuildableName = "TripToZero.app"
+            BuildableName = "triptozero.app"
             BlueprintName = "TiketReactions"
             ReferencedContainer = "container:TiketReactions.xcodeproj">
          </BuildableReference>
@@ -87,7 +87,6 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       language = "id"
-      region = "ID"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -99,7 +98,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CDC648BF2019F85F00D11772"
-            BuildableName = "TripToZero.app"
+            BuildableName = "triptozero.app"
             BlueprintName = "TiketReactions"
             ReferencedContainer = "container:TiketReactions.xcodeproj">
          </BuildableReference>
@@ -122,7 +121,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CDC648BF2019F85F00D11772"
-            BuildableName = "TripToZero.app"
+            BuildableName = "triptozero.app"
             BlueprintName = "TiketReactions"
             ReferencedContainer = "container:TiketReactions.xcodeproj">
          </BuildableReference>

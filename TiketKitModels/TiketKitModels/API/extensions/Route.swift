@@ -7,16 +7,19 @@
 //
 
 import Foundation
+import Prelude
 
 internal enum Route {
     case getToken(ClientAuthType)
     case listCurrency()
+    case listCountry()
     case searchFlights(SearchFlightParams)
     case searchSingleFlights(SearchSingleFlightParams)
     case searchAirport(String)
     case checkUpdate
-    case getFlightData
-    case addOrderFlight(GroupPassengersParam)
+    case getFlightData(GetFlightDataParams)
+    case forceUpdateFlight(GetFlightDataParams, String)
+    case addOrderFlight(contact: GroupPassengersParam)
     case orderFlight
     case searchHotel(SearchHotelParams)
     case searchHotelPage(String, SearchHotelParams)
@@ -33,7 +36,7 @@ internal enum Route {
     case checkoutGuestSample(String)
     case payCheckout(String)
     case availablePayment
-    case bankTransfer(String, String)
+    case bankTransfer(String)
     case instantBankTransfer(String)
     case klikBCA(String)
     case creditCard(String)
@@ -63,6 +66,8 @@ internal enum Route {
             return (.GET, "/apiv1/payexpress?method=getToken&secretkey=\(client.clientId)&output=json", [:])
         case .listCurrency():
             return (.GET, "/general_api/listCurrency?", [:])
+        case .listCountry():
+            return (.GET, "/general_api/listCountry?", [:])
         case let .searchFlights(params):
             return (.GET, "/search/flight?", params.queryParams)
         case let .searchSingleFlights(params):
@@ -71,10 +76,12 @@ internal enum Route {
             return (.GET, "/flight_api/all_airport?", ["q": query])
         case .checkUpdate:
             return (.GET, "/ajax/mCheckFlightUpdated?", [:])
-        case .getFlightData:
-            return (.GET, "/flight_api/get_flight_data?", [:])
+        case let .getFlightData(params):
+            return (.GET, "/flight_api/get_flight_data?", params.queryParams)
+        case let .forceUpdateFlight(params, adult):
+            return (.GET, "/fl/fu/CGK/DPS/\(params.date ?? "")/\(adult)/0/0/GARUDA?Preview", [:])
         case let .addOrderFlight(params):
-            return (.POST, "/order/add/flight?", params.queryParams)
+            return (.GET, "/order/add/flight?", params.queryParams)
         case .orderFlight:
             return (.GET, "/order?", [:])
         case let .searchHotel(params):
@@ -107,20 +114,20 @@ internal enum Route {
             return (.GET, url, [:])
         case .availablePayment:
             return (.GET, "/checkout/checkout_payment?", [:])
-        case let .bankTransfer(currency, token):
-            return (.GET, "/checkout/checkout_payment/2?btn_booking=1&currency=\(currency)&token=\(token)", [:])
+        case let .bankTransfer(currency):
+            return (.GET, "/checkout/checkout_payment/2?btn_booking=1", [:])
         case let .instantBankTransfer(currency):
             return (.GET, "/checkout/checkout_payment/35?btn_booking=1", ["currency": currency])
         case let .klikBCA(userBCA):
-            return (.GET, "/checkout/checkout_payment/3?", ["user_bca": userBCA])
+            return (.GET, "/checkout/checkout_payment/3?btn_booking=1", ["user_bca": userBCA])
         case let .creditCard(checkouttoken):
             return (.GET, "/payment/checkout_payment?checkouttoken=\(checkouttoken)", [:])
         case let .bcaKlikpay(checkouttoken):
-            return (.GET, "/payment/checkout_payment?checkouttoken=\(checkouttoken)payment_type=4", [:])
+            return (.GET, "/payment/checkout_payment?checkouttoken=\(checkouttoken)&payment_type=4", [:])
         case let .cimbClicks(checkouttoken):
-            return (.GET, "/payment/checkout_payment?checkouttoken=\(checkouttoken)payment_type=31", [:])
+            return (.GET, "/payment/checkout_payment?checkouttoken=\(checkouttoken)&payment_type=31", [:])
         case let .epayBri(checkouttoken):
-            return (.GET, "/payment/checkout_payment?checkouttoken=\(checkouttoken)payment_type=33", [:])
+            return (.GET, "/payment/checkout_payment?checkouttoken=\(checkouttoken)&payment_type=33", [:])
         case let .checkHistoryOrder(orderId, email):
             return (.GET, "/check_order?", ["order_id": orderId, "email": email])
         }

@@ -6,8 +6,12 @@ public enum Nib: String {
     case AvailableRoomViewCell
     case FacilitySummaryViewCell
     case FlightResultViewCell
+    case PickFlightNoticeViewCell
     case FlightDirectViewCell
+    case ValueTotalFlightViewCell
+    case NoticeSummaryViewCell
     case PassengerSummaryViewCell
+    case PassengerFormTableViewCell
     case BannerPagerViewCell
     case GuestFormTableViewCell
     case PaymentSummaryViewCell

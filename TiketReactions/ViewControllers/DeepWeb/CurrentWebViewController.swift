@@ -59,16 +59,6 @@ internal class CurrentWebViewController: UIViewController {
     }
 }
 
-extension WKNavigationAction {
-    var isAllowed: Bool {
-        guard let url = request.url else {
-            return true
-        }
-        
-        return !url.isWebPage(includeDataURIs: false)
-    }
-}
-
 extension CurrentWebViewController: WKUIDelegate {
     
 }
@@ -88,6 +78,12 @@ extension CurrentWebViewController: WKNavigationDelegate {
         
         if !navigationAction.isAllowed && navigationAction.navigationType != .backForward {
             
+        }
+        
+        if ["dummyConfirmPage", "redirect_back_confirm", "payment_type=1"].contains(url.scheme) {
+            print("Payment should complete from Redirect Back Confirm")
+            decisionHandler(.allow)
+            return
         }
         
         if ["http", "https", "data", "blob", "file"].contains(url.scheme) {
@@ -155,52 +151,4 @@ extension CurrentWebViewController: UIScrollViewDelegate {
 }
 
 fileprivate let permanentURISchemes = ["aaa", "aaas", "about", "acap", "acct", "cap", "cid", "coap", "coaps", "crid", "data", "dav", "dict", "dns", "example", "file", "ftp", "geo", "go", "gopher", "h323", "http", "https", "iax", "icap", "im", "imap", "info", "ipp", "ipps", "iris", "iris.beep", "iris.lwz", "iris.xpc", "iris.xpcs", "jabber", "ldap", "mailto", "mid", "msrp", "msrps", "mtqp", "mupdate", "news", "nfs", "ni", "nih", "nntp", "opaquelocktoken", "pkcs11", "pop", "pres", "reload", "rtsp", "rtsps", "rtspu", "service", "session", "shttp", "sieve", "sip", "sips", "sms", "snmp", "soap.beep", "soap.beeps", "stun", "stuns", "tag", "tel", "telnet", "tftp", "thismessage", "tip", "tn3270", "turn", "turns", "tv", "urn", "vemmi", "vnc", "ws", "wss", "xcon", "xcon-userid", "xmlrpc.beep", "xmlrpc.beeps", "xmpp", "z39.50r", "z39.50s"]
-
-extension URL {
-    public func isWebPage(includeDataURIs: Bool = true) -> Bool {
-        let schemes = includeDataURIs ? ["http", "https", "data"] : ["http", "https"]
-        return scheme.map { schemes.contains($0) } ?? false
-    }
-    
-    public var schemeIsValid: Bool {
-        guard let scheme = scheme else { return false }
-        return permanentURISchemes.contains(scheme.lowercased())
-    }
-    
-    public func havingRemovedAuthorisationComponents() -> URL {
-        guard var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false) else {
-            return self
-        }
-        urlComponents.user = nil
-        urlComponents.password = nil
-        if let url = urlComponents.url {
-            return url
-        }
-        return self
-    }
-}
-
-internal protocol WebViewControllerProtocol: UIViewControllerProtocol {
-    var webView: WKWebView { get }
-}
-
-
-extension CurrentWebViewController: WebViewControllerProtocol {}
-
-extension LensHolder where Object: WebViewControllerProtocol {
-    internal var webView: Lens<Object, WKWebView> {
-        return Lens(
-            view: { $0.webView },
-            set: { $1 }
-        )
-    }
-}
-
-extension Lens where Whole: WebViewControllerProtocol, Part == WKWebView {
-    internal var scrollView: Lens<Whole, UIScrollView> {
-        return Whole.lens.webView..Part.lens.scrollView
-    }
-}
-
-
 

@@ -6,19 +6,32 @@
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 
+import Prelude
 import UIKit
 
-class NoticeSummaryViewCell: UITableViewCell {
-
-    override func awakeFromNib() {
+public final class NoticeSummaryViewCell: UITableViewCell, ValueCell {
+    
+    public typealias Value = String
+    
+    @IBOutlet fileprivate weak var noticeMainLabel: UILabel!
+    
+    public override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    public override func bindStyles() {
+        super.bindStyles()
+        
+        _ = self
+            |> UIView.lens.backgroundColor .~ .clear
+        
+        _ = self.noticeMainLabel
+            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
     }
     
+    public func configureWith(value: String) {
+        _ = self.noticeMainLabel
+            |> UILabel.lens.text .~ "\(value)"
+    }
 }

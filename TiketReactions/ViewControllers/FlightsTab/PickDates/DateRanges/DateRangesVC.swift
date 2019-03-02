@@ -21,7 +21,18 @@ public final class DateRangesVC: UICollectionViewController {
     
     let itemsPerRow = 7
     let itemHeight: CGFloat = 40
-    let collectionViewInsets = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
+    
+//    let collectionViewInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+    // Left: 25, Right: 25
+    
+    var collectionViewInsets: UIEdgeInsets {
+        if UIDevice.current.screenType == .iPhones_5_5s_5c_SE {
+            return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        } else {
+            return UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
+        }
+    }
+    
     
     public weak var delegate: DateRangesVCDelegate?
     
@@ -30,6 +41,8 @@ public final class DateRangesVC: UICollectionViewController {
     
     public var selectedStartDate: Date?
     public var selectedEndDate: Date?
+    public var isStatusFlightOneWay: Bool?
+
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -145,6 +158,25 @@ extension DateRangesVC: UICollectionViewDelegateFlowLayout {
             selectedStartDate = cell.date
             delegate?.didSelectStartDate(startDate: selectedStartDate)
         } else if selectedEndDate == nil {
+            // There is callback function here
+            // if status is one-way
+            // selectedEndDate must be nil
+            // if status is return
+            // selectedEndDate must be cell date
+            
+            if isStatusFlightOneWay == true {
+                selectedStartDate = cell.date
+                selectedEndDate = nil
+                delegate?.didSelectStartDate(startDate: selectedStartDate)
+            } else {
+                if isBefore(dateA: selectedStartDate!, dateB: cell.date!) {
+                    selectedEndDate = cell.date
+                    self.navigationItem.rightBarButtonItem?.isEnabled = true
+                    self.delegate?.diSelectEndDate(endDate: selectedEndDate)
+                }
+            }
+            
+            /*
             if isBefore(dateA: selectedStartDate!, dateB: cell.date!) {
                 selectedEndDate = cell.date
                 self.navigationItem.rightBarButtonItem?.isEnabled = true
@@ -154,6 +186,7 @@ extension DateRangesVC: UICollectionViewDelegateFlowLayout {
                 selectedStartDate = cell.date
                 delegate?.didSelectStartDate(startDate: selectedStartDate)
             }
+            */
         } else {
             selectedStartDate = cell.date
             delegate?.didSelectStartDate(startDate: selectedStartDate)

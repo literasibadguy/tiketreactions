@@ -17,6 +17,7 @@ public final class PaymentsListVC: UIViewController {
     
     @IBOutlet fileprivate weak var baseScrollView: UIScrollView!
     @IBOutlet fileprivate weak var baseStackView: UIStackView!
+    @IBOutlet fileprivate weak var orderDetailView: UIView!
     
     @IBOutlet fileprivate weak var orderIdInputLabel: UILabel!
     @IBOutlet fileprivate weak var totalPriceInputLabel: UILabel!
@@ -84,6 +85,12 @@ public final class PaymentsListVC: UIViewController {
         return vc
     }
     
+    public static func configureFlightWith(myorder: FlightMyOrder) -> PaymentsListVC {
+        let vc = Storyboard.PaymentsList.instantiate(PaymentsListVC.self)
+        vc.viewModel.inputs.configureFlightWith(myOrder: myorder)
+        return vc
+    }
+    
     public static func instantiate() -> PaymentsListVC {
         let vc = Storyboard.PaymentsList.instantiate(PaymentsListVC.self)
         return vc
@@ -91,6 +98,8 @@ public final class PaymentsListVC: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.title = Localizations.ChoosepaymentTitle
         
         self.bankTransferButton.addTarget(self, action: #selector(bankTransferTapped), for: .touchUpInside)
         self.ePayBRIButton.addTarget(self, action: #selector(epayBRITapped), for: .touchUpInside)
@@ -116,6 +125,9 @@ public final class PaymentsListVC: UIViewController {
         _ = self.totalPriceInputLabel
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
         
+        _ = self.orderDetailView
+            |> UIView.lens.backgroundColor .~ .tk_fade_green_grey
+        
         _ = self.epayBRIInputLabel
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
         _ = self.cimbClicksLabel
@@ -128,6 +140,7 @@ public final class PaymentsListVC: UIViewController {
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
         _ = self.cardCreditInputLabel
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
+            |> UILabel.lens.text .~ Localizations.CreditcardTitle
         _ = self.banktransferInputLabel
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
         
@@ -173,10 +186,16 @@ public final class PaymentsListVC: UIViewController {
                 self?.goToBankTransfers()
         }
         
+        self.viewModel.outputs.goATMTransfer
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] in
+                self?.goToATMTransfers()
+        }
+        
         self.viewModel.outputs.goCardCredit
             .observe(on: QueueScheduler.main)
             .observeValues { [weak self] request in
-                self?.goToCheckout(request, title: "Kartu Kredit")
+                self?.goToCheckout(request, title: Localizations.CreditcardTitle)
         }
         
         self.viewModel.outputs.goBCAKlikpay
@@ -185,10 +204,33 @@ public final class PaymentsListVC: UIViewController {
                 self?.goToCheckout(request, title: "BCA Klikpay")
         }
         
-        self.viewModel.outputs.goKlikBCA
+        self.viewModel.outputs.alertKlikBCA
             .observe(on: QueueScheduler.main)
             .observeValues { [weak self] request in
-                self?.goToCheckout(request, title: "Klik BCA")
+                let alertController = UIAlertController(title: "KlikBCA", message: "Please Write your Klik BCA ID", preferredStyle: .alert)
+                alertController.addTextField(configurationHandler: { textField in
+                    textField.placeholder = "KlikBCA ID"
+                    textField.font = UIFont.systemFont(ofSize: 16.0)
+                    textField.tintColor = .tk_official_green
+                    textField.borderStyle = .roundedRect
+                    textField.keyboardType = .default
+                })
+                
+                alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+                    let firstTextField = alertController.textFields![0] as UITextField
+                    self?.viewModel.inputs.getYourKlikBCA(firstTextField.text ?? "")
+                    self?.viewModel.inputs.confirmYourKlikBCA(true)
+                }))
+                alertController.addAction(UIAlertAction(title: Localizations.CancelbuttonTitle, style: .cancel, handler : { _ in
+                    self?.viewModel.inputs.confirmYourKlikBCA(false)
+                }))
+                self?.present(alertController, animated: true, completion: nil)
+        }
+        
+        self.viewModel.outputs.goToKlikBCA
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] klikBCAId in
+                self?.goToKlikBCATransfers(id: klikBCAId)
         }
         
         self.viewModel.outputs.goCIMBClicks
@@ -233,17 +275,43 @@ public final class PaymentsListVC: UIViewController {
     }
     
     @objc fileprivate func dismissPaymentMethod() {
-        self.dismiss(animated: true, completion: nil)
+        self.view.window?.rootViewController.flatMap { $0 as? RootTabBarVC }.doIfSome { root in
+            root.dismiss(animated: true, completion: nil)
+            UIView.transition(with: root.view, duration: 0.3, options: [.transitionCrossDissolve], animations: {
+                root.switchToOrder()
+            }, completion:nil)
+        }
     }
     
     fileprivate func goToCheckout(_ request: URLRequest, title: String) {
         let checkoutVC = CheckoutPageVC.configuredWith(initialRequest: request)
         checkoutVC.title = title
-        self.navigationController?.pushViewController(checkoutVC, animated: true)
+        let navVC = UINavigationController(rootViewController: checkoutVC)
+        self.present(navVC, animated: true, completion: nil)
     }
     
     fileprivate func goToBankTransfers() {
         let bankTransferVC = BankTransfersVC.instantiate()
+//        let navVC = UINavigationController(rootViewController: bankTransferVC)
         self.navigationController?.pushViewController(bankTransferVC, animated: true)
     }
+    
+    fileprivate func goToATMTransfers() {
+        let atmVC = InstantTransfersVC.instantiate()
+        self.navigationController?.pushViewController(atmVC, animated: true)
+    }
+    
+    fileprivate func goToKlikBCATransfers(id: String) {
+        let klikBCAVC = KlikBCATransferVC.configureWith(klikBCAId: id)
+        self.navigationController?.pushViewController(klikBCAVC, animated: true)
+    }
 }
+
+/*
+extension PaymentsListVC: UITextFieldDelegate {
+    
+    public func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.viewModel.inputs.getYourKlikBCA(textField.text ?? "")
+    }
+}
+ */

@@ -17,11 +17,11 @@ open class UserAgent {
         return "\(prefix)\(AppEnvironment.current.mainBundle.version) (\(AppEnvironment.current.device.systemName); iPhone OS \(UIDevice.current.systemVersion))"
     }
     
-    open static var defaultClientUserAgent: String {
-        return clientUserAgent(prefix: "twh:[27029614];[Jajanan Online];")
+    public static var defaultClientUserAgent: String {
+        return clientUserAgent(prefix: "twh:27029614;Jajanan Online;")
     }
     
-    open static func cachedUserAgent(checkiOSVersion: Bool = true, checkTiketVersion: Bool = true, checkTiketBuildNumber: Bool = true) -> String? {
+    public static func cachedUserAgent(checkiOSVersion: Bool = true, checkTiketVersion: Bool = true, checkTiketBuildNumber: Bool = true) -> String? {
         let currentiOSVersion = UIDevice.current.systemVersion
         let lastiOSVersion = defaults.string(forKey: "LastDeviceSystemVersionNumber")
         
@@ -41,7 +41,7 @@ open class UserAgent {
         return nil
     }
     
-    open static func defaultUserAgent() -> String {
+    public static func defaultUserAgent() -> String {
         assert(Thread.current.isMainThread, "This method must be called on the main thread.")
         
         if let firefoxUA = UserAgent.cachedUserAgent(checkiOSVersion: true) {
@@ -89,7 +89,7 @@ open class UserAgent {
         return tiketUA
     }
     
-    open static func desktopUserAgent() -> String {
+    public static func desktopUserAgent() -> String {
         let userAgent = NSMutableString(string: defaultUserAgent())
         
         // Spoof platform section

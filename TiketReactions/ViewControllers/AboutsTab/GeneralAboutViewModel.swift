@@ -13,6 +13,7 @@ import TiketKitModels
 
 public protocol GeneralAboutViewModelInputs {
     func currencyButtonTapped()
+    func contactButtonTapped()
     func currencyHaveChanged(_ currency: CurrencyListEnvelope.Currency)
     func viewDidLoad()
 }
@@ -21,7 +22,9 @@ public protocol GeneralAboutViewModelOutputs {
     var currencyMainText: Signal<String, NoError> { get }
     var currencySubText: Signal<String, NoError> { get }
     var buildVersionText: Signal<String, NoError> { get }
+    var deviceIdText: Signal<String, NoError> { get }
     var goToCurrency: Signal<String, NoError> { get }
+    var goToContact: Signal<(), NoError> { get }
 }
 
 public protocol GeneralAboutViewModelType {
@@ -45,12 +48,22 @@ public final class GeneralAboutViewModel: GeneralAboutViewModelType, GeneralAbou
         
         self.buildVersionText = self.viewDidLoadProperty.signal.map { AppEnvironment.current.mainBundle.version }
         
+        self.deviceIdText = self.viewDidLoadProperty.signal.map { AppEnvironment.current.device.identifierForVendor?.description }.skipNil()
+        
+        
         self.goToCurrency = pleaseCurrency.takeWhen(self.currencyTappedProperty.signal)
+        
+        self.goToContact = self.contactTappedProperty.signal
     }
     
     fileprivate let currencyTappedProperty = MutableProperty(())
     public func currencyButtonTapped() {
         self.currencyTappedProperty.value = ()
+    }
+    
+    fileprivate let contactTappedProperty = MutableProperty(())
+    public func contactButtonTapped() {
+        self.contactTappedProperty.value = ()
     }
     
     fileprivate let currencyChangedProperty = MutableProperty<CurrencyListEnvelope.Currency?>(nil)
@@ -66,7 +79,9 @@ public final class GeneralAboutViewModel: GeneralAboutViewModelType, GeneralAbou
     public let currencyMainText: Signal<String, NoError>
     public let currencySubText: Signal<String, NoError>
     public let buildVersionText: Signal<String, NoError>
+    public let deviceIdText: Signal<String, NoError>
     public let goToCurrency: Signal<String, NoError>
+    public let goToContact: Signal<(), NoError>
     
     public var inputs: GeneralAboutViewModelInputs { return self }
     public var outputs: GeneralAboutViewModelOutputs { return self }

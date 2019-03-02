@@ -6,19 +6,48 @@
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 
+import Prelude
 import UIKit
 
-class PickFlightNoticeViewCell: UITableViewCell {
-
-    override func awakeFromNib() {
+public final class PickFlightNoticeViewCell: UITableViewCell, ValueCell {
+    
+    public typealias Value = PickNoticeFlight
+    
+    
+    @IBOutlet fileprivate weak var noticeStackView: UIStackView!
+    @IBOutlet fileprivate weak var dateNoticeLabel: UILabel!
+    @IBOutlet fileprivate weak var routeNoticeLabel: UILabel!
+    
+    public override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    public override func bindStyles() {
+        super.bindStyles()
+        
+        _ = self
+            |> UIView.lens.backgroundColor .~ .tk_fade_green_grey
+        
+        _ = self.dateNoticeLabel
+            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
+        
+        _ = self.routeNoticeLabel
+            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
     }
     
+    public func configureWith(value: PickNoticeFlight) {
+        _ = self.dateNoticeLabel
+            |> UILabel.lens.text .~ (value.date ?? "")
+        
+        _ = self.routeNoticeLabel
+            |> UILabel.lens.text .~ (value.route ?? "")
+    }
+    
+}
+
+
+public struct PickNoticeFlight {
+    public var date: String?
+    public var route: String?
 }

@@ -12,35 +12,48 @@ import Spring
 import TiketKitModels
 import UIKit
 
+public protocol PickDatesDelegate: class {
+    func submitDate(depart: Date, returned: Date?)
+}
+
+public protocol PickSingleDateDelegate: class {
+    func submitSingleDate(depart: Date)
+}
+
 public final class PickDatesVC: UIViewController {
     
     fileprivate let cellReuseIdentifier = "PickDateRangeViewCell"
     
     fileprivate let viewModel: PickDatesViewModelType = PickDatesViewModel()
+    fileprivate var dateRangeController: DateRangesVC!
     
-    @IBOutlet fileprivate weak var headDateTitleLabel: UILabel!
     @IBOutlet fileprivate weak var cancelButton: UIButton!
 
     @IBOutlet fileprivate weak var headTitleStackView: UIStackView!
+    @IBOutlet fileprivate weak var navDateSeparatorView: UIView!
     
-    fileprivate var dateRangeController: DateRangesVC!
     @IBOutlet fileprivate weak var firstDateTitleLabel: UILabel!
     @IBOutlet fileprivate weak var firstDateTextLabel: UILabel!
     
     @IBOutlet fileprivate weak var endDateTitleLabel: UILabel!
     @IBOutlet fileprivate weak var endDateTextLabel: UILabel!
     @IBOutlet fileprivate weak var flightFindButton: DesignableButton!
-    
+    @IBOutlet fileprivate weak var loadingOverlayView: UIView!
+    @IBOutlet fileprivate weak var loadingFlightIndicatorView: UIActivityIndicatorView!
+    @IBOutlet fileprivate weak var cancelLoadingButton: UIButton!
     
     private var minimumDate: Date!
     private var maximumDate: Date!
     private var selectedStartDate: Date?
     private var selectedEndDate: Date?
     
+    weak var delegate: PickDatesDelegate?
+    weak var singleDelegate: PickSingleDateDelegate?
     
-    public static func configureWith(param: SearchFlightParams) -> PickDatesVC {
+    
+    public static func configureWith(_ status: FlightStatusTab) -> PickDatesVC {
         let vc = Storyboard.PickDates.instantiate(PickDatesVC.self)
-        vc.viewModel.inputs.configureWith(flightParams: param)
+        vc.viewModel.inputs.configureWith(status)
         return vc
     }
     
@@ -54,20 +67,10 @@ public final class PickDatesVC: UIViewController {
         
         self.cancelButton.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
         self.flightFindButton.addTarget(self, action: #selector(flightResultButtonTapped), for: .touchUpInside)
-        
-        if minimumDate == nil {
-            minimumDate = Date()
-        }
-        if maximumDate == nil {
-            maximumDate = Calendar.current.date(byAdding: .year, value: 1, to: minimumDate)
-        }
-        
-        self.dateRangeController = self.childViewControllers.flatMap { $0 as? DateRangesVC }.first
+
+        self.dateRangeController = self.childViewControllers.compactMap { $0 as? DateRangesVC }.first
         self.dateRangeController.delegate = self
-        
-        // Do any additional setup after loading the view.
-        
-        
+    
         self.viewModel.inputs.viewDidLoad()
     }
     
@@ -84,43 +87,92 @@ public final class PickDatesVC: UIViewController {
             |> UIStackView.lens.layoutMargins .~ .init(top: Styles.grid(2))
             |> UIStackView.lens.isLayoutMarginsRelativeArrangement .~ true
         
+        _ = self.navDateSeparatorView
+            |> UIView.lens.backgroundColor .~ .tk_base_grey_100
+        
+        _ = self.firstDateTitleLabel
+            |> UILabel.lens.text .~ Localizations.OutboundTitlePickDate
+        
+        _ = self.endDateTitleLabel
+            |> UILabel.lens.text .~ Localizations.ReturnTitlePickDate
+        
         _ = self.flightFindButton
             |> UIButton.lens.backgroundColor .~ .tk_official_green
             |> UIButton.lens.titleColor(forState: .normal) .~ .white
+            |> UIButton.lens.title(forState: .normal) .~ Localizations.FindFlightsButtonPickDate
         
+        _ = self.loadingOverlayView
+            |> UIView.lens.isHidden .~ true
     }
     
     public override func bindViewModel() {
         super.bindViewModel()
         
+        self.loadingOverlayView.rac.hidden = self.viewModel.outputs.flightsAreLoading
+        self.loadingFlightIndicatorView.rac.animating = self.viewModel.outputs.flightsAreLoading.negate()
+        
         self.firstDateTextLabel.rac.text = self.viewModel.outputs.startDateText
         self.endDateTextLabel.rac.text = self.viewModel.outputs.endDateText
         self.flightFindButton.rac.title = self.viewModel.outputs.singleFlightStatus
         
+        self.endDateTextLabel.rac.hidden = self.viewModel.outputs.hideReturnLabels
+        self.endDateTitleLabel.rac.hidden = self.viewModel.outputs.hideReturnLabels
+        
         self.viewModel.outputs.dismissPickDates
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] in
                 self?.dismiss(animated: true, completion: nil)
         }
         
-        self.viewModel.outputs.goToSingleFlightResults
+        self.viewModel.outputs.statusPickDate
             .observe(on: UIScheduler())
-            .observeValues { [weak self] params in
-                print("GO TO SINGLE FLIGHT")
-                self?.goToSingleFlightResults(params: params)
+            .observeValues { [weak self] in
+                self?.lockedReturnDate(tab: $0)
         }
         
-        self.viewModel.outputs.goToFlightResults
+        self.viewModel.outputs.singleFlightDate
             .observe(on: UIScheduler())
-            .observeValues { [weak self] params in
-                print("GO TO FLIGHT RESULTS ROUND OBSERVE VALUES")
-                self?.goToFlightResults(params: params)
+            .observeValues { [weak self] status in
+                guard let _self = self else { return }
+                if status == true {
+                    _ = _self.endDateTitleLabel
+                        |> UILabel.lens.isHidden .~ true
+                    _ = _self.endDateTextLabel
+                        |> UILabel.lens.isHidden .~ true
+                    
+                }
+                
+                _self.dateRangeController.isStatusFlightOneWay = status
         }
         
         self.viewModel.outputs.singleFlightStatus
             .observe(on: UIScheduler())
             .observeValues { [weak self] status in
                 self?.flightFindButton.titleLabel?.text = status
+        }
+        
+        self.viewModel.outputs.showErrorOccured
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] in
+                let alertNotFound = UIAlertController.genericError(message: "Mohon maaf untuk penerbangan ini", cancel: nil)
+                self?.present(alertNotFound, animated: true, completion: nil)
+        }
+        
+        self.viewModel.outputs.selectedDate
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] (first, second) in
+                guard let _self = self else { return }
+                _self.delegate?.submitDate(depart: first, returned: second)
+                _self.dismiss(animated: true, completion: nil)
+        }
+        
+        self.viewModel.outputs.selectedSingleDate
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] single in
+                guard let _self = self else { return }
+                print("Is there any Single Date: \(single)")
+                _self.singleDelegate?.submitSingleDate(depart: single)
+                _self.dismiss(animated: true, completion: nil)
         }
     }
     
@@ -129,89 +181,29 @@ public final class PickDatesVC: UIViewController {
     }
     
     @objc fileprivate func flightResultButtonTapped() {
-        print("GO TO FLIGHT RESULTS BUTTON TAPPED")
         self.viewModel.inputs.flightButtonTapped()
     }
     
-    fileprivate func goToSingleFlightResults(params: SearchSingleFlightParams) {
-        let vc = PickFlightResultsVC.configureSingleWith(param: params)
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    fileprivate func goToFlightResults(params: SearchFlightParams) {
-        let vc = PickFlightResultsVC.configureWith(param: params)
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-}
-
-extension PickDatesVC {
-    
-    // Helper functions
-    
-    private func getFirstDate() -> Date {
-        var components = Calendar.current.dateComponents([.month, .year], from: minimumDate)
-        components.day = 1
-        return Calendar.current.date(from: components)!
-    }
-    
-    private func getFirstDateForSection(section: Int) -> Date {
-        return Calendar.current.date(byAdding: .month, value: section, to: getFirstDate())!
-    }
-    
-    private func getMonthLabel(date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM yyyy"
-        return dateFormatter.string(from: date)
-    }
-    
-    private func getWeekdayLabel(weekday: Int) -> String {
-        var components = DateComponents()
-        components.calendar = Calendar.current
-        components.weekday = weekday
-        let date = Calendar.current.nextDate(after: Date(), matching: components, matchingPolicy: Calendar.MatchingPolicy.strict)
-        if date == nil {
-            return "E"
+    private func lockedReturnDate(tab: FlightStatusTab) {
+        switch tab {
+        case .oneWay:
+            self.viewModel.inputs.isThisOneWayFlight(true)
+        default:
+            self.dateRangeController.view.isUserInteractionEnabled = true
         }
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEEE"
-        return dateFormatter.string(from: date!)
     }
     
-    private func getWeekday(date: Date) -> Int {
-        return Calendar.current.dateComponents([.weekday], from: date).weekday!
-    }
-    
-    private func getNumberOfDaysInMonth(date: Date) -> Int {
-        return Calendar.current.range(of: .day, in: .month, for: date)!.count
-    }
-    
-    
-    private func getDate(dayOfMonth: Int, section: Int) -> Date {
-        var components = Calendar.current.dateComponents([.month, .year], from: getFirstDateForSection(section: section))
-        components.day = dayOfMonth
-        return Calendar.current.date(from: components)!
-    }
-    
-    private func areSameDay(dateA: Date, dateB: Date) -> Bool {
-        return Calendar.current.compare(dateA, to: dateB, toGranularity: .day) == ComparisonResult.orderedSame
-    }
-    
-    private func isBefore(dateA: Date, dateB: Date) -> Bool {
-        return Calendar.current.compare(dateA, to: dateB, toGranularity: .day) == ComparisonResult.orderedAscending
-    }
 }
 
 extension PickDatesVC: DateRangesVCDelegate {
+    
     public func diSelectEndDate(endDate: Date!) {
-        self.viewModel.inputs.endDate(endDate)
-        print("DID Select End Date: \(endDate)")
+        self.viewModel.inputs.endDate(endDate ?? Date())
     }
     
     
     public func didSelectStartDate(startDate: Date!) {
-        self.viewModel.inputs.startDate(startDate)
-        print("DID Select Start Date: \(startDate)")
+        self.viewModel.inputs.startDate(startDate ?? Date())
     }
     
 }

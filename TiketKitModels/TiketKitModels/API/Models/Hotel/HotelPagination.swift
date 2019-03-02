@@ -21,7 +21,7 @@ extension HotelPagination: Argo.Decodable {
     public static func decode(_ json: JSON) -> Decoded<HotelPagination> {
         return curry(HotelPagination.init)
             <^> json <| "total_found"
-            <*> json <| "current_page"
+            <*> ((json <| "current_page" >>- stringToInt) <|> (json <| "current_page"))
             <*> json <| "offset"
             <*> json <| "lastPage"
     }

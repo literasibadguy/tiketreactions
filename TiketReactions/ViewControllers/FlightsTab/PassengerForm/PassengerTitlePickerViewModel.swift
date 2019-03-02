@@ -9,10 +9,12 @@
 import Prelude
 import ReactiveSwift
 import Result
+import TiketKitModels
 
 public protocol PassengerTitlePickerViewModelInputs {
     func cancelButtonTapped()
     func selectedSalutation(titles: [String], title: String)
+    func configureBaggage(_ availables: [ResourceBaggage])
     func pickerView(didSelectRow row: Int)
     func doneButtonTapped()
     func viewDidLoad()
@@ -22,6 +24,7 @@ public protocol PassengerTitlePickerViewModelInputs {
 public protocol PassengerTitlePickerViewModelOutputs {
     var dataSource: Signal<[String], NoError> { get }
     var notifyDelegateChoseTitle: Signal<String, NoError> { get }
+    var notifyDelegateChoseBaggage: Signal<ResourceBaggage, NoError> { get }
     var notifyDelegateToCancel: Signal<(), NoError> { get }
     var selectRow: Signal<Int, NoError> { get }
 }
@@ -36,14 +39,12 @@ public final class PassengerTitlePickerViewModel: PassengerTitlePickerViewModelT
     public init() {
         let selectedSalutation = Signal.combineLatest(self.selectedSalutationProperty.signal.skipNil(), self.viewDidLoadProperty.signal).map(first)
         
+        let currentBaggages = Signal.combineLatest(self.configAvailBaggagesProperty.signal.skipNil(), self.viewDidLoadProperty.signal).map(first)
+        
         self.selectRow = selectedSalutation.map { (arg) -> Int in
             let (titles, selected) = arg
             return titles.index(of: selected) ?? 0
         }.takeWhen(self.viewWillAppearProperty.signal)
-        
-        self.dataSource = selectedSalutation.map { titles, _ in
-            titles
-        }
         
         let selectedRow = Signal.merge(self.pickerSelectedRowProperty.signal, self.selectRow)
         
@@ -61,6 +62,11 @@ public final class PassengerTitlePickerViewModel: PassengerTitlePickerViewModelT
     fileprivate let selectedSalutationProperty = MutableProperty<([String], String)?>(nil)
     public func selectedSalutation(titles: [String], title: String) {
         self.selectedSalutationProperty.value = (titles, title)
+    }
+    
+    fileprivate let configAvailBaggagesProperty = MutableProperty<[ResourceBaggage]?>(nil)
+    public func configureBaggage(_ availables: [ResourceBaggage]) {
+        self.configAvailBaggagesProperty.value = availables
     }
     
     fileprivate let doneButtonTappedProperty = MutableProperty(())
@@ -85,6 +91,7 @@ public final class PassengerTitlePickerViewModel: PassengerTitlePickerViewModelT
     
     public let dataSource: Signal<[String], NoError>
     public let notifyDelegateChoseTitle: Signal<String, NoError>
+    public let notifyDelegateChoseBaggage: Signal<ResourceBaggage, NoError>
     public let notifyDelegateToCancel: Signal<(), NoError>
     public let selectRow: Signal<Int, NoError>
     

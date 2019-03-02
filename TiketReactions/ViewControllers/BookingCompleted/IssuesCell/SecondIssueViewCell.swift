@@ -14,7 +14,8 @@ import TiketKitModels
 
 public protocol SecondIssueCelLDelegate: class {
     func emailVoucherButtonTapped(_ cell: SecondIssueViewCell)
-    func printVoucherButtonTapped(_ cell: SecondIssueViewCell, document: PDFDocument)
+    func printVoucherErrorDetected(_ cell: SecondIssueViewCell, description: String)
+    func printVoucherButtonTapped(_ cell: SecondIssueViewCell, document: PDFDocument?)
 }
 
 public final class SecondIssueViewCell: UITableViewCell, ValueCell {
@@ -23,23 +24,31 @@ public final class SecondIssueViewCell: UITableViewCell, ValueCell {
     
     fileprivate let viewModel: ThirdIssueViewModelType = ThirdIssueViewModel()
     
-    @IBOutlet fileprivate weak var firstIssueStackView: UIStackView!
+    @IBOutlet private weak var headIssueStackView: UIStackView!
+    @IBOutlet private weak var detailIssueStackView: UIStackView!
     
-    @IBOutlet fileprivate weak var paymentStatusLabel: UILabel!
-    @IBOutlet fileprivate weak var orderNameTitleLabel: UILabel!
-    @IBOutlet fileprivate weak var orderDetailTitleLabel: UILabel!
-    @IBOutlet fileprivate weak var orderSubTitleLabel: UILabel!
+    @IBOutlet private weak var headOrderTitleLabel: UILabel!
+    @IBOutlet private weak var headOrderSubtitleLabel: UILabel!
+    @IBOutlet private weak var headSeparatorView: UIView!
     
-    @IBOutlet fileprivate weak var checkinInputLabel: UILabel!
-    @IBOutlet fileprivate weak var guestnameInputLabel: UILabel!
+    @IBOutlet private weak var guestNameStackView: UIStackView!
+    @IBOutlet private weak var guestInputLabel: UILabel!
+    @IBOutlet private weak var guestLabel: UILabel!
     
-    @IBOutlet fileprivate weak var checkinValueLabel: UILabel!
-    @IBOutlet fileprivate weak var guestnameValueLabel: UILabel!
-    @IBOutlet fileprivate weak var nightsValueLabel: UILabel!
+    @IBOutlet private weak var checkInStackView: UIStackView!
+    @IBOutlet private weak var checkInInputLabel: UILabel!
+    @IBOutlet private weak var checkInLabel: UILabel!
     
-    @IBOutlet fileprivate weak var emailVoucherButton: UIButton!
-    @IBOutlet fileprivate weak var printVoucherButton: UIButton!
-    @IBOutlet fileprivate weak var thirdIssueSeparatorView: UIView!
+    @IBOutlet private weak var roomStackView: UIStackView!
+    @IBOutlet private weak var roomInputLabel: UILabel!
+    @IBOutlet private weak var roomLabel: UILabel!
+    
+    @IBOutlet private weak var breakfastStackView: UIStackView!
+    @IBOutlet private weak var breakfastInputLabel: UILabel!
+    @IBOutlet private weak var breakfastLabel: UILabel!
+    @IBOutlet private weak var issueSeparatorView: UIView!
+    
+    @IBOutlet private weak var printVoucherButton: UIButton!
     
     weak var delegate: SecondIssueCelLDelegate?
     
@@ -47,7 +56,7 @@ public final class SecondIssueViewCell: UITableViewCell, ValueCell {
         super.awakeFromNib()
         // Initialization code
         
-        self.emailVoucherButton.addTarget(self, action: #selector(emailVoucherTapped), for: .touchUpInside)
+//        self.emailVoucherButton.addTarget(self, action: #selector(emailVoucherTapped), for: .touchUpInside)
         self.printVoucherButton.addTarget(self, action: #selector(printVoucherTapped), for: .touchUpInside)
     }
 
@@ -60,53 +69,43 @@ public final class SecondIssueViewCell: UITableViewCell, ValueCell {
     override public func bindStyles() {
         super.bindStyles()
         
-        _ = self.firstIssueStackView
-            |> UIStackView.lens.layoutMargins %~~ { _, stackView in
-                stackView.traitCollection.isRegularRegular
-                    ? .init(topBottom: Styles.grid(6), leftRight: Styles.grid(4))
-                    : .init(top: Styles.grid(4), left: Styles.grid(4), bottom: Styles.grid(3), right: Styles.grid(2))
-            }
-            |> UIStackView.lens.isLayoutMarginsRelativeArrangement .~ true
-            |> UIStackView.lens.spacing .~ 3
+        _ = self.headSeparatorView
+            |> UIView.lens.backgroundColor .~ .tk_base_grey_100
         
-        _ = self.paymentStatusLabel
-            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
-        _ = self.orderNameTitleLabel
-            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
-        _ = self.orderDetailTitleLabel
-            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
-        _ = self.orderSubTitleLabel
+        _ = self.headOrderTitleLabel
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
         
-        _ = self.checkinInputLabel
-            |> UILabel.lens.textColor .~ .tk_typo_green_grey_500
-        
-        _ = self.guestnameInputLabel
-            |> UILabel.lens.textColor .~ .tk_typo_green_grey_500
-        
-        _ = self.checkinValueLabel
+        _ = self.guestLabel
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
         
-        _ = self.guestnameValueLabel
+        _ = self.checkInLabel
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
         
-        _ = self.nightsValueLabel
+        _ = self.roomLabel
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
         
-        _ = self.emailVoucherButton
-            |> UIButton.lens.tintColor .~ .tk_official_green
+        _ = self.breakfastLabel
+            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
+        
+        _ = self.issueSeparatorView
+            |> UIView.lens.backgroundColor .~ .tk_typo_green_grey_500
         
         _ = self.printVoucherButton
             |> UIButton.lens.backgroundColor .~ .tk_official_green
-            |> UIButton.lens.tintColor .~ .white
-        
-        _ = self.thirdIssueSeparatorView
-            |> UIView.lens.backgroundColor .~ .tk_base_grey_100
-        
     }
     
     public override func bindViewModel() {
         super.bindViewModel()
+        
+        self.guestInputLabel.rac.text = self.viewModel.outputs.firstFormTitle
+        self.checkInInputLabel.rac.text = self.viewModel.outputs.secondFormTitle
+        
+        self.headOrderTitleLabel.rac.text = self.viewModel.outputs.titleOrderText
+        self.headOrderSubtitleLabel.rac.text = self.viewModel.outputs.subtitleOrderText
+        self.guestLabel.rac.text = self.viewModel.outputs.guestNameText
+        self.checkInLabel.rac.text = self.viewModel.outputs.checkInText
+        self.roomLabel.rac.text = self.viewModel.outputs.roomsText
+        self.breakfastLabel.rac.text = self.viewModel.outputs.breakfastText
         
         self.viewModel.outputs.generateImage
             .observe(on: UIScheduler())
@@ -114,34 +113,19 @@ public final class SecondIssueViewCell: UITableViewCell, ValueCell {
                 guard let _self = self else { return }
                 _self.delegate?.printVoucherButtonTapped(_self, document: generated)
         }
+        
+        self.viewModel.outputs.generatePDFError
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] error in
+                guard let _self = self else { return }
+                _self.delegate?.printVoucherErrorDetected(_self, description: error)
+        }
     }
     
     public func configureWith(value: OrderCartDetail) {
         print("Configure With Value: \(value)")
         self.viewModel.inputs.configureWith(value)
         
-        _ = self.paymentStatusLabel
-            |> UILabel.lens.text .~ "Pesan Hotel"
-        
-        _ = self.orderNameTitleLabel
-            |> UILabel.lens.text .~ value.orderName
-        
-        _ = self.orderDetailTitleLabel
-            |> UILabel.lens.text .~ "61014414"
-        
-        _ = self.orderSubTitleLabel
-            |> UILabel.lens.text .~ "Superior ROOM Only, 2 Kamar"
-        
-        _ = self.checkinValueLabel
-            |> UILabel.lens.text .~ value.hotelDetail.checkin
-        
-        let fullname = "\(value.passenger.last?.accountSalutationName ?? "") \(value.passenger.last?.accountFirstName ?? "") \(value.passenger.last?.accountLastName ?? "")"
-        
-        _ = self.guestnameValueLabel
-            |> UILabel.lens.text .~ fullname
-        
-        _ = self.nightsValueLabel
-            |> UILabel.lens.text .~ "\(value.hotelDetail.nights) Malam"
     }
     
     @objc fileprivate func emailVoucherTapped() {

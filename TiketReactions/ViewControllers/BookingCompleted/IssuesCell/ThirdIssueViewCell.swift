@@ -60,10 +60,12 @@ public final class ThirdIssueViewCell: UITableViewCell, ValueCell {
     public override func bindViewModel() {
         super.bindViewModel()
         
+        
         self.viewModel.outputs.generateImage
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] generated in
                 guard let _self = self else { return }
+                print("GENERATING DOCUMENT")
                 _self.delegate?.printVoucherButtonTapped(_self, document: generated)
         }
     }

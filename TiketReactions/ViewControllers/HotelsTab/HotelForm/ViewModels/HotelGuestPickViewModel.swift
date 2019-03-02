@@ -54,8 +54,8 @@ public final class HotelGuestPickViewModel: HotelGuestPickViewModelType, HotelGu
         self.guestValue = Signal.merge(guestChanged.map { Double($0) }, guestUpdatedMax)
         self.roomValue = roomChanged.map { Double($0) }
         
-        self.guestValueText = Signal.merge(guestChanged.map { Double($0) }, guestUpdatedMax).map { "\(Int($0)) Tamu" }
-        self.roomValueText = roomChanged.map { "\(Int($0)) Kamar" }
+        self.guestValueText = Signal.merge(guestChanged.map { Double($0) }, guestUpdatedMax).map { "\(Localizations.GuestPickTitle(Int($0)))" }
+        self.roomValueText = roomChanged.map { "\(Localizations.RoomTitle(Int($0)))" }
         
         self.dismissPickGuest = Signal.combineLatest(paramsChanged, guestChanged, roomChanged).map { param, guest, room in
             let custom = param

@@ -147,6 +147,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Argo/Argo.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Backpack/Backpack.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CalendarDateRangePickerViewController/CalendarDateRangePickerViewController.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Curry/Curry.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FSPagerView/FSPagerView.framework"
@@ -160,6 +161,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Result/Result.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Runes/Runes.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Spring/Spring.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SwiftSoup/SwiftSoup.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FBSnapshotTestCase/FBSnapshotTestCase.framework"
 fi
@@ -168,6 +170,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Argo/Argo.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Backpack/Backpack.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CalendarDateRangePickerViewController/CalendarDateRangePickerViewController.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Curry/Curry.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FSPagerView/FSPagerView.framework"
@@ -181,6 +184,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Result/Result.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Runes/Runes.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Spring/Spring.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SwiftSoup/SwiftSoup.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TUSafariActivity/TUSafariActivity.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FBSnapshotTestCase/FBSnapshotTestCase.framework"
 fi

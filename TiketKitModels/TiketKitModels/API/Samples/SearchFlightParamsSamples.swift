@@ -7,3 +7,8 @@
 //
 
 import Foundation
+
+extension SearchFlightParams {
+    
+    internal static let sample = SearchFlightParams(fromAirport: "CGK", toAirport: "DPS", departDate: "2018-08-02", returnDate: "2018-08-03", adult: 1, child: 0, infant: 0, sort: true)
+}

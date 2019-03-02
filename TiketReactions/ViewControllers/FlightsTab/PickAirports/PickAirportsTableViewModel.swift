@@ -44,33 +44,39 @@ public final class PickAirportsTableViewModel: PickAirportsTableViewModelType, P
     public init() {
         let viewWillAppearNotAnimated = self.viewWillAppearProperty.signal.filter(isFalse).ignoreValues()
         
-        let initialAirport = self.viewDidLoadProperty.signal.mapConst(AirportResult.defaults)
+        let current = Signal.combineLatest(self.viewDidLoadProperty.signal, self.configureDataProperty.signal.skipNil()).map(second)
         
         let airport = self.configureDataProperty.signal.skipNil().map(second)
         
-        let initialSelectedRow = Signal.combineLatest(airport,
-            self.viewDidLoadProperty.signal).take(first: 1).map(first)
-        
-        self.titleStatusText = self.configureDataProperty.signal.skipNil().map(first).map(statusLocation(status:))
+        self.titleStatusText = current.signal.map(first).map(statusLocation(status:))
         
         let allAirports = self.viewWillAppearProperty.signal.switchMap { _ in
             AppEnvironment.current.apiService.fetchAirports(query: "").demoteErrors()
         }.map { $0.airportResults }
         
-        let query = Signal.merge(self.searchAirportChangedProperty.signal, viewWillAppearNotAnimated.mapConst("Jakarta").take(first: 0), self.tappedCancelProperty.signal.mapConst(""))
+//        let query = Signal.merge(self.searchAirportChangedProperty.signal, viewWillAppearNotAnimated.mapConst("Jakarta").take(first: 0), self.tappedCancelProperty.signal.mapConst(""))
         
-        let clears = query.mapConst(allAirports.map { $0 })
+//        let clears = query.mapConst(allAirports.map { $0 })
         
+        /*
         let requestCustomized = query.filter { !$0.isEmpty }.switchMap { AppEnvironment.current.apiService.fetchAirports(query: $0).demoteErrors()
             }.map { envelope in
                 return envelope.airportResults
         }
+        */
         
-        let searched = Signal.combineLatest(self.searchAirportChangedProperty.signal.filter { !$0.isEmpty }, allAirports).filter { (arg) -> Bool in let (query, results) = arg; return results.contains { $0.locationName == query } }.map(second)
+        let lowercased = self.searchAirportChangedProperty.signal.filter { $0 != "" }.map { $0.lowercased() }
+        let combinedResults = Signal.combineLatest(allAirports, lowercased)
         
-        self.airportsResult = Signal.merge(allAirports, searched)
+        let resultLocationSearched = combinedResults.signal.map { airports, lowercase in
+            airports.filter { airport in
+                return airport.locationName.lowercased().contains(lowercase.lowercased())
+            }
+        }
         
-        self.updatesResult = Signal.combineLatest(Signal.merge(allAirports, searched), airport)
+        self.airportsResult = .empty
+        
+        self.updatesResult = Signal.combineLatest(Signal.merge(allAirports, resultLocationSearched), airport)
         
         self.searchFieldText = self.tappedCancelProperty.signal.mapConst("")
         

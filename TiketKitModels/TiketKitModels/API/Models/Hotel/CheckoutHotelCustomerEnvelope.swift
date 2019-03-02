@@ -12,6 +12,7 @@ import Runes
 
 public struct CheckoutHotelCustomerEnvelope {
     public let diagnostic: Diagnostic
+    public let currentProfile: CurrentProfile
     public let loginStatus: String
     public let guestId: String
     public let loginEmail: String
@@ -21,8 +22,9 @@ extension CheckoutHotelCustomerEnvelope: Argo.Decodable {
     public static func decode(_ json: JSON) -> Decoded<CheckoutHotelCustomerEnvelope> {
         return curry(CheckoutHotelCustomerEnvelope.init)
             <^> json <| "diagnostic"
+            <*> json <| "currProfileArr"
             <*> json <| "login_status"
-            <*> json <| "guest_id"
+            <*> (json <| "guest_id" <|> json <| "id")
             <*> json <| "login_email"
     }
 }

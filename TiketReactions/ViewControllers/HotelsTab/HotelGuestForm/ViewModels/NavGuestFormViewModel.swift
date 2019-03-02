@@ -40,9 +40,6 @@ public final class NavGuestFormViewModel: NavGuestFormViewModelType, NavGuestFor
     public init() {
         
         let roomCheckout = self.configWithData.signal.skipNil()
-        let guest = self.configFormGuestProperty.signal.skipNil()
-        
-        let checkoutGuest = Signal.combineLatest(self.configWithData.signal.skipNil(), self.configFormGuestProperty.signal.skipNil())
         
         self.totalPriceText = roomCheckout.signal.map { "\(Format.symbolForCurrency($0.currency)) \(Localizations.PricepernightHotelTitle(Format.currency($0.price, country: "Rp")))" }
         

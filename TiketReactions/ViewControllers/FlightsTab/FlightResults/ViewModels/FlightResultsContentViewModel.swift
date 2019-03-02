@@ -45,30 +45,21 @@ public final class FlightResultsContentViewModel: FlightResultsContentViewModelT
         let paramsChanged = self.sortProperty.signal.skipNil()
         
         let isVisible = Signal.merge(self.viewDidAppearProperty.signal.mapConst(true), self.viewDidDisappearProperty.signal.mapConst(false)).skipRepeats()
-        
-        let searchFlightParams = .defaults
-            |> SearchFlightParams.lens.departDate .~ "2018-03-10"
-            |> SearchFlightParams.lens.returnDate .~ "2018-03-11"
-            |> SearchFlightParams.lens.adult .~ 1
-            |> SearchFlightParams.lens.child .~ 0
-            |> SearchFlightParams.lens.infant .~ 0
-            |> SearchFlightParams.lens.fromAirport .~ "CGK"
-            |> SearchFlightParams.lens.toAirport .~ "DPS"
-        
+
         let requestFlightResults = Signal.combineLatest(self.viewDidAppearProperty.signal, paramsChanged, isVisible).filter { _, _, visible in visible }.skipRepeats {
             lhs, rhs in lhs.0 == rhs.0 && lhs.1 == rhs.1
             }.map(second).switchMap { params in
-                AppEnvironment.current.apiService.fetchFlightResults(params: params).demoteErrors()
+                AppEnvironment.current.apiService.fetchFlightResults(params: params).materialize()
         }
         
-        self.envelope = requestFlightResults
-        self.flights = requestFlightResults.map { $0.departResuts  }
+        self.envelope = requestFlightResults.values()
+        self.flights = requestFlightResults.values().map { $0.departResuts  }.skipNil()
         
         self.returnedFlights = .empty
     
         self.flightsAreLoading = Signal.merge(self.viewDidAppearProperty.signal.mapConst(true), self.flights.filter { !$0.isEmpty }.mapConst(false))
         
-        self.hideEmptyState = Signal.merge(self.viewWillAppearProperty.signal.take(first: 1), self.flights.filter { $0.isEmpty }.ignoreValues())
+        self.hideEmptyState = .empty
         self.showEmptyState = .empty
         
         self.selectedFlight = self.tappedFlightProperty.signal.skipNil()

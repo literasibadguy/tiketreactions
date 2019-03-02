@@ -8,17 +8,22 @@
 
 import UIKit
 
-class IssuedListEmptyStateCell: UITableViewCell {
+internal final class IssuedListEmptyStateCell: UITableViewCell, ValueCell {
 
+    
+    @IBOutlet private weak var summaryEmptyStateCell: UILabel!
+    
+    typealias Value = String
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    func configureWith(value: String) {
+        
     }
-
+    
+    
 }

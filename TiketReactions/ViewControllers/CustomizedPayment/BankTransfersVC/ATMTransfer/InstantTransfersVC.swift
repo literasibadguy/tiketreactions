@@ -15,11 +15,19 @@ internal final class InstantTransfersVC: UITableViewController {
     private let dataSource = InstantTransfersDataSource()
     private let viewModel: InstantTransfersViewModelType = InstantTransfersViewModel()
     
+    lazy private var lazyDoneButton: UIBarButtonItem = {
+        let closeBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonItemTapped))
+        return closeBarButtonItem
+    }()
+    
     private let activityIndicator = UIActivityIndicatorView()
     
     internal override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.navigationItem.leftBarButtonItem = self.lazyDoneButton
+        self.navigationItem.rightBarButtonItem = self.lazyDoneButton
+        
         // Do any additional setup after loading the view.
         self.tableView.register(nib: .NoticeSummaryViewCell)
         self.tableView.addSubview(self.activityIndicator)
@@ -46,6 +54,11 @@ internal final class InstantTransfersVC: UITableViewController {
         _ = self
             |> baseTableControllerStyle()
         
+        _ = self.lazyDoneButton
+            |> UIBarButtonItem.lens.accessibilityLabel .~ "Done"
+        
+        _ = self.activityIndicator
+            |> baseActivityIndicatorStyle
     }
     
     override func bindViewModel() {
@@ -59,5 +72,30 @@ internal final class InstantTransfersVC: UITableViewController {
                 self?.dataSource.load(instant: $0)
                 self?.tableView.reloadData()
         }
+        
+        self.viewModel.outputs.confirmOrder
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] in
+                self?.present(UIAlertController.alert(message: Localizations.PaymentdoneNotice, confirm: { _ in self?.viewModel.inputs.prepareToDismiss(true) }, cancel: { _ in self?.viewModel.inputs.prepareToDismiss(false) }), animated: true, completion: nil)
+        }
+        
+        self.viewModel.outputs.dismissToIssue
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] in
+                guard let _self = self else { return }
+                _self.view.window?.rootViewController.flatMap { $0 as? RootTabBarVC }.doIfSome { root in
+                    root.dismiss(animated: true, completion: nil)
+                    UIView.transition(with: root.view, duration: 0.3, options: [.transitionCrossDissolve], animations: {
+                        root.switchToLounge()
+                    }, completion: { _ in
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "GoToIssues"), object: nil)
+                    })
+                }
+        }
+    }
+    
+    @objc private func doneButtonItemTapped() {
+        print("Done Button Item Tapped")
+        self.viewModel.inputs.doneButtonItemTapped()
     }
 }

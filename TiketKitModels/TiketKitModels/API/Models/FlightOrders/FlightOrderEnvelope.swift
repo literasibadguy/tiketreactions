@@ -12,8 +12,8 @@ import Runes
 
 public struct FlightOrderEnvelope {
     public let diagnostic: Diagnostic
-    public let myOrder: MyOrder
-    public let checkout: String
+    public let myOrder: FlightMyOrder?
+    public let checkout: String?
     public let loginStatus: String
 }
 
@@ -21,8 +21,8 @@ extension FlightOrderEnvelope: Argo.Decodable {
     public static func decode(_ json: JSON) -> Decoded<FlightOrderEnvelope> {
         return curry(FlightOrderEnvelope.init)
             <^> json <| "diagnostic"
-            <*> json <| "myorder"
-            <*> json <| "checkout"
+            <*> (json <|? "myorder" <|> .success(nil))
+            <*> (json <|? "checkout" <|> .success(nil))
             <*> json <| "login_status"
     }
 }

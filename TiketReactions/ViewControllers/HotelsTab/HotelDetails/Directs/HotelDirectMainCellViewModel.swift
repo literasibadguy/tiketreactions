@@ -9,6 +9,7 @@
 import Foundation
 import ReactiveSwift
 import Result
+import SwiftSoup
 import TiketKitModels
 import UIKit
 
@@ -20,7 +21,7 @@ public protocol HotelDirectMainCellViewModelOutputs {
     var hotelnameTitleText: Signal<String, NoError> { get }
     var hotelProvinceTitleText: Signal<String, NoError> { get }
     var photos: Signal<[HotelDirect.Photo], NoError> { get }
-    var firstRooms: Signal<AvailableRoom, NoError> { get }
+    var firstRoomDescription: Signal<String, NoError> { get }
     var photosImage: Signal<[UIImage], NoError> { get }
     var starRating: Signal<UIImage, NoError> { get }
 }
@@ -41,7 +42,9 @@ public final class HotelDirectMainCellViewModel: HotelDirectMainCellViewModelTyp
         
         self.photos = hotelDirect.map { $0.photos }
         
-        self.firstRooms = hotelDirect.map { $0.availableRooms.roomResults.first! }
+        self.firstRoomDescription = hotelDirect.map { $0.availableRooms.roomResults.first! }.switchMap {
+            parseDescriptionHotel($0.roomDescription).materialize()
+        }.values()
         
         self.photosImage = .empty
     }
@@ -54,7 +57,7 @@ public final class HotelDirectMainCellViewModel: HotelDirectMainCellViewModelTyp
     public let hotelnameTitleText: Signal<String, NoError>
     public let hotelProvinceTitleText: Signal<String, NoError>
     public let photos: Signal<[HotelDirect.Photo], NoError>
-    public let firstRooms: Signal<AvailableRoom, NoError>
+    public let firstRoomDescription: Signal<String, NoError>
     public let photosImage: Signal<[UIImage], NoError>
     public let starRating: Signal<UIImage, NoError>
     
@@ -76,5 +79,17 @@ private func ratingForStar(rating: String) -> UIImage {
         return UIImage(named: "star-rating-one")!
     default:
         return UIImage(named: "star-rating-one")!
+    }
+}
+
+private func parseDescriptionHotel(_ content: String) -> SignalProducer<String, NoError> {
+    do {
+        let doc: Document = try SwiftSoup.parse(content)
+        let parsed = try doc.text()
+        return SignalProducer(value: parsed)
+    } catch Exception.Error(_, let message) {
+        return SignalProducer(value: message)
+    } catch {
+        return SignalProducer(value: content)
     }
 }

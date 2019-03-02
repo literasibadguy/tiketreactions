@@ -41,15 +41,17 @@ public final class RoundFlightResultsViewModel: RoundFlightResultsViewModelType,
         
         let currentParam = Signal.combineLatest(self.configDataProperty.signal.skipNil(), self.viewWillAppearProperty.signal).map(first)
         
+        /*
         let searchFlightParams = .defaults
             |> SearchFlightParams.lens.fromAirport .~ "CGK"
             |> SearchFlightParams.lens.toAirport .~ "DPS"
             |> SearchFlightParams.lens.adult .~ 1
             |> SearchFlightParams.lens.child .~ 0
             |> SearchFlightParams.lens.infant .~ 0
+        */
         
-        let departs = searchFlightParams |> SearchFlightParams.lens.departDate .~ "2018-03-11"
-        let rounds = departs |> SearchFlightParams.lens.returnDate .~ "2018-03-12"
+//        let departs = searchFlightParams |> SearchFlightParams.lens.departDate .~ "2018-03-11"
+//        let rounds = departs |> SearchFlightParams.lens.returnDate .~ "2018-03-12"
         
         let envelopeCurrent = currentParam.takeWhen(self.viewDidLoadProperty.signal).switchMap { param in
             AppEnvironment.current.apiService.fetchFlightResults(params: param).demoteErrors()

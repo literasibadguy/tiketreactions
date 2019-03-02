@@ -12,18 +12,20 @@ import Runes
 
 public struct FlightOrderData {
     public let expire: Int
+    public let uri: String
     public let orderDetailId: String
     public let orderExpireDatetime: String
     public let orderType: String
+    public let customerPrice: String
     public let orderName: String
     public let orderNameDetail: String
-    public let tenor: String
+    public let orderDetailStatus: String
     public let detail: FlightOrderDataDetail
     public let orderPhoto: String
-    public let tax: Int
-    public let itemCharge: Int
+    public let tax: String
     public let subtotalAndCharge: String
     public let deleteUri: String
+    public let businessId: String
 }
 
 public struct FlightOrderDataDetail {
@@ -42,13 +44,16 @@ public struct FlightOrderDataDetail {
         
         public let arrivalTime: String
         public let baggageFee: String
+        
         public let departureAirportName: String
+        public let departureCityName: String
         public let arrivalAirportName: String
+        public let arrivalCityName: String
     }
     
     public let passengers: [AdultPassenger]
     public let priceTotal: Int
-    public let breakDownPrice: [SeparatePrice]
+//    public let breakDownPrice: [SeparatePrice]
     
     public struct AdultPassenger {
         public let orderPassengerId: String
@@ -61,6 +66,11 @@ public struct FlightOrderDataDetail {
         public let idNumber: String
         // Passengers International
         public let internationalPassenger: InternationalPassenger
+        public let ticketNumber: String?
+        public let typeText: String
+        public let checkInBaggageUnit: String
+        public let titleTranslate: String
+
         
         public struct InternationalPassenger {
             public let birthDate: String?
@@ -71,7 +81,9 @@ public struct FlightOrderDataDetail {
             public let passportIssuingCountry: String?
             public let passportNationality: String?
             public let checkInBaggage: String?
+            public let checkInBaggageReturn: String?
             public let checkInBaggageSize: String?
+            public let checkInBaggageSizeReturn: String?
             
             public let passportIssuedDate: String?
             public let birthCountry: String?
@@ -92,22 +104,24 @@ extension FlightOrderData: Argo.Decodable {
     public static func decode(_ json: JSON) -> Decoded<FlightOrderData> {
         let tmp1 = curry(FlightOrderData.init)
             <^> json <| "expire"
+            <*> json <| "uri"
             <*> json <| "order_detail_id"
             <*> json <| "order_expire_datetime"
             <*> json <| "order_type"
-            <*> json <| "order_name"
+            <*> json <| "customer_price"
         
         let tmp2 = tmp1
+            <*> json <| "order_name"
             <*> json <| "order_name_detail"
-            <*> json <| "tenor"
+            <*> json <| "order_detail_status"
             <*> json <| "detail"
             <*> json <| "order_photo"
         
         return tmp2
-            <*> json <| "tax"
-            <*> json <| "item_charge"
+            <*> json <| "tax_and_charge"
             <*> json <| "subtotal_and_charge"
             <*> json <| "delete_uri"
+            <*> json <| "business_id"
     }
 }
 
@@ -120,7 +134,7 @@ extension FlightOrderDataDetail: Argo.Decodable {
         
         return tmp1
             <*> json <| "price"
-            <*> json <|| "breakdown_price"
+//            <*> json <|| "breakdown_price"
     }
 }
 
@@ -141,7 +155,9 @@ extension FlightOrderDataDetail.FlightStatus: Argo.Decodable {
             <*> json <| "arrival_time"
             <*> json <| "baggage_fee"
             <*> json <| "departure_airport_name"
+            <*> json <| "departure_city_name"
             <*> json <| "arrival_airport_name"
+            <*> json <| "arrival_city_name"
     }
 }
 
@@ -158,6 +174,10 @@ extension FlightOrderDataDetail.AdultPassenger: Argo.Decodable {
             <*> json <| "title"
             <*> json <| "id_number"
             <*> InternationalPassenger.decode(json)
+            <*> json <|? "ticket_number"
+            <*> json <| "type_text"
+            <*> json <| "check_in_baggage_unit"
+            <*> json <| "title_translate"
     }
 }
 
@@ -177,6 +197,8 @@ extension FlightOrderDataDetail.AdultPassenger.InternationalPassenger: Argo.Deco
             <*> .success(nil)
             <*> .success(nil)
             <*> .success(nil)
+            <*> .success(nil)
+            <*> .success(nil)
         
         let nil3 = nil2
             <*> .success(nil)
@@ -192,7 +214,9 @@ extension FlightOrderDataDetail.AdultPassenger.InternationalPassenger: Argo.Deco
             <*> json <|? "passport_issuing_country"
             <*> json <|? "passport_nationality"
             <*> json <|? "check_in_baggage"
+            <*> json <|? "check_in_baggage_return"
             <*> json <|? "check_in_baggage_size"
+            <*> json <|? "check_in_baggage_size_return"
         
         let tmp3 = tmp2
             <*> json <|? "passport_issued_Date"
@@ -212,4 +236,3 @@ extension FlightOrderDataDetail.SeparatePrice: Argo.Decodable {
             <*> json <| "text"
     }
 }
-

@@ -3,6 +3,7 @@ import UIKit
 public enum Storyboard: String {
     case Main
     case CurrencyList
+    case NationalityPick
     case FlightForm
     case PickAirports
     case PickPassengers
@@ -11,6 +12,7 @@ public enum Storyboard: String {
     case PickFlight
     case FlightDirects
     case PassengerForm
+    case PassengersList
     case FlightPayments
     case HotelLiveFeed
     case HotelForm

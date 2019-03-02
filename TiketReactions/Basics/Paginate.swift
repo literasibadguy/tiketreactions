@@ -8,11 +8,7 @@
 import ReactiveSwift
 import Result
 import Prelude
-/*
-public func paginateHotel<Cursor, Value: Equatable, SearchHotelEnvelopes, ErrorEnvelope, RequestParams>(requestFirstPageWith requestFirstPage: Signal<RequestParams, NoError>) {
-    
-}
- */
+
 public func paginate(
     requestFirstPageWith requestFirstPage: Signal<SearchHotelParams, NoError>,
     requestNextPageWhen requestNextPage: Signal<(), NoError>,

@@ -18,53 +18,32 @@ class FlightFormVC: UIViewController {
     
     fileprivate let viewModel: FlightFormViewModelType = FlightFormViewModel()
     
-    @IBOutlet fileprivate weak var scrollView: UIScrollView!
-    @IBOutlet fileprivate weak var flightFormStackView: UIStackView!
-    
-    @IBOutlet fileprivate weak var bannerPagerView: FSPagerView! {
-        didSet {
-            self.bannerPagerView.register(UINib(nibName: "BannerPagerViewCell", bundle: .framework), forCellWithReuseIdentifier: "BannerPagerViewCell")
-            self.bannerPagerView.interitemSpacing = 10
-            self.bannerPagerView.automaticSlidingInterval = 3.0
-            self.bannerPagerView.dataSource = self
-            self.bannerPagerView.delegate = self
-        }
-    }
-    
-    @IBOutlet fileprivate weak var bannerPageControl: UIPageControl! {
-        didSet {
-            self.bannerPageControl.numberOfPages = 3
-        }
-    }
+    @IBOutlet private weak var flightFormStackView: UIStackView!
     
     @IBOutlet fileprivate weak var fromInputStackView: UIStackView!
+    
     @IBOutlet fileprivate weak var originMenuStackView: UIStackView!
     @IBOutlet fileprivate weak var passengerMenuStackView: UIStackView!
-    @IBOutlet weak var destinationMenuStackView: UIStackView!
+    @IBOutlet fileprivate weak var destinationMenuStackView: UIStackView!
     
+    @IBOutlet fileprivate weak var originInputLabel: UILabel!
     @IBOutlet fileprivate weak var originLabel: UILabel!
     @IBOutlet fileprivate weak var originSeparatorView: UIView!
     
+    @IBOutlet fileprivate weak var destinationInputLabel: UILabel!
     @IBOutlet fileprivate weak var destinationLabel: UILabel!
     @IBOutlet fileprivate weak var destinationSeparatorView: UIView!
     
-    @IBOutlet fileprivate weak var configureRoundStackView: UIStackView!
-    
-    @IBOutlet fileprivate weak var roundDestinationButton: UIButton!
-    
-    
+    @IBOutlet fileprivate weak var passengersInputLabel: UILabel!
     @IBOutlet fileprivate weak var passengersLabel: UILabel!
-    @IBOutlet fileprivate weak var passengersSeparatorView: UIView!
     
     @IBOutlet fileprivate weak var originButton: UIButton!
     @IBOutlet fileprivate weak var destinationButton: UIButton!
     @IBOutlet fileprivate weak var passengerButton: UIButton!
-    @IBOutlet fileprivate weak var classButton: UIButton!
     
     @IBOutlet fileprivate weak var fromContainerView: UIView!
     @IBOutlet fileprivate weak var ToContainerView: UIView!
     @IBOutlet fileprivate weak var passengersContainerView: UIView!
-    @IBOutlet fileprivate weak var classContainerView: UIView!
     
     @IBOutlet fileprivate weak var orderFirstButton: DesignableButton!
     
@@ -73,23 +52,18 @@ class FlightFormVC: UIViewController {
         return vc
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 
-        // Do any additional setup after loading the view.
-//        self.view.backgroundColor = .red
-        let syncServerURL = URL(string: "realm://triptozero-issued-orders.us1.cloud.realm.io")!
-        let realm = try! Realm(configuration: .defaultConfiguration)
-        
-        let latestIssued = IssuedOrder()
-        latestIssued.email = "firasrafislam@live.com"
-        latestIssued.orderId = "1234567"
-        
-        try! realm.write {
-            realm.add(latestIssued)
-        }
-        
-        self.bannerPagerView.itemSize = CGSize(width: self.view.frame.size.width, height: 250)
+        self.originButton.addTarget(self, action: #selector(originButtonTapped), for: .touchUpInside)
+        self.destinationButton.addTarget(self, action: #selector(destinationButtonTapped), for: .touchUpInside)
+        self.passengerButton.addTarget(self, action: #selector(passengerButtonTapped), for: .touchUpInside)
+        self.orderFirstButton.addTarget(self, action: #selector(pickDateButtonTapped), for: .touchUpInside)
         
         self.viewModel.inputs.viewDidLoad()
     }
@@ -97,14 +71,9 @@ class FlightFormVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
-        
-        self.originButton.addTarget(self, action: #selector(originButtonTapped), for: .touchUpInside)
-        self.destinationButton.addTarget(self, action: #selector(destinationButtonTapped), for: .touchUpInside)
-        self.roundDestinationButton.addTarget(self, action: #selector(roundConfigureTapped), for: .touchUpInside)
-        self.passengerButton.addTarget(self, action: #selector(passengerButtonTapped), for: .touchUpInside)
-        self.orderFirstButton.addTarget(self, action: #selector(pickDateButtonTapped), for: .touchUpInside)
 //        self.classButton.addTarget(self, action: #selector(), for: .touchUpInside)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.setNeedsStatusBarAppearanceUpdate()
     }
     
     override func bindStyles() {
@@ -114,45 +83,49 @@ class FlightFormVC: UIViewController {
         
         _ = self.flightFormStackView
             |> UIStackView.lens.layoutMargins .~ .init(topBottom: Styles.grid(6), leftRight: Styles.grid(2))
-            |> UIStackView.lens.spacing .~ Styles.grid(4)
+            |> UIStackView.lens.spacing .~ Styles.grid(2)
             |> UIStackView.lens.isLayoutMarginsRelativeArrangement .~ true
         
         _ = self.fromContainerView
             |> UIView.lens.backgroundColor .~ .white
         
-        _ = self.originMenuStackView
-            |> UIView.lens.isUserInteractionEnabled .~ false
+        _ = self.originButton
+            |> UIButton.lens.isEnabled .~ true
+        
+        _ = self.originInputLabel
+            |> UILabel.lens.text .~ Localizations.OriginFlightTitleForm
+            |> UILabel.lens.textColor .~ .black
+        
+        _ = self.destinationInputLabel
+            |> UILabel.lens.text .~ Localizations.DestinationFlightTitleForm
+            |> UILabel.lens.textColor .~ .black
+        
+        _ = self.passengersInputLabel
+            |> UILabel.lens.text .~ Localizations.PassengerFlightTitleForm
+            |> UILabel.lens.textColor .~ .black
         
         _ = self.originLabel
             |> UILabel.lens.isUserInteractionEnabled .~ false
-            |> UILabel.lens.textColor .~ .lightGray
+            |> UILabel.lens.textColor .~ .tk_official_green
             |> UILabel.lens.text .~ "-> Asal Kota"
-        
-        _ = self.originSeparatorView
-            |> UIView.lens.backgroundColor .~ .tk_official_green
-        
-        _ = self.destinationMenuStackView
-            |> UIView.lens.isUserInteractionEnabled .~ false
         
         _ = self.destinationLabel
             |> UILabel.lens.isUserInteractionEnabled .~ false
-            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
+            |> UILabel.lens.textColor .~ .tk_official_green
             |> UILabel.lens.text .~ "-> Tujuan Kota"
         
-        _ = self.destinationSeparatorView
-            |> UIView.lens.backgroundColor .~ .tk_official_green
+        _ = self.originSeparatorView
+            |> UIView.lens.backgroundColor .~ .tk_fade_green_grey
         
-        _ = self.configureRoundStackView
-            |> UIStackView.lens.spacing .~ Styles.grid(4)
+        _ = self.destinationSeparatorView
+            |> UIView.lens.backgroundColor .~ .tk_fade_green_grey
         
         _ = self.passengerMenuStackView
             |> UIView.lens.isUserInteractionEnabled .~ false
         
         _ = self.passengersLabel
             |> UILabel.lens.isUserInteractionEnabled .~ false
-        
-        _ = self.passengersSeparatorView
-            |> UIView.lens.backgroundColor .~ .tk_official_green
+            |> UILabel.lens.textColor .~ .tk_official_green
         
         _ = self.ToContainerView
             |> UIView.lens.backgroundColor .~ .white
@@ -160,75 +133,65 @@ class FlightFormVC: UIViewController {
         _ = self.passengersContainerView
             |> UIView.lens.backgroundColor .~ .white
         
-        _ = self.classContainerView
-            |> UIView.lens.backgroundColor .~ .white
-        
         _ = self.orderFirstButton
             |> UIButton.lens.titleColor(forState: .normal) .~ .white
-            |> UIButton.lens.backgroundColor .~ .tk_official_green
+            |> UIButton.lens.backgroundImage(forState: .normal) .~ UIImage(named: "background-flight-tab")
+            |> UIButton.lens.title(forState: .normal) .~ Localizations.PickDateTitleForm
     }
     
     override func bindViewModel() {
         super.bindViewModel()
         
-        self.viewModel.outputs.originAirportText
-            .observe(on: UIScheduler())
-            .observeValues { [weak self] origin in
-                self?.originLabel.text = origin
-                self?.originLabel.textColor = .black
-        }
+        self.destinationLabel.rac.text = self.viewModel.outputs.destinationAirportText
+        self.originLabel.rac.text = self.viewModel.outputs.originAirportText
         
-        self.viewModel.outputs.destinationAirportText
-            .observe(on: UIScheduler())
-            .observeValues { [weak self] destination in
-                self?.destinationLabel.text = destination
-                self?.destinationLabel.textColor = .black
-        }
         
         self.viewModel.outputs.goToOrigin
-            .observe(on: UIScheduler())
-            .observeValues { [weak self] initial in
-                self?.goToOrigin(selected: initial)
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] result in
+                self?.goToOrigin(selected: result)
         }
         
         self.viewModel.outputs.goToDestination
-            .observe(on: UIScheduler())
-            .observeValues { [weak self] initial in
-                self?.goToDestination(selected: initial)
-        }
-        
-        self.viewModel.outputs.crossedDestination
-            .observe(on: UIScheduler())
-            .observeValues { [weak self] origin, destination in
-                print("VALUES ORIGIN CROSSED: \(origin)")
-                print("VALUES DESTINATION CROSSED: \(destination)")
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] result in
+                self?.goToDestination(selected: result)
         }
         
         self.viewModel.outputs.goToPassengers
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] adult, child, infant in
                 self?.goToPassengers(adult: adult, child: child, infant: infant)
-        }
-        
-        self.viewModel.outputs.goToPickDate
-            .observe(on: UIScheduler())
-            .observeValues { [weak self] flightParam in
-                print("PICK DATE OBSERVE VALUES")
-                self?.goToPickDate(param: flightParam)
         }
         
         self.viewModel.outputs.passengersChanged
             .observe(on: UIScheduler())
             .observeValues { [weak self] adult, child, infant in
-                print("ADULT: \(adult), CHILD: \(child), INFANT: \(infant)")
                 self?.passengersLabel.text = "\(adult) Dewasa, \(child) Anak, \(infant) Bayi"
         }
+    }
+    
+
+    private func setAttributedTitles(for button: UIButton, with string: String) {
+        let normalTitleString = NSAttributedString(string: string, attributes: [
+            NSAttributedStringKey.font: self.traitCollection.isRegularRegular
+                ? UIFont.boldSystemFont(ofSize: 16.0)
+                : UIFont.boldSystemFont(ofSize: 14.0),
+            NSAttributedStringKey.foregroundColor: UIColor.tk_typo_green_grey_600
+            ])
         
-        self.viewModel.outputs.pickEmptyDate
-            .observe(on: UIScheduler())
-            .observeValues { [weak self] in
-                self?.goToEmptyDate()
-        }
+        let selectedTitleString = NSAttributedString(string: string, attributes: [
+            NSAttributedStringKey.font: self.traitCollection.isRegularRegular
+                ? UIFont.boldSystemFont(ofSize: 16.0)
+                : UIFont.boldSystemFont(ofSize: 14.0),
+            NSAttributedStringKey.foregroundColor: UIColor.tk_typo_green_grey_500
+            ])
+        
+        _ = button
+            |> UIButton.lens.attributedTitle(forState: .normal) %~ { _ in normalTitleString }
+            |> UIButton.lens.attributedTitle(forState: .selected) %~ { _ in selectedTitleString }
+            |> (UIButton.lens.titleLabel..UILabel.lens.lineBreakMode) .~ .byWordWrapping
+            |> UIButton.lens.backgroundColor(forState: .selected) .~ .clear
     }
     
     fileprivate func goToOrigin() {
@@ -256,21 +219,27 @@ class FlightFormVC: UIViewController {
     }
     
     fileprivate func goToPassengers(adult: Int, child: Int, infant: Int) {
-        let pickPassengersVC = PickPassengersVC.configureWith(adult: adult, child: child, infant: infant)
+        let pickPassengersVC = PassengersStepperVC.configureWith(adult: adult, child: child, infant: infant)
         pickPassengersVC.delegate = self
+        pickPassengersVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        pickPassengersVC.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
         self.present(pickPassengersVC, animated: true, completion: nil)
     }
-    
-    fileprivate func goToEmptyDate() {
-        let pickDateVC = PickDatesVC.instantiate()
-        let dateNavVC = UINavigationController(rootViewController: pickDateVC)
-        self.present(dateNavVC, animated: true, completion: nil)
-    }
-    
+
+    /*
     fileprivate func goToPickDate(param: SearchFlightParams) {
-        let pickDatesVC = PickDatesVC.configureWith(param: param)
+        let pickDatesVC = PickDatesVC.configureWith(param: param, status: false)
         let dateNavVC = UINavigationController(rootViewController: pickDatesVC)
         self.present(dateNavVC, animated: true, completion: nil)
+    }
+    */
+
+    @objc fileprivate func roundTripButtonTapped() {
+        self.viewModel.inputs.roundTripButtonTapped()
+    }
+    
+    @objc fileprivate func oneWayButtonTapped() {
+        self.viewModel.inputs.oneWayButtonTapped()
     }
     
     @objc fileprivate func originButtonTapped() {
@@ -278,6 +247,7 @@ class FlightFormVC: UIViewController {
     }
     
     @objc fileprivate func destinationButtonTapped() {
+        print("Something Detected: Destination Button Tapped")
         self.viewModel.inputs.desinationButtonTapped()
     }
     
@@ -290,7 +260,12 @@ class FlightFormVC: UIViewController {
     }
     
     @objc fileprivate func pickDateButtonTapped() {
+        print("Picking Date Button Tapped Worked")
         self.viewModel.inputs.pickDateButtonTapped()
+    }
+    
+    @objc fileprivate func searchFlightButtonTapped() {
+        
     }
     
     @objc fileprivate func classButtonTapped() {
@@ -310,15 +285,6 @@ extension FlightFormVC: FSPagerViewDataSource {
     }
 }
 
-extension FlightFormVC: FSPagerViewDelegate {
-    func pagerViewDidScroll(_ pagerView: FSPagerView) {
-        guard self.bannerPageControl.currentPage != pagerView.currentIndex else {
-            return
-        }
-        self.bannerPageControl.currentPage = pagerView.currentIndex
-    }
-}
-
 extension FlightFormVC: PickOriginTableDelegate {
     
     func pickOriginAirportsTable(_ vc: PickAirportsTableVC, selectedRow: AirportResult) {
@@ -333,8 +299,9 @@ extension FlightFormVC: PickDestinationTableDelegate {
     }
 }
 
-extension FlightFormVC: PickPassengersDelegate {
-    func didPassengersPick(_ pickPassengersVC: PickPassengersVC, adult: Int, child: Int, infant: Int) {
+extension FlightFormVC: PassengersStepperDelegate {
+    func didDismissPassengers(_ adult: Int, child: Int, infant: Int) {
         self.viewModel.inputs.selectedPassengers(adult: adult, child: child, infant: infant)
     }
 }
+

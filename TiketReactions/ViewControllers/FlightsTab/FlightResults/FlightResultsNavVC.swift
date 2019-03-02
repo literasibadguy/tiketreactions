@@ -31,6 +31,7 @@ public final class FlightResultsNavVC: UIViewController {
     @IBOutlet fileprivate weak var dateTitleLabel: UILabel!
     
     @IBOutlet fileprivate weak var filterButton: UIButton!
+    @IBOutlet fileprivate weak var navSeparatorView: UIView!
     
     internal func configureWith(envelopeFlight: SearchFlightEnvelope) {
         self.viewModel.inputs.configureEnvelope(flightEnvelope: envelopeFlight)
@@ -54,10 +55,14 @@ public final class FlightResultsNavVC: UIViewController {
             |> UIButton.lens.titleColor(forState: .normal) .~ .tk_official_green
         
         _ = self.routeTitleLabel
-            |> UILabel.lens.textColor .~ .tk_official_green
+            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
         
         _ = self.dateTitleLabel
-            |> UILabel.lens.textColor .~ .tk_official_green
+            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
+        
+        _ = self.navSeparatorView
+            |> UIView.lens.backgroundColor .~ .tk_base_grey_100
+        
     }
     
     public override func bindViewModel() {

@@ -67,7 +67,7 @@ public final class AvailableRoomViewModel: AvailableRoomViewModelType, Available
     public var outputs: AvailableRoomViewModelOutputs { return self }
 }
 
-private func includedBreakfast(_ status: String) -> String {
+public func includedBreakfast(_ status: String) -> String {
     switch status {
     case "0":
         return Localizations.UnavailablebreakfastTitle

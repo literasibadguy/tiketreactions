@@ -12,9 +12,14 @@ protocol GuestOptionViewCellDelegate: class {
     func guestFormOptionChanged(_ option: Bool)
 }
 
+public enum BookingOptionFormState {
+    case flightOption
+    case hotelOption
+}
+
 internal class GuestOptionViewCell: UITableViewCell, ValueCell {
     
-    typealias Value = Int
+    typealias Value = BookingOptionFormState
     
     weak var delegate: GuestOptionViewCellDelegate?
     
@@ -22,9 +27,11 @@ internal class GuestOptionViewCell: UITableViewCell, ValueCell {
     @IBOutlet fileprivate weak var titleOptionLabel: UILabel!
     @IBOutlet fileprivate weak var guestSwitch: UISwitch!
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+    
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -35,16 +42,27 @@ internal class GuestOptionViewCell: UITableViewCell, ValueCell {
     
     override func bindStyles() {
         super.bindStyles()
-
+        
+        _ = self.guestSwitch
+            |> UISwitch.lens.tintColor .~ .tk_official_green
+        
+        self.guestSwitch.onTintColor = .tk_official_green
     }
     
-    @IBAction func anotherGuestOptionChanged(_ sender: UISwitch) {
+    @IBAction private func guestOptionIsSwitched(_ sender: UISwitch) {
         self.delegate?.guestFormOptionChanged(sender.isOn)
     }
     
-    
-    func configureWith(value: Int) {
-        _ = self.titleOptionLabel
-            |> UILabel.lens.text .~ Localizations.AnotherguestOptionFormTitle
+    func configureWith(value: BookingOptionFormState) {
+        switch value {
+        case .flightOption:
+            _ = self.titleOptionLabel
+                |> UILabel.lens.text .~ "Kontak Sama dengan Penumpang Pertama"
+        case .hotelOption:
+            _ = self.titleOptionLabel
+                |> UILabel.lens.text .~ Localizations.AnotherguestOptionFormTitle
+        }
+       
     }
+    
 }

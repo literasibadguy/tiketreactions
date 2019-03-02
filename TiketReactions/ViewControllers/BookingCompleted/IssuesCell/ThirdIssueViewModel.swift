@@ -19,7 +19,17 @@ public protocol ThirdIssueViewModelInputs {
 }
 
 public protocol ThirdIssueViewModelOutputs {
+    var titleOrderText: Signal<String, NoError> { get }
+    var subtitleOrderText: Signal<String, NoError> { get }
+    var orderIdText: Signal<String, NoError> { get }
+    var firstFormTitle: Signal<String, NoError> { get }
+    var guestNameText: Signal<String, NoError> { get }
+    var secondFormTitle: Signal<String, NoError> { get }
+    var checkInText: Signal<String, NoError> { get }
+    var roomsText: Signal<String, NoError> { get }
+    var breakfastText: Signal<String, NoError> { get }
     var generateImage: Signal<PDFDocument, NoError> { get }
+    var generatePDFError: Signal<String, NoError> { get }
     var sendVoucher: Signal<(), NoError> { get }
 }
 
@@ -33,12 +43,42 @@ public final class ThirdIssueViewModel: ThirdIssueViewModelType, ThirdIssueViewM
     public init() {
         let current = self.configIssueProperty.signal.skipNil()
         
-        let printURIEvent = current.switchMap { documentPDFFromURI($0.printUri ?? "").materialize() }
+        let printURIEvent = current.switchMap { documentPDFFromURI($0.printUri).materialize() }
+        
+        let hotelCheckin = current.signal.map { $0.hotelDetail.checkin }.skipNil()
+        let nightCheckin = current.signal.map { $0.hotelDetail.nights }.skipNil()
+        
+        let accSalutationName = current.signal.map { $0.passenger.last?.accountSalutationName }.skipNil()
+        let accFirstName = current.signal.map { $0.passenger.last?.accountFirstName }.skipNil()
+        let accLastName = current.signal.map { $0.passenger.last?.accountLastName }.skipNil()
+        
+//        let departureFlight = current.signal.map { $0.flightDetail.departureCity }.skipNil()
+//        let arrivalFlight = current.signal.map { $0.flightDetail.arrivalCity }.skipNil()
+        
+        // Keberangkatan
+        let departureTime = current.signal.map { $0.flightDetail.departureTime }.skipNil().map(stringToDate(rawDate:)).map { dateFormatterString(date: $0, template: "MMM d, yyyy HH:mm") }
+        // Kedatangan
+        let arrivalTime = current.signal.map { $0.flightDetail.arrivalTime }.skipNil().map(stringToDate(rawDate:)).map { dateFormatterString(date: $0, template: "MMM d, yyyy HH:mm") }
+        
+        self.firstFormTitle = Signal.merge(departureTime.signal.mapConst("Keberangkatan"), accSalutationName.signal.mapConst("Guest Name"))
+        self.secondFormTitle = Signal.merge(arrivalTime.signal.mapConst("Kedatangan"), accSalutationName.signal.mapConst("Check-in"))
+
+        self.titleOrderText = current.signal.map { $0.orderName }
+        self.subtitleOrderText = current.signal.map { $0.orderNameDetail }
+        self.orderIdText = current.signal.map { $0.orderDetailId }
+        self.guestNameText = Signal.merge(Signal.combineLatest(accSalutationName, accFirstName, accLastName).map { "\($0.0) \($0.1) \($0.2)" }, departureTime.signal)
+        self.checkInText = Signal.merge(Signal.combineLatest(hotelCheckin, nightCheckin).map { "\($0.0) - \($0.1)" }, arrivalTime.signal)
+        self.roomsText = current.signal.map { "\($0.hotelDetail.rooms ?? "") Kamar" }
+        self.breakfastText = current.signal.map { "\(includedBreakfast($0.hotelDetail.breakfast ?? ""))" }
         
         // printURIEvent.values().sample(on: self.downloadVoucherTappedProperty.signal)
         
         self.sendVoucher = .empty
-        self.generateImage = printURIEvent.values().sample(on: self.downloadVoucherTappedProperty.signal)
+        
+        self.generatePDFError = Signal.merge(printURIEvent.errors().ignoreValues(), printURIEvent.values().filter { $0.isNil }.ignoreValues()).map { _ in "FPDF Error: Can't print pdf" }
+        
+        self.generateImage = printURIEvent.values().skipNil().takeWhen(self.downloadVoucherTappedProperty.signal)
+        
     }
     
     fileprivate let configIssueProperty = MutableProperty<OrderCartDetail?>(nil)
@@ -56,6 +96,16 @@ public final class ThirdIssueViewModel: ThirdIssueViewModelType, ThirdIssueViewM
         self.downloadVoucherTappedProperty.value = ()
     }
     
+    public let titleOrderText: Signal<String, NoError>
+    public let subtitleOrderText: Signal<String, NoError>
+    public let orderIdText: Signal<String, NoError>
+    public let firstFormTitle: Signal<String, NoError>
+    public let guestNameText: Signal<String, NoError>
+    public let secondFormTitle: Signal<String, NoError>
+    public let checkInText: Signal<String, NoError>
+    public let roomsText: Signal<String, NoError>
+    public let  breakfastText: Signal<String, NoError>
+    public let generatePDFError: Signal<String, NoError>
     public let generateImage: Signal<PDFDocument, NoError>
     public let sendVoucher: Signal<(), NoError>
     
@@ -63,12 +113,38 @@ public final class ThirdIssueViewModel: ThirdIssueViewModelType, ThirdIssueViewM
     public var outputs: ThirdIssueViewModelOutputs { return self }
 }
 
-fileprivate func documentPDFFromURI(_ printURI: String?) -> SignalProducer<PDFDocument, NoError> {
+fileprivate func documentPDFFromURI(_ printURI: String?) -> SignalProducer<PDFDocument?, NoError> {
     
     let token = AppEnvironment.current.apiService.tiketToken?.token ?? ""
     
-    let remotePDFDocumentURL = URL(string: "\(printURI ?? "")&token=\(token)")
-    let document = PDFDocument(url: remotePDFDocumentURL!)!
-    return SignalProducer(value: document)
+    var remotePDFDocumentURI: URL!
+    if let completedURI = printURI {
+        remotePDFDocumentURI = URL(string: "\(completedURI)&token=\(token)")
+        if let document = PDFDocument(url: remotePDFDocumentURI) {
+            return SignalProducer(value: document)
+        }
+    }
+    
+    return SignalProducer(value: nil)
 }
 
+
+private func stringToDate(rawDate: String) -> Date {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+    print("RAW DATE: \(rawDate)")
+    guard let date = dateFormatter.date(from: rawDate) else {
+        fatalError("ERROR: Date conversion failed due to mismatched format.")
+    }
+    
+    return date
+}
+
+private func dateFormatterString(date: Date, template: String) -> String {
+    let printFormatter = DateFormatter()
+    printFormatter.dateFormat = template
+    
+    let summaryDate = printFormatter.string(from: date)
+    
+    return summaryDate
+}

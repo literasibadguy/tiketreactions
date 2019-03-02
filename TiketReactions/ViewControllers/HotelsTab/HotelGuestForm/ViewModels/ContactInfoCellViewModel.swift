@@ -12,6 +12,11 @@ import ReactiveSwift
 import Result
 import TiketKitModels
 
+public enum ContactFormState {
+    case flightResult
+    case hotelResult
+}
+
 public protocol ContactInfoCellViewModelInputs {
     func titleSalutationButtonTapped()
     func titleSalutationChanged(_ text: String?)
@@ -31,9 +36,12 @@ public protocol ContactInfoCellViewModelInputs {
     
     func phoneTextFieldChange(_ text: String?, code: String?)
     func phoneTextFieldDidEndEditing()
+    
+    func contactCellDidLoad(_ state: ContactFormState)
 }
 
 public protocol ContactInfoCellViewModelOutputs {
+    var statusFormText: Signal<String, NoError> { get }
     var titleLabelText: Signal<String, NoError> { get }
     var goToTitleSalutationPicker: Signal<(), NoError> { get }
     var goToPhoneCodePicker: Signal<(), NoError> { get }
@@ -48,6 +56,7 @@ public protocol ContactInfoCellViewModelOutputs {
     var phoneCodeLabelText: Signal<String, NoError> { get }
     var phoneTextFieldText: Signal<String, NoError> { get }
     var contactFormIsCompleted: Signal<Bool, NoError> { get }
+    var collectForContactFlight: Signal<GroupPassengersParam, NoError> { get }
     var collectForCheckout: Signal<CheckoutGuestParams, NoError> { get }
 }
 
@@ -60,7 +69,9 @@ public final class ContactInfoCellViewModel: ContactInfoCellViewModelType, Conta
     
     init() {
         
-        let initialText = self.salutationChangedProperty.signal.mapConst("")
+        self.statusFormText = self.contactCellDidLoadProperty.signal.skipNil().map(formatContactInfo(_ :))
+        
+        let initialText = self.contactCellDidLoadProperty.signal.mapConst("")
         
         self.goToTitleSalutationPicker = self.salutationButtonTappedProperty.signal
         self.goToPhoneCodePicker = self.phoneCodeButtonTappedProperty.signal
@@ -71,41 +82,51 @@ public final class ContactInfoCellViewModel: ContactInfoCellViewModelType, Conta
         self.emailFirstResponder = self.lastNameEndEditingProperty.signal
         self.phoneFirstResponder = self.emailTextFieldDidEndEditingProperty.signal
         
-        let title = Signal.merge(self.salutationChangedProperty.signal.skipNil(), initialText)
-        let firstname = Signal.merge(self.firstNameTextFieldChangeProperty.signal.skipNil(), initialText)
-        let lastname = Signal.merge(self.lastNameTextFieldChangeProperty.signal.skipNil(), initialText)
-        let email = Signal.merge(self.emailTextFieldChangeProperty.signal.skipNil(), initialText)
-        let phone = Signal.merge(self.phoneTextFieldChangeProperty.signal.skipNil(), initialText)
+        let title = Signal.merge(self.salutationChangedProperty.signal.skipNil(), initialText.skipRepeats(==))
+        let firstname = self.firstNameTextFieldChangeProperty.signal.skipNil()
+        let lastname = self.lastNameTextFieldChangeProperty.signal.skipNil()
+        let email = self.emailTextFieldChangeProperty.signal.skipNil()
+        let countryCode = Signal.merge(self.contactCellDidLoadProperty.signal.mapConst("+62").skipRepeats(==), self.phoneCodeChangedProperty.signal.skipNil().map { $0.phoneCode }).skipNil()
+        let phone = Signal.combineLatest(countryCode, self.phoneTextFieldChangeProperty.signal.skipNil()).map { "\($0.0)\($0.1)" }
         
-        let codeMerge = Signal.merge(self.phoneTextFieldChangeProperty.signal.mapConst("ID"), self.phoneCodeChangedProperty.signal.skipNil().map { $0.code! })
-        
-        let contactForm = Signal.combineLatest(title, firstname, lastname, email, phone, codeMerge)
+        let contactForm = Signal.combineLatest(title, firstname, lastname, email, phone, countryCode)
         
         self.titleLabelText = title
         self.firstNameTextFieldText = .empty
         self.lastNameTextFieldText = .empty
         self.emailTextFieldText = .empty
-        self.phoneCodeLabelText = self.phoneCodeChangedProperty.signal.skipNil().map { $0.phoneCode! }
+        self.phoneCodeLabelText = countryCode
         self.phoneTextFieldText = .empty
-        
 
-        self.contactFormIsCompleted = contactForm.map(isValid(title:firstname:lastname:email:phone:code:))
+        self.contactFormIsCompleted = contactForm.map(isValid(title:firstname:lastname:email:phone:countryCode:)).skipRepeats()
         
-        let contactInfoParams = contactForm.switchMap { title, first, last, email, phone, _ -> SignalProducer<CheckoutGuestParams, NoError> in
-            
+        let contactInfoParams = contactForm.switchMap { title, first, last, email, phoneNumber, _ -> SignalProducer<CheckoutGuestParams, NoError> in
             let param = .defaults
-                |> CheckoutGuestParams.lens.conSalutation .~ "Mr"
+                |> CheckoutGuestParams.lens.conSalutation .~ title
                 |> CheckoutGuestParams.lens.conFirstName .~ first
                 |> CheckoutGuestParams.lens.conLastName .~ last
                 |> CheckoutGuestParams.lens.conEmailAddress .~ email
-                |> CheckoutGuestParams.lens.conPhone .~ "%2B\(phone)"
-                |> CheckoutGuestParams.lens.salutation .~ "Mr"
+                |> CheckoutGuestParams.lens.conPhone .~ phoneNumber
+                |> CheckoutGuestParams.lens.salutation .~ title
                 |> CheckoutGuestParams.lens.firstName .~ first
                 |> CheckoutGuestParams.lens.lastName .~ last
-                |> CheckoutGuestParams.lens.phone .~ "%2B\(phone)"
+                |> CheckoutGuestParams.lens.phone .~ phoneNumber
             
             return SignalProducer(value: param)
         }.materialize()
+        
+        let contactFlightParams = contactForm.switchMap { title, first, last, email, phoneNumber, _ -> SignalProducer<GroupPassengersParam, NoError> in
+            let param = .defaults
+                |> GroupPassengersParam.lens.conSalutation .~ title
+                |> GroupPassengersParam.lens.conFirstName .~ first
+                |> GroupPassengersParam.lens.conLastName .~ last
+                |> GroupPassengersParam.lens.conPhone .~ phoneNumber
+                |> GroupPassengersParam.lens.conEmailAddress .~ email
+            
+            return SignalProducer(value: param)
+        }.materialize()
+        
+        self.collectForContactFlight = contactFlightParams.values()
         
         self.collectForCheckout = contactInfoParams.values()
         
@@ -176,6 +197,12 @@ public final class ContactInfoCellViewModel: ContactInfoCellViewModelType, Conta
         self.phoneTextFieldDidEndEditingProperty.value = ()
     }
     
+    fileprivate let contactCellDidLoadProperty = MutableProperty<ContactFormState?>(nil)
+    public func contactCellDidLoad(_ state: ContactFormState) {
+        self.contactCellDidLoadProperty.value = state
+    }
+    
+    public let statusFormText: Signal<String, NoError>
     public let titleLabelText: Signal<String, NoError>
     public let goToTitleSalutationPicker: Signal<(), NoError>
     public let goToPhoneCodePicker: Signal<(), NoError>
@@ -190,13 +217,34 @@ public final class ContactInfoCellViewModel: ContactInfoCellViewModelType, Conta
     public let phoneTextFieldText: Signal<String, NoError>
     public let phoneCodeLabelText: Signal<String, NoError>
     public let contactFormIsCompleted: Signal<Bool, NoError>
+    public let collectForContactFlight: Signal<GroupPassengersParam, NoError>
     public let collectForCheckout: Signal<CheckoutGuestParams, NoError>
     
     public var inputs: ContactInfoCellViewModelInputs { return self }
     public var outputs: ContactInfoCellViewModelOutputs { return self }
 }
 
-private func isValid(title: String, firstname: String, lastname: String, email: String, phone: String, code: String) -> Bool {
-    return !title.isEmpty && !firstname.isEmpty && !lastname.isEmpty && isValidEmail(email) && isValidPhone(phone, code: code)
+private func isValid(title: String, firstname: String, lastname: String, email: String, phone: String, countryCode: String) -> Bool {
+    return !title.isEmpty && !firstname.isEmpty && !lastname.isEmpty && isValidEmail(email) && isValidPhone(phone, code: countryCode)
 }
 
+private func formatContactInfo(_ state: ContactFormState) -> String {
+    switch state {
+    case .flightResult:
+        return "Contact Info"
+    case .hotelResult:
+        return Localizations.GuestContactFormTitle
+    }
+}
+
+/*
+private func removeRestSpace(value: String) -> String {
+    let spaces = CharacterSet.whitespacesAndNewlines.union(.punctuationCharacters)
+    let namesDouble = value.components(separatedBy: spaces)
+    if namesDouble.count > 1 {
+        return value.components(separatedBy: " ").joined(separator: " ")
+    }
+    
+    return value.components(separatedBy: " ").joined()
+}
+*/

@@ -17,6 +17,7 @@ public protocol CheckoutPageViewModelInputs {
     func configureWith(initialRequest: URLRequest)
     func failureAlertButtonTapped()
     func webViewConfirm(_ isLoading: Bool)
+    func paymentIsFailedOrCompleted(_ callback: Bool)
     func viewDidLoad()
 }
 
@@ -25,6 +26,7 @@ public protocol CheckoutPageViewModelOutputs {
     var popViewController: Signal<Void, NoError> { get }
     var showAlert: Signal<String, NoError> { get }
     var webViewLoadRequest: Signal<URLRequest, NoError> { get }
+    var paymentCallback: Signal<(), NoError> { get }
     var webIsLoading: Signal<Bool, NoError> { get }
 }
 
@@ -52,6 +54,8 @@ public final class CheckoutPageViewModel: CheckoutPageViewModelType {
         
         self.dismissViewController = .empty
         
+        self.paymentCallback = self.paymentCallbackConfirmedProperty.signal.filter(isTrue).ignoreValues()
+        
         self.showAlert = .empty
     }
     
@@ -75,6 +79,11 @@ public final class CheckoutPageViewModel: CheckoutPageViewModelType {
         self.webViewIsLoadingProperty.value = isLoading
     }
     
+    fileprivate let paymentCallbackConfirmedProperty = MutableProperty(false)
+    public func paymentIsFailedOrCompleted(_ callback: Bool) {
+        self.paymentCallbackConfirmedProperty.value = callback
+    }
+    
     fileprivate let viewDidLoadProperty = MutableProperty(())
     public func viewDidLoad() {
         self.viewDidLoadProperty.value = ()
@@ -84,6 +93,7 @@ public final class CheckoutPageViewModel: CheckoutPageViewModelType {
     public let popViewController: Signal<Void, NoError>
     public let showAlert: Signal<String, NoError>
     public let webViewLoadRequest: Signal<URLRequest, NoError>
+    public let paymentCallback: Signal<(), NoError>
     public let webIsLoading: Signal<Bool, NoError>
     
     public var inputs: CheckoutPageViewModelInputs { return self }

@@ -10,8 +10,9 @@ import Foundation
 import TiketKitModels
 
 public final class PickFlightResultsDataSource: ValueCellDataSource {
-    public func load(flights: [Flight]) {
-        self.set(values: flights, cellClass: FlightResultViewCell.self, inSection: 0)
+    public func load(flights: [Flight], notice: PickNoticeFlight) {
+        self.set(values: [notice], cellClass: PickFlightNoticeViewCell.self, inSection: 0)
+        self.set(values: flights, cellClass: FlightResultViewCell.self, inSection: 1)
     }
     
     public func flightAtIndexPath(_ indexPath: IndexPath) -> Flight? {
@@ -20,6 +21,8 @@ public final class PickFlightResultsDataSource: ValueCellDataSource {
     
     public override func configureCell(tableCell cell: UITableViewCell, withValue value: Any) {
         switch (cell, value) {
+        case let (cell as PickFlightNoticeViewCell, value as PickNoticeFlight):
+            cell.configureWith(value: value)
         case let (cell as FlightResultViewCell, value as Flight):
             cell.configureWith(value: value)
         default:

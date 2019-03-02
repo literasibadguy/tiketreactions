@@ -54,8 +54,6 @@ public final class HotelDiscoveryViewModel: HotelDiscoveryViewModelType, HotelDi
         
         let currentStatus = Signal.combineLatest(self.selectedFilterProperty.signal.skipNil(), self.viewDidAppearProperty.signal).map(first)
         
-        let mergeSelected = currentStatus.map(first)
-        
         let mergeParams = Signal.merge(currentStatus.map(second), Signal.combineLatest(currentStatus.map(second), self.sortProperty.signal.skipNil()).map { (arg) -> SearchHotelParams in
             let (param, sort) = arg
             return param
@@ -74,8 +72,6 @@ public final class HotelDiscoveryViewModel: HotelDiscoveryViewModelType, HotelDi
         
         let isVisible = Signal.merge(self.viewDidAppearProperty.signal.mapConst(true), self.viewDidDisappearProperty.signal.mapConst(false)).skipRepeats()
         
-        let requestSelected = Signal.combineLatest(self.viewDidAppearProperty.signal, mergeParams)
-        
         let isLoading = MutableProperty(false)
         
         let requestHotelParams = Signal.combineLatest(self.viewDidAppearProperty.signal, mergeParams, isVisible).filter { _, _, visible in visible }.skipRepeats {
@@ -86,11 +82,13 @@ public final class HotelDiscoveryViewModel: HotelDiscoveryViewModelType, HotelDi
         
         let requestFirstPageWith = Signal.combineLatest(mergeParams, isVisible).filter { _, visible in visible }.skipRepeats { lhs, rhs in lhs.0 == rhs.0 && lhs.1 == rhs.1 }.map(first)
         
-        let requestFilterPageWith = Signal.combineLatest(paramsChanged, self.filterDismissProperty.signal.mapConst(true)).filter { _, visible in visible }.map(first)
+        let requestFilterPageWith = Signal.combineLatest(paramsChanged, self.filterDismissProperty.signal.mapConst(true)).filter { _, visible in visible }.skipRepeats { lhs, rhs in lhs.0.sort == rhs.0.sort }.map(first)
+        
+        let requestTotalPage = Signal.merge(requestFirstPageWith, requestFilterPageWith)
         
         let paginatedHotels: Signal<[HotelResult], NoError>
         (paginatedHotels, self.hotelsAreLoading, _) = paginate(
-            requestFirstPageWith: requestFirstPageWith,
+            requestFirstPageWith: requestTotalPage,
             requestNextPageWhen: isCloseToBottom,
             clearOnNewRequest: true,
             skipRepeats: false,
@@ -101,6 +99,7 @@ public final class HotelDiscoveryViewModel: HotelDiscoveryViewModelType, HotelDi
                 AppEnvironment.current.apiService.fetchHotelResultsPagination(page, params: cursor) },
             concater: { ($0 + $1).distincts() })
         
+        /*
         let filteredHotels: Signal<[HotelResult], NoError>
         (filteredHotels, self.filtersAreLoading, _) = paginate(
             requestFirstPageWith: requestFilterPageWith,
@@ -113,40 +112,22 @@ public final class HotelDiscoveryViewModel: HotelDiscoveryViewModelType, HotelDi
             requestFromCursor: { (page, cursor) -> SignalProducer<SearchHotelEnvelopes, ErrorEnvelope> in
                 AppEnvironment.current.apiService.fetchHotelResultsPagination(page, params: cursor) },
             concater: { ($0 + $1).distincts() })
+         */
         
-        /*
-        let requestHotelFilters = Signal.combineLatest(self.filterDismissProperty.signal, self.configParamFilterProperty.signal.skipNil(), isVisible).filter { _, _, visible in visible }.skipRepeats {
-            lhs, rhs in lhs.0 == rhs.0 && lhs.1 == rhs.1
-            }.map(second).switchMap { params in
-                AppEnvironment.current.apiService.fetchHotelResults(params: params).on(starting: { isLoading.value = true }, completed: { isLoading.value = false }, terminated: { isLoading.value = false }).materialize()
-        }
-        
-        let requestHotelSelected = Signal.combineLatest(self.viewDidAppearProperty.signal, mergeSelected, isVisible).filter { _, _, visible in visible }.skipRepeats {
-            lhs, rhs in lhs.0 == rhs.0 && lhs.2 == rhs.2
-            }.map(second).switchMap { params in
-                AppEnvironment.current.apiService.fetchResultsHotelByArea(uid: params.id).demoteErrors()
-        }
-        */
-        
-//        let responseResults = Signal.merge(requestHotelParams.values(), requestHotelFilters.values()).map { $0.searchHotelResults }
+        self.filtersAreLoading = .empty
         
         self.notifyDelegate = requestHotelParams.values()
+        self.hotels = Signal.merge(paginatedHotels, self.sortProperty.signal.skipNil().mapConst([])).skip { $0.isEmpty }.skipRepeats()
         
-//        let hotelsBetweenArea = requestHotelSelected.map { $0.hotelResults }
-        
-        // requestHotelParams.values().map { $0.searchHotelResults }
-        
-        self.hotels = paginatedHotels
-        
-        self.filtersHotels = filteredHotels
-        
+        self.filtersHotels = .empty
         
         self.asyncReloadData = Signal.merge(self.hotels.take(first: 1).ignoreValues(), self.filtersHotels.take(first: 1).ignoreValues())
         
-        self.hideEmptyState = Signal.merge(self.viewWillAppearProperty.signal.take(first: 1), self.hotels.filter { !$0.isEmpty }.ignoreValues())
         self.showEmptyState = Signal.combineLatest(self.hotelsAreLoading, paginatedHotels).filter { hotelsAreLoading, hotels in
             hotelsAreLoading == false && hotels.isEmpty
-        }.map { _ in emptyStateHotel() }.skipRepeats()
+        }.map { _ in emptyStateHotel() }
+        
+        self.hideEmptyState = Signal.merge(self.viewWillAppearProperty.signal.take(first: 1), self.hotels.filter { !$0.isEmpty }.ignoreValues(), paramsChanged.ignoreValues())
         
         let hotelCardTapped = self.tappedHotel.signal.skipNil()
         

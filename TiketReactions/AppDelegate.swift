@@ -31,6 +31,7 @@ internal final class AppDelegate: UIResponder, UIApplicationDelegate {
         UIViewController.doBadSwizzleStuff()
         
         self.window?.tintColor = .tk_official_green
+        self.setDefaultRealmForTiket()
         
         AppEnvironment.replaceCurrentEnvironment(
             AppEnvironment.fromStorage(ubiquitousStore: NSUbiquitousKeyValueStore.default, userDefaults: UserDefaults.standard)
@@ -39,13 +40,12 @@ internal final class AppDelegate: UIResponder, UIApplicationDelegate {
         self.viewModel.outputs.tokenIntoEnvironment
             .observe(on: UIScheduler())
             .observeValues { token in
-                print("TOKEN STORED ON SERVICE: \(token)")
                 AppEnvironment.getFirstToken(token)
-                setDefaultRealmForTiket()
-                GMSPlacesClient.provideAPIKey("AIzaSyDY06nW1UVnDikX07QDJfJYkPIqVVofxtM")
-                GMSServices.provideAPIKey("AIzaSyDY06nW1UVnDikX07QDJfJYkPIqVVofxtM")
+                print("Is there any token: \(token)")
+                GMSPlacesClient.provideAPIKey(Secrets.googleMapKeys)
+                GMSServices.provideAPIKey(Secrets.googleMapKeys)
         }
-        
+//
         self.viewModel.outputs.presentViewController
             .observe(on: UIScheduler())
             .observeValues { [weak self] in
@@ -86,10 +86,68 @@ internal final class AppDelegate: UIResponder, UIApplicationDelegate {
         self.viewModel.inputs.applicationWillEnterForeground()
     }
     
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        self.viewModel.inputs.applicationPerformActionForShortcutItem(shortcutItem)
+        completionHandler(true)
+    }
+    
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         return true
     }
-
+    
+    private var deduplicationNotificationToken: NotificationToken!
+    
+    private func setDefaultRealmForTiket() {
+        var config = Realm.Configuration()
+        
+        // Use the default directory, but replace the filename with the username
+        config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("triptozero.realm")
+        config.objectTypes = [IssuedOrderList.self, IssuedOrder.self]
+        config.readOnly = false
+        
+        // Set this as the configuration used for the default Realm
+        Realm.Configuration.defaultConfiguration = config
+        
+        let realm = try! Realm()
+        if realm.isEmpty {
+            try! realm.write {
+                let listLists = IssuedOrderList()
+                realm.add(listLists)
+            }
+        }
+        
+        
+        print("Is there any occured something on Default Realm Configuration")
+        /*
+         deduplicationNotificationToken = realm.observe { _, realm in
+         let items = realm.objects(IssuedOrderList.self).first!.items
+         guard items.count > 1 && !realm.isInWriteTransaction else { return }
+         let itemsReference = ThreadSafeReference(to: items)
+         // Deduplicate
+         print("Deduplicate Notification Token")
+         DispatchQueue(label: "io.realm.RealmTasks.bg").async {
+         let realm = try! Realm(configuration: realm.configuration)
+         guard let items = realm.resolve(itemsReference), items.count > 1 else {
+         return
+         }
+         realm.beginWrite()
+         let listReferenceIDs = NSCountedSet(array: items.map { $0.orderId })
+         for id in listReferenceIDs where listReferenceIDs.count(for: id) > 1 {
+         let id = id as! String
+         let indexesToRemove = items.enumerated().compactMap { index, element in
+         return element.orderId == id ? index : nil
+         }
+         indexesToRemove.dropFirst().reversed().forEach(items.remove)
+         }
+         try! realm.commitWrite()
+         }
+         }
+         */
+    }
+    
+    private func isDefaultRealmConfigured() -> Bool {
+        return try! !Realm().isEmpty
+    }
 }
 

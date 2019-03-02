@@ -6,12 +6,13 @@
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 
+import Prelude
 import TiketKitModels
 import UIKit
 
 internal final class LoungeCurrencyCell: UITableViewCell, ValueCell {
     
-    typealias Value = CurrencyListEnvelope.Currency
+    typealias Value = String
     
     @IBOutlet private weak var currencyTitleLabel: UILabel!
     @IBOutlet private weak var currencyValueLabel: UILabel!
@@ -21,8 +22,9 @@ internal final class LoungeCurrencyCell: UITableViewCell, ValueCell {
         // Initialization code
     }
     
-    func configureWith(value: CurrencyListEnvelope.Currency) {
-        
+    func configureWith(value: String) {
+        _ = self.currencyValueLabel
+            |> UILabel.lens.text .~ value
     }
     
 }

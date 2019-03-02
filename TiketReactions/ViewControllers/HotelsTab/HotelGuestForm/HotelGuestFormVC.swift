@@ -34,6 +34,7 @@ internal final class HotelGuestFormVC: UITableViewController {
         
         self.tableView.dataSource = dataSource
         self.tableView.register(nib: .ContactInfoViewCell)
+        self.tableView.register(nib: .NoticeSummaryViewCell)
         self.tableView.register(nib: .GuestFormTableViewCell)
         
         self.viewModel.inputs.viewDidLoad()
@@ -42,13 +43,16 @@ internal final class HotelGuestFormVC: UITableViewController {
     override func bindStyles() {
         super.bindStyles()
         
+        _ = (self.navigationController?.navigationBar)!
+            |> UINavigationBar.lens.barTintColor .~ .white
+            |> UINavigationBar.lens.shadowImage .~ UIImage()
+        
         _ = self
             |> baseTableControllerStyle(estimatedRowHeight: 500.0)
     }
     
     override func bindViewModel() {
         super.bindViewModel()
-        
         
         self.viewModel.outputs.loadHotelAndAvailableRoomIntoDataSource
             .observe(on: UIScheduler())
@@ -64,31 +68,20 @@ internal final class HotelGuestFormVC: UITableViewController {
                 print("Guest First Form Valid: \(valid)")
                 self?.delegate?.shouldFirstGuestForm(valid)
         }
-        
-        self.viewModel.outputs.loadExtendingParam
-            .observe(on: UIScheduler())
-            .observeValues { [weak self] param in
-                
-        }
-        
+
         self.viewModel.outputs.expandGuestCell
             .observe(on: UIScheduler())
-            .observeValues { [weak self] params, expanded in
-                print("EXPANDING GUEST CELL: \(expanded)")
-                if expanded == true {
-                    self?.dataSource.loadedSourceParams(params)
-                    self?.tableView.reloadData()
-                    self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 3), at: .bottom, animated: true)
-                } else {
-                    self?.deleteAnotherGuestForm()
-                    self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .middle, animated: true)
-                }
+            .observeValues { [weak self] params in
+                self?.dataSource.loadedSourceParams(params)
+                self?.tableView.reloadData()
+                self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 3), at: .bottom, animated: true)
         }
         
-        self.viewModel.outputs.hideExtendingParam
+        self.viewModel.outputs.removeGuestCell
             .observe(on: UIScheduler())
             .observeValues { [weak self] _ in
-//                self?.deleteAnotherGuestForm()
+                self?.deleteAnotherGuestForm()
+
         }
         
         self.viewModel.outputs.finalCheckoutData
@@ -154,7 +147,10 @@ extension HotelGuestFormVC: GuestFormTableCellDelegate {
         self.viewModel.inputs.anotherGuestFormDataChange(guestForm)
     }
     
-    
+    func getAnotherFinishedForm(_ completed: Bool) {
+        print("Get Another Finished Form: \(completed)")
+        self.viewModel.inputs.anotherGuestFormValid(completed)
+    }
 }
 
 

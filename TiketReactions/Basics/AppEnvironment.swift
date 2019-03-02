@@ -101,7 +101,6 @@ public struct AppEnvironment {
         let config: Config? = data["config"].flatMap(decode)
         
         if let tiketToken = data["apiService.tiketToken.token"] as? String {
-            print("Is THERE ANY TOKEN STORED: \(tiketToken)")
             service = service.getToken(TiketToken(token: tiketToken))
             removeLegacyTiketToken(fromUserDefaults: userDefaults)
         } else if let tiketToken = legacyTiketToken(forUserDefaults: userDefaults) {

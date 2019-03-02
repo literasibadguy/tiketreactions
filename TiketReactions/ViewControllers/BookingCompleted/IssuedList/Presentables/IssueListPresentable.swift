@@ -7,3 +7,11 @@
 //
 
 import Foundation
+import RealmSwift
+
+public final class IssueListPresenter: NSObject {
+    
+    public var notificationToken: NotificationToken?
+    
+
+}

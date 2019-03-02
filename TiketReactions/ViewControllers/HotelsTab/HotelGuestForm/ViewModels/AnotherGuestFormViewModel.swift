@@ -47,11 +47,9 @@ public final class AnotherGuestFormViewModel: AnotherGuestFormViewModelType, Ano
     
     init() {
         
-        let initialText = self.titleChangedTextProperty.signal.mapConst("")
-        
-        let titleText = Signal.merge(self.titleChangedTextProperty.signal.skipNil(), initialText)
-        let firstNameText = Signal.merge(self.firstNameChangedTextProperty.signal.skipNil(), initialText)
-        let lastNameText = Signal.merge(self.lastNameChangedTextProperty.signal.skipNil(), initialText)
+        let titleText = self.titleChangedTextProperty.signal.skipNil()
+        let firstNameText = self.firstNameChangedTextProperty.signal.skipNil()
+        let lastNameText = self.lastNameChangedTextProperty.signal.skipNil()
         
         let anotherGuestParam = Signal.combineLatest(self.configGuestParamProperty.signal.skipNil(), titleText.filter { $0 != "" }, firstNameText.filter { $0 != "" }, lastNameText).switchMap { (arg) -> SignalProducer<CheckoutGuestParams, NoError> in
             let (current, title, firstName, lastName) = arg

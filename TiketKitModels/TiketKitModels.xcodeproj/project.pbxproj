@@ -62,8 +62,11 @@
 		CD10220220820CA600F26983 /* CheckoutLoginCustomerEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD10220120820CA600F26983 /* CheckoutLoginCustomerEnvelope.swift */; };
 		CD102204208211C100F26983 /* CheckoutLoginParamsLenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD102203208211C100F26983 /* CheckoutLoginParamsLenses.swift */; };
 		CD19F10C20B8DE4A0048689A /* TakeUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D698F205E621300548BC6 /* TakeUntil.swift */; };
+		CD3AB2E421FEA89500787479 /* CountryListEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3AB2E321FEA89500787479 /* CountryListEnvelope.swift */; };
 		CD52603A2080936F000B2865 /* CheckoutPaymentEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5260392080936F000B2865 /* CheckoutPaymentEnvelope.swift */; };
 		CD54C11B206771DE001A2596 /* String+Whitespace.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD54C11A206771DE001A2596 /* String+Whitespace.swift */; };
+		CD5CB4F4213422FC0066D5A0 /* SearchFlightEnvelopeSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5CB4F3213422FC0066D5A0 /* SearchFlightEnvelopeSamples.swift */; };
+		CD5CB4F6213423720066D5A0 /* SearchFlightParamsSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5CB4F5213423720066D5A0 /* SearchFlightParamsSamples.swift */; };
 		CD60125620A2834B00CDF272 /* Paginate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D69E9205E660A00548BC6 /* Paginate.swift */; };
 		CD707029209737280073312F /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD707028209737280073312F /* Errors.swift */; };
 		CD82EACE2068ED670006F66C /* FlightOrderEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD82EACD2068ED670006F66C /* FlightOrderEnvelope.swift */; };
@@ -130,10 +133,14 @@
 		CDB9677B205E8A3D00DEE52F /* FlightInfoLenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96743205E8A3D00DEE52F /* FlightInfoLenses.swift */; };
 		CDB9677C205E8A3D00DEE52F /* FlightLenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96744205E8A3D00DEE52F /* FlightLenses.swift */; };
 		CDB9677D205E8A9900DEE52F /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D69E4205E660900548BC6 /* Environment.swift */; };
-		CDB9677F205E9BE800DEE52F /* AppDelegateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D69E5205E660900548BC6 /* AppDelegateViewModel.swift */; };
 		CDBC808620CE0F4100919A9A /* CheckHistoryOrderEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBC808520CE0F4100919A9A /* CheckHistoryOrderEnvelope.swift */; };
 		CDC45A6D20C0CC4A006C4146 /* UIResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC45A6C20C0CC4A006C4146 /* UIResponder.swift */; };
+		CDD1265D2179E78800476E9C /* UIBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD1265C2179E78800476E9C /* UIBarItem.swift */; };
 		CDDA460020736DFE00844004 /* UISwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDA45FF20736DFE00844004 /* UISwitch.swift */; };
+		CDDA5BC52140073B005AC357 /* GetFlightDataParamsLenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDA5BC42140073B005AC357 /* GetFlightDataParamsLenses.swift */; };
+		CDF129562137D2DE00B1DAB2 /* GetFlightDataSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDF129552137D2DE00B1DAB2 /* GetFlightDataSamples.swift */; };
+		CDFBC37321351CFA001E28A7 /* GetFlightDataParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFBC37221351CFA001E28A7 /* GetFlightDataParams.swift */; };
+		CDFBC3752135490B001E28A7 /* GetFlightData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFBC3742135490B001E28A7 /* GetFlightData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -188,7 +195,6 @@
 		CD0D69E2205E660900548BC6 /* DateProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateProtocol.swift; path = ../../../TiketReactions/Basics/DateProtocol.swift; sourceTree = "<group>"; };
 		CD0D69E3205E660900548BC6 /* NSHTTPCookieStorageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSHTTPCookieStorageType.swift; path = ../../../TiketReactions/Basics/NSHTTPCookieStorageType.swift; sourceTree = "<group>"; };
 		CD0D69E4205E660900548BC6 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Environment.swift; path = ../../../TiketReactions/Basics/Environment.swift; sourceTree = "<group>"; };
-		CD0D69E5205E660900548BC6 /* AppDelegateViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegateViewModel.swift; path = ../../../TiketReactions/Basics/AppDelegateViewModel.swift; sourceTree = "<group>"; };
 		CD0D69E6205E660900548BC6 /* IsValidEmail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IsValidEmail.swift; path = ../../../TiketReactions/Basics/IsValidEmail.swift; sourceTree = "<group>"; };
 		CD0D69E7205E660A00548BC6 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = ../../../TiketReactions/Basics/Reachability.swift; sourceTree = "<group>"; };
 		CD0D69E8205E660A00548BC6 /* Format.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Format.swift; path = ../../../TiketReactions/Basics/Format.swift; sourceTree = "<group>"; };
@@ -214,8 +220,11 @@
 		CD1021FF2082049200F26983 /* Values.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Values.swift; sourceTree = "<group>"; };
 		CD10220120820CA600F26983 /* CheckoutLoginCustomerEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutLoginCustomerEnvelope.swift; sourceTree = "<group>"; };
 		CD102203208211C100F26983 /* CheckoutLoginParamsLenses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutLoginParamsLenses.swift; sourceTree = "<group>"; };
+		CD3AB2E321FEA89500787479 /* CountryListEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListEnvelope.swift; sourceTree = "<group>"; };
 		CD5260392080936F000B2865 /* CheckoutPaymentEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutPaymentEnvelope.swift; sourceTree = "<group>"; tabWidth = 5; };
 		CD54C11A206771DE001A2596 /* String+Whitespace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Whitespace.swift"; sourceTree = "<group>"; };
+		CD5CB4F3213422FC0066D5A0 /* SearchFlightEnvelopeSamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFlightEnvelopeSamples.swift; sourceTree = "<group>"; };
+		CD5CB4F5213423720066D5A0 /* SearchFlightParamsSamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFlightParamsSamples.swift; sourceTree = "<group>"; };
 		CD707028209737280073312F /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		CD82EACD2068ED670006F66C /* FlightOrderEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightOrderEnvelope.swift; sourceTree = "<group>"; };
 		CD82EACF2068EF300006F66C /* FlightMyOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightMyOrder.swift; sourceTree = "<group>"; };
@@ -285,7 +294,13 @@
 		CDB96744205E8A3D00DEE52F /* FlightLenses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlightLenses.swift; sourceTree = "<group>"; };
 		CDBC808520CE0F4100919A9A /* CheckHistoryOrderEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckHistoryOrderEnvelope.swift; sourceTree = "<group>"; };
 		CDC45A6C20C0CC4A006C4146 /* UIResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIResponder.swift; sourceTree = "<group>"; };
+		CDD1265C2179E78800476E9C /* UIBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBarItem.swift; sourceTree = "<group>"; };
 		CDDA45FF20736DFE00844004 /* UISwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISwitch.swift; sourceTree = "<group>"; };
+		CDDA5BC42140073B005AC357 /* GetFlightDataParamsLenses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFlightDataParamsLenses.swift; sourceTree = "<group>"; };
+		CDF129552137D2DE00B1DAB2 /* GetFlightDataSamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFlightDataSamples.swift; sourceTree = "<group>"; };
+		CDFBC37021351999001E28A7 /* GetFlightDataEnvelopeSamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFlightDataEnvelopeSamples.swift; sourceTree = "<group>"; };
+		CDFBC37221351CFA001E28A7 /* GetFlightDataParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFlightDataParams.swift; sourceTree = "<group>"; };
+		CDFBC3742135490B001E28A7 /* GetFlightData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFlightData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -387,6 +402,7 @@
 				CD0D6984205E621300548BC6 /* UIStepper.swift */,
 				CDDA45FF20736DFE00844004 /* UISwitch.swift */,
 				CDC45A6C20C0CC4A006C4146 /* UIResponder.swift */,
+				CDD1265C2179E78800476E9C /* UIBarItem.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -482,7 +498,6 @@
 				CD0D69E2205E660900548BC6 /* DateProtocol.swift */,
 				CD0D69E0205E660900548BC6 /* UIDeviceType.swift */,
 				CD0D69E3205E660900548BC6 /* NSHTTPCookieStorageType.swift */,
-				CD0D69E5205E660900548BC6 /* AppDelegateViewModel.swift */,
 				CD0D69E9205E660A00548BC6 /* Paginate.swift */,
 				CD0D69E6205E660900548BC6 /* IsValidEmail.swift */,
 				CD0D69E8205E660A00548BC6 /* Format.swift */,
@@ -587,6 +602,7 @@
 				CDB96725205E8A3D00DEE52F /* GetTokenEnvelope.swift */,
 				CDB96726205E8A3D00DEE52F /* ErrorEnvelope.swift */,
 				CD0B11F020B6458100DC25CE /* CurrencyListEnvelope.swift */,
+				CD3AB2E321FEA89500787479 /* CountryListEnvelope.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -622,6 +638,8 @@
 				CDB96718205E8A3D00DEE52F /* SearchFlightParams.swift */,
 				CDB96719205E8A3D00DEE52F /* SearchAirportsEnvelope.swift */,
 				CDB9671A205E8A3D00DEE52F /* Airport.swift */,
+				CDFBC37221351CFA001E28A7 /* GetFlightDataParams.swift */,
+				CDFBC3742135490B001E28A7 /* GetFlightData.swift */,
 			);
 			path = Flight;
 			sourceTree = "<group>";
@@ -669,6 +687,10 @@
 				CDB96733205E8A3D00DEE52F /* HotelDirectSamples.swift */,
 				CD97290520A14ED400321199 /* HotelResultSamples.swift */,
 				CD97290720A14EEF00321199 /* OrderDataSamples.swift */,
+				CD5CB4F3213422FC0066D5A0 /* SearchFlightEnvelopeSamples.swift */,
+				CD5CB4F5213423720066D5A0 /* SearchFlightParamsSamples.swift */,
+				CDFBC37021351999001E28A7 /* GetFlightDataEnvelopeSamples.swift */,
+				CDF129552137D2DE00B1DAB2 /* GetFlightDataSamples.swift */,
 			);
 			path = Samples;
 			sourceTree = "<group>";
@@ -722,6 +744,7 @@
 			children = (
 				CDB96741205E8A3D00DEE52F /* AddOrderFlightLenses.swift */,
 				CDB8AB24207B60D100FBCB1A /* AirportResultLenses.swift */,
+				CDDA5BC42140073B005AC357 /* GetFlightDataParamsLenses.swift */,
 			);
 			path = Flight;
 			sourceTree = "<group>";
@@ -920,6 +943,7 @@
 				CDB96777205E8A3D00DEE52F /* CheckoutGuestParamsLenses.swift in Sources */,
 				CD0D69F0205E660A00548BC6 /* NSHTTPCookieStorageType.swift in Sources */,
 				CDB9677A205E8A3D00DEE52F /* SearchFlightParamsLenses.swift in Sources */,
+				CD3AB2E421FEA89500787479 /* CountryListEnvelope.swift in Sources */,
 				CDB9674A205E8A3D00DEE52F /* AddOrderParams.swift in Sources */,
 				CDAC38D52097D21B00B494D7 /* HotelBookingSummary.swift in Sources */,
 				CDB96776205E8A3D00DEE52F /* SearchHotelEnvelopeLenses.swift in Sources */,
@@ -943,8 +967,10 @@
 				CDB8AB25207B60D100FBCB1A /* AirportResultLenses.swift in Sources */,
 				CDB96751205E8A3D00DEE52F /* CheckoutGuestParams.swift in Sources */,
 				CDB96763205E8A3D00DEE52F /* OrderData.swift in Sources */,
+				CDFBC37321351CFA001E28A7 /* GetFlightDataParams.swift in Sources */,
 				CDB96748205E8A3D00DEE52F /* Secrets.swift in Sources */,
 				CD0D69A5205E622300548BC6 /* UIStepper.swift in Sources */,
+				CDDA5BC52140073B005AC357 /* GetFlightDataParamsLenses.swift in Sources */,
 				CD0D69ED205E660A00548BC6 /* UIDeviceType.swift in Sources */,
 				CD0D6999205E621F00548BC6 /* CKDelay.swift in Sources */,
 				CDB9676F205E8A3D00DEE52F /* SearchHotelEnvelopeSamples.swift in Sources */,
@@ -963,6 +989,8 @@
 				CDB96767205E8A3D00DEE52F /* Decodable.swift in Sources */,
 				CDB9675D205E8A3D00DEE52F /* Diagnostic.swift in Sources */,
 				CD82EAD02068EF300006F66C /* FlightMyOrder.swift in Sources */,
+				CDD1265D2179E78800476E9C /* UIBarItem.swift in Sources */,
+				CD5CB4F4213422FC0066D5A0 /* SearchFlightEnvelopeSamples.swift in Sources */,
 				CD97290620A14ED400321199 /* HotelResultSamples.swift in Sources */,
 				CDC45A6D20C0CC4A006C4146 /* UIResponder.swift in Sources */,
 				CDDA460020736DFE00844004 /* UISwitch.swift in Sources */,
@@ -983,10 +1011,10 @@
 				CD0B11F120B6458100DC25CE /* CurrencyListEnvelope.swift in Sources */,
 				CD0D69F4205E660A00548BC6 /* Reachability.swift in Sources */,
 				CD0D699B205E621F00548BC6 /* MergeWith.swift in Sources */,
-				CDB9677F205E9BE800DEE52F /* AppDelegateViewModel.swift in Sources */,
 				CD52603A2080936F000B2865 /* CheckoutPaymentEnvelope.swift in Sources */,
 				CDB96775205E8A3D00DEE52F /* SearchHotelParamsLenses.swift in Sources */,
 				CDB9675F205E8A3D00DEE52F /* CurrentProfile.swift in Sources */,
+				CD5CB4F6213423720066D5A0 /* SearchFlightParamsSamples.swift in Sources */,
 				CD0D69A2205E622300548BC6 /* UITextField.swift in Sources */,
 				CDB9676C205E8A3D00DEE52F /* ConfigSamples.swift in Sources */,
 				CDAC38D72097D27400B494D7 /* HotelBookingSummaryLenses.swift in Sources */,
@@ -1006,10 +1034,12 @@
 				CD0D69A8205E622800548BC6 /* LazyAssociatedProperty.swift in Sources */,
 				CDB9674C205E8A3D00DEE52F /* CheckoutGuestEnvelope.swift in Sources */,
 				CD0D69A0205E622300548BC6 /* UILabel.swift in Sources */,
+				CDF129562137D2DE00B1DAB2 /* GetFlightDataSamples.swift in Sources */,
 				CDB9675B205E8A3D00DEE52F /* Airport.swift in Sources */,
 				CDB96769205E8A3D00DEE52F /* Route.swift in Sources */,
 				CD0D69A3205E622300548BC6 /* UIButtonAssociations.swift in Sources */,
 				CDB96750205E8A3D00DEE52F /* AddOrderEnvelope.swift in Sources */,
+				CDFBC3752135490B001E28A7 /* GetFlightData.swift in Sources */,
 				CDB96765205E8A3D00DEE52F /* ErrorEnvelope.swift in Sources */,
 				CD0D699D205E621F00548BC6 /* Rac.swift in Sources */,
 				CD0D69EE205E660A00548BC6 /* Language.swift in Sources */,

@@ -63,13 +63,3 @@ public final class PickRoomNavViewModel: PickRoomNavViewModelType, PickRoomNavVi
     public var inputs: PickRoomNavViewModelInputs { return self }
     public var outputs: PickRoomNavViewModelOutputs { return self }
 }
-
-private func symbolForCurrency(_ currency: String) -> String {
-    switch currency {
-    case "IDR":
-        return "Rp"
-    default:
-        return currency
-    }
-}
-

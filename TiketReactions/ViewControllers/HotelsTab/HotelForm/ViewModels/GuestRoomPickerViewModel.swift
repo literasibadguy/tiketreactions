@@ -58,8 +58,6 @@ public final class GuestRoomPickerViewModel: GuestRoomPickerViewModelType, Guest
         
         let mixed = Signal.combineLatest(guests, rooms).map(guestRoomTitles(guest:room:))
         
-        let guestEvents = Signal.combineLatest(guests, self.pickerGuestRowSelectedProperty.signal).map { return $0.0[$0.1.0] }
-        
         let selectedGuest = self.pickerGuestRowSelectedProperty.signal.map { $0.0 + 1 }
         let selectedRoom = self.pickerRoomRowSelectedProperty.signal.map { $0.0 + 1 }
         

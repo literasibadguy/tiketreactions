@@ -6,6 +6,34 @@
   Copyright © 2018 Firas Rafislam. All rights reserved.
 */
 
+// Flight
+"Origin_Flight_Title_Form" = "Origin";
+"Destination_Flight_Title_Form" = "Destination";
+"Passenger_Flight_Title_Form" = "Passenger";
+"Outbound_Title_Pick_Date" = "Outbound";
+"Return_Title_Pick_Date" = "Return";
+"Find_Flights_Button_Pick_Date" = "Find Flights";
+"Single_Status_Title_Pick_Date" = "Single Flight";
+"Return_Status_Title_Pick_Date" = "Round Flights";
+"Outbound_Notice_Pick_Flight" = "Outbound to %@";
+"Return_Notice_Pick_Flight" = "Return to %@";
+"Choose_Title_Button_Pick_Flight" = "Choose this flight";
+"Order_Title_Button_Pick_Flight" = "Order this flight";
+"Check_Flight_Notice_Summary" = "Please check your flight first before take an order";
+"Passenger_Adult_Status_list" = "Passenger (Adult) %d";
+"Passenger_Child_Status_list" = "Passenger (Child) %d";
+"Passenger_Infant_Status_list" = "Passenger (Infant) %d";
+"Birthdate_Title_Passenger_Form" = "Birthdate";
+"Citizen_Title_Passenger_Form" = "Citizenship";
+"PassportNo_Title_Passenger_Form" = "Passport No.";
+"Expired_Title_Passenger_Form" = "Expired Date";
+"IssuedPassport_Passenger_Form" = "Issued Passport";
+"Form_Notice_Reminder" = "Fill this form with your identity";
+"Option_Title_Passenger_Form" = "Same as Contact Detail";
+"Fill_Data_Title_Passenger_Form" = "Fill Data";
+
+
+// Hotel
 "Destination_Hotel_Title_Form" = "Destination / Hotel";
 "Welcome_To_TripToZero" = "Welcome to triptozero";
 "Your_Location_Title" = "Your Location";
@@ -16,6 +44,7 @@
 "Pick_Date_Title_Form" = "Pick Dates";
 "How_Nights_Title" = "How Many Nights?";
 "Count_Nights_Title" = "%d Nights";
+"Order_Nights_title" = "%@ Nights";
 "Maximum_Nights_Alert_Title" = "Only Maximum 15 Nights";
 "Maximum_Nights_Reminder_Title" = "Maximum 15 Nights";
 "CheckIn_Pick_Title" = "Choose Check-In Date";
@@ -40,7 +69,7 @@
 "Address_Hotel_Title" = "Address";
 "Order_Hotel_Title" = "Order Hotel Room";
 "Guest_Contact_Form_Title" = "Guest Form";
-"Title_Form_Data" = "Title";
+"Title_Form_Data" = "Title (Mr, Mrs, Ms)";
 "Mr_Form_Data" = "Mr";
 "Mrs_Form_Data" = "Mrs";
 "Ms_Form_Data" = "Ms";
@@ -63,5 +92,33 @@
 "CreditCard_Title" = "Credit Card";
 "Transfer_Title" = "Transfer";
 "Cart_Orders_Title" = "Order Cart";
-"PayTotal_Title" = "Payment Total: %@";
-"Issued_Order_Title" = "Issued - %@";
+"PayTotal_Title" = "Total: %@";
+"Issued_Order_Title" = "Order - %@";
+"ThankYou_Notice" = "Thank You";
+"Confirmed_Notice" = "Show this detail and your ID to front desk for checkin";
+"PaymentDone_Notice" = "Your order has saved, Please check your booking after did the transfer";
+"CheckBooking_Title" = "Check Booking";
+"TransferNotAvailable_Notice" = "Sorry, This transfer payment is not available temporarily";
+"KlikBCA_NoticeError" = "A Problem have occured. Please try again.";
+"KlikBCA_NoticeConfirm" = "Please Write your Klik BCA ID!";
+"NoOrder_title" = "No Order";
+"NoOrder_Description" = "Book hotel now and pay here";
+"CancelOrder_Title" = "Are you sure to cancel this order?";
+"NoIssue_Title" = "No Trips";
+"NoIssue_Description" = "Your trip or business start here";
+"NoBooking_Title" = "No Booking";
+"NoFlight_Title" = "No Flight";
+"NoHotel_Title" = "No Hotel here";
+"NoFlight_Description" = "Please reschedule your flight again";
+"NoHotel_Description" = "Please find another different location";
+"Welcome_TripToZero" = "Welcome to triptozero";
+"Currency_Title" = "Currency";
+"NoticeMatchForm_Title" = "Please all information matches your travel ID!";
+"NoticeScreenshot_Title" = "Take a screenshot this page if It's necessary";
+
+// Misc.
+
+"PhoneTextField_Placeholder" = "e.g:81355XXXXX";
+"CountryCode_Title" = "Country Code & Phone Number";
+"CountryCodePick_Title" = "Country Code";
+"BookingAttention_Title" = "Please Wait, Booking is in process";

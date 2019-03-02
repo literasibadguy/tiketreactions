@@ -7,3 +7,9 @@
 //
 
 import Foundation
+
+
+extension GetFlightDataEnvelope {
+    
+    internal static let sample = GetFlightDataEnvelope(diagnostic: .sample, adultPassengerList: .sample, departures: .sample, returns: .sample, guestId: "000000")
+}

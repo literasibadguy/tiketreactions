@@ -29,6 +29,7 @@ public protocol OrderListViewModelOutputs {
     var ordersAreLoading: Signal<Bool, NoError> { get }
     var loadingOverlaysIsHidden: Signal<Bool, NoError> { get }
     var orders: Signal<[OrderData], NoError> { get }
+    var flightMyOrders: Signal<[FlightOrderData], NoError> { get }
     var goToOrderDetail: Signal<OrderData, NoError> { get }
     var goToPayment: Signal<MyOrder, NoError> { get }
     var goToBookingCompleted: Signal<(), NoError> { get }
@@ -49,53 +50,33 @@ public final class OrderListViewModel: OrderListViewModelType, OrderListViewMode
     public init() {
         
         let orderListIsLoading = MutableProperty(false)
-        
-        /*
-        let viewDidLoadRequest = self.viewDidLoadProperty.signal.switchMap {
-            AppEnvironment.current.apiService.fetchHotelOrder().on(started: { orderListIsLoading.value = true } , terminated: { orderListIsLoading.value = false }).retry(upTo: 2).materialize()
-        }.values()
-         */
- 
-        let ordersRequest = Signal.merge(self.viewWillAppearProperty.signal.ignoreValues(), self.viewDidLoadProperty.signal).switchMap {
+        let ordersRequest = Signal.merge(self.viewWillAppearProperty.signal.ignoreValues(), self.viewDidLoadProperty.signal, self.shouldRefreshProperty.signal).switchMap {
             AppEnvironment.current.apiService.fetchHotelOrder().on(started: { orderListIsLoading.value = true }, terminated: { orderListIsLoading.value = false }).retry(upTo: 2).materialize()
-        }.values()
-        
-        let refreshedRequest = self.shouldRefreshProperty.signal.switchMap {
-            AppEnvironment.current.apiService.fetchHotelOrder().on(started: { orderListIsLoading.value = true }, terminated: { orderListIsLoading.value = false }).retry(upTo: 2).materialize()
-        }.values()
-        
-        ordersRequest.observe(on: UIScheduler()).observeValues { envelope in
-            print("DIAGNOSTIC: \(envelope.diagnostic.status)")
         }
         
-        let orderPayment = ordersRequest.map { result in return result.myOrder }.skipNil()
+        let orderPayment = ordersRequest.values().map { result in return result.myOrder }.skipNil()
+        let ordersAvailable = ordersRequest.values().map { result in return result.myOrder?.orderData }
         
-        let ordersAvailable = Signal.merge(ordersRequest, refreshedRequest).map { result in return result.myOrder?.orderData }
+        self.flightMyOrders = .empty
         
         self.orders = ordersAvailable.skipNil()
-        self.showEmptyState = Signal.merge(self.orders.map { $0.isEmpty }, ordersRequest.map { $0.diagnostic.status == .empty }).skipRepeats(==).mapConst(true)
-        self.hideEmptyState = Signal.merge(self.viewDidLoadProperty.signal.ignoreValues(), self.orders.filter { orders in
-            !orders.isEmpty
-        }.ignoreValues())
+
+//        self.showEmptyState = Signal.merge(self.orders.map { $0.i sEmpty }, ordersRequest.map { $0.diagnostic.status == .empty }).skipRepeats(==).mapConst(true)
+        self.hideEmptyState = Signal.merge(self.viewDidLoadProperty.signal.ignoreValues(), orderListIsLoading.signal.filter { $0 == true }.ignoreValues(), self.orders.combinePrevious([]).filter { previousOrders, currentOrders in previousOrders.isEmpty && !currentOrders.isEmpty }.ignoreValues())
         
-        self.deleteOrderReminder = self.deletedOrderProperty.signal.ignoreValues().map { "Apakah Yakin Membatalkan Order Ini?" }
+        self.deleteOrderReminder = self.deletedOrderProperty.signal.ignoreValues().map { Localizations.CancelorderTitle }
         
-        let deleteOrderEnvelope = self.deletedOrderProperty.signal.skipNil().promoteError(OrderListRetryError.self).switchMap { order in
-            SignalProducer<(), OrderListRetryError>(value: ()).flatMap {
-                _ in AppEnvironment.current.apiService.deleteOrder(url: order.deleteUri).on(started: { orderListIsLoading.value = true }, terminated: { orderListIsLoading.value = false })
-                    .flatMapError { _ in
-                    return SignalProducer(error: OrderListRetryError())
-                    }.flatMap { envelope -> SignalProducer<DeleteOrderEnvelope, OrderListRetryError> in
-                        return SignalProducer(value: envelope)
-                }
-            }
-            }.materialize().takeWhen(self.confirmDeleteProperty.signal.filter(isTrue).ignoreValues())
+        let deleteOrderEvents = self.deletedOrderProperty.signal.skipNil().takeWhen(self.confirmDeleteProperty.signal.filter(isTrue)).switchMap { order in
+            AppEnvironment.current.apiService.deleteOrder(url: order.deleteUri).ck_delay(AppEnvironment.current.apiDelayInterval, on: AppEnvironment.current.scheduler).on(started: { orderListIsLoading.value = true }, terminated: { orderListIsLoading.value = false }).materialize()
+        }
         
         self.ordersAreLoading = orderListIsLoading.signal
         
+        self.showEmptyState = Signal.merge(ordersRequest.values().filter { isTrue($0.myOrder.isNil) }.mapConst(false), self.orders.filter { $0.isEmpty }.mapConst(false), ordersRequest.errors().mapConst(false))
+        
         self.loadingOverlaysIsHidden = orderListIsLoading.signal.negate()
         
-        self.deletedOrder = deleteOrderEnvelope.values().map { $0.diagnostic }
+        self.deletedOrder = deleteOrderEvents.values().map { $0.diagnostic }
         self.goToOrderDetail = self.tapOrderDetailProperty.signal.skipNil()
         
         self.goToBookingCompleted = self.historyButtonTappedProperty.signal
@@ -143,14 +124,15 @@ public final class OrderListViewModel: OrderListViewModelType, OrderListViewMode
         self.viewDidLoadProperty.value = ()
     }
     
-    fileprivate let viewWillAppearProperty = MutableProperty<Bool?>(nil)
+    fileprivate let viewWillAppearProperty = MutableProperty(())
     public func viewWillAppear(animated: Bool) {
-        self.viewWillAppearProperty.value = animated
+        self.viewWillAppearProperty.value = ()
     }
     
     public let ordersAreLoading: Signal<Bool, NoError>
     public let loadingOverlaysIsHidden: Signal<Bool, NoError>
     public let orders: Signal<[OrderData], NoError>
+    public let flightMyOrders: Signal<[FlightOrderData], NoError>
     public let goToOrderDetail: Signal<OrderData, NoError>
     public let goToBookingCompleted: Signal<(), NoError>
     public let goToPayment: Signal<MyOrder, NoError>

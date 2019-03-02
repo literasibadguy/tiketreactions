@@ -6,8 +6,8 @@ public struct SearchFlightEnvelope {
     public let diagnostic: Diagnostic
     public let roundTrip: Bool?
     public let paramSearchFlight: SearchFlightParams
-    public let departResuts: [Flight]
-    public let returnResults: FlightResults?
+    public let departResuts: [Flight]?
+    public let returnResults: [Flight]?
 //    public let flightResults: RoundResults
     //    public let nearbyGoDate: NearbyGoDate
     
@@ -54,8 +54,8 @@ extension SearchFlightEnvelope: Argo.Decodable {
             <^> json <| "diagnostic"
             <*> json <|? "round_trip"
             <*> json <| "search_queries"
-            <*> json <|| ["departures", "result"]
-            <*> json <|? "returns"
+            <*> json <||? ["departures", "result"]
+            <*> json <||? ["returns", "result"]
         
     }
 }
@@ -86,7 +86,7 @@ extension SearchFlightEnvelope.RoundResults: Argo.Decodable {
             <^> json <| "departures"
             <*> json <| "returns"
         
-        return nilTemp <|> foundTemp <|> roundTemp
+        return roundTemp
     }
 }
 

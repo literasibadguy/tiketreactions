@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -13,7 +13,7 @@
         <!--Pick Airports TableVC-->
         <scene sceneID="5a8-PI-lRS">
             <objects>
-                <viewController storyboardIdentifier="PickAirportsTableVC" id="XFh-6f-0mc" customClass="PickAirportsTableVC" customModule="TiketReactions" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PickAirportsTableVC" id="XFh-6f-0mc" customClass="PickAirportsTableVC" customModule="TripToZero" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xQ4-vl-ccs">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -58,7 +58,7 @@
                                 <rect key="frame" x="0.0" y="163" width="375" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AirportViewCell" rowHeight="78" id="pRd-Kr-wYN" customClass="AirportViewCell" customModule="TiketReactions" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AirportViewCell" rowHeight="78" id="pRd-Kr-wYN" customClass="AirportViewCell" customModule="TripToZero" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="78"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pRd-Kr-wYN" id="pfb-h8-yMB">
@@ -99,7 +99,7 @@
                                                         <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="9cp-ci-nJg" secondAttribute="trailing" constant="60" id="9Kt-EQ-bNP"/>
                                                     </constraints>
                                                 </stackView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HKV-2F-eu5" userLabel="Airport Container View">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HKV-2F-eu5" userLabel="Airport Separator View">
                                                     <rect key="frame" x="20" y="76.5" width="335" height="1"/>
                                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
@@ -120,6 +120,7 @@
                                         <connections>
                                             <outlet property="airportCodeLabel" destination="ZMw-fL-Sw9" id="NBe-aU-zoG"/>
                                             <outlet property="airportLabel" destination="l2c-84-E5n" id="JmT-bA-lev"/>
+                                            <outlet property="airportSeparatorView" destination="HKV-2F-eu5" id="gD0-dA-ZrV"/>
                                             <outlet property="cityLabel" destination="y8T-BV-rlo" id="rwH-vW-AP0"/>
                                         </connections>
                                     </tableViewCell>
@@ -195,7 +196,7 @@
                             <viewLayoutGuide key="safeArea" id="ort-np-UuH"/>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AirportViewCell" rowHeight="64" id="BlO-t7-KHf" customClass="AirportViewCell" customModule="TiketReactions" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AirportViewCell" rowHeight="64" id="BlO-t7-KHf" customClass="AirportViewCell" customModule="TripToZero" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="183" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BlO-t7-KHf" id="cff-91-bU8">

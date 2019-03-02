@@ -20,9 +20,10 @@ public final class IssuedListViewCell: UITableViewCell, ValueCell {
     
     fileprivate let viewModel: IssuedListCellViewModelType = IssuedListCellViewModel()
     
-    @IBOutlet fileprivate weak var orderIdLabel: UILabel!
+    @IBOutlet fileprivate weak var issueStackView: UIStackView!
+//    @IBOutlet fileprivate weak var hotelNameLabel: UILabel!
+    @IBOutlet fileprivate weak var issueDateLabel: UILabel!
     @IBOutlet fileprivate weak var emailLabel: UILabel!
-    @IBOutlet fileprivate weak var deleteIssueButton: UIButton!
     @IBOutlet fileprivate weak var separatorView: UIView!
     
     weak var delegate: IssuedListCellDelegate?
@@ -30,8 +31,6 @@ public final class IssuedListViewCell: UITableViewCell, ValueCell {
     public override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
-        self.deleteIssueButton.addTarget(self, action: #selector(deleteIssueButtonTapped), for: .touchUpInside)
     }
 
     override public func setSelected(_ selected: Bool, animated: Bool) {
@@ -42,6 +41,12 @@ public final class IssuedListViewCell: UITableViewCell, ValueCell {
     
     public override func bindStyles() {
         super.bindStyles()
+        
+        _ = self.issueDateLabel
+            |> UILabel.lens.textColor .~ .tk_official_green
+        
+        _ = self.emailLabel
+            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
         
         _ = self.separatorView
             |> UIView.lens.backgroundColor .~ .tk_base_grey_100
@@ -62,7 +67,7 @@ public final class IssuedListViewCell: UITableViewCell, ValueCell {
     public func configureWith(value: IssuedOrder) {
         self.viewModel.inputs.configureWith(value)
         
-        _ = self.orderIdLabel
+        _ = self.issueDateLabel
             |> UILabel.lens.text .~ "Order ID: \(value.orderId)"
         
         _ = self.emailLabel

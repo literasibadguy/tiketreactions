@@ -25,7 +25,6 @@ class FlightResultsFilterVC: UITableViewController {
         
         let cancelButton = UIButton(type: .custom)
         cancelButton.setImage(UIImage(named: "cancel-button-saved"), for: .normal)
-        let cancelBarItem = UIBarButtonItem(customView: cancelButton)
         
         let plainCancel = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped))
         

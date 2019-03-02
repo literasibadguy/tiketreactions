@@ -16,6 +16,7 @@ public protocol UINavigationBarProtocol: UIViewProtocol {
     var shadowImage: UIImage? { get set }
     var titleTextAttributes: [NSAttributedStringKey : Any]? { get set }
     var isTranslucent: Bool { get set }
+    var prefersLargeTitles: Bool { get set }
 }
 
 extension UINavigationBar: UINavigationBarProtocol {}
@@ -53,6 +54,13 @@ public extension LensHolder where Object: UINavigationBarProtocol {
         return Lens(
             view: { view in view.isTranslucent },
             set: { view, set in set.isTranslucent = view; return set; }
+        )
+    }
+    
+    public var prefersLargeTitles: Lens<Object, Bool> {
+        return Lens(
+            view: { view in view.prefersLargeTitles },
+            set: { view, set in set.prefersLargeTitles = view; return set; }
         )
     }
 }

@@ -52,9 +52,6 @@ public final class HotelLiveFeedNavViewModel: HotelLiveFeedNavViewModelType, Hot
     
     
     public init() {
-        let currentParams = Signal.merge(self.configParamsProperty.signal.skipNil(), self.destinationSelectedProperty.signal.skipNil().map { $0.params })
-        
-        let combineParams = Signal.combineLatest(self.configParamsProperty.signal.skipNil(), self.destinationSelectedProperty.signal.skipNil(), self.dateRangeSelectedProperty.signal.skipNil(), self.guestRoomSelectedProperty.signal.skipNil())
         
         self.destinationLabelText = .empty
         self.dateRangeLabelText = .empty

@@ -36,7 +36,7 @@ public final class PickDatesHotelVC: UIViewController {
         super.viewDidLoad()
         
         self.dateRangeVC = self.childViewControllers
-            .flatMap { $0 as? DateRangesVC }.first
+            .compactMap { $0 as? DateRangesVC }.first
         self.dateRangeVC.delegate = self
         
         self.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)

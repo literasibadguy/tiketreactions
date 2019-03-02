@@ -5,6 +5,33 @@
   Created by Firas Rafislam on 21/05/18.
   Copyright © 2018 Firas Rafislam. All rights reserved.
 */
+// Flight
+"Origin_Flight_Title_Form" = "Asal";
+"Destination_Flight_Title_Form" = "Tujuan";
+"Passenger_Flight_Title_Form" = "Penumpang";
+"Outbound_Title_Pick_Date" = "Tanggal Berangkat";
+"Return_Title_Pick_Date" = "Tanggal Pulang";
+"Find_Flights_Button_Pick_Date" = "Cari Penerbangan";
+"Single_Status_Title_Pick_Date" = "Penerbangan Sekali Jalan";
+"Return_Status_Title_Pick_Date" = "Penerbangan Pergi-Pulang";
+"Outbound_Notice_Pick_Flight" = "Pergi ke %@";
+"Return_Notice_Pick_Flight" = "Pulang ke %@";
+"Choose_Title_Button_Pick_Flight" = "Pilih penerbangan ini";
+"Order_Title_Button_Pick_Flight" = "Pesan penerbangan ini";
+"Check_Flight_Notice_Summary" = "Mohon dicek kembali penerbangan ini sebelum melakukan pemesanan";
+"Passenger_Contact_Form_Title" = "Kontak Form";
+"Passenger_Adult_Status_list" = "Penumpang (Dewasa) %d";
+"Passenger_Child_Status_list" = "Penumpang (Anak) %d";
+"Passenger_Infant_Status_list" = "Penumpang (Bayi) %d";
+"Birthdate_Title_Passenger_Form" = "Tanggal lahir";
+"Citizen_Title_Passenger_Form" = "Kewarganegaraan";
+"PassportNo_Title_Passenger_Form" = "No. Paspor";
+"Expired_Title_Passenger_Form" = "Jatuh Tanggal Kadaluarsa";
+"IssuedPassport_Passenger_Form" = "Kota Terbit Paspor";
+"Form_Notice_Reminder" = "Mohon data penumpang sesuai identitas";
+"Option_Title_Passenger_Form" = "Sama dengan kontak";
+"Fill_Data_Title_Passenger_Form" = "Isi Data";
+
 
 "Destination_Hotel_Title_Form" = "Destinasi / Hotel";
 "Welcome_To_TripToZero" = "Selamat Datang di triptozero";
@@ -16,6 +43,7 @@
 "Pick_Date_Title_Form" = "Pilih Tanggal";
 "How_Nights_Title" = "Berapa Malam?";
 "Count_Nights_Title" = "%d Malam";
+"Order_Nights_title" = "%@ Malam";
 "Maximum_Nights_Alert_Title" = "Maaf Maksimal 15 Malam";
 "Maximum_Nights_Reminder_Title" = "Maksimal 15 Malam";
 "CheckIn_Pick_Title" = "Pilih tanggal Check-In";
@@ -40,7 +68,7 @@
 "Address_Hotel_Title" = "Alamat";
 "Order_Hotel_Title" = "Pesan Kamar Hotel";
 "Guest_Contact_Form_Title" = "Form Tamu";
-"Title_Form_Data" = "Title";
+"Title_Form_Data" = "Title (Tuan, Nyonya, Nona)";
 "Mr_Form_Data" = "Tuan";
 "Mrs_Form_Data" = "Nyonya";
 "Ms_Form_Data" = "Nona";
@@ -62,6 +90,35 @@
 "OrderId_Title" = "Order Id";
 "CreditCard_Title" = "Kartu Kredit";
 "Transfer_Title" = "Transfer";
-"Cart_Orders_Title" = "Keranjang Order";
-"PayTotal_Title" = "Total Bayar: %@";
-"Issued_Order_Title" = "Issued - %@";
+"Cart_Orders_Title" = "Keranjang";
+"PayTotal_Title" = "Total: %@";
+"Issued_Order_Title" = "Pesanan - %@";
+"ThankYou_Notice" = "Terima Kasih";
+"Confirmed_Notice" = "Tunjukkan pesanan ini dan ID anda di resepsionis untuk checkin";
+"PaymentDone_Notice" = "Order anda sudah tersimpan, Silakan cek Booking anda setelah melakukan transfer";
+"CheckBooking_Title" = "Cek Booking";
+"TransferNotAvailable_Notice" = "Metode pembayaran ini sedang tidak tersedia";
+"KlikBCA_NoticeError" = "Terjadi masalah saat memproses pesanan Anda. Silakan dicoba lagi.";
+"KlikBCA_NoticeConfirm" = "Mohon tulis Klik BCA ID anda!";
+"NoOrder_title" = "Keranjang kosong";
+"NoOrder_Description" = "Pesan hotel sekarang dan bayar langsung di sini";
+"CancelOrder_Title" = "Yakin batalkan pesanan ini?";
+"NoIssue_Title" = "Tidak ada liburan";
+"NoIssue_Description" = "Liburan dan bisnis kamu mulai dari sini";
+"NoBooking_Title" = "Tidak ada Booking";
+"NoFlight_Title" = "Tidak ada penerbangan untuk ini";
+"NoHotel_Title" = "Tidak ada hotel di sekitar ini";
+"NoFlight_Description" = "Silakan cari penerbangan dengan jadwal berbeda";
+"NoHotel_Description" = "Silakan cari hotel di tempat berbeda";
+"Welcome_TripToZero" = "Selamat Datang di triptozero";
+"Currency_Title" = "Mata Uang";
+"NoticeMatchForm_Title" = "Mohon semua informasi cocok dengan identitas anda!";
+"NoticeScreenshot_Title" = "Ambil Screenshot halaman ini jika diperlukan";
+
+
+// Misc.
+
+"PhoneTextField_Placeholder" = "Cth:81355XXXXX";
+"CountryCode_Title" = "Kode Negara & No. Hp";
+"CountryCodePick_Title" = "Kode Negara";
+"BookingAttention_Title" = "Mohon Tunggu, Booking sedang proses";

@@ -1,28 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Checkout PageVC-->
-        <scene sceneID="OUt-uW-iUH">
+        <scene sceneID="J2v-cG-kEe">
             <objects>
-                <viewController storyboardIdentifier="CheckoutPageVC" id="mbs-AI-Y2m" customClass="CheckoutPageVC" customModule="TiketReactions" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="NNu-eT-zBO">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                <viewController storyboardIdentifier="CheckoutPageVC" id="LBM-Dc-EgF" customClass="CheckoutPageVC" customModule="TripToZero" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GDL-Xx-qcw">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" customUserAgent="twh:27029614;Jajanan Online;" translatesAutoresizingMaskIntoConstraints="NO" id="ID1-E4-duJ">
+                                <rect key="frame" x="0.0" y="88" width="375" height="690"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration" allowsAirPlayForMediaPlayback="NO" applicationNameForUserAgent="triptozero">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="lav-Up-cxL"/>
+                        <constraints>
+                            <constraint firstItem="ID1-E4-duJ" firstAttribute="leading" secondItem="Uh7-ch-kfA" secondAttribute="leading" id="93D-oZ-OIR"/>
+                            <constraint firstItem="ID1-E4-duJ" firstAttribute="top" secondItem="Uh7-ch-kfA" secondAttribute="top" id="BsS-hv-hwc"/>
+                            <constraint firstItem="ID1-E4-duJ" firstAttribute="bottom" secondItem="Uh7-ch-kfA" secondAttribute="bottom" id="Yhq-6Y-YKp"/>
+                            <constraint firstItem="ID1-E4-duJ" firstAttribute="trailing" secondItem="Uh7-ch-kfA" secondAttribute="trailing" id="iPC-dQ-7h2"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Uh7-ch-kfA"/>
                     </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="webView" destination="ID1-E4-duJ" id="Mcq-j3-Pky"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bOc-SH-5zr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="z3G-i4-dhr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-28" y="64"/>
+            <point key="canvasLocation" x="-767.20000000000005" y="89.408866995073893"/>
         </scene>
     </scenes>
 </document>

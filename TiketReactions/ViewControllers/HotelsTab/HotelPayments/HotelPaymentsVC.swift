@@ -22,6 +22,12 @@ public final class HotelPaymentsVC: UITableViewController {
         return vc
     }
     
+    public static func configureWith(myorder: FlightMyOrder) -> HotelPaymentsVC {
+        let vc = Storyboard.HotelPaymentsVC.instantiate(HotelPaymentsVC.self)
+//        vc.viewModel.inputs.configureWith(myOrder: myorder)
+        return vc
+    }
+    
     public static func instantiate() -> HotelPaymentsVC {
         let vc = Storyboard.HotelPaymentsVC.instantiate(HotelPaymentsVC.self)
         return vc

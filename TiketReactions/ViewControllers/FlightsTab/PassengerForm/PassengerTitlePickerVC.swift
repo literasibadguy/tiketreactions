@@ -10,21 +10,27 @@ import UIKit
 import Prelude
 import ReactiveSwift
 import Spring
+import TiketKitModels
 
 internal protocol PassengerTitlePickerVCDelegate: class {
     func passengerTitlePickerVC(_ controller: PassengerTitlePickerVC, choseTitle: String)
-    
     func passengerTitlePickerVCCancelled(_ controller: PassengerTitlePickerVC)
+}
+
+internal protocol PassengerBaggagePickerDelegate: class {
+    func passengerBaggagePicker(_ controller: PassengerTitlePickerVC, choseBaggage: ResourceBaggage)
+    func passengerBaggageCanceled(_ controller: PassengerTitlePickerVC)
 }
 
 internal final class PassengerTitlePickerVC: UIViewController {
     fileprivate var dataSource: [String] = []
     internal weak var delegate: PassengerTitlePickerVCDelegate!
+    internal weak var baggageDelegate: PassengerTitlePickerVCDelegate!
+    
     fileprivate let viewModel: PassengerTitlePickerViewModelType = PassengerTitlePickerViewModel()
     @IBOutlet fileprivate weak var titlePickerView: UIPickerView!
     @IBOutlet fileprivate weak var titleView: UIView!
     @IBOutlet fileprivate weak var titleStackView: UIStackView!
-    
     
     @IBOutlet fileprivate weak var titleInputLabel: UILabel!
     @IBOutlet fileprivate weak var doneButton: DesignableButton!
@@ -34,9 +40,13 @@ internal final class PassengerTitlePickerVC: UIViewController {
     
     static func instantiate(titles: [String], selectedTitle: String, delegate: PassengerTitlePickerVCDelegate) -> PassengerTitlePickerVC {
         let vc = Storyboard.PassengerForm.instantiate(PassengerTitlePickerVC.self)
-        let titles = [Localizations.MrFormData, Localizations.MrsFormData, Localizations.MsFormData]
         vc.viewModel.inputs.selectedSalutation(titles: titles, title: selectedTitle)
         vc.delegate = delegate
+        return vc
+    }
+    
+    static func instantiate(baggages: [ResourceBaggage]) -> PassengerTitlePickerVC {
+        let vc = Storyboard.PassengerForm.instantiate(PassengerTitlePickerVC.self)
         return vc
     }
     
@@ -45,6 +55,9 @@ internal final class PassengerTitlePickerVC: UIViewController {
 
         // Do any additional setup after loading the view.
         self.doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+        
+        self.titlePickerView.dataSource = self
+        self.titlePickerView.delegate = self
         
         self.viewModel.inputs.viewDidLoad()
     }
@@ -74,8 +87,8 @@ internal final class PassengerTitlePickerVC: UIViewController {
         _ = self.titlePickerView
             |> UIView.lens.backgroundColor .~ .white
         
-        self.doneButton.cornerRadius = 8.0
-        self.doneButton.backgroundColor = .tk_official_green
+        _ = self.doneButton
+            |> UIButton.lens.backgroundColor .~ .tk_official_green
         
         _ = self.topSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_base_grey_100
@@ -88,20 +101,21 @@ internal final class PassengerTitlePickerVC: UIViewController {
         super.bindViewModel()
         
         self.viewModel.outputs.dataSource
-            .observe(on: UIScheduler())
-            .observeValues { [weak self]  in
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] in
+                print("Whats Title here in dataSource: \($0)")
                 self?.dataSource = $0
                 self?.titlePickerView.reloadAllComponents()
         }
         
         self.viewModel.outputs.selectRow
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] row in
                 self?.titlePickerView.selectRow(row, inComponent: 0, animated: true)
         }
         
         self.viewModel.outputs.notifyDelegateToCancel
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] in
                 guard let _self = self else { return }
                 print("[NOTIFY DELEGATE TO CANCEL...]")
@@ -109,12 +123,14 @@ internal final class PassengerTitlePickerVC: UIViewController {
         }
         
         self.viewModel.outputs.notifyDelegateChoseTitle
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] title in
                 guard let _self = self else { return }
                 _self.delegate?.passengerTitlePickerVCCancelled(_self)
                 _self.delegate?.passengerTitlePickerVC(_self, choseTitle: title)
         }
+        
+
     }
     
     @objc fileprivate func doneButtonTapped() {
@@ -137,6 +153,7 @@ extension PassengerTitlePickerVC: UIPickerViewDelegate {
     internal func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return self.dataSource[row]
     }
+    
     
     internal func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         print("DID SELECT ROW ON PICKER")

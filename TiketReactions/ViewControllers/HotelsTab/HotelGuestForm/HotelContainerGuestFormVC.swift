@@ -24,6 +24,8 @@ public final class HotelContainerGuestFormVC: UIViewController {
     
     fileprivate let backButton = UIBarButtonItem()
     
+    
+    @IBOutlet fileprivate weak var loadingOverlayLabel: UILabel!
     @IBOutlet fileprivate weak var loadingOverlayView: UIView!
     @IBOutlet fileprivate weak var loadingIndicatorView: UIActivityIndicatorView!
     
@@ -51,17 +53,6 @@ public final class HotelContainerGuestFormVC: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
-    public override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    
-    }
-    
-    public override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        
-    }
-    
     public override func bindStyles() {
         super.bindStyles()
         
@@ -70,17 +61,23 @@ public final class HotelContainerGuestFormVC: UIViewController {
         _ = self.backButton
             |> UIBarButtonItem.lens.tintColor .~ .tk_official_green
         
+        _ = self.loadingOverlayLabel
+            |> UILabel.lens.isHidden .~ true
+            |> UILabel.lens.text .~ Localizations.BookingattentionTitle
+        
         _ = self.loadingIndicatorView
             |> baseActivityIndicatorStyle
         
         _ = self.loadingOverlayView
             |> UIView.lens.backgroundColor .~ UIColor(white: 1.0, alpha: 0.99)
+        
     }
     
     public override func bindViewModel() {
         super.bindViewModel()
         
         self.loadingIndicatorView.rac.animating = self.viewModel.outputs.orderIsLoading
+        self.loadingOverlayLabel.rac.hidden = self.viewModel.outputs.loadingOverlayIsHidden
         self.loadingOverlayView.rac.hidden = self.viewModel.outputs.loadingOverlayIsHidden
         
         self.viewModel.outputs.configureEmbedVCWithHotelAndRoom
@@ -105,7 +102,7 @@ public final class HotelContainerGuestFormVC: UIViewController {
         }
         
         self.viewModel.outputs.remindAlert
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] remind in
                 self?.present(UIAlertController.alert(message: remind, confirm: {
                     _ in self?.viewModel.inputs.remindAlertTappedOK(shouldCheckOut: true)
@@ -132,12 +129,6 @@ public final class HotelContainerGuestFormVC: UIViewController {
                 print("WHATS STATUS HOTEL DIAGNOSTIC: \(hotelLogin.diagnostic)")
                 print("WHATS STATUS HOTEL LOGIN: \(hotelLogin.loginStatus)")
                 self?.viewModel.inputs.tellsToCheckoutCustomer(status: hotelLogin.loginStatus)
-        }
-        
-        self.viewModel.outputs.bookURI
-            .observe(on: UIScheduler())
-            .observeValues { [weak self] book in
-                print("GIVE ME BOOK URI ROOM: \(book)")
         }
         
         self.viewModel.outputs.goToPayments

@@ -24,7 +24,7 @@ public struct HotelDirect {
     public let photos: [Photo]
     public let largePhotos: String
     public let availFacilities: [AvailableFacility]
-    public let nearbyAttraction: [NearbyAttraction]
+    public let nearbyAttraction: [NearbyAttraction]?
     
     public struct Photo {
         public let fileName: String
@@ -40,7 +40,7 @@ public struct HotelDirect {
         public let cityName: String
         public let provinceName: String
         public let countryName: String
-        public let continentName: String
+        public let continentName: String?
         
         public let kelurahanURI: String
         public let kecamatanURI: String
@@ -90,7 +90,7 @@ extension HotelDirect: Argo.Decodable {
             <*> json <|| ["all_photo", "photo"]
             <*> json <| "primaryPhotos_large"
             <*> json <|| ["avail_facilities", "avail_facilitiy"]
-            <*> json <|| ["nearby_attractions", "nearby_attraction"]
+            <*> (json <||? ["nearby_attractions", "nearby_attraction"] <|> .success(nil))
     }
 }
 
@@ -134,7 +134,7 @@ extension HotelDirect.Breadcrumb: Argo.Decodable {
             <*> json <| "city_name"
             <*> json <| "province_name"
             <*> json <| "country_name"
-            <*> json <| "continent_name"
+            <*> (json <|? "continent_name" <|> .success(nil))
         
         let tmp3 = tmp2
             <*> json <| "kelurahan_name"

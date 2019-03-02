@@ -68,12 +68,12 @@ extension SearchHotelParams {
             set: { some, thing in SearchHotelParams(mainCountry: thing.mainCountry, uid: thing.uid, startDate: thing.startDate, endDate: thing.endDate, night: thing.night, room: thing.room, adult: thing.adult, child: thing.child,  sort: thing.sort, minStar: thing.minStar, maxStar: some, minPrice: thing.minPrice, maxPrice: thing.maxPrice, distance: thing.distance, page: thing.page) }
         )
         
-        public static let minPrice = Lens<SearchHotelParams, String?>(
+        public static let minPrice = Lens<SearchHotelParams, String>(
             view: { $0.minPrice },
             set: { some, thing in SearchHotelParams(mainCountry: thing.mainCountry, uid: thing.uid, startDate: thing.startDate, endDate: thing.endDate, night: thing.night, room: thing.room, adult: thing.adult, child: thing.child,  sort: thing.sort, minStar: thing.minStar,maxStar: thing.maxStar, minPrice: some, maxPrice: thing.maxPrice, distance: thing.distance, page: thing.page) }
         )
         
-        public static let maxPrice = Lens<SearchHotelParams, String?>(
+        public static let maxPrice = Lens<SearchHotelParams, String>(
             view: { $0.maxPrice },
             set: { some, thing in SearchHotelParams(mainCountry: thing.mainCountry, uid: thing.uid, startDate: thing.startDate, endDate: thing.endDate, night: thing.night, room: thing.room, adult: thing.adult, child: thing.child,  sort: thing.sort, minStar: thing.minStar,maxStar: thing.maxStar, minPrice: thing.minPrice, maxPrice: some, distance: thing.distance, page: thing.page) }
         )

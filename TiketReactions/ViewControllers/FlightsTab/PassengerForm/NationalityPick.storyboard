@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Nationality PickVC-->
+        <scene sceneID="rvo-Sb-hyN">
+            <objects>
+                <viewController storyboardIdentifier="NationalityPickVC" id="34d-fX-Fm1" customClass="NationalityPickVC" customModule="triptozero" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EH2-IY-4XW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jtL-83-0TB">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="163"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nationality" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zTw-Y5-xwc">
+                                        <rect key="frame" x="20" y="40" width="156.5" height="38.5"/>
+                                        <viewLayoutGuide key="safeArea" id="zRB-mr-xbe"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="32"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="Z1p-Ul-qrQ">
+                                        <rect key="frame" x="0.0" y="86.5" width="375" height="56"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="34d-fX-Fm1" id="bxS-ob-1eJ"/>
+                                        </connections>
+                                    </searchBar>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3IU-V6-wKE">
+                                        <rect key="frame" x="337" y="28" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="A4G-3Q-ZH5"/>
+                                            <constraint firstAttribute="width" constant="30" id="fHM-kP-8Kw"/>
+                                        </constraints>
+                                        <state key="normal" title="Cancel" image="cancel-button-saved"/>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ADe-Ys-gF7" userLabel="Currency Separator View">
+                                        <rect key="frame" x="0.0" y="162" width="375" height="1"/>
+                                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="sZw-Zu-t4A"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="ADe-Ys-gF7" firstAttribute="leading" secondItem="P7I-Jj-RPk" secondAttribute="leading" id="0Zl-Sw-Qnr"/>
+                                    <constraint firstAttribute="bottom" secondItem="ADe-Ys-gF7" secondAttribute="bottom" id="3Fc-Un-gDf"/>
+                                    <constraint firstItem="zTw-Y5-xwc" firstAttribute="top" secondItem="P7I-Jj-RPk" secondAttribute="top" constant="20" id="4dO-LZ-uBX"/>
+                                    <constraint firstItem="Z1p-Ul-qrQ" firstAttribute="trailing" secondItem="P7I-Jj-RPk" secondAttribute="trailing" id="79h-I6-Viy"/>
+                                    <constraint firstItem="P7I-Jj-RPk" firstAttribute="trailing" secondItem="ADe-Ys-gF7" secondAttribute="trailing" id="813-Op-ven"/>
+                                    <constraint firstItem="zTw-Y5-xwc" firstAttribute="leading" secondItem="P7I-Jj-RPk" secondAttribute="leading" constant="20" id="DI2-um-gJf"/>
+                                    <constraint firstItem="Z1p-Ul-qrQ" firstAttribute="leading" secondItem="P7I-Jj-RPk" secondAttribute="leading" id="K8a-T5-Mlc"/>
+                                    <constraint firstItem="3IU-V6-wKE" firstAttribute="top" secondItem="P7I-Jj-RPk" secondAttribute="top" constant="8" id="WmI-B7-6Id"/>
+                                    <constraint firstItem="Z1p-Ul-qrQ" firstAttribute="top" secondItem="zTw-Y5-xwc" secondAttribute="bottom" constant="8" id="Www-Pf-3iM"/>
+                                    <constraint firstItem="P7I-Jj-RPk" firstAttribute="trailing" secondItem="3IU-V6-wKE" secondAttribute="trailing" constant="8" id="a25-zu-kii"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="zTw-Y5-xwc" secondAttribute="trailing" id="uR3-1C-y0z"/>
+                                </constraints>
+                                <viewLayoutGuide key="safeArea" id="P7I-Jj-RPk"/>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0P4-Te-nIW" userLabel="Currency Table View">
+                                <rect key="frame" x="0.0" y="163" width="375" height="504"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CurrencyListViewCell" rowHeight="78" id="2ae-fz-G55" userLabel="CurrencyListViewCell" customClass="CurrencyListViewCell" customModule="triptozero" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="78"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2ae-fz-G55" id="0jc-vP-3xF">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="77.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JCf-DZ-375" userLabel="Currency List Stack View">
+                                                    <rect key="frame" x="16" y="12.5" width="343" height="52.5"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Gwc-LA-1XN" userLabel="Currency Stack View">
+                                                            <rect key="frame" x="0.0" y="0.0" width="343" height="52.5"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Jakarta" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BVN-yV-FsB" userLabel="Currency Title Label">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="33"/>
+                                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Soekarno Hatta" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YGS-FS-zwD" userLabel="Currency Subtitle Label">
+                                                                    <rect key="frame" x="0.0" y="33" width="343" height="19.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="JCf-DZ-375" secondAttribute="trailing" constant="16" id="RkK-Sh-VPj"/>
+                                                <constraint firstItem="JCf-DZ-375" firstAttribute="centerY" secondItem="0jc-vP-3xF" secondAttribute="centerY" id="TRe-cP-zcq"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="JCf-DZ-375" secondAttribute="bottom" constant="2" id="phD-GQ-4fW"/>
+                                                <constraint firstItem="JCf-DZ-375" firstAttribute="leading" secondItem="0jc-vP-3xF" secondAttribute="leading" constant="16" id="yNE-sJ-QtZ"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="currencySubtitleLabel" destination="YGS-FS-zwD" id="vam-f7-TYN"/>
+                                            <outlet property="currencyTitleLabel" destination="BVN-yV-FsB" id="Iq0-Dt-Csm"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="fpp-Ha-rlV">
+                                <rect key="frame" x="177.5" y="405" width="20" height="20"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="jtL-83-0TB" firstAttribute="leading" secondItem="EH2-IY-4XW" secondAttribute="leading" id="Gf2-Hc-00e"/>
+                            <constraint firstItem="0P4-Te-nIW" firstAttribute="leading" secondItem="6FV-Bq-Lq1" secondAttribute="leading" id="LBl-EO-Lne"/>
+                            <constraint firstItem="jtL-83-0TB" firstAttribute="top" secondItem="EH2-IY-4XW" secondAttribute="top" id="Mm2-dH-6cp"/>
+                            <constraint firstItem="0P4-Te-nIW" firstAttribute="bottom" secondItem="6FV-Bq-Lq1" secondAttribute="bottom" id="QZO-1r-2w5"/>
+                            <constraint firstItem="fpp-Ha-rlV" firstAttribute="centerX" secondItem="0P4-Te-nIW" secondAttribute="centerX" id="U4F-Ks-8fV"/>
+                            <constraint firstAttribute="trailing" secondItem="jtL-83-0TB" secondAttribute="trailing" id="alZ-ha-LEJ"/>
+                            <constraint firstItem="0P4-Te-nIW" firstAttribute="top" secondItem="6FV-Bq-Lq1" secondAttribute="top" constant="143" id="dMQ-zU-faL"/>
+                            <constraint firstItem="0P4-Te-nIW" firstAttribute="top" secondItem="jtL-83-0TB" secondAttribute="bottom" id="gRx-bU-76E"/>
+                            <constraint firstItem="fpp-Ha-rlV" firstAttribute="centerY" secondItem="0P4-Te-nIW" secondAttribute="centerY" id="hB2-U7-ddd"/>
+                            <constraint firstItem="0P4-Te-nIW" firstAttribute="trailing" secondItem="6FV-Bq-Lq1" secondAttribute="trailing" id="l1i-lf-JZK"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6FV-Bq-Lq1"/>
+                    </view>
+                    <connections>
+                        <outlet property="cancelButton" destination="3IU-V6-wKE" id="eeq-gf-H4W"/>
+                        <outlet property="loadingIndicatorView" destination="fpp-Ha-rlV" id="XvA-0u-es9"/>
+                        <outlet property="nationalitySeparatorView" destination="ADe-Ys-gF7" id="fuQ-mu-Gu3"/>
+                        <outlet property="nationalityTableView" destination="0P4-Te-nIW" id="qwA-zG-nOi"/>
+                        <outlet property="searchBar" destination="Z1p-Ul-qrQ" id="aFp-yC-jnI"/>
+                        <outlet property="titleHeaderLabel" destination="zTw-Y5-xwc" id="MXo-I7-ynk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wGz-Rq-aFf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2910" y="9"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="cancel-button-saved" width="40" height="40"/>
+    </resources>
+</document>

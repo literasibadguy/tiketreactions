@@ -5,6 +5,60 @@ PODS:
   - ARChromeActivity (1.0.5)
   - Argo (4.1.2):
     - Runes (>= 4.0.0)
+  - Backpack (0.16.1):
+    - Backpack/Badge (= 0.16.1)
+    - Backpack/Button (= 0.16.1)
+    - Backpack/Card (= 0.16.1)
+    - Backpack/Color (= 0.16.1)
+    - Backpack/Font (= 0.16.1)
+    - Backpack/Gradient (= 0.16.1)
+    - Backpack/Icon (= 0.16.1)
+    - Backpack/Label (= 0.16.1)
+    - Backpack/Panel (= 0.16.1)
+    - Backpack/Radii (= 0.16.1)
+    - Backpack/RTLSupport (= 0.16.1)
+    - Backpack/Shadow (= 0.16.1)
+    - Backpack/Spacing (= 0.16.1)
+    - Backpack/Spinner (= 0.16.1)
+    - Backpack/TextView (= 0.16.1)
+  - Backpack/Badge (0.16.1):
+    - Backpack/Color
+    - Backpack/Font
+    - Backpack/Radii
+    - Backpack/Spacing
+  - Backpack/Button (0.16.1):
+    - Backpack/Color
+    - Backpack/Font
+    - Backpack/Gradient
+    - Backpack/Label
+    - Backpack/RTLSupport
+    - Backpack/Spacing
+  - Backpack/Card (0.16.1):
+    - Backpack/Color
+    - Backpack/Radii
+    - Backpack/Shadow
+    - Backpack/Spacing
+  - Backpack/Color (0.16.1)
+  - Backpack/Font (0.16.1)
+  - Backpack/Gradient (0.16.1):
+    - Backpack/Color
+  - Backpack/Icon (0.16.1)
+  - Backpack/Label (0.16.1):
+    - Backpack/Color
+    - Backpack/Font
+  - Backpack/Panel (0.16.1):
+    - Backpack/Color
+    - Backpack/Radii
+    - Backpack/Spacing
+  - Backpack/Radii (0.16.1)
+  - Backpack/RTLSupport (0.16.1)
+  - Backpack/Shadow (0.16.1)
+  - Backpack/Spacing (0.16.1)
+  - Backpack/Spinner (0.16.1):
+    - Backpack/Color
+  - Backpack/TextView (0.16.1):
+    - Backpack/Color
+    - Backpack/Font
   - CalendarDateRangePickerViewController (0.1.0)
   - Curry (4.0.0)
   - FBSnapshotTestCase (2.1.4):
@@ -43,12 +97,14 @@ PODS:
   - Runes (4.1.0)
   - Spring (1.0.5)
   - SwiftGen (5.3.0)
+  - SwiftSoup (1.7.1)
   - TUSafariActivity (1.0.4)
 
 DEPENDENCIES:
   - Alamofire (~> 4.6)
   - AlamofireImage
   - Argo
+  - Backpack (from `../../backpack-ios`)
   - CalendarDateRangePickerViewController
   - Curry
   - FBSnapshotTestCase
@@ -65,6 +121,7 @@ DEPENDENCIES:
   - Runes
   - Spring (from `https://github.com/MengTo/Spring.git`)
   - SwiftGen
+  - SwiftSoup
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -88,9 +145,12 @@ SPEC REPOS:
     - Result
     - Runes
     - SwiftGen
+    - SwiftSoup
     - TUSafariActivity
 
 EXTERNAL SOURCES:
+  Backpack:
+    :path: "../../backpack-ios"
   Spring:
     :git: https://github.com/MengTo/Spring.git
 
@@ -104,6 +164,7 @@ SPEC CHECKSUMS:
   AlamofireImage: 2e784dc5d00f04903a52c1d169181469c805c3df
   ARChromeActivity: 821c7849b566f49583987468733a896fee35aa4d
   Argo: 5db06502fc1222d83011f574243089dab25202ff
+  Backpack: fd6ac139d06248dbe9364e5e49c06404742dca57
   CalendarDateRangePickerViewController: 9e82a36a21ad7338f4e21a314469bfabe1f738fb
   Curry: 887c0b9de9a9947820a59557459c7895e76d7b90
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
@@ -121,8 +182,9 @@ SPEC CHECKSUMS:
   Runes: 72a67a5bbbe1b5fdae08b5a01b10c60d83fc69aa
   Spring: 48aad470f3ead043b2da98b64e0bf0630b7ebc42
   SwiftGen: 4379bd3640b0a212a0f6ea3c494adba385513d10
+  SwiftSoup: 277f7ef548826e0ca7603a06b30d4a5df3ee0587
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
 
-PODFILE CHECKSUM: ce0a27d5c12bd92fed773019b31f74ae51d94e69
+PODFILE CHECKSUM: 26ffd1e478b8020ebd3d0570e17268a933941079
 
 COCOAPODS: 1.5.0

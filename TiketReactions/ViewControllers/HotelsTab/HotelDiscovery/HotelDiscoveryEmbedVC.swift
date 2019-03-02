@@ -27,7 +27,6 @@ public final class HotelDiscoveryEmbedVC: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         self.navDiscoveryVC = self.childViewControllers.compactMap { $0 as? HotelDiscoveryNavVC }.first
 //        self.navigationFlightVC.delegate = self
         self.navDiscoveryVC.delegate = self

@@ -86,7 +86,7 @@ public struct LanguageDoubler: NSBundleType {
     public let bundleIdentifier: String? = "com.language.doubler"
     
     public static func create(path: String) -> NSBundleType? {
-        return DoublerBundler(path: path) as? NSBundleType
+        return DoublerBundler(path: path)
     }
     
     public func localizedString(forKey key: String, value: String?, table tableName: String?) -> String {

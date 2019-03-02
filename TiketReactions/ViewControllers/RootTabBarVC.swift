@@ -40,6 +40,7 @@ public final class RootTabBarVC: UITabBarController {
         self.viewModel.outputs.selectedIndex
             .observe(on: UIScheduler())
             .observeValues { [weak self] in
+                print("Selected Index: \($0)")
                 self?.selectedIndex = $0
         }
         
@@ -52,11 +53,9 @@ public final class RootTabBarVC: UITabBarController {
         }
     }
     
-    /*
     public func switchToFlight() {
         self.viewModel.inputs.switchToFlight()
     }
-    */
     
     public func switchToHotelForm() {
         self.viewModel.inputs.switchToHotelForm()
@@ -66,17 +65,26 @@ public final class RootTabBarVC: UITabBarController {
         self.viewModel.inputs.switchToOrder()
     }
     
+    public func switchToLounge() {
+        self.viewModel.inputs.switchToIssues()
+    }
+    
     public func switchToAbout() {
         self.viewModel.inputs.switchToAbout()
     }
     
+    
     fileprivate func setTabBarItemsStyles(withData data: TabBarItemsData) {
         data.items.forEach { item in
             switch item {
+            case let .flightForm(index):
+                _ = tabBarItem(atIndex: index) ?|> flightTabBarItemStyle()
             case let .hotelForm(index):
                 _ = tabBarItem(atIndex: index) ?|> hotelTabBarItemStyle()
             case let .order(index):
                 _ = tabBarItem(atIndex: index) ?|> orderTabBarItemStyle()
+            case let .lounge(index):
+                _ = tabBarItem(atIndex: index) ?|> issueTabBarItemStyle()
             case let .about(index):
                 _ = tabBarItem(atIndex: index) ?|> aboutTabBarItemStyle()
             }

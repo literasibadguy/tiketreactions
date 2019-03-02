@@ -23,6 +23,10 @@ internal final class HotelPaymentsDataSource: ValueCellDataSource {
         self.set(values: envelope.payments, cellClass: HotelPaymentViewCell.self, inSection: Section.availablePayments.rawValue)
     }
     
+    internal func loadFlightPayments(_ order: FlightMyOrder, envelope: AvailablePaymentEnvelope) {
+        
+    }
+    
     override func configureCell(tableCell cell: UITableViewCell, withValue value: Any) {
         switch (cell, value) {
         case let (cell as PaymentSummaryViewCell, value as MyOrder):

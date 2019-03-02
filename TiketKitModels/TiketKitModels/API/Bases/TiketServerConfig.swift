@@ -28,7 +28,7 @@ public struct TiketServerConfig: TiketServerConfigType {
     public static let staging: TiketServerConfigType = TiketServerConfig(
         apiBaseUrl: URL(string: "https://\(Secrets.Api.Endpoint.staging)")!,
         webBaseUrl: URL(string: "https://\(Secrets.WebEndPoint.staging)")!,
-        apiClientAuth: ClientAuth.production
+        apiClientAuth: ClientAuth.development
     )
     
     public init(apiBaseUrl: URL, webBaseUrl: URL, apiClientAuth: ClientAuthType) {

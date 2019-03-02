@@ -27,8 +27,8 @@ public protocol EmptyStatesViewModelInputs {
 
 public protocol EmptyStatesViewModelOutputs {
     var titleLabelText: Signal<String, NoError> { get }
-    
     var subtitleLabelText: Signal<String, NoError> { get }
+    var imageEmptyState: Signal<UIImage, NoError> { get }
 }
 
 public protocol EmptyStatesViewModelType {
@@ -43,6 +43,7 @@ public final class EmptyStatesViewModel: EmptyStatesViewModelType, EmptyStatesVi
         
         self.titleLabelText = emptyState.map(textForTitle(emptyState:))
         self.subtitleLabelText = emptyState.map(textForSubtitle(emptyState:))
+        self.imageEmptyState = emptyState.map(imageFor(emptyState:))
     }
     
     fileprivate let emptyStateProperty = MutableProperty<EmptyState?>(nil)
@@ -61,6 +62,7 @@ public final class EmptyStatesViewModel: EmptyStatesViewModelType, EmptyStatesVi
     
     public let titleLabelText: Signal<String, NoError>
     public let subtitleLabelText: Signal<String, NoError>
+    public let imageEmptyState: Signal<UIImage, NoError>
     
     public var inputs: EmptyStatesViewModelInputs { return self }
     public var outputs: EmptyStatesViewModelOutputs { return self }
@@ -69,26 +71,34 @@ public final class EmptyStatesViewModel: EmptyStatesViewModelType, EmptyStatesVi
 private func textForTitle(emptyState: EmptyState) -> String {
     switch emptyState {
     case .flightResult:
-        return "Tidak ada penerbangan untuk ini"
+        return Localizations.NoflightTitle
     case .hotelResult:
-        return "Tidak ada hotel di sekitar ini"
+        return Localizations.NohotelTitle
     case .orderResult:
-        return "Tidak ada order"
+        return Localizations.NoorderTitle
     case .issueResult:
-        return "Tidak ada Booking"
+        return ""
     }
 }
 
 private func textForSubtitle(emptyState: EmptyState) -> String {
     switch emptyState {
     case .flightResult:
-        return "Silakan cari penerbangan dengan jadwal berbeda"
+        return Localizations.NoflightDescription
     case .hotelResult:
-        return "Silakan cari hotel di tempat berbeda"
+        return Localizations.NohotelDescription
     case .orderResult:
-        return "Silakan melakukan booking terlebih dahulu"
+        return Localizations.NoorderDescription
     case .issueResult:
-        return "Silakan Melakukan booking terlebih dahulu"
+        return Localizations.NoissueDescription
     }
 }
 
+private func imageFor(emptyState: EmptyState) -> UIImage {
+    switch emptyState {
+    case .issueResult:
+        return UIImage(named: "illustrator-lounge")!
+    default:
+        return UIImage(named: "illustrator-emptystate")!
+    }
+}

@@ -24,7 +24,7 @@ public struct AutoHotelResult {
     public let countLocation: String
     public let category: String
     
-    public static let defaults = AutoHotelResult(id: "", labelHotel: "", labelLocation: "", countLocation: "", category: "")
+    public static let defaults = AutoHotelResult(id: "", labelHotel: "", labelLocation: "Jakarta, Indonesia", countLocation: "", category: "Jakarta, Indonesia")
 }
 
 

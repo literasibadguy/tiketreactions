@@ -17,6 +17,10 @@ extension UIColor {
         return .hex(0x09815F)
     }
     
+    public static var tk_fade_green_grey: UIColor {
+        return .hex(0xE0EDE9)
+    }
+    
     public static var tk_official_green_selected: UIColor {
         return .hex(0x09644A)
     }

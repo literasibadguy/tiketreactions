@@ -13,9 +13,8 @@ import Result
 import TiketKitModels
 
 public protocol PickFlightResultsViewModelInputs {
-    func configureSingleWith(params: SearchSingleFlightParams)
-    func configureWith(params: SearchFlightParams)
-    func configureReturn(params: SearchFlightParams, selected: Flight, returns: [Flight])
+    func configureWith(_ envelope: SearchFlightEnvelope)
+    func configureWith(_ params: SearchFlightParams)
     func tappedButtonDismiss()
     func tappedButtonNextStep()
     func tapped(flight: Flight)
@@ -23,28 +22,21 @@ public protocol PickFlightResultsViewModelInputs {
     func viewDidAppear()
     func viewDidDisappear(animated: Bool)
     func willDisplayRow(_ row: Int, outOf totalRows: Int)
+    func viewDidLoad()
 }
 
 public protocol PickFlightResultsViewModelOutputs {
-    var dismissFlightResults: Signal<(), NoError> { get }
     var flightsAreLoading: Signal<Bool, NoError> { get }
-    
-    var destinationTitleText: Signal<String, NoError> { get }
-    var dateTitleText: Signal<String, NoError> { get }
-    var goRoundButtonTitleText: Signal<String, NoError> { get }
-    var goOrderButtonTitleText: Signal<String, NoError> { get }
-    
-    var flights: Signal<[Flight], NoError> { get }
+    var flights: Signal<([Flight], PickNoticeFlight), NoError> { get }
+    var dismissToPickDate: Signal<(), NoError> { get }
     var showNextSteps: Signal<Bool, NoError> { get }
-    var showReturnFlightsText: Signal<String, NoError> { get }
-    var showSingleDirectText: Signal<String, NoError> { get }
-    var showReturnDirectText: Signal<String, NoError> { get }
-    var goToSingleFlights: Signal<(SearchSingleFlightParams, Flight), NoError> { get }
-    var goToReturnFlights: Signal<(SearchFlightParams, Flight, [Flight]), NoError> { get }
-    var goToDirectReturnFlights: Signal<(SearchFlightParams, Flight, Flight), NoError> { get }
+    var showDestinationText: Signal<String, NoError> { get }
+    var showDateText: Signal<String, NoError> { get }
     var returnFlights: Signal<[Flight], NoError> { get }
     var showEmptyState: Signal<EmptyState, NoError> { get }
     var hideEmptyState: Signal<(), NoError> { get }
+    var goToFlight: Signal<Flight, NoError> { get }
+    var goToReturnFlights: Signal<(SearchFlightEnvelope, Flight), NoError> { get }
 }
 
 public protocol PickFlightResultsViewModelType {
@@ -56,86 +48,40 @@ public protocol PickFlightResultsViewModelType {
 public final class PickFlightResultsViewModel: PickFlightResultsViewModelType, PickFlightResultsViewModelInputs, PickFlightResultsViewModelOutputs {
     
     public init() {
-        let paramsChanged = Signal.combineLatest(self.configParamProperty.signal.skipNil(), self.configReturnProperty.signal.skipNil())
+        let current = Signal.combineLatest(self.viewDidLoadProperty.signal, self.configEnvelopeProperty.signal.skipNil()).map(second)
         
-        let onlySingle = Signal.combineLatest(self.configSingleParamProperty.signal.skipNil(), self.viewDidAppearProperty.signal).map(first)
-        let onlyParams = Signal.combineLatest(self.configParamProperty.signal.skipNil(), self.viewDidAppearProperty.signal).map(first)
-        let paramReturns = self.configReturnProperty.signal.skipNil().map(first)
+        let currentParam = Signal.combineLatest(self.viewDidLoadProperty.signal, self.configParamFlightProperty.signal.skipNil()).map(second)
         
-        let isVisible = Signal.merge(self.viewDidAppearProperty.signal.mapConst(true), self.viewDidDisappearProperty.signal.mapConst(false)).skipRepeats()
+        let flightsLoading = MutableProperty(false)
+        let fetchFlightServices = currentParam.switchMap { AppEnvironment.current.apiService.fetchFlightResults(params: $0)
+            .on(started: { flightsLoading.value = true }, terminated: { flightsLoading.value = false }).materialize() }
         
-        self.dismissFlightResults = self.tappedButtonDismissProperty.signal
+        self.flightsAreLoading = flightsLoading.signal
         
-        self.destinationTitleText = onlyParams.map { envelope in "\(envelope.fromAirport ?? "") - \(envelope.toAirport ?? "")" }
-        self.dateTitleText = .empty
+        let noticeSignal = fetchFlightServices.values().map(takeFlightsIntoNotice(_ :))
+        self.flights = Signal.combineLatest(fetchFlightServices.values().map { $0.departResuts }.skipNil(), noticeSignal)
+        self.showNextSteps = self.tappedFlightProperty.signal.skipNil().mapConst(true)
+        self.showDestinationText = Signal.combineLatest(current.map { "\($0.paramSearchFlight.fromAirport ?? "") - \($0.paramSearchFlight.toAirport ?? "")" }, self.viewDidLoadProperty.signal.mapConst("")).map(first)
+        self.showDateText = Signal.combineLatest(noticeSignal.map { $0.date }.skipNil(), self.viewDidLoadProperty.signal.mapConst("")).map(first)
+        self.returnFlights = .empty
+        self.showEmptyState = self.flights.signal.map(first).filter { $0.isEmpty }.map { _ in emptyStateFlight() }
+        self.hideEmptyState = Signal.merge(self.viewWillAppearProperty.signal.ignoreValues().take(first: 1), self.flights.map(first).filter { !$0.isEmpty }.ignoreValues())
         
-        let requestFirstPage = Signal.combineLatest(self.viewDidAppearProperty.signal, paramsChanged, isVisible).filter { _, _, visible in visible }.skipRepeats { lhs, rhs in lhs.0 == rhs.0 && lhs.2 == rhs.2 }.map(second)
-        
-        let requestSingleFlightResults = Signal.combineLatest(self.viewDidAppearProperty.signal, onlySingle, isVisible).filter { _, _, visible in visible }.skipRepeats { lhs, rhs in lhs.0 == rhs.0 && lhs.2 == rhs.2 }
-            .map(second).switchMap { singleParams in
-                AppEnvironment.current.apiService.fetchSingleFlightResults(params: singleParams).demoteErrors()
-        }
-        
-        let requestFlightResults = Signal.combineLatest(self.viewDidAppearProperty.signal, onlyParams, isVisible).filter { _, _, visible in visible }.skipRepeats {
-            lhs, rhs in lhs.0 == rhs.0 && lhs.1 == rhs.1
-            }.map(second).switchMap { params in
-                AppEnvironment.current.apiService.fetchFlightResults(params: params).demoteErrors()
-        }
-        
-        self.goOrderButtonTitleText = .empty
-        self.goRoundButtonTitleText = .empty
-        
-        self.flights = .empty
-        
-        let flightSelected = self.tappedFlightProperty.signal.skipNil()
-        let singleFlight = Signal.combineLatest(onlySingle, flightSelected)
-            
-        self.showNextSteps = flightSelected.mapConst(false)
-        
-        self.showSingleDirectText = singleFlight.mapConst("Order Sekarang")
-        
-        self.goToSingleFlights = singleFlight.takeWhen(self.tappedButtonNextStepProperty.signal)
-        
-        let returnedFlights = Signal.combineLatest(onlyParams, flightSelected, requestFlightResults.filter { $0.returnResults?.flights != nil }.map { ($0.returnResults?.flights)! })
-        
-        self.showReturnFlightsText = singleFlight.mapConst("Pilih Tiket Pulang")
-        self.goToReturnFlights = returnedFlights.takeWhen(self.tappedButtonNextStepProperty.signal)
-        
-        let initialReturns = self.goToReturnFlights.map(second)
-        
-        self.returnFlights = self.configReturnProperty.signal.skipNil().map(third).takeWhen(self.viewDidAppearProperty.signal)
-        
-        self.flightsAreLoading = Signal.merge(self.viewDidAppearProperty.signal.mapConst(true), self.flights.filter { !$0.isEmpty }.mapConst(false), self.returnFlights.filter { !$0.isEmpty }.mapConst(false))
-        
-        let depart = self.configReturnProperty.signal.skipNil().map(second)
-        let directReturnedFlight = Signal.combineLatest(depart, self.tappedFlightProperty.signal.skipNil())
-        
-        let variousButtonText = Signal.merge(singleFlight.mapConst(""), singleFlight.mapConst(""), directReturnedFlight.mapConst(""))
-        
-        self.showReturnDirectText = variousButtonText
-        
-        self.goToDirectReturnFlights = Signal.combineLatest(paramReturns, depart, self.tappedFlightProperty.signal.skipNil()).takeWhen(self.tappedButtonNextStepProperty.signal)
-        
-        self.showEmptyState = .empty
-        
-        self.hideEmptyState = Signal.merge(self.viewWillAppearProperty.signal.take(first: 1).ignoreValues(), requestFlightResults.map { !$0.departResuts.isEmpty && !($0.returnResults?.flights.isEmpty)! })
-        
+        self.goToFlight = Signal.combineLatest(fetchFlightServices.values().filter { $0.returnResults.isNil }, self.tappedFlightProperty.signal.skipNil()).map(second).takeWhen(self.tappedButtonNextStepProperty.signal)
+        self.goToReturnFlights = Signal.combineLatest(fetchFlightServices.values().filter { !$0.returnResults.isNil }, self.tappedFlightProperty.signal.skipNil()).takeWhen(self.tappedButtonNextStepProperty.signal)
+
+        self.dismissToPickDate = self.tappedButtonDismissProperty.signal
         
     }
     
-    fileprivate let configSingleParamProperty = MutableProperty<SearchSingleFlightParams?>(nil)
-    public func configureSingleWith(params: SearchSingleFlightParams) {
-        self.configSingleParamProperty.value = params
+    fileprivate let configEnvelopeProperty = MutableProperty<SearchFlightEnvelope?>(nil)
+    public func configureWith(_ envelope: SearchFlightEnvelope) {
+        self.configEnvelopeProperty.value = envelope
     }
     
-    fileprivate let configParamProperty = MutableProperty<SearchFlightParams?>(nil)
-    public func configureWith(params: SearchFlightParams) {
-        self.configParamProperty.value = params
-    }
-    
-    fileprivate let configReturnProperty = MutableProperty<(SearchFlightParams, Flight, [Flight])?>(nil)
-    public func configureReturn(params: SearchFlightParams, selected: Flight, returns: [Flight]) {
-        self.configReturnProperty.value = (params, selected, returns)
+    fileprivate let configParamFlightProperty = MutableProperty<SearchFlightParams?>(nil)
+    public func configureWith(_ params: SearchFlightParams) {
+        self.configParamFlightProperty.value = params
     }
     
     fileprivate let tappedButtonDismissProperty = MutableProperty(())
@@ -173,24 +119,62 @@ public final class PickFlightResultsViewModel: PickFlightResultsViewModelType, P
         self.willDisplayRowProperty.value = (row, totalRows)
     }
     
-    public let dismissFlightResults: Signal<(), NoError>
+    fileprivate let viewDidLoadProperty = MutableProperty(())
+    public func viewDidLoad() {
+        self.viewDidLoadProperty.value = ()
+    }
+    
     public let flightsAreLoading: Signal<Bool, NoError>
-    public let destinationTitleText: Signal<String, NoError>
-    public let dateTitleText: Signal<String, NoError>
-    public let goRoundButtonTitleText: Signal<String, NoError>
-    public let goOrderButtonTitleText: Signal<String, NoError>
-    public let flights: Signal<[Flight], NoError>
+    public let flights: Signal<([Flight], PickNoticeFlight), NoError>
     public let showNextSteps: Signal<Bool, NoError>
-    public let showReturnFlightsText: Signal<String, NoError>
-    public let showSingleDirectText: Signal<String, NoError>
-    public let showReturnDirectText: Signal<String, NoError>
-    public let goToSingleFlights: Signal<(SearchSingleFlightParams, Flight), NoError>
-    public let goToReturnFlights: Signal<(SearchFlightParams, Flight, [Flight]), NoError>
-    public let goToDirectReturnFlights: Signal<(SearchFlightParams, Flight, Flight), NoError>
+    public let showDestinationText: Signal<String, NoError>
+    public let showDateText: Signal<String, NoError>
     public let returnFlights: Signal<[Flight], NoError>
     public let showEmptyState: Signal<EmptyState, NoError>
     public let hideEmptyState: Signal<(), NoError>
+    public let goToFlight: Signal<Flight, NoError>
+    public let goToReturnFlights: Signal<(SearchFlightEnvelope, Flight), NoError>
+    public let dismissToPickDate: Signal<(), NoError>
     
     public var inputs: PickFlightResultsViewModelInputs { return self }
     public var outputs: PickFlightResultsViewModelOutputs { return self }
 }
+
+private func takeFlightsIntoNotice(_ envelope: SearchFlightEnvelope) -> PickNoticeFlight {
+    if let firstResultFlight = envelope.departResuts?.first {
+        return PickNoticeFlight(date: firstResultFlight.inner.departureFlightDateStr, route: Localizations.OutboundNoticePickFlight(firstResultFlight.flightDetail.departureCityName))
+    } else {
+        return PickNoticeFlight(date: nil, route: nil)
+    }
+}
+
+private func isFlightStored(withFlight flight: Flight) -> Bool {
+    return AppEnvironment.current.ubiquitousStore.temporaryCartFlights.index(of: flight) != nil
+}
+
+private func saveFirstFlight(_ flight: Flight) {
+    if let index = AppEnvironment.current.ubiquitousStore.temporaryCartFlights.index(of: flight) {
+        AppEnvironment.current.ubiquitousStore.temporaryCartFlights.remove(at: index)
+    } else {
+        AppEnvironment.current.ubiquitousStore.temporaryCartFlights.append(flight)
+    }
+}
+private func listCartFlights() -> SignalProducer<[Flight], NoError> {
+    let temporary = AppEnvironment.current.ubiquitousStore.temporaryCartFlights
+    return SignalProducer(value: temporary)
+}
+
+private func emptyStateFlight() -> EmptyState {
+    return EmptyState.flightResult
+}
+
+private func somehowToCurlForceUpdate(_ force: String) {
+    print("Somehow to Curl Force Update")
+    if let sample = URL(string: force) {
+        var request = URLRequest(url: sample)
+        request.httpMethod = "GET"
+        let session = URLSession.shared
+        session.dataTask(with: request).resume()
+    }
+}
+

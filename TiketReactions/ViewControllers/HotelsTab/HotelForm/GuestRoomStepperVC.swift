@@ -60,9 +60,11 @@ public final class GuestRoomStepperVC: UIViewController {
         _ = self.doneButton
             |> UIButton.lens.titleColor(forState: .normal) .~ .tk_official_green
             |> UIButton.lens.titleColor(forState: .disabled) .~ .tk_base_grey_100
+            |> UIButton.lens.title(forState: .normal) .~ Localizations.DonebuttonTitle
         
         _ = self.guestInputTitleLabel
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
+            |> UILabel.lens.text .~ Localizations.GuestRoomTitleForm
         
         _ = self.guestStepper
             |> UIStepper.lens.tintColor .~ .tk_official_green

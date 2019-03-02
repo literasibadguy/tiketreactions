@@ -62,7 +62,7 @@ extension HotelResult: Argo.Decodable {
             <*> json <| "photo_primary"
             <*> json <| "star_rating"
             <*> json <| "id"
-            <*> json <| "room_available"
+            <*> ((json <| "room_available" >>- intToString) <|> (json <| "room_available"))
         
         let tmp3 = tmp2
             <*> (json <| "latitude" >>- stringToDouble)
@@ -95,5 +95,9 @@ extension HotelResult.MetadataHotel: Argo.Decodable {
 
 private func stringToDouble(_ string: String) -> Decoded<Double> {
     return Double(string).map(Decoded.success) ?? .success(0)
+}
+
+public func intToString(_ value: Int) -> Decoded<String> {
+    return Decoded.success(String(value))
 }
 

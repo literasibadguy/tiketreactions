@@ -82,27 +82,48 @@ public final class HotelDirectsVC: UITableViewController {
                 self?.goToOrderGuestForm(hotelDirect: hotel, availableRoom: room, booking: summary)
         }
         
+        
         self.viewModel.outputs.goToFacilities
             .observe(on: QueueScheduler.main)
             .observeValues { [weak self] facilities in
                 let vc = FacilityListVC.configureWith(facilities: facilities)
                 self?.navigationController?.pushViewController(vc, animated: true)
         }
+        
+        self.viewModel.outputs.goToFullMapHotel
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] result in
+                self?.goToEmbedMap(result: result)
+        }
     }
     
     override public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let facilities = self.dataSource[indexPath] as? String {
             self.viewModel.inputs.tapHotelFacility(facilities)
-            
         }
+        
+        if indexPath == self.dataSource.indexPathForMapCell() {
+            print("Tapped Map Available")
+            self.viewModel.inputs.tappedMapEmbed()
+        }
+        
         if let availableRoom = self.dataSource[indexPath] as? AvailableRoom {
             print("Tapped Room Available")
             self.viewModel.inputs.tappedRoomAvailable(availableRoom: availableRoom)
         }
+        
+        
     }
     
     private func goToOrderGuestForm(hotelDirect: HotelDirect, availableRoom: AvailableRoom, booking: HotelBookingSummary) {
         let vc = HotelContainerGuestFormVC.configureWith(hotelDirect: hotelDirect, room: availableRoom, summary: booking)
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func goToEmbedMap(result: HotelResult) {
+        let mapVC = HotelLocatedMapVC.configureWith(result)
+        let navMap = UINavigationController(rootViewController: mapVC)
+        
+        self.present(navMap, animated: true, completion: nil)
     }
 }

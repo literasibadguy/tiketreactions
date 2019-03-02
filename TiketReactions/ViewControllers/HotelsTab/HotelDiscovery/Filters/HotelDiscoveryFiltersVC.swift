@@ -78,7 +78,7 @@ public final class HotelDiscoveryFiltersVC: UIViewController, UITableViewDelegat
         
         _ = self.passFilterButton
             |> UIButton.lens.backgroundColor(forState: .normal) .~ .tk_official_green
-//            |> UIButton.lens.title(forState: .normal) .~ Localizations.ApplybuttonTitle
+            |> UIButton.lens.title(forState: .normal) .~ Localizations.ApplybuttonTitle
     }
     
     public override func bindViewModel() {

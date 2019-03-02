@@ -62,6 +62,17 @@ public final class OrderListViewCell: UITableViewCell, ValueCell {
         _ = self.orderNameLabel
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
         
+        if UIDevice.current.screenType == .iPhones_5_5s_5c_SE {
+            _ = self.orderNameLabel
+                |> UILabel.lens.font .~ UIFont.boldSystemFont(ofSize: 16.0)
+            
+            _ = self.orderNameDetailLabel
+                |> UILabel.lens.font .~ UIFont.systemFont(ofSize: 14.0)
+            
+            _ = self.startDateLabel
+                |> UILabel.lens.font .~ UIFont.systemFont(ofSize: 14.0)
+        }
+        
         _ = self.orderNameDetailLabel
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_500
         _ = self.startDateLabel

@@ -17,6 +17,7 @@ target 'TiketReactions' do
 
   shared_with_all_pods
   pod 'Argo'
+  pod 'AloeStackView'
   pod 'CalendarDateRangePickerViewController'
   pod 'Curry'
   pod 'Runes'
@@ -30,6 +31,7 @@ target 'TiketReactions' do
   pod 'PhoneNumberKit'
   pod 'RealmSwift'
   pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
+  pod 'SwiftSoup'
 
   target 'TiketReactionsTests' do
     # Pods for testing

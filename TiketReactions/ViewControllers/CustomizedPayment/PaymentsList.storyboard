@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="867"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NQZ-dq-tST" userLabel="Base Scroll View">
+                            <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NQZ-dq-tST" userLabel="Base Scroll View">
                                 <rect key="frame" x="0.0" y="64" width="375" height="803"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Nw5-92-pFi" userLabel="Base Stack View">
@@ -29,15 +30,8 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KXZ-Zz-3us" userLabel="Order Detail Container View">
                                                         <rect key="frame" x="15" y="10" width="345" height="80"/>
                                                         <subviews>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4pU-cK-XIW" userLabel="Bottom Separator View">
-                                                                <rect key="frame" x="0.0" y="79" width="345" height="1"/>
-                                                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="1" id="QCA-xs-y2z"/>
-                                                                </constraints>
-                                                            </view>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="qC8-CH-vUY">
-                                                                <rect key="frame" x="8" y="19" width="131" height="43.5"/>
+                                                                <rect key="frame" x="8" y="18.5" width="131" height="43.5"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order ID: 456789" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jr6-zJ-tu1">
                                                                         <rect key="frame" x="0.0" y="0.0" width="131" height="19.5"/>
@@ -54,13 +48,9 @@
                                                                 </subviews>
                                                             </stackView>
                                                         </subviews>
-                                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <constraints>
                                                             <constraint firstItem="qC8-CH-vUY" firstAttribute="leading" secondItem="KXZ-Zz-3us" secondAttribute="leading" constant="8" id="a08-eT-FQn"/>
-                                                            <constraint firstItem="4pU-cK-XIW" firstAttribute="leading" secondItem="KXZ-Zz-3us" secondAttribute="leading" id="oXG-6B-nPj"/>
                                                             <constraint firstItem="qC8-CH-vUY" firstAttribute="centerY" secondItem="KXZ-Zz-3us" secondAttribute="centerY" id="pOF-1i-H9s"/>
-                                                            <constraint firstAttribute="bottom" secondItem="4pU-cK-XIW" secondAttribute="bottom" id="pUX-iv-ZRR"/>
-                                                            <constraint firstAttribute="trailing" secondItem="4pU-cK-XIW" secondAttribute="trailing" id="xVk-14-FvU"/>
                                                         </constraints>
                                                     </view>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CO9-IW-IUl" userLabel="Order Detail Button">
@@ -105,19 +95,13 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="mqp-4P-E1p">
-                                                                <rect key="frame" x="8" y="34" width="192" height="38"/>
+                                                                <rect key="frame" x="8" y="34" width="92" height="38"/>
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bank-bca-logo" translatesAutoresizingMaskIntoConstraints="NO" id="4t7-iK-4GC">
                                                                         <rect key="frame" x="0.0" y="0.0" width="42" height="38"/>
                                                                     </imageView>
-                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bank-bni-logo" translatesAutoresizingMaskIntoConstraints="NO" id="lDX-rv-q8c">
-                                                                        <rect key="frame" x="50" y="0.0" width="42" height="38"/>
-                                                                    </imageView>
-                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bank-bri-logo" translatesAutoresizingMaskIntoConstraints="NO" id="ki9-gI-8kz">
-                                                                        <rect key="frame" x="100" y="0.0" width="42" height="38"/>
-                                                                    </imageView>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bank-mandiri-logo" translatesAutoresizingMaskIntoConstraints="NO" id="Spk-bZ-Bi5">
-                                                                        <rect key="frame" x="150" y="0.0" width="42" height="38"/>
+                                                                        <rect key="frame" x="50" y="0.0" width="42" height="38"/>
                                                                     </imageView>
                                                                 </subviews>
                                                             </stackView>
@@ -516,7 +500,7 @@
                                                                 </constraints>
                                                             </view>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ePay BRI" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pyh-tq-nwc">
-                                                                <rect key="frame" x="8" y="10" width="65" height="19.5"/>
+                                                                <rect key="frame" x="8" y="10" width="65.5" height="19.5"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -572,11 +556,11 @@
                                     </stackView>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="Nw5-92-pFi" firstAttribute="centerX" secondItem="NQZ-dq-tST" secondAttribute="centerX" id="5hW-ZV-mg8"/>
                                     <constraint firstItem="Nw5-92-pFi" firstAttribute="leading" secondItem="NQZ-dq-tST" secondAttribute="leading" id="6Nd-QQ-foe"/>
                                     <constraint firstAttribute="trailing" secondItem="Nw5-92-pFi" secondAttribute="trailing" id="9H8-zb-amO"/>
-                                    <constraint firstItem="Nw5-92-pFi" firstAttribute="top" secondItem="NQZ-dq-tST" secondAttribute="top" id="ODq-zx-2lB"/>
-                                    <constraint firstAttribute="bottom" secondItem="Nw5-92-pFi" secondAttribute="bottom" id="ldh-ey-4KT"/>
-                                    <constraint firstItem="Nw5-92-pFi" firstAttribute="centerX" secondItem="NQZ-dq-tST" secondAttribute="centerX" id="v8I-4c-ynh"/>
+                                    <constraint firstAttribute="bottom" secondItem="Nw5-92-pFi" secondAttribute="bottom" id="Dq4-Oj-sHE"/>
+                                    <constraint firstItem="Nw5-92-pFi" firstAttribute="top" secondItem="NQZ-dq-tST" secondAttribute="top" id="gyj-j6-4IJ"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -626,6 +610,7 @@
                         <outlet property="klikBCAInputLabel" destination="2mD-yp-Vek" id="NfX-f8-f07"/>
                         <outlet property="klikBCATopSeparatorView" destination="oqZ-27-MoL" id="SZM-ux-8kD"/>
                         <outlet property="klikBCAView" destination="cah-yG-yTn" id="3V8-3z-ohl"/>
+                        <outlet property="orderDetailView" destination="mAY-1I-hMU" id="aIp-OS-xxI"/>
                         <outlet property="orderIdInputLabel" destination="jr6-zJ-tu1" id="Rfm-Sp-pEB"/>
                         <outlet property="totalPriceInputLabel" destination="ghH-bm-bBP" id="EWw-Zu-0lu"/>
                         <outlet property="transferATMButton" destination="kpo-L9-cg9" id="S1W-gf-RTe"/>
@@ -642,8 +627,6 @@
         <image name="alto-logo" width="42" height="38"/>
         <image name="atm-bersama-logo" width="42" height="38"/>
         <image name="bank-bca-logo" width="42" height="38"/>
-        <image name="bank-bni-logo" width="42" height="38"/>
-        <image name="bank-bri-logo" width="42" height="38"/>
         <image name="bank-mandiri-logo" width="42" height="38"/>
         <image name="bca-klikpay-logo" width="42" height="38"/>
         <image name="cimb-clicks-logo" width="42" height="38"/>

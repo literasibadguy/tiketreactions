@@ -51,6 +51,8 @@ public final class PickAirportsTableVC: UIViewController {
         self.tableView.dataSource = dataSource
         self.tableView.delegate = self
         
+        self.searchBarAirport.becomeFirstResponder()
+        
         self.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         self.searchBarAirport.delegate = self
         
@@ -78,21 +80,18 @@ public final class PickAirportsTableVC: UIViewController {
     public override func bindViewModel() {
         super.bindViewModel()
         
-        self.viewModel.outputs.airportsResult
-            .observe(on: UIScheduler())
-            .observeValues { [weak self] results in
-        }
+        self.statusDestinationLabel.rac.text = self.viewModel.outputs.titleStatusText
         
         self.viewModel.outputs.cancelPickAirports
-            .observe(on: UIScheduler())
+            .observe(on: QueueScheduler.main)
             .observeValues { [weak self] in
                 self?.dismiss(animated: true, completion: nil)
+                self?.searchBarAirport.resignFirstResponder()
         }
         
         self.viewModel.outputs.updatesResult
             .observe(on: UIScheduler())
             .observeValues { [weak self] results, selected in
-//                self?.dataSource.load(airportResults: updateResults)
                 print("WHAT SELECTED: \(selected)")
                 self?.dataSource.load(airportResults: results, selectedRow: selected)
                 self?.tableView.reloadData()
@@ -103,6 +102,7 @@ public final class PickAirportsTableVC: UIViewController {
             .observeValues { [weak self] airport in
                 guard let _self = self else { return }
                 _self.dismiss(animated: true, completion: nil)
+                _self.searchBarAirport.resignFirstResponder()
                 _self.delegate?.pickOriginAirportsTable(_self, selectedRow: airport)
                 _self.destinationDelegate?.pickDestinationAirportsTable(_self, selectedRow: airport)
         }

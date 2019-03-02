@@ -5,91 +5,235 @@
 //  Created by Firas Rafislam on 28/08/18.
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
-
+import Prelude
+import ReactiveSwift
 import UIKit
+import TiketKitModels
 
-class PassengersListVC: UITableViewController {
-
-    override func viewDidLoad() {
+public final class PassengersListVC: UIViewController {
+    
+    fileprivate let viewModel: PassengersListViewModelType = PassengersListViewModel()
+    fileprivate let dataSource = PassengersListDataSource()
+    
+    @IBOutlet fileprivate weak var listPassengersTableView: UITableView!
+    @IBOutlet fileprivate weak var nextContainerButton: UIButton!
+    
+    @IBOutlet fileprivate weak var loadingOverlayView: UIView!
+    @IBOutlet fileprivate weak var grayActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet fileprivate weak var loadingOverlayLabel: UILabel!
+    
+    fileprivate var muchPassengers: [AdultPassengerParam] = []
+    fileprivate var childPassengers: [AdultPassengerParam] = []
+    fileprivate var infantPassengers: [AdultPassengerParam] = []
+    
+    private var toggles = [String : AdultPassengerParam]()
+    private var formatCount: Int!
+    
+    public static func instantiate() -> PassengersListVC {
+        let vc = Storyboard.PassengersList.instantiate(PassengersListVC.self)
+        return vc
+    }
+    
+    public static func configureWith(_ envelope: GetFlightDataEnvelope) -> PassengersListVC {
+        let vc = Storyboard.PassengersList.instantiate(PassengersListVC.self)
+        vc.viewModel.inputs.configureWith(envelope)
+        return vc
+    }
+    
+    public override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        self.nextContainerButton.addTarget(self, action: #selector(submitFlightOrderTapped), for: .touchUpInside)
+        
+        self.listPassengersTableView.register(nib: .ContactInfoViewCell)
+        self.listPassengersTableView.register(nib: .PassengerSummaryViewCell)
+        
+        self.listPassengersTableView.dataSource = dataSource
+        self.listPassengersTableView.delegate = self
+        
+        self.viewModel.inputs.viewDidLoad()
+    }
+    
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        self.grayActivityIndicator.center = self.listPassengersTableView.center
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    public override func bindStyles() {
+        super.bindStyles()
+        
+        _ = self.grayActivityIndicator
+            |> baseActivityIndicatorStyle
+        
+        _ = (self.navigationController?.navigationBar)!
+            |> UINavigationBar.lens.barTintColor .~ .white
+            |> UINavigationBar.lens.shadowImage .~ UIImage()
+        
+        _ = self.listPassengersTableView
+            |> UITableView.lens.rowHeight .~ UITableViewAutomaticDimension
+            |> UITableView.lens.backgroundColor .~ .white
+            |> UITableView.lens.estimatedRowHeight .~ 480.0
+            |> UITableView.lens.separatorStyle .~ .none
+        
+        _ = self.nextContainerButton
+            |> UIButton.lens.backgroundColor .~ .tk_official_green
+            |> UIButton.lens.backgroundColor(forState: .disabled) .~ .tk_typo_green_grey_600
+            |> UIButton.lens.isEnabled .~ false
+            |> UIButton.lens.title(forState: .normal) .~ Localizations.ChoosepaymentTitle
+        
+        _ = self.loadingOverlayView
+            |> UIView.lens.isHidden .~ true
     }
-
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+    
+    public override func bindViewModel() {
+        super.bindViewModel()
+        
+        self.nextContainerButton.rac.isEnabled = self.viewModel.outputs.isPassengerListValid
+        self.loadingOverlayView.rac.hidden = self.viewModel.outputs.orderFlightIsLoading.negate()
+        self.grayActivityIndicator.rac.animating = self.viewModel.outputs.orderFlightIsLoading
+        
+        self.viewModel.outputs.loadPassengerLists
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] passengerFormat in
+                print("Should There be Passengers here: \(passengerFormat)")
+                self?.dataSource.loadPassenger(passengerFormat)
+                self?.listPassengersTableView.reloadData()
+                self?.formatCount = passengerFormat.count
+        }
+        
+        self.viewModel.outputs.goToFirstPassenger
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] format, status, baggage in
+                self?.setFormatPassenger(format, status: status)
+                print("Is there any baggage here: \(baggage)")
+        }
+        
+        self.viewModel.outputs.remindAlert
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] remind in
+                self?.present(UIAlertController.alert(message: remind, confirm: {
+                    _ in self?.viewModel.inputs.remindAlertTappedOK(shouldCheckOut: true)
+                }, cancel: { _ in self?.viewModel.inputs.remindAlertTappedOK(shouldCheckOut: false) }), animated: true, completion: nil)
+        }
+        
+        self.viewModel.outputs.errorAlert
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] errorReason in
+                self?.present(UIAlertController.genericError(message: errorReason, cancel: {
+                    _ in self?.viewModel.inputs.errorAlertTappedOK(shouldDismiss: true)
+                }), animated: true, completion: nil)
+        }
+        
+        self.viewModel.outputs.goToPaymentMethod
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] order in
+                print("Is it going to success: \(order)")
+                self?.goToPaymentMethod(order)
+//                self?.goToPaymentMethod()
+        }
     }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+    
+    fileprivate func goToPassengerFormVC(_ format: FormatDataForm, state: PassengerFormState) {
+        let formVC = PassengerDetailVC.configureWith(format, state: state)
+        formVC.adultDelegate = self
+        self.navigationController?.pushViewController(formVC, animated: true)
     }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
+    
+    fileprivate func goToPassengerInternationalVC(_ format: FormatDataForm, status: PassengerStatus) {
+        let internationalVC = PassengerInternationalVC.configureWith(separator: format, status: status, baggage: false)
+        internationalVC.delegate = self
+        self.navigationController?.pushViewController(internationalVC, animated: true)
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    fileprivate func goToPaymentMethod(_ order: FlightMyOrder) {
+        let paymentMethodVC = PaymentsListVC.configureFlightWith(myorder: order)
+        self.navigationController?.pushViewController(paymentMethodVC, animated: true)
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    fileprivate func setFormatPassenger(_ format: FormatDataForm, status: PassengerStatus) {
+        self.goToPassengerInternationalVC(format, status: status)
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+    
+    @objc fileprivate func submitFlightOrderTapped() {
+//        self.viewModel.inputs.addOrderButtonSubmitTapped()
+        self.viewModel.inputs.submitToPaymentButtonTapped()
     }
-    */
+}
 
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+extension PassengersListVC: UITableViewDelegate {
+    
+    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let contactCell = cell as? ContactInfoViewCell {
+            contactCell.flightDelegate = self
+        } else if let passengerCell = cell as? PassengerSummaryViewCell {
+            passengerCell.delegate = self
+        }
     }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let passenger = self.dataSource.passengerSummaryAtIndexPath(indexPath) {
+            self.viewModel.inputs.selectedPassenger(passenger)
+        }
     }
-    */
+}
 
+extension PassengersListVC: ContactFlightInfoViewCellDelegate {
+    
+    func goToPassengerPickerVC(passengerPickerVC: PassengerTitlePickerVC) {
+        self.present(passengerPickerVC, animated: true, completion: nil)
+    }
+    
+    func goToRegionalCodePhoneVC(phoneVC: PhoneCodeListVC) {
+        self.present(phoneVC, animated: true, completion: nil)
+    }
+    
+    func getFinishedForm(_ completed: Bool) {
+        self.viewModel.inputs.contactFormValid(completed)
+    }
+    
+    func getContactInfoParams(guestForm: GroupPassengersParam) {
+        self.viewModel.inputs.getContactPassenger(guestForm)
+        
+    }
+    
+    func canceledTitlePick() {
+        self.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension PassengersListVC: PassengerSummaryCellDelegate {
+    public func updatePassengerSummary(_ text: AdultPassengerParam, indexRow: Int) {
+        print("Text: \(text), indexRow: \(indexRow)")
+//        self.viewModel.inputs.saveEveryCurrent(passenger: text, index: indexRow)
+    }
+}
+
+extension PassengersListVC: PassengerDomesticDelegate {
+    public func submitAdultDomesticFormTapped(_ vc: PassengerDomesticVC, adult: AdultPassengerParam) {
+//        self.viewModel.inputs.getAdultListPassenger(adult)
+        
+    }
+}
+
+extension PassengersListVC: PassengerInternationalDelegate {
+    public func paramFormSubmitted(_ internationalVC: PassengerInternationalVC, format: FormatDataForm, passenger: AdultPassengerParam) {
+        toggles[format.fieldText] = passenger
+        if toggles.count == formatCount {
+            self.viewModel.inputs.getRestPassenger(lists: toggles)
+            print("Its time to take it to the lists")
+        }
+        print("What Inside in Dictionary here: \(toggles)")
+    }
+}
+
+extension PassengersListVC: AdultPassengerDetailDelegate {
+    public func submitAdultPassenger(_ detail: PassengerDetailVC, format: FormatDataForm, passenger: AdultPassengerParam) {
+        toggles[format.fieldText] = passenger
+        if toggles.count == formatCount {
+            self.viewModel.inputs.getRestPassenger(lists: toggles)
+            print("Its time to take it to the lists")
+        }
+        print("What Inside in Dictionary here: \(toggles)")
+    }
 }

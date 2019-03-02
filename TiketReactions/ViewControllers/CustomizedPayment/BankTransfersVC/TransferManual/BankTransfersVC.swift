@@ -16,6 +16,13 @@ public final class BankTransfersVC: UITableViewController {
     fileprivate let viewModel: BankTransfersViewModelType = BankTransfersViewModel()
     fileprivate let dataSource = BankTransfersDataSource()
     
+    private var doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonItemTapped))
+    
+    lazy private var lazyDoneButton: UIBarButtonItem = {
+        let closeBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonItemTapped))
+        return closeBarButtonItem
+    }()
+    
     fileprivate let activityIndicator = UIActivityIndicatorView()
     
     public static func instantiate() -> BankTransfersVC {
@@ -28,7 +35,12 @@ public final class BankTransfersVC: UITableViewController {
         
         navigationItem.title = "Bank Transfer"
         
-        self.tableView.register(nib: .NoticeSummaryViewCell)
+        self.navigationItem.leftBarButtonItem = self.lazyDoneButton
+        self.navigationItem.rightBarButtonItem = self.lazyDoneButton
+        
+        self.doneButton.isEnabled = false
+        
+       self.tableView.register(nib: .NoticeSummaryViewCell)
         self.tableView.addSubview(self.activityIndicator)
         self.tableView.dataSource = dataSource
         
@@ -47,6 +59,9 @@ public final class BankTransfersVC: UITableViewController {
         _ = self
             |> baseTableControllerStyle(estimatedRowHeight: 105.0)
         
+        _ = self.lazyDoneButton
+            |> UIBarButtonItem.lens.accessibilityLabel .~ "Done"
+        
         _ = self.activityIndicator
             |> baseActivityIndicatorStyle
     }
@@ -54,6 +69,7 @@ public final class BankTransfersVC: UITableViewController {
     public override func bindViewModel() {
         super.bindViewModel()
         
+        self.doneButton.rac.isEnabled = self.viewModel.outputs.doneEnabled.negate()
         self.activityIndicator.rac.animating = self.viewModel.outputs.banksAreAnimating
         
         self.viewModel.outputs.banks
@@ -63,5 +79,35 @@ public final class BankTransfersVC: UITableViewController {
                 self?.tableView.reloadData()
         }
         
+        self.viewModel.outputs.confirmTransfers
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] in
+                self?.present(UIAlertController.alert(message: Localizations.PaymentdoneNotice, confirm: { _ in self?.viewModel.inputs.dismissTransfers(true) }, cancel: { _ in self?.viewModel.inputs.dismissTransfers(false) }), animated: true, completion: nil)
+        }
+        
+        self.viewModel.outputs.transferNotAvailable
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] in
+                self?.present(UIAlertController.genericError(message: $0, cancel: { _ in self?.navigationController?.popViewController(animated: true) }), animated: true, completion: nil)
+        }
+        
+        self.viewModel.outputs.dismissToChecked
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] in
+                guard let _self = self else { return }
+                _self.view.window?.rootViewController.flatMap { $0 as? RootTabBarVC }.doIfSome { root in
+                    root.dismiss(animated: true, completion: nil)
+                    UIView.transition(with: root.view, duration: 0.3, options: [.transitionCrossDissolve], animations: {
+                        root.switchToLounge()
+                    }, completion: { _ in
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "GoToIssues"), object: nil)
+                    })
+                }
+        }
+    }
+    
+    @objc private func doneButtonItemTapped() {
+        print("Done Button Item Tapped")
+        self.viewModel.inputs.doneButtonItemTapped()
     }
 }

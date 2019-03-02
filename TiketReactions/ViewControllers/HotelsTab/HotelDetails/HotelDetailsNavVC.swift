@@ -38,7 +38,7 @@ public final class HotelDetailsNavVC: UIViewController {
             |> UIView.lens.backgroundColor .~ .tk_base_grey_100
         
         _ = self.titleDetailLabel
-            |> UILabel.lens.textColor .~ .tk_dark_grey_500
+            |> UILabel.lens.textColor .~ .black
     }
 
     override public func bindViewModel() {

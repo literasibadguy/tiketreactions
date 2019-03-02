@@ -106,11 +106,13 @@ public final class CheckOrderFormVC: UIViewController {
         self.loadingOverlayView.rac.hidden = self.viewModel.outputs.loadingOverlayIsHidden
         self.loadingIndicatorView.rac.animating = self.viewModel.outputs.orderIssueIsLoading
         
+        /*
         self.viewModel.outputs.goToCheckOrder
             .observe(on: QueueScheduler.main)
             .observeValues { [weak self] result in
                 
         }
+        */
         
         self.viewModel.outputs.showError
             .observe(on: QueueScheduler.main)

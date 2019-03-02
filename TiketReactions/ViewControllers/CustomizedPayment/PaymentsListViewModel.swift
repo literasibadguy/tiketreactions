@@ -15,6 +15,7 @@ import TiketKitModels
 
 public protocol PaymentsListViewModelInputs {
     func configureWith(myOrder: MyOrder)
+    func configureFlightWith(myOrder: FlightMyOrder)
     func bankTransferTapped()
     func cardCreditTapped()
     func transferATMTapped()
@@ -22,6 +23,8 @@ public protocol PaymentsListViewModelInputs {
     func bcaKlikpayTapped()
     func cimbClicksTapped()
     func epayBriTapped()
+    func confirmYourKlikBCA(_ approve: Bool)
+    func getYourKlikBCA(_ account: String)
     func viewDidLoad()
 }
 
@@ -30,8 +33,9 @@ public protocol PaymentsListViewModelOutputs {
     var totalPriceLabelText: Signal<String, NoError> { get }
     var goBankTransfer: Signal<(), NoError> { get }
     var goCardCredit: Signal<URLRequest, NoError> { get }
-    var goATMTransfer: Signal<URLRequest, NoError> { get }
-    var goKlikBCA: Signal<URLRequest, NoError> { get }
+    var goATMTransfer: Signal<(), NoError> { get }
+    var alertKlikBCA: Signal<(), NoError> { get }
+    var goToKlikBCA: Signal<String, NoError> { get }
     var goBCAKlikpay: Signal<URLRequest, NoError> { get }
     var goCIMBClicks: Signal<URLRequest, NoError> { get }
     var goEpayBRI: Signal<URLRequest, NoError> { get }
@@ -47,25 +51,19 @@ public final class PaymentsListViewModel: PaymentsListViewModelType, PaymentsLis
     public init() {
         
         let bookedOrder = Signal.combineLatest(self.configOrderProperty.signal.skipNil(), self.viewDidLoadProperty.signal).map(first)
+        let flightBookedOrder = Signal.combineLatest(self.configFlightOrderProperty.signal.skipNil(), self.viewDidLoadProperty.signal).map(first)
         
-        self.orderIdLabelText = bookedOrder.map { "Order ID: \($0.orderId)" }
-        self.totalPriceLabelText = bookedOrder.map { "Total Bayar: \(Format.symbolForCurrency(AppEnvironment.current.apiService.currency)) \(String($0.total))" }
-        
-        let cardCreditEvent = self.viewDidLoadProperty.signal.switchMap { _ in
-            AppEnvironment.current.apiService.createCreditCardRequest(token: AppEnvironment.current.apiService.tiketToken?.token ?? "").materialize()
-        }
+        self.orderIdLabelText = Signal.merge(bookedOrder.map { "Order ID: \($0.orderId)" }, flightBookedOrder.map { "Order ID: \($0.orderId)" })
+        self.totalPriceLabelText = Signal.merge(bookedOrder.map { Localizations.PaytotalTitle("\(Format.symbolForCurrency(AppEnvironment.current.apiService.currency)) \(Format.currency($0.totalWithoutTax, country: "Rp"))") }, flightBookedOrder.map { "Total Bayar: \(Format.symbolForCurrency(AppEnvironment.current.apiService.currency)) \(Format.currency($0.totalWithoutTax, country: AppEnvironment.current.apiService.currency))" })
         
         let sandboxCreditEvent = self.viewDidLoadProperty.signal.switchMap { _ in
             AppEnvironment.current.apiService.sandboxCreditCard(AppEnvironment.current.apiService.tiketToken?.token ?? "").materialize()
         }
-        
-        cardCreditEvent.values().observe(on: UIScheduler()).observeValues { request in
-            print("CARD CREDIT EVENT: \(request.url!)")
-        }
-        
+        /*
         let klikBCAEvent = self.viewDidLoadProperty.signal.switchMap { _ in
-            AppEnvironment.current.apiService.klikBCARequest("").materialize()
+            AppEnvironment.current.apiService.klikBCARequest("firasraf").materialize()
         }
+        */
         
         let bcaKlikpayEvent = self.viewDidLoadProperty.signal.switchMap { _ in
             AppEnvironment.current.apiService.bcaKlikpayRequest(AppEnvironment.current.apiService.tiketToken?.token ?? "").materialize()
@@ -81,9 +79,12 @@ public final class PaymentsListViewModel: PaymentsListViewModelType, PaymentsLis
         
         self.goBankTransfer = self.bankTransferTappedProperty.signal
         self.goCardCredit = sandboxCreditEvent.values().takeWhen(self.cardCreditTappedProperty.signal)
-        self.goATMTransfer = .empty
-        self.goKlikBCA = klikBCAEvent.values().takeWhen(self.klikBCATappedProperty.signal)
+        self.goATMTransfer = self.transferATMTappedProperty.signal
+        
+        self.alertKlikBCA = self.klikBCATappedProperty.signal
+        self.goToKlikBCA = self.youtKlikBCATappedProperty.signal.skipNil().takeWhen(self.confirmKlikBCAProperty.signal.filter(isTrue))
         self.goBCAKlikpay = bcaKlikpayEvent.values().takeWhen(self.bcaKlikpayTappedProperty.signal)
+        
         self.goCIMBClicks = cimbClicksEvent.values().takeWhen(self.cimbClicksTappedProperty.signal)
         self.goEpayBRI = epayBRIEvent.values().takeWhen(self.epayBriTappedProperty.signal)
     }
@@ -91,6 +92,11 @@ public final class PaymentsListViewModel: PaymentsListViewModelType, PaymentsLis
     fileprivate let configOrderProperty = MutableProperty<MyOrder?>(nil)
     public func configureWith(myOrder: MyOrder) {
         self.configOrderProperty.value = myOrder
+    }
+    
+    fileprivate let configFlightOrderProperty = MutableProperty<FlightMyOrder?>(nil)
+    public func configureFlightWith(myOrder: FlightMyOrder) {
+        self.configFlightOrderProperty.value = myOrder
     }
     
     fileprivate let bankTransferTappedProperty = MutableProperty(())
@@ -128,6 +134,16 @@ public final class PaymentsListViewModel: PaymentsListViewModelType, PaymentsLis
         self.epayBriTappedProperty.value = ()
     }
     
+    fileprivate let confirmKlikBCAProperty = MutableProperty(false)
+    public func confirmYourKlikBCA(_ approve: Bool) {
+        self.confirmKlikBCAProperty.value = approve
+    }
+    
+    fileprivate let youtKlikBCATappedProperty = MutableProperty<String?>(nil)
+    public func getYourKlikBCA(_ account: String) {
+        self.youtKlikBCATappedProperty.value = account
+    }
+    
     fileprivate let viewDidLoadProperty = MutableProperty(())
     public func viewDidLoad() {
         self.viewDidLoadProperty.value = ()
@@ -137,8 +153,9 @@ public final class PaymentsListViewModel: PaymentsListViewModelType, PaymentsLis
     public let totalPriceLabelText: Signal<String, NoError>
     public let goBankTransfer: Signal<(), NoError>
     public let goCardCredit: Signal<URLRequest, NoError>
-    public let goATMTransfer: Signal<URLRequest, NoError>
-    public let goKlikBCA: Signal<URLRequest, NoError>
+    public let goATMTransfer: Signal<(), NoError>
+    public let alertKlikBCA: Signal<(), NoError>
+    public let goToKlikBCA: Signal<String, NoError>
     public let goBCAKlikpay: Signal<URLRequest, NoError>
     public let goCIMBClicks: Signal<URLRequest, NoError>
     public let goEpayBRI: Signal<URLRequest, NoError>

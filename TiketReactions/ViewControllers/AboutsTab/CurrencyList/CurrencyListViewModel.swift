@@ -78,8 +78,6 @@ public final class CurrencyListViewModel: CurrencyListViewModelType, CurrencyLis
         self.cancelTappedProperty.value = ()
     }
     
-    
-    
     fileprivate let viewDidLoadProperty = MutableProperty(())
     public func viewDidLoad() {
         self.viewDidLoadProperty.value = ()

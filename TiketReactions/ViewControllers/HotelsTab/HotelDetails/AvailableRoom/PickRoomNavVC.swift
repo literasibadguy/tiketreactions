@@ -40,7 +40,7 @@ internal final class PickRoomNavVC: UIViewController {
             |> UIButton.lens.title(forState: .normal) .~ Localizations.ChooseRoomTitle
         
         _ = startingPriceLabel
-            |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
+            |> UILabel.lens.textColor .~ .black
             |> UILabel.lens.font .~ UIFont.boldSystemFont(ofSize: 16.0)
             |> UILabel.lens.numberOfLines .~ 2
         

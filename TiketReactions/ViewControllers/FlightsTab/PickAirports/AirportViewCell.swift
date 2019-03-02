@@ -16,6 +16,7 @@ class AirportViewCell: UITableViewCell, ValueCell {
     @IBOutlet fileprivate weak var cityLabel: UILabel!
     @IBOutlet fileprivate weak var airportLabel: UILabel!
     @IBOutlet fileprivate weak var airportCodeLabel: UILabel!
+    @IBOutlet fileprivate weak var airportSeparatorView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -41,6 +42,9 @@ class AirportViewCell: UITableViewCell, ValueCell {
         
         _ = self.airportCodeLabel
             |> UILabel.lens.text .~ value.airportCode
+        
+        _ = self.airportSeparatorView
+            |> UIView.lens.backgroundColor .~ .tk_base_grey_100
     }
     
 }
