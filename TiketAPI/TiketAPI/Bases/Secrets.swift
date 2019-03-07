@@ -2,8 +2,8 @@ public enum Secrets {
     
     public enum Api {
         public enum Client {
-            public static let production = "38b93bc5a49bd846414c21755b9aae0d"
-            public static let staging = "38b93bc5a49bd846414c21755b9aae0d"
+            public static let production = ""
+            public static let staging = ""
         }
         
         public enum Endpoint {
