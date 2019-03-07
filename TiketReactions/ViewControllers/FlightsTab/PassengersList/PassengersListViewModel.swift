@@ -46,7 +46,7 @@ public protocol PassengersListViewModelInputs {
 public protocol PassengersListViewModelOutputs {
     var loadPassengerLists: Signal<[FormatDataForm], NoError> { get }
     var setPassengerFormat: Signal<[FormatDataForm], NoError> { get }
-    var goToFirstPassenger: Signal<(FormatDataForm, PassengerStatus, [FormatDataForm]), NoError> { get }
+    var goToFirstPassenger: Signal<(FormatDataForm, PassengerStatus), NoError> { get }
     var goToAdultPassengers: Signal<FormatDataForm, NoError> { get }
     var goToChildPassengers: Signal<FormatDataForm, NoError> { get }
     var goToInfantPassengers: Signal<FormatDataForm, NoError> { get }
@@ -72,7 +72,7 @@ public final class PassengersListViewModel: PassengersListViewModelType, Passeng
         let passsengerState: Signal<(isInternational: Bool, isDepartBaggage: Bool, isReturnBaggage: Bool), NoError> = current.signal.skipNil().map { ($0.adultPassengerList.adult1.passportNo != nil, $0.adultPassengerList.adult1.departBaggage != nil, $0.adultPassengerList.adult1.returnBaggage != nil) }
         
         let personalizedBaggagePassenger = Signal.combineLatest(current.signal.skipNil(), passsengerState.signal).map { flightData, state in
-            [state.isDepartBaggage ? flightData.adultPassengerList.adult1.departBaggage : nil, state.isReturnBaggage ? flightData.adultPassengerList.adult1.returnBaggage : nil]
+            [state.isDepartBaggage ? flightData.adultPassengerList.adult1.departBaggage?.resBaggage : nil, state.isReturnBaggage ? flightData.adultPassengerList.adult1.returnBaggage?.resBaggage : nil]
         }.map { $0.compact() }
         
 //        let listInternational = current.signal.skipNil().filter { $0.adultPassengerList.adult1.passportNo != nil }.map { [$0.adultPassengerList.adult1.separator, $0.adultPassengerList.adult2.separtor, $0.adultPassengerList.adult3.separtor, $0.adultPassengerList.adult4.separtor, $0.adultPassengerList.adult5.separtor, $0.adultPassengerList.adult6.separtor, $0.adultPassengerList.child1.separtor, $0.adultPassengerList.child2.separtor, $0.adultPassengerList.child3.separtor, $0.adultPassengerList.child4.separtor, $0.adultPassengerList.child5.separtor, $0.adultPassengerList.child6.separtor, $0.adultPassengerList.infant1.separtor, $0.adultPassengerList.infant2.separtor, $0.adultPassengerList.infant3.separtor, $0.adultPassengerList.infant4.separtor, $0.adultPassengerList.infant5.separtor, $0.adultPassengerList.infant6.separtor].compact() }
@@ -87,7 +87,7 @@ public final class PassengersListViewModel: PassengersListViewModelType, Passeng
         
         let findOutStatus = Signal.merge(current.signal.skipNil().filter { $0.adultPassengerList.adult1.passportNo != nil }.mapConst(PassengerStatus.international), current.signal.skipNil().filter { $0.adultPassengerList.adult1.passportNo == nil }.mapConst(PassengerStatus.domestic))
         
-        self.goToFirstPassenger = Signal.combineLatest(self.selectedPassengerProperty.signal.skipNil(), findOutStatus.signal, personalizedBaggagePassenger.signal)
+        self.goToFirstPassenger = Signal.combineLatest(self.selectedPassengerProperty.signal.skipNil(), findOutStatus.signal)
         
         let contactForm = self.firstPassengerFilledProperty.signal.skipNil()
         
@@ -256,7 +256,7 @@ public final class PassengersListViewModel: PassengersListViewModelType, Passeng
     
     public let loadPassengerLists: Signal<[FormatDataForm], NoError>
     public let setPassengerFormat: Signal<[FormatDataForm], NoError>
-    public let goToFirstPassenger: Signal<(FormatDataForm, PassengerStatus, [FormatDataForm]), NoError>
+    public let goToFirstPassenger: Signal<(FormatDataForm, PassengerStatus), NoError>
     public let goToAdultPassengers: Signal<FormatDataForm, NoError>
     public let goToChildPassengers: Signal<FormatDataForm, NoError>
     public let goToInfantPassengers: Signal<FormatDataForm, NoError>

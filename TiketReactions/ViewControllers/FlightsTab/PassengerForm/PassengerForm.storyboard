@@ -1546,13 +1546,17 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="400" height="600"/>
                     <connections>
+                        <outlet property="baggageInputLabel" destination="YAs-PR-92H" id="q7C-mb-Tv4"/>
+                        <outlet property="baggagePickerView" destination="yx6-rX-wjn" id="X4w-39-DDD"/>
+                        <outlet property="baggageStackView" destination="XXe-PM-yRD" id="ufn-07-PeM"/>
+                        <outlet property="baggageView" destination="FjZ-kM-8ZM" id="Vch-tf-Hb1"/>
                         <outlet property="bottomSeparatorView" destination="Vdy-7G-awc" id="ifB-0J-aaL"/>
-                        <outlet property="doneButton" destination="Se0-Kd-cJI" id="XXs-xJ-nVr"/>
+                        <outlet property="doneButton" destination="Se0-Kd-cJI" id="Nd6-9K-9nG"/>
                         <outlet property="titleInputLabel" destination="YAs-PR-92H" id="O4m-lq-vsc"/>
                         <outlet property="titlePickerView" destination="yx6-rX-wjn" id="fgw-hP-3C7"/>
                         <outlet property="titleStackView" destination="XXe-PM-yRD" id="puf-KX-Reg"/>
                         <outlet property="titleView" destination="FjZ-kM-8ZM" id="hVB-7U-MLr"/>
-                        <outlet property="topSeparatorView" destination="1lT-mx-kG3" id="yPc-5m-iMJ"/>
+                        <outlet property="topSeparatorView" destination="1lT-mx-kG3" id="5wZ-NV-DcJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KIm-Vs-kXl" userLabel="First Responder" sceneMemberID="firstResponder"/>

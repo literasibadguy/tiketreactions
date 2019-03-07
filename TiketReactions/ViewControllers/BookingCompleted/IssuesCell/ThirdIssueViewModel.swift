@@ -25,6 +25,8 @@ public protocol ThirdIssueViewModelOutputs {
     var firstFormTitle: Signal<String, NoError> { get }
     var guestNameText: Signal<String, NoError> { get }
     var secondFormTitle: Signal<String, NoError> { get }
+    var thirdFormTitle: Signal<String, NoError> { get }
+    var fourthFormTitle: Signal<String, NoError> { get }
     var checkInText: Signal<String, NoError> { get }
     var roomsText: Signal<String, NoError> { get }
     var breakfastText: Signal<String, NoError> { get }
@@ -42,6 +44,8 @@ public final class ThirdIssueViewModel: ThirdIssueViewModelType, ThirdIssueViewM
     
     public init() {
         let current = self.configIssueProperty.signal.skipNil()
+        
+        
         
         let printURIEvent = current.switchMap { documentPDFFromURI($0.printUri).materialize() }
         
@@ -62,14 +66,17 @@ public final class ThirdIssueViewModel: ThirdIssueViewModelType, ThirdIssueViewM
         
         self.firstFormTitle = Signal.merge(departureTime.signal.mapConst("Keberangkatan"), accSalutationName.signal.mapConst("Guest Name"))
         self.secondFormTitle = Signal.merge(arrivalTime.signal.mapConst("Kedatangan"), accSalutationName.signal.mapConst("Check-in"))
+        
+        self.thirdFormTitle = Signal.merge(accSalutationName.signal.mapConst(Localizations.OrderRoomTitle), departureTime.signal.mapConst("Kode Booking"))
+        self.fourthFormTitle = Signal.merge(accSalutationName.signal.mapConst(Localizations.AvailablebreakfastTitle), departureTime.signal.mapConst("Ticket Class"))
 
         self.titleOrderText = current.signal.map { $0.orderName }
         self.subtitleOrderText = current.signal.map { $0.orderNameDetail }
         self.orderIdText = current.signal.map { $0.orderDetailId }
         self.guestNameText = Signal.merge(Signal.combineLatest(accSalutationName, accFirstName, accLastName).map { "\($0.0) \($0.1) \($0.2)" }, departureTime.signal)
-        self.checkInText = Signal.merge(Signal.combineLatest(hotelCheckin, nightCheckin).map { "\($0.0) - \($0.1)" }, arrivalTime.signal)
-        self.roomsText = current.signal.map { "\($0.hotelDetail.rooms ?? "") Kamar" }
-        self.breakfastText = current.signal.map { "\(includedBreakfast($0.hotelDetail.breakfast ?? ""))" }
+        self.checkInText = Signal.merge(Signal.combineLatest(hotelCheckin, nightCheckin).map { "\($0.0) - \(Localizations.CountNightsTitle(Int($0.1)!))" }, arrivalTime.signal)
+        self.roomsText = Signal.merge(current.signal.map { "\($0.hotelDetail.rooms ?? "") Kamar" }, current.signal.map { $0.flightDetail.bookingCode ?? "" })
+        self.breakfastText = Signal.merge(current.signal.map { "\(includedBreakfast($0.hotelDetail.breakfast ?? ""))" }, current.signal.map { $0.flightDetail.ticketClass ?? "" })
         
         // printURIEvent.values().sample(on: self.downloadVoucherTappedProperty.signal)
         
@@ -102,9 +109,11 @@ public final class ThirdIssueViewModel: ThirdIssueViewModelType, ThirdIssueViewM
     public let firstFormTitle: Signal<String, NoError>
     public let guestNameText: Signal<String, NoError>
     public let secondFormTitle: Signal<String, NoError>
+    public let thirdFormTitle: Signal<String, NoError>
+    public let fourthFormTitle: Signal<String, NoError>
     public let checkInText: Signal<String, NoError>
     public let roomsText: Signal<String, NoError>
-    public let  breakfastText: Signal<String, NoError>
+    public let breakfastText: Signal<String, NoError>
     public let generatePDFError: Signal<String, NoError>
     public let generateImage: Signal<PDFDocument, NoError>
     public let sendVoucher: Signal<(), NoError>

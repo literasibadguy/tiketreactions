@@ -20,9 +20,9 @@
 "Choose_Title_Button_Pick_Flight" = "Choose this flight";
 "Order_Title_Button_Pick_Flight" = "Order this flight";
 "Check_Flight_Notice_Summary" = "Please check your flight first before take an order";
-"Passenger_Adult_Status_list" = "Passenger (Adult) %d";
-"Passenger_Child_Status_list" = "Passenger (Child) %d";
-"Passenger_Infant_Status_list" = "Passenger (Infant) %d";
+"Passenger_Adult_Status_list" = "Adult %d";
+"Passenger_Child_Status_list" = "Child %d";
+"Passenger_Infant_Status_list" = "Infant %d";
 "Birthdate_Title_Passenger_Form" = "Birthdate";
 "Citizen_Title_Passenger_Form" = "Citizenship";
 "PassportNo_Title_Passenger_Form" = "Passport No.";

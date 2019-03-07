@@ -14,7 +14,6 @@ import TiketKitModels
 public protocol PassengerTitlePickerViewModelInputs {
     func cancelButtonTapped()
     func selectedSalutation(titles: [String], title: String)
-    func configureBaggage(_ availables: [ResourceBaggage])
     func pickerView(didSelectRow row: Int)
     func doneButtonTapped()
     func viewDidLoad()
@@ -24,7 +23,6 @@ public protocol PassengerTitlePickerViewModelInputs {
 public protocol PassengerTitlePickerViewModelOutputs {
     var dataSource: Signal<[String], NoError> { get }
     var notifyDelegateChoseTitle: Signal<String, NoError> { get }
-    var notifyDelegateChoseBaggage: Signal<ResourceBaggage, NoError> { get }
     var notifyDelegateToCancel: Signal<(), NoError> { get }
     var selectRow: Signal<Int, NoError> { get }
 }
@@ -39,7 +37,7 @@ public final class PassengerTitlePickerViewModel: PassengerTitlePickerViewModelT
     public init() {
         let selectedSalutation = Signal.combineLatest(self.selectedSalutationProperty.signal.skipNil(), self.viewDidLoadProperty.signal).map(first)
         
-        let currentBaggages = Signal.combineLatest(self.configAvailBaggagesProperty.signal.skipNil(), self.viewDidLoadProperty.signal).map(first)
+        self.dataSource = selectedSalutation.signal.map(first)
         
         self.selectRow = selectedSalutation.map { (arg) -> Int in
             let (titles, selected) = arg
@@ -64,11 +62,6 @@ public final class PassengerTitlePickerViewModel: PassengerTitlePickerViewModelT
         self.selectedSalutationProperty.value = (titles, title)
     }
     
-    fileprivate let configAvailBaggagesProperty = MutableProperty<[ResourceBaggage]?>(nil)
-    public func configureBaggage(_ availables: [ResourceBaggage]) {
-        self.configAvailBaggagesProperty.value = availables
-    }
-    
     fileprivate let doneButtonTappedProperty = MutableProperty(())
     public func doneButtonTapped() {
         self.doneButtonTappedProperty.value = ()
@@ -91,7 +84,6 @@ public final class PassengerTitlePickerViewModel: PassengerTitlePickerViewModelT
     
     public let dataSource: Signal<[String], NoError>
     public let notifyDelegateChoseTitle: Signal<String, NoError>
-    public let notifyDelegateChoseBaggage: Signal<ResourceBaggage, NoError>
     public let notifyDelegateToCancel: Signal<(), NoError>
     public let selectRow: Signal<Int, NoError>
     

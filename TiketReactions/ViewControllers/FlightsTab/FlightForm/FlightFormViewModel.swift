@@ -87,6 +87,7 @@ public final class FlightFormViewModel: FlightFormViewModelType, FlightFormViewM
         let finalPath = Signal.merge(initialPath, crossingDestination)
         
         let originInitialDateText = self.viewDidLoadProperty.signal.mapConst(Date())
+        let returnInitialDateText = self.viewDidLoadProperty.signal.mapConst(Calendar.current.date(byAdding: .day, value: +1, to: Date())!)
         
         let originReplaced = finalPath.map { $0.origin }
         let destReplaced = finalPath.map { $0.destination }
@@ -94,9 +95,9 @@ public final class FlightFormViewModel: FlightFormViewModelType, FlightFormViewM
         self.goToOrigin = Signal.merge(origin, originReplaced).takeWhen(self.originTappedProperty.signal)
         self.originChanged = .empty
         
-        self.originAirportText =  origin.signal.map { "\($0.locationName), \($0.airportCode)" }
+        self.originAirportText =  Signal.merge(origin.signal.map { "\($0.locationName), \($0.airportCode)" }, self.viewDidLoadProperty.signal.mapConst(Localizations.OriginFlightTitleForm))
         
-        self.destinationAirportText = destination.signal.map { "\($0.locationName), \($0.airportCode)" }
+        self.destinationAirportText = Signal.merge(destination.signal.map { "\($0.locationName), \($0.airportCode)" }, self.viewDidLoadProperty.signal.mapConst(Localizations.DestinationFlightTitleForm))
         
         let initialAdult = self.viewDidLoadProperty.signal.mapConst(1)
         let initialChildInfant = self.viewDidLoadProperty.signal.mapConst(0)
@@ -129,11 +130,13 @@ public final class FlightFormViewModel: FlightFormViewModelType, FlightFormViewM
         
         self.firstDateText = Signal.merge(originInitialDateText.signal.map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "d MMM yyyy") ?? "" }, self.selectedDateProperty.signal.skipNil().map { Format.date(secondsInUTC: $0.first.timeIntervalSince1970, template: "d MMM yyyy") ?? "" })
 
-        self.secondDateText = self.selectedDateProperty.signal.skipNil().map(second).skipNil().map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "d MMM yyyy") ?? "" }
+        self.secondDateText = Signal.merge(returnInitialDateText.signal.map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "d MMM yyyy") ?? "" }, self.selectedDateProperty.signal.skipNil().map(second).skipNil().map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "d MMM yyyy") ?? "" })
         
         let firstDateExtend = Signal.merge(originInitialDateText.signal, self.selectedDateProperty.signal.skipNil().map(first)).map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "yyyy-MM-dd") ?? "" }
         
-        let inputsRoundParam = Signal.combineLatest(self.selectedOriginProperty.signal.skipNil(), self.selectedDestinationProperty.signal.skipNil(), passengersParam, firstDateExtend.signal, self.selectedDateProperty.signal.skipNil().map(second).skipNil().map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "yyyy-MM-dd") ?? "" }).switchMap(configureFlightParam(origin:destination:passengers:departDate:returnDate:))
+        let returnDateExtend = Signal.merge(returnInitialDateText.signal, self.selectedDateProperty.signal.skipNil().map(second).skipNil()).map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "yyyy-MM-dd") ?? "" }
+        
+        let inputsRoundParam = Signal.combineLatest(self.selectedOriginProperty.signal.skipNil(), self.selectedDestinationProperty.signal.skipNil(), passengersParam, firstDateExtend.signal, returnDateExtend.signal).switchMap(configureFlightParam(origin:destination:passengers:departDate:returnDate:))
         
         let inputsSingleParam = Signal.combineLatest(self.selectedOriginProperty.signal.skipNil(), self.selectedDestinationProperty.signal.skipNil(), passengersParam, firstDateExtend.signal).switchMap(configureFlightSingleParam(origin:destination:passengers:departDate:))
         

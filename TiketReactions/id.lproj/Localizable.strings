@@ -20,9 +20,9 @@
 "Order_Title_Button_Pick_Flight" = "Pesan penerbangan ini";
 "Check_Flight_Notice_Summary" = "Mohon dicek kembali penerbangan ini sebelum melakukan pemesanan";
 "Passenger_Contact_Form_Title" = "Kontak Form";
-"Passenger_Adult_Status_list" = "Penumpang (Dewasa) %d";
-"Passenger_Child_Status_list" = "Penumpang (Anak) %d";
-"Passenger_Infant_Status_list" = "Penumpang (Bayi) %d";
+"Passenger_Adult_Status_list" = "Dewasa %d";
+"Passenger_Child_Status_list" = "Anak %d";
+"Passenger_Infant_Status_list" = "Bayi %d";
 "Birthdate_Title_Passenger_Form" = "Tanggal lahir";
 "Citizen_Title_Passenger_Form" = "Kewarganegaraan";
 "PassportNo_Title_Passenger_Form" = "No. Paspor";

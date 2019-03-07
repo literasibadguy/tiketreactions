@@ -104,9 +104,8 @@ public final class PassengersListVC: UIViewController {
         
         self.viewModel.outputs.goToFirstPassenger
             .observe(on: QueueScheduler.main)
-            .observeValues { [weak self] format, status, baggage in
+            .observeValues { [weak self] format, status in
                 self?.setFormatPassenger(format, status: status)
-                print("Is there any baggage here: \(baggage)")
         }
         
         self.viewModel.outputs.remindAlert
@@ -140,8 +139,8 @@ public final class PassengersListVC: UIViewController {
         self.navigationController?.pushViewController(formVC, animated: true)
     }
     
-    fileprivate func goToPassengerInternationalVC(_ format: FormatDataForm, status: PassengerStatus) {
-        let internationalVC = PassengerInternationalVC.configureWith(separator: format, status: status, baggage: false)
+    fileprivate func goToPassengerInternationalVC(_ format: FormatDataForm, status: PassengerStatus, baggages: FormatDataForm? = nil) {
+        let internationalVC = PassengerInternationalVC.configureWith(separator: format, status: status, baggage: baggages)
         internationalVC.delegate = self
         self.navigationController?.pushViewController(internationalVC, animated: true)
     }

@@ -99,6 +99,8 @@ public final class SecondIssueViewCell: UITableViewCell, ValueCell {
         
         self.guestInputLabel.rac.text = self.viewModel.outputs.firstFormTitle
         self.checkInInputLabel.rac.text = self.viewModel.outputs.secondFormTitle
+        self.roomInputLabel.rac.text = self.viewModel.outputs.thirdFormTitle
+        self.breakfastInputLabel.rac.text = self.viewModel.outputs.fourthFormTitle
         
         self.headOrderTitleLabel.rac.text = self.viewModel.outputs.titleOrderText
         self.headOrderSubtitleLabel.rac.text = self.viewModel.outputs.subtitleOrderText

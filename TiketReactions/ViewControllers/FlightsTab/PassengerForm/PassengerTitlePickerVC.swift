@@ -17,15 +17,10 @@ internal protocol PassengerTitlePickerVCDelegate: class {
     func passengerTitlePickerVCCancelled(_ controller: PassengerTitlePickerVC)
 }
 
-internal protocol PassengerBaggagePickerDelegate: class {
-    func passengerBaggagePicker(_ controller: PassengerTitlePickerVC, choseBaggage: ResourceBaggage)
-    func passengerBaggageCanceled(_ controller: PassengerTitlePickerVC)
-}
 
 internal final class PassengerTitlePickerVC: UIViewController {
     fileprivate var dataSource: [String] = []
     internal weak var delegate: PassengerTitlePickerVCDelegate!
-    internal weak var baggageDelegate: PassengerTitlePickerVCDelegate!
     
     fileprivate let viewModel: PassengerTitlePickerViewModelType = PassengerTitlePickerViewModel()
     @IBOutlet fileprivate weak var titlePickerView: UIPickerView!

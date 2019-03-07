@@ -128,9 +128,9 @@ public final class PassengerInternationalVC: UIViewController {
         return vc
     }
     
-    public static func configureWith(separator: FormatDataForm, status: PassengerStatus, baggage: Bool) -> PassengerInternationalVC {
+    public static func configureWith(separator: FormatDataForm, status: PassengerStatus, baggage: FormatDataForm? = nil) -> PassengerInternationalVC {
         let vc = Storyboard.PassengerForm.instantiate(PassengerInternationalVC.self)
-        vc.viewModel.inputs.configureWith(separator, status: status)
+        vc.viewModel.inputs.configureWith(separator, status: status, baggages: baggage)
         return vc
     }
     
@@ -308,8 +308,6 @@ public final class PassengerInternationalVC: UIViewController {
         _ = self.dateBornInputTextLabel
             |> UILabel.lens.text .~ Localizations.BirthdateTitlePassengerForm
         
-
-        
         _ = self.firstNameTextField
             |> UITextField.lens.returnKeyType .~ .next
             |> UITextField.lens.tintColor .~ .tk_official_green
@@ -387,6 +385,8 @@ public final class PassengerInternationalVC: UIViewController {
         self.pasportNoInputStackView.rac.hidden = self.viewModel.outputs.isInternational
         self.pasportExpiredInputStackView.rac.hidden = self.viewModel.outputs.isInternational
         self.pasportIssuesStackView.rac.hidden = self.viewModel.outputs.isInternational
+        self.departBaggageInputStackView.rac.hidden = self.viewModel.outputs.isAvailableBaggage
+        self.returnBaggageInputStackView.rac.hidden = self.viewModel.outputs.isAvailableBaggage
         
         self.dateBornSeparatorView.rac.hidden = self.viewModel.outputs.isInternational
         self.citizenshipSeparatorView.rac.hidden = self.viewModel.outputs.isInternational
@@ -409,6 +409,12 @@ public final class PassengerInternationalVC: UIViewController {
                 case .goToIssuedPassportPicker:
                     self?.goToIssuedPickerController()
                 }
+        }
+        
+        self.viewModel.outputs.goToBaggagePicker
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] resBaggage in
+                self?.goTakeBaggage(res: resBaggage)
         }
         
         self.viewModel.outputs.goToBirthdatePicker
@@ -498,6 +504,15 @@ public final class PassengerInternationalVC: UIViewController {
         self.present(nationalPickerVC, animated: true, completion: nil)
     }
     
+    fileprivate func goTakeBaggage(res: [ResourceBaggage]) {
+        let pickBaggageVC = PassengerBaggagePickerVC.configureWith(res)
+        pickBaggageVC.departDelegate = self
+        pickBaggageVC.returnDelegate = self
+        pickBaggageVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        pickBaggageVC.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
+        self.present(pickBaggageVC, animated: true, completion: nil)
+    }
+    
     @objc fileprivate func cancelButtonTapped() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -547,11 +562,11 @@ public final class PassengerInternationalVC: UIViewController {
     }
     
     @objc fileprivate func departBaggageButtonTapped() {
-        
+        self.viewModel.inputs.baggageDepartButtonTapped()
     }
     
     @objc fileprivate func returnBaggageButtonTapped() {
-        
+        self.viewModel.inputs.baggageReturnButtonTapped()
     }
     
     @objc fileprivate func submitPassengerFormTapped() {
@@ -590,5 +605,25 @@ extension PassengerInternationalVC: NationalityPickDelegate {
 extension PassengerInternationalVC: PassportIssuePickDelegate {
     public func changedIssuing(_ list: NationalityPickVC, country: CountryListEnvelope.ListCountry) {
         self.viewModel.inputs.issuedPassportChanged(country)
+    }
+}
+
+extension PassengerInternationalVC: PassengerDepartBaggagePickerDelegate {
+    func passengerBaggagePicker(_ controller: PassengerBaggagePickerVC, choseBaggage: ResourceBaggage) {
+        self.viewModel.inputs.baggageDepartChanged(choseBaggage)
+    }
+    
+    func passengerBaggageCanceled(_ controller: PassengerBaggagePickerVC) {
+        self.viewModel.inputs.baggageDepartCanceled()
+    }
+}
+
+extension PassengerInternationalVC: PassengerReturnBaggagePickerDelegate {
+    func passengerReturnBaggagePicker(_ controller: PassengerBaggagePickerVC, choseBaggage: ResourceBaggage) {
+        self.viewModel.inputs.baggageReturnChanged(choseBaggage)
+    }
+    
+    func passengerReturnBaggageCanceled(_ controller: PassengerBaggagePickerVC) {
+        self.viewModel.inputs.baggageReturnCanceled()
     }
 }

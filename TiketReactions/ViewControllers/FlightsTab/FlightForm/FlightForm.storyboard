@@ -19,20 +19,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="2mf-JN-JIW" userLabel="Form Stack View">
-                                <rect key="frame" x="0.0" y="54" width="414" height="559.5"/>
+                                <rect key="frame" x="0.0" y="54" width="414" height="519.5"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="if8-bo-i6Z" userLabel="Status Flight Stack View">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="if8-bo-i6Z" userLabel="Status Flight Stack View">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7n8-UH-BpG" userLabel="Single Button">
-                                                <rect key="frame" x="0.0" y="0.0" width="52" height="39"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="206" height="40"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                                 <state key="normal" title="Single">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Yq-jo-dBF" userLabel="Return Button">
-                                                <rect key="frame" x="0.0" y="41" width="53" height="39"/>
+                                                <rect key="frame" x="208" y="0.0" width="206" height="40"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                                 <state key="normal" title="Return">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -40,18 +40,20 @@
                                             </button>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="80" id="OBl-Qh-IY3"/>
+                                            <constraint firstAttribute="height" constant="40" id="OBl-Qh-IY3"/>
+                                            <constraint firstItem="7n8-UH-BpG" firstAttribute="centerY" secondItem="if8-bo-i6Z" secondAttribute="centerY" id="iqL-d6-Zua"/>
+                                            <constraint firstItem="3Yq-jo-dBF" firstAttribute="centerY" secondItem="7n8-UH-BpG" secondAttribute="centerY" id="muc-cX-j9Z"/>
                                         </constraints>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="waA-wf-rsT" userLabel="Status Separator View">
-                                        <rect key="frame" x="0.0" y="88" width="414" height="1"/>
+                                        <rect key="frame" x="0.0" y="48" width="414" height="1"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="cij-hw-cnE"/>
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="yBP-TJ-zGy" userLabel="Origin Input Stack View">
-                                        <rect key="frame" x="0.0" y="97" width="414" height="70"/>
+                                        <rect key="frame" x="0.0" y="57" width="414" height="70"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qSZ-CW-Uky" userLabel="Origin Text Label">
                                                 <rect key="frame" x="0.0" y="0.0" width="34.5" height="26"/>
@@ -99,14 +101,14 @@
                                         <viewLayoutGuide key="safeArea" id="hBK-oX-QYQ"/>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mi0-lw-TcO" userLabel="Origin Separator View">
-                                        <rect key="frame" x="0.0" y="175" width="414" height="1"/>
+                                        <rect key="frame" x="0.0" y="135" width="414" height="1"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="opQ-On-09t"/>
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="FZj-4V-KhU" userLabel="Destination Input Stack View">
-                                        <rect key="frame" x="0.0" y="184" width="414" height="70"/>
+                                        <rect key="frame" x="0.0" y="144" width="414" height="70"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U91-cv-n3r" userLabel="Destination Input Label">
                                                 <rect key="frame" x="0.0" y="0.0" width="16.5" height="26"/>
@@ -154,23 +156,23 @@
                                         <viewLayoutGuide key="safeArea" id="bVH-aI-JK3"/>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pvl-pF-0pc" userLabel="Destination Separator VIew">
-                                        <rect key="frame" x="0.0" y="262" width="414" height="1"/>
+                                        <rect key="frame" x="0.0" y="222" width="414" height="1"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="hEf-Uo-hp6"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FqY-QJ-4zW" userLabel="Dates Input Container View">
-                                        <rect key="frame" x="0.0" y="271" width="414" height="104.5"/>
+                                        <rect key="frame" x="0.0" y="231" width="414" height="104.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VnX-TD-vUK" userLabel="Dates Pick Button">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="104.5"/>
                                             </button>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="RCA-Ob-Ita" userLabel="Dates Input Stack View">
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="RCA-Ob-Ita" userLabel="Dates Input Stack View">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="104.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="gF4-Dv-4bn" userLabel="Deparure Date Input Stack View">
-                                                        <rect key="frame" x="0.0" y="0.0" width="208" height="104.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="207" height="104.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Depart" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jtl-nr-ffG" userLabel="Departure Input Label">
                                                                 <rect key="frame" x="0.0" y="0.0" width="46.5" height="60.5"/>
@@ -244,9 +246,6 @@
                                                         <viewLayoutGuide key="safeArea" id="C47-BF-Gi9"/>
                                                     </stackView>
                                                 </subviews>
-                                                <constraints>
-                                                    <constraint firstItem="dGC-Q7-jYx" firstAttribute="leading" secondItem="RCA-Ob-Ita" secondAttribute="leading" constant="216" id="22T-U7-mDd"/>
-                                                </constraints>
                                             </stackView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -262,14 +261,14 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u2p-q0-UbV" userLabel="Dates Separator View">
-                                        <rect key="frame" x="0.0" y="383.5" width="414" height="1"/>
+                                        <rect key="frame" x="0.0" y="343.5" width="414" height="1"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="CgZ-or-6MM"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hba-z0-hP0" userLabel="Passengers Container View">
-                                        <rect key="frame" x="0.0" y="392.5" width="414" height="70"/>
+                                        <rect key="frame" x="0.0" y="352.5" width="414" height="70"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZRf-fH-bwL" userLabel="Passengers Pick Button">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
@@ -300,14 +299,14 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rOL-A6-ske" userLabel="Passenger Separator View">
-                                        <rect key="frame" x="0.0" y="470.5" width="414" height="1"/>
+                                        <rect key="frame" x="0.0" y="430.5" width="414" height="1"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="3IX-VZ-L1s"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xTp-fg-5Zm" userLabel="Search Button Container View">
-                                        <rect key="frame" x="0.0" y="479.5" width="414" height="80"/>
+                                        <rect key="frame" x="0.0" y="439.5" width="414" height="80"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s4x-x3-cq3" userLabel="Search Final Button">
                                                 <rect key="frame" x="20" y="10" width="374" height="60"/>

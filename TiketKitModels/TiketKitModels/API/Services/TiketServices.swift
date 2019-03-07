@@ -178,7 +178,7 @@ public struct TiketServices: TiketServiceType {
     }
     
     public func sandboxCreditCard(_ token: String) -> SignalProducer<URLRequest, NoError> {
-        guard let url = URL(string: "https://tiket.com/payment/checkout_payment?checkouttoken=\(token)") else {
+        guard let url = URL(string: "https://sandbox.tiket.com/payment/checkout_payment?checkouttoken=\(token)") else {
             fatalError()
         }
         

@@ -21,7 +21,7 @@ public enum InternationalFormGoTo {
 
 public protocol PassengerInternationalViewModelInputs {
     
-    func configureWith(_ separator: FormatDataForm, status: PassengerStatus)
+    func configureWith(_ separator: FormatDataForm, status: PassengerStatus, baggages: FormatDataForm?)
     func configCurrentPassenger(pass: AdultPassengerParam)
     
     func titleSalutationButtonTapped()
@@ -53,6 +53,14 @@ public protocol PassengerInternationalViewModelInputs {
     func issuedPassportChanged(_ text: CountryListEnvelope.ListCountry?)
     func issuedPassportCanceled()
     
+    func baggageDepartButtonTapped()
+    func baggageDepartChanged(_ res: ResourceBaggage?)
+    func baggageDepartCanceled()
+    
+    func baggageReturnButtonTapped()
+    func baggageReturnChanged(_ res: ResourceBaggage?)
+    func baggageReturnCanceled()
+    
     func submitButtonTapped()
     
     func viewDidLoad()
@@ -61,9 +69,13 @@ public protocol PassengerInternationalViewModelInputs {
 public protocol PassengerInternationalViewModelOutputs {
     var passengerStatusText: Signal<String, NoError> { get }
     var isInternational: Signal<Bool, NoError> { get }
+    var isAvailableBaggage: Signal<Bool, NoError> { get }
+    var departBaggageText: Signal<String, NoError> { get }
+    var returnBaggageText: Signal<String, NoError> { get }
     var titleLabelText: Signal<String, NoError> { get }
     var goToInputsPicker: Signal<InternationalFormGoTo, NoError> { get }
     var goToBirthdatePicker: Signal<String, NoError> { get }
+    var goToBaggagePicker: Signal<[ResourceBaggage], NoError> { get }
     var dismissInputsPicker: Signal<InternationalFormGoTo, NoError> { get }
     var firstNameFirstResponder: Signal<(), NoError> { get }
     var lastNameFirstResponder: Signal<(), NoError> { get }
@@ -90,6 +102,9 @@ public final class PassengerInternationalViewModel: PassengerInternationalViewMo
         
         let current = Signal.combineLatest(self.configSeparatorProperty.signal.skipNil().map(first), self.viewDidLoadProperty.signal).map(first)
         let statusFlight = Signal.combineLatest(self.configSeparatorProperty.signal.skipNil().map(second), self.viewDidLoadProperty.signal).map(first)
+        
+        let baggageData = Signal.combineLatest(self.configSeparatorProperty.signal.skipNil().map(third), self.viewDidLoadProperty.signal).map(first)
+        
         let passengerFilled = Signal.combineLatest(self.configCurrentPassProperty.signal.skipNil(), self.viewDidLoadProperty.signal).map(first)
         
         statusFlight.observe(on: UIScheduler()).observeValues {
@@ -97,6 +112,8 @@ public final class PassengerInternationalViewModel: PassengerInternationalViewMo
         }
         
         self.isInternational = statusFlight.signal.map { $0 == .domestic }
+        
+        self.isAvailableBaggage = baggageData.signal.map { !$0.isNil }
         
         let initial = self.viewDidLoadProperty.signal.mapConst("")
         
@@ -107,6 +124,8 @@ public final class PassengerInternationalViewModel: PassengerInternationalViewMo
         self.goToBirthdatePicker = current.signal.map { $0.fieldText }.takeWhen(self.birthDateTappedProperty.signal)
         
         self.dismissInputsPicker = Signal.merge(self.titleSalutationCanceledProperty.signal.map { InternationalFormGoTo.goToTitleSalutationPicker }, self.citizenshipCanceledProperty.signal.map { InternationalFormGoTo.goToCitizenshipPicker }, self.expiredPassportCanceledProperty.signal.map { InternationalFormGoTo.goToExpiredPassportPicker }, self.issuedPassportCanceledProperty.signal.map { InternationalFormGoTo.goToIssuedPassportPicker })
+        
+        self.goToBaggagePicker = baggageData.signal.skipNil().map { $0.resBaggage }.skipNil()
         
         self.firstNameFirstResponder = .empty
         self.lastNameFirstResponder = .empty
@@ -120,6 +139,9 @@ public final class PassengerInternationalViewModel: PassengerInternationalViewMo
         self.citizenshipLabelText = Signal.merge(self.citizenshipChangedProperty.signal.skipNil().map { $0.countryName }, initial)
         self.expiredPassportLabelText = Signal.merge(self.expiredPassportChangedProperty.signal.skipNil().map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "MMM d, yyyy")! }, initial)
         self.issuedPassportLabelText = Signal.merge(self.issuedPassportChangedProperty.signal.skipNil().map { $0.countryName }, initial)
+        
+        self.departBaggageText = Signal.merge(initial, self.baggageDepartChangedProperty.signal.skipNil().map { $0.name })
+        self.returnBaggageText = Signal.merge(initial, self.baggageReturnChangedProperty.signal.skipNil().map { $0.name })
         
         let domesticPassenger = Signal.combineLatest(self.titleLabelText.signal, self.firstNameTextFieldText.signal, self.lastNameTextFieldText.signal, current.map { $0.fieldText }).switchMap { title, firstname, lastname, counting -> SignalProducer<AdultPassengerParam, NoError> in
             let adult = .defaults
@@ -148,12 +170,11 @@ public final class PassengerInternationalViewModel: PassengerInternationalViewMo
         let domesticValid = Signal.combineLatest(statusFlight.signal.filter { $0 == .domestic}.ignoreValues(), domesticPassenger.signal).map(second)
         
         self.submitInternationalPassenger = Signal.combineLatest(current.signal ,Signal.merge(domesticValid.signal, internationalValid.signal)).takeWhen(self.submitPassengerTappedProperty.signal)
-        
     }
     
-    fileprivate let configSeparatorProperty = MutableProperty<(FormatDataForm, PassengerStatus)?>(nil)
-    public func configureWith(_ separator: FormatDataForm, status: PassengerStatus) {
-        self.configSeparatorProperty.value = (separator, status)
+    fileprivate let configSeparatorProperty = MutableProperty<(FormatDataForm, PassengerStatus, FormatDataForm?)?>(nil)
+    public func configureWith(_ separator: FormatDataForm, status: PassengerStatus, baggages: FormatDataForm?) {
+        self.configSeparatorProperty.value = (separator, status, baggages)
     }
     
     fileprivate let configCurrentPassProperty = MutableProperty<AdultPassengerParam?>(nil)
@@ -260,6 +281,36 @@ public final class PassengerInternationalViewModel: PassengerInternationalViewMo
         self.issuedPassportCanceledProperty.value = ()
     }
     
+    fileprivate let baggageDepartTappedProperty = MutableProperty(())
+    public func baggageDepartButtonTapped() {
+        self.baggageDepartTappedProperty.value = ()
+    }
+    
+    fileprivate let baggageDepartChangedProperty = MutableProperty<ResourceBaggage?>(nil)
+    public func baggageDepartChanged(_ res: ResourceBaggage?) {
+        self.baggageDepartChangedProperty.value = res
+    }
+    
+    fileprivate let baggageDepartCanceledProperty = MutableProperty(())
+    public func baggageDepartCanceled() {
+        self.baggageDepartCanceledProperty.value = ()
+    }
+    
+    fileprivate let baggageReturnTappedProperty = MutableProperty(())
+    public func baggageReturnButtonTapped() {
+        self.baggageReturnTappedProperty.value = ()
+    }
+    
+    fileprivate let baggageReturnChangedProperty = MutableProperty<ResourceBaggage?>(nil)
+    public func baggageReturnChanged(_ res: ResourceBaggage?) {
+        self.baggageReturnChangedProperty.value = res
+    }
+    
+    fileprivate let baggageReturnCanceledProperty = MutableProperty(())
+    public func baggageReturnCanceled() {
+        self.baggageReturnCanceledProperty.value = ()
+    }
+    
     fileprivate let submitPassengerTappedProperty = MutableProperty(())
     public func submitButtonTapped() {
         self.submitPassengerTappedProperty.value = ()
@@ -272,9 +323,13 @@ public final class PassengerInternationalViewModel: PassengerInternationalViewMo
     
     public let passengerStatusText: Signal<String, NoError>
     public let isInternational: Signal<Bool, NoError>
+    public let isAvailableBaggage: Signal<Bool, NoError>
+    public let departBaggageText: Signal<String, NoError>
+    public let returnBaggageText: Signal<String, NoError>
     public let titleLabelText: Signal<String, NoError>
     public let goToInputsPicker: Signal<InternationalFormGoTo, NoError>
     public let goToBirthdatePicker: Signal<String, NoError>
+    public let goToBaggagePicker: Signal<[ResourceBaggage], NoError>
     public let dismissInputsPicker: Signal<InternationalFormGoTo, NoError>
     public let firstNameFirstResponder: Signal<(), NoError>
     public let lastNameFirstResponder: Signal<(), NoError>

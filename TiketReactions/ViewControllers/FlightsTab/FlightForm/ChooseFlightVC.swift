@@ -113,6 +113,12 @@ internal final class ChooseFlightVC: UIViewController {
         _ = self.destinationInputLabel
             |> UILabel.lens.textColor .~ .black
         
+        _ = self.departureInputLabel
+            |> UILabel.lens.text .~ Localizations.OutboundTitlePickDate
+        
+        _ = self.returnInputLabel
+            |> UILabel.lens.text .~ Localizations.ReturnTitlePickDate
+        
         _ = self.destinationContainerView
             |> UIView.lens.backgroundColor .~ .clear
         
@@ -135,6 +141,7 @@ internal final class ChooseFlightVC: UIViewController {
         
         _ = self.searchFinalButton
             |> UIButton.lens.backgroundColor(forState: .normal) .~ .tk_official_green
+            |> UIButton.lens.title(forState: .normal) .~ Localizations.FindFlightsButtonPickDate
         
         _ = self.originValueLabel
             |> UILabel.lens.textColor .~ .tk_official_green
@@ -197,7 +204,7 @@ internal final class ChooseFlightVC: UIViewController {
         self.viewModel.outputs.passengersChanged
             .observe(on: UIScheduler())
             .observeValues { [weak self] adult, child, infant in
-                self?.passengersValueLabel.text = "\(adult) Dewasa, \(child) Anak, \(infant) Bayi"
+                self?.passengersValueLabel.text = "\(Localizations.PassengerAdultStatusList(adult)), \(Localizations.PassengerChildStatusList(child)), \(Localizations.PassengerInfantStatusList(infant))"
         }
         
         self.viewModel.outputs.goToPickDate
