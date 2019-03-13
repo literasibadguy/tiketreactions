@@ -104,8 +104,16 @@ public final class PassengersListVC: UIViewController {
         
         self.viewModel.outputs.goToFirstPassenger
             .observe(on: QueueScheduler.main)
-            .observeValues { [weak self] format, status in
-                self?.setFormatPassenger(format, status: status)
+            .observeValues { [weak self] format, status, resBaggage in
+                self?.setFormatPassenger(format, status: status, res: resBaggage)
+        }
+        
+        self.viewModel.outputs.goToAdultPassengers
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] tabData in
+                let vc = PassengerInternationalVC.configureDataWith(tabData)
+                vc.delegate = self
+                self?.navigationController?.pushViewController(vc, animated: true)
         }
         
         self.viewModel.outputs.remindAlert
@@ -129,7 +137,6 @@ public final class PassengersListVC: UIViewController {
             .observeValues { [weak self] order in
                 print("Is it going to success: \(order)")
                 self?.goToPaymentMethod(order)
-//                self?.goToPaymentMethod()
         }
     }
     
@@ -150,8 +157,8 @@ public final class PassengersListVC: UIViewController {
         self.navigationController?.pushViewController(paymentMethodVC, animated: true)
     }
     
-    fileprivate func setFormatPassenger(_ format: FormatDataForm, status: PassengerStatus) {
-        self.goToPassengerInternationalVC(format, status: status)
+    fileprivate func setFormatPassenger(_ format: FormatDataForm, status: PassengerStatus, res: FormatDataForm? = nil) {
+        self.goToPassengerInternationalVC(format, status: status, baggages: res)
     }
     
     @objc fileprivate func submitFlightOrderTapped() {

@@ -88,6 +88,7 @@ internal final class FlightOrderListVC: UIViewController {
             .observe(on: UIScheduler())
             .observeValues { [weak self] orders in
                 self?.dataSource.load(orders: orders)
+                print("Is there any flight orders: \(orders)")
                 self?.orderTableView.reloadData()
         }
         
@@ -112,6 +113,13 @@ internal final class FlightOrderListVC: UIViewController {
             .observe(on: QueueScheduler.main)
             .observeValues { [weak self] remind in
                 self?.present(UIAlertController.alert(message: remind, confirm: { _ in self?.viewModel.inputs.confirmDeleteOrder(true) }, cancel: { _ in self?.viewModel.inputs.confirmDeleteOrder(false) }), animated: true, completion: nil)
+        }
+        
+        self.viewModel.outputs.deletedOrder
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] deleted in
+                self?.viewModel.inputs.shouldRefresh()
+                self?.orderTableView.reloadData()
         }
         
         self.viewModel.outputs.goToPayments

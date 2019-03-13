@@ -18,6 +18,7 @@ public protocol FlightOrderListViewModelInputs {
     func refreshAfterDeleted()
     func paymentButtonTapped()
     func willDisplayRow(_ row: Int, outOf totalRows: Int)
+    func shouldRefresh()
     func viewDidLoad()
     func viewWillAppear(_ animated: Bool)
 }
@@ -44,8 +45,12 @@ public final class FlightOrderListViewModel: FlightOrderListViewModelType, Fligh
     public init() {
         
         let ordersAreLoading = MutableProperty(false)
-        let flightOrdersEnvelope = Signal.merge(self.viewWillAppearProperty.signal.ignoreValues(), self.refreshDeletedProperty.signal).switchMap { _ in
-            AppEnvironment.current.apiService.fetchFlightOrder().ck_delay(AppEnvironment.current.apiDelayInterval, on: AppEnvironment.current.scheduler).on(started: { ordersAreLoading.value = true }, terminated: { ordersAreLoading.value = false }).materialize()
+        let flightOrdersEnvelope = Signal.merge(self.viewWillAppearProperty.signal.ignoreValues(), self.refreshDeletedProperty.signal, self.shouldRefreshProperty.signal).switchMap { _ in
+            AppEnvironment.current.apiService.fetchFlightOrder().on(started: { ordersAreLoading.value = true }, terminated: { ordersAreLoading.value = false }).materialize()
+        }
+        
+        flightOrdersEnvelope.values().observe(on: UIScheduler()).observeValues { envelope in
+            print("Flight Orders Envelope: \(envelope)")
         }
         
         self.flightOrders = flightOrdersEnvelope.values().map { $0.myOrder?.orderData }.skipNil()
@@ -92,6 +97,11 @@ public final class FlightOrderListViewModel: FlightOrderListViewModelType, Fligh
     private let viewWillAppearProperty = MutableProperty(false)
     public func viewWillAppear(_ animated: Bool) {
         self.viewWillAppearProperty.value = animated
+    }
+    
+    private let shouldRefreshProperty = MutableProperty(())
+    public func shouldRefresh() {
+        self.shouldRefreshProperty.value = ()
     }
     
     private let viewDidLoadProperty = MutableProperty(())

@@ -79,8 +79,6 @@ public final class RootTabBarVC: UITabBarController {
             switch item {
             case let .flightForm(index):
                 _ = tabBarItem(atIndex: index) ?|> flightTabBarItemStyle()
-            case let .hotelForm(index):
-                _ = tabBarItem(atIndex: index) ?|> hotelTabBarItemStyle()
             case let .order(index):
                 _ = tabBarItem(atIndex: index) ?|> orderTabBarItemStyle()
             case let .lounge(index):

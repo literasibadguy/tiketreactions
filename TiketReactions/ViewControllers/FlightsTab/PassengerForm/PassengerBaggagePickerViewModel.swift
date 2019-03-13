@@ -23,6 +23,7 @@ public protocol PassengerBaggagePickerViewModelInputs {
 public protocol PassengerBaggagePickerViewModelOutputs {
     var dataSource: Signal<[ResourceBaggage], NoError> { get }
     var notifyDelegateChoseBaggage: Signal<ResourceBaggage, NoError> { get }
+    var notifyDelegateReturnBaggage: Signal<ResourceBaggage, NoError> { get }
     var notifyDelegateToCancel: Signal<(), NoError> { get }
     var selectRow: Signal<Int, NoError> { get }
 }
@@ -44,6 +45,8 @@ public final class PassengerBaggagePickerViewModel: PassengerBaggagePickerViewMo
         self.selectRow = .empty
         
         self.notifyDelegateChoseBaggage = selectedBaggage.signal.takeWhen(self.doneButtonTappedProperty.signal)
+        self.notifyDelegateReturnBaggage = selectedBaggage.takeWhen(self.doneButtonTappedProperty.signal)
+        
         self.notifyDelegateToCancel = self.cancelTappedProperty.signal
     }
     
@@ -79,6 +82,7 @@ public final class PassengerBaggagePickerViewModel: PassengerBaggagePickerViewMo
     
     public let dataSource: Signal<[ResourceBaggage], NoError>
     public let notifyDelegateChoseBaggage: Signal<ResourceBaggage, NoError>
+    public let notifyDelegateReturnBaggage: Signal<ResourceBaggage, NoError>
     public let notifyDelegateToCancel: Signal<(), NoError>
     public let selectRow: Signal<Int, NoError>
     

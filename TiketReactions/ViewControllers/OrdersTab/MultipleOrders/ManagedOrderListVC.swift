@@ -27,6 +27,8 @@ internal final class ManagedOrderListVC: UIViewController {
     fileprivate let viewModel: ManagedOrderListViewModelType = ManagedOrderListViewModel()
     fileprivate var pagesDataSource: ManagedOrderListPagesDataSource!
     
+    private var panGesture = UIPanGestureRecognizer()
+    
     internal static func instantiate() -> ManagedOrderListVC {
         let vc = Storyboard.OrderList.instantiate(ManagedOrderListVC.self)
         return vc
@@ -106,6 +108,7 @@ internal final class ManagedOrderListVC: UIViewController {
                 guard let _self = self, let controller = self?.pagesDataSource.controllerFor(tab: tab) else {
                     fatalError("Controller not found for tab \(tab)")
                 }
+                print("Managed Order Tab: \(tab)")
                 _self.pageViewController.setViewControllers([controller], direction: .forward, animated: false, completion: nil)
         }
         
@@ -215,7 +218,7 @@ extension ManagedOrderListVC: UIPageViewControllerDelegate {
     }
 }
 
-/*
+
 extension ManagedOrderListVC: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         guard let gestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer else {
@@ -234,4 +237,3 @@ extension ManagedOrderListVC: UIGestureRecognizerDelegate {
         return true
     }
 }
- */

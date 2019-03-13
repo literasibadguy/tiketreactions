@@ -19,34 +19,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S97-Ic-dOC" userLabel="Logo Image View">
-                                <rect key="frame" x="0.0" y="34" width="375" height="225"/>
+                                <rect key="frame" x="0.0" y="119" width="375" height="100"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background-about-tab" translatesAutoresizingMaskIntoConstraints="NO" id="4AY-NE-vWW">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="4AY-NE-vWW" secondAttribute="height" multiplier="16:9" id="uKc-7i-UmS"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="triptozero" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vhl-QO-Tay">
-                                        <rect key="frame" x="28" y="42" width="319" height="28.666666666666671"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="triptozero" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vhl-QO-Tay">
+                                        <rect key="frame" x="28" y="32" width="319" height="28.666666666666671"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="textColor" red="0.3368430416" green="0.68521292099999997" blue="0.56773633560000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="4AY-NE-vWW" firstAttribute="leading" secondItem="S97-Ic-dOC" secondAttribute="leading" id="9OE-Er-Nzu"/>
                                     <constraint firstItem="Vhl-QO-Tay" firstAttribute="top" secondItem="S97-Ic-dOC" secondAttribute="topMargin" constant="24" id="WmY-L1-O3m"/>
-                                    <constraint firstAttribute="trailing" secondItem="4AY-NE-vWW" secondAttribute="trailing" id="cuo-3g-oAn"/>
-                                    <constraint firstItem="4AY-NE-vWW" firstAttribute="top" secondItem="S97-Ic-dOC" secondAttribute="top" id="fBv-KH-8LL"/>
-                                    <constraint firstAttribute="height" constant="225" id="jFF-xX-dpi"/>
+                                    <constraint firstAttribute="height" constant="100" id="jFF-xX-dpi"/>
                                     <constraint firstItem="Vhl-QO-Tay" firstAttribute="leading" secondItem="S97-Ic-dOC" secondAttribute="leadingMargin" constant="20" id="pfH-NG-ywp"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="Vhl-QO-Tay" secondAttribute="trailing" constant="20" id="zbE-tG-F3M"/>
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="nek-1m-SnR" userLabel="Config Stack View">
-                                <rect key="frame" x="0.0" y="259" width="375" height="180"/>
+                                <rect key="frame" x="0.0" y="219" width="375" height="180"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UvN-2c-How" userLabel="Currency View Cell">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
@@ -154,10 +145,10 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="93Z-hY-mvm" userLabel="Contact Button">
-                                <rect key="frame" x="0.0" y="379" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="339" width="375" height="60"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jvh-lu-zJg" userLabel="Currency Button">
-                                <rect key="frame" x="0.0" y="259" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="219" width="375" height="60"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -166,13 +157,13 @@
                             <constraint firstItem="nek-1m-SnR" firstAttribute="top" secondItem="S97-Ic-dOC" secondAttribute="bottom" id="7hM-mW-3Ou"/>
                             <constraint firstItem="S97-Ic-dOC" firstAttribute="leading" secondItem="jFY-Wl-0e2" secondAttribute="leading" id="BNQ-rj-OTE"/>
                             <constraint firstItem="Jvh-lu-zJg" firstAttribute="top" secondItem="UvN-2c-How" secondAttribute="top" id="CPK-cS-x5k"/>
+                            <constraint firstItem="S97-Ic-dOC" firstAttribute="top" secondItem="jFY-Wl-0e2" secondAttribute="top" constant="75" id="Qhj-8g-bct"/>
                             <constraint firstItem="93Z-hY-mvm" firstAttribute="top" secondItem="N3Y-3O-gxb" secondAttribute="top" id="W98-4z-8Ri"/>
                             <constraint firstItem="S97-Ic-dOC" firstAttribute="trailing" secondItem="jFY-Wl-0e2" secondAttribute="trailing" id="WKq-hg-xIM"/>
                             <constraint firstItem="93Z-hY-mvm" firstAttribute="bottom" secondItem="N3Y-3O-gxb" secondAttribute="bottom" id="Wkr-ft-qwR"/>
                             <constraint firstItem="Jvh-lu-zJg" firstAttribute="trailing" secondItem="UvN-2c-How" secondAttribute="trailing" id="f48-1N-dTs"/>
                             <constraint firstItem="93Z-hY-mvm" firstAttribute="trailing" secondItem="N3Y-3O-gxb" secondAttribute="trailing" id="ifh-PW-9u6"/>
                             <constraint firstItem="Jvh-lu-zJg" firstAttribute="bottom" secondItem="UvN-2c-How" secondAttribute="bottom" id="iqR-RC-jXb"/>
-                            <constraint firstItem="S97-Ic-dOC" firstAttribute="top" secondItem="jFY-Wl-0e2" secondAttribute="top" constant="-10" id="oZS-p5-gsN"/>
                             <constraint firstItem="Jvh-lu-zJg" firstAttribute="leading" secondItem="UvN-2c-How" secondAttribute="leading" id="qKa-oJ-O1V"/>
                             <constraint firstItem="nek-1m-SnR" firstAttribute="leading" secondItem="jFY-Wl-0e2" secondAttribute="leading" id="vDP-h8-GCd"/>
                             <constraint firstItem="93Z-hY-mvm" firstAttribute="leading" secondItem="N3Y-3O-gxb" secondAttribute="leading" id="ymK-xC-chg"/>
@@ -356,7 +347,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="background-about-tab" width="1080" height="1080"/>
         <image name="issued-order-icon" width="33" height="35"/>
     </resources>
 </document>

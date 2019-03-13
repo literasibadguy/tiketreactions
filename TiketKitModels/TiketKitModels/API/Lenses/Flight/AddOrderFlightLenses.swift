@@ -195,57 +195,77 @@ extension AdultPassengerParam {
         
         public static let title = Lens<AdultPassengerParam, String?>(
             view: { $0.title },
-            set: { some, thing in AdultPassengerParam(title: some, firstname: thing.firstname, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality) }
+            set: { some, thing in AdultPassengerParam(title: some, firstname: thing.firstname, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality, departAdultBaggage: thing.departAdultBaggage, returnAdultBaggage: thing.returnAdultBaggage, departChildBaggage: thing.departChildBaggage, returnChildBaggage: thing.returnChildBaggage) }
         )
         
         public static let firstname = Lens<AdultPassengerParam, String?>(
             view: { $0.firstname },
-            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: some, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality) }
+            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: some, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality, departAdultBaggage: thing.departAdultBaggage, returnAdultBaggage: thing.returnAdultBaggage, departChildBaggage: thing.departChildBaggage, returnChildBaggage: thing.returnChildBaggage) }
         )
         
         public static let lastname = Lens<AdultPassengerParam, String?>(
             view: { $0.lastname },
-            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: some, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality) }
+            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: some, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality, departAdultBaggage: thing.departAdultBaggage, returnAdultBaggage: thing.returnAdultBaggage, departChildBaggage: thing.departChildBaggage, returnChildBaggage: thing.returnChildBaggage) }
         )
         
         public static let birthdate = Lens<AdultPassengerParam, String?>(
             view: { $0.birthdate },
-            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: thing.lastname, birthdate: some, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality) }
+            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: thing.lastname, birthdate: some, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality, departAdultBaggage: thing.departAdultBaggage, returnAdultBaggage: thing.returnAdultBaggage, departChildBaggage: thing.departChildBaggage, returnChildBaggage: thing.returnChildBaggage) }
         )
         
         public static let id = Lens<AdultPassengerParam, String?>(
             view: { $0.id },
-            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality) }
+            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality, departAdultBaggage: thing.departAdultBaggage, returnAdultBaggage: thing.returnAdultBaggage, departChildBaggage: thing.departChildBaggage, returnChildBaggage: thing.returnChildBaggage) }
         )
         
         public static let count = Lens<AdultPassengerParam, String?>(
             view: { $0.count },
-            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: some, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality) }
+            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: some, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality, departAdultBaggage: thing.departAdultBaggage, returnAdultBaggage: thing.returnAdultBaggage, departChildBaggage: thing.departChildBaggage, returnChildBaggage: thing.returnChildBaggage) }
         )
         
         public static let passportNo = Lens<AdultPassengerParam, String?>(
             view: { $0.passportNo },
-            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: some, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality) }
+            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: some, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality, departAdultBaggage: thing.departAdultBaggage, returnAdultBaggage: thing.returnAdultBaggage, departChildBaggage: thing.departChildBaggage, returnChildBaggage: thing.returnChildBaggage) }
         )
         
         public static let passportExpiryDate = Lens<AdultPassengerParam, String?>(
             view: { $0.passportExpiryDate},
-            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: some, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality) }
+            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: some, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality, departAdultBaggage: thing.departAdultBaggage, returnAdultBaggage: thing.returnAdultBaggage, departChildBaggage: thing.departChildBaggage, returnChildBaggage: thing.returnChildBaggage) }
         )
         
         public static let passportIssuedDate = Lens<AdultPassengerParam, String?>(
             view: { $0.passportIssuedDate },
-            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: some, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality) }
+            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: some, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality, departAdultBaggage: thing.departAdultBaggage, returnAdultBaggage: thing.returnAdultBaggage, departChildBaggage: thing.departChildBaggage, returnChildBaggage: thing.returnChildBaggage) }
         )
         
         public static let passportIssue = Lens<AdultPassengerParam, String?>(
             view: { $0.passportIssue},
-            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: some, passportNationality: thing.passportNationality) }
+            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: some, passportNationality: thing.passportNationality, departAdultBaggage: thing.departAdultBaggage, returnAdultBaggage: thing.returnAdultBaggage, departChildBaggage: thing.departChildBaggage, returnChildBaggage: thing.returnChildBaggage) }
         )
         
         public static let passportNationality = Lens<AdultPassengerParam, String?>(
             view: { $0.passportIssue},
-            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: some) }
+            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: some, departAdultBaggage: thing.departAdultBaggage, returnAdultBaggage: thing.returnAdultBaggage, departChildBaggage: thing.departChildBaggage, returnChildBaggage: thing.returnChildBaggage) }
+        )
+        
+        public static let departAdultBaggage = Lens<AdultPassengerParam, String?>(
+            view: { $0.departAdultBaggage},
+            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality, departAdultBaggage: some, returnAdultBaggage: thing.returnAdultBaggage, departChildBaggage: thing.departChildBaggage, returnChildBaggage: thing.returnChildBaggage) }
+        )
+        
+        public static let returnAdultBaggage = Lens<AdultPassengerParam, String?>(
+            view: { $0.returnAdultBaggage },
+            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality, departAdultBaggage: thing.departAdultBaggage, returnAdultBaggage: some, departChildBaggage: thing.departChildBaggage, returnChildBaggage: thing.returnChildBaggage) }
+        )
+        
+        public static let departChildBaggage = Lens<AdultPassengerParam, String?>(
+            view: { $0.departChildBaggage },
+            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality, departAdultBaggage: thing.departAdultBaggage, returnAdultBaggage: thing.returnAdultBaggage, departChildBaggage: some, returnChildBaggage: thing.returnChildBaggage) }
+        )
+        
+        public static let returnChildBaggage = Lens<AdultPassengerParam, String?>(
+            view: { $0.returnChildBaggage},
+            set: { some, thing in AdultPassengerParam(title: thing.title, firstname: thing.firstname, lastname: thing.lastname, birthdate: thing.birthdate, id: thing.id, count: thing.count, passportNo: thing.passportNo, passportExpiryDate: thing.passportExpiryDate, passportIssuedDate: thing.passportIssuedDate, passportIssue: thing.passportIssue, passportNationality: thing.passportNationality, departAdultBaggage: thing.departAdultBaggage, returnAdultBaggage: thing.returnAdultBaggage, departChildBaggage: thing.departChildBaggage, returnChildBaggage: some) }
         )
     }
 }

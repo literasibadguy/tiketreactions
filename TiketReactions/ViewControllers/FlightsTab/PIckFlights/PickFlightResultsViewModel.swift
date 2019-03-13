@@ -61,8 +61,8 @@ public final class PickFlightResultsViewModel: PickFlightResultsViewModelType, P
         let noticeSignal = fetchFlightServices.values().map(takeFlightsIntoNotice(_ :))
         self.flights = Signal.combineLatest(fetchFlightServices.values().map { $0.departResuts }.skipNil(), noticeSignal)
         self.showNextSteps = self.tappedFlightProperty.signal.skipNil().mapConst(true)
-        self.showDestinationText = Signal.combineLatest(current.map { "\($0.paramSearchFlight.fromAirport ?? "") - \($0.paramSearchFlight.toAirport ?? "")" }, self.viewDidLoadProperty.signal.mapConst("")).map(first)
-        self.showDateText = Signal.combineLatest(noticeSignal.map { $0.date }.skipNil(), self.viewDidLoadProperty.signal.mapConst("")).map(first)
+        self.showDestinationText = Signal.combineLatest(currentParam.signal.map { "\($0.fromAirport ?? "") - \($0.toAirport ?? "")" }, self.viewDidLoadProperty.signal.mapConst("")).map(first)
+        self.showDateText = self.viewDidLoadProperty.signal.mapConst("")
         self.returnFlights = .empty
         self.showEmptyState = self.flights.signal.map(first).filter { $0.isEmpty }.map { _ in emptyStateFlight() }
         self.hideEmptyState = Signal.merge(self.viewWillAppearProperty.signal.ignoreValues().take(first: 1), self.flights.map(first).filter { !$0.isEmpty }.ignoreValues())
@@ -71,7 +71,6 @@ public final class PickFlightResultsViewModel: PickFlightResultsViewModelType, P
         self.goToReturnFlights = Signal.combineLatest(fetchFlightServices.values().filter { !$0.returnResults.isNil }, self.tappedFlightProperty.signal.skipNil()).takeWhen(self.tappedButtonNextStepProperty.signal)
 
         self.dismissToPickDate = self.tappedButtonDismissProperty.signal
-        
     }
     
     fileprivate let configEnvelopeProperty = MutableProperty<SearchFlightEnvelope?>(nil)

@@ -122,21 +122,15 @@ public final class PassengerInternationalVC: UIViewController {
         return vc
     }
     
-    public static func configureWith(_ separator: FormatDataForm, index: Int) -> PassengerInternationalVC {
-        let vc = Storyboard.PassengerForm.instantiate(PassengerInternationalVC.self)
-//        vc.viewModel.inputs.configureWith(separator, index: index)
-        return vc
-    }
-    
     public static func configureWith(separator: FormatDataForm, status: PassengerStatus, baggage: FormatDataForm? = nil) -> PassengerInternationalVC {
         let vc = Storyboard.PassengerForm.instantiate(PassengerInternationalVC.self)
         vc.viewModel.inputs.configureWith(separator, status: status, baggages: baggage)
         return vc
     }
     
-    public static func configureCurrentWith(_ adult: AdultPassengerParam) -> PassengerInternationalVC {
+    public static func configureDataWith(_ passenger: PassengersData) -> PassengerInternationalVC {
         let vc = Storyboard.PassengerForm.instantiate(PassengerInternationalVC.self)
-        vc.viewModel.inputs.configCurrentPassenger(pass: adult)
+        vc.viewModel.inputs.configureWith(data: passenger)
         return vc
     }
     
@@ -359,8 +353,6 @@ public final class PassengerInternationalVC: UIViewController {
         _ = self.returnBaggageSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_official_green
         
-        
-        
         _ = self.collectInternationalButton
             |> UIButton.lens.backgroundColor(forState: .normal) .~ .tk_official_green
             |> UIButton.lens.backgroundColor(forState: .disabled) .~ .tk_typo_green_grey_600
@@ -380,19 +372,20 @@ public final class PassengerInternationalVC: UIViewController {
         self.pasportNoTextField.rac.text = self.viewModel.outputs.noPassportTextFieldText
         self.passportExpiredPickedLabel.rac.text = self.viewModel.outputs.expiredPassportLabelText
         self.passportIssuesPickedLabel.rac.text = self.viewModel.outputs.issuedPassportLabelText
+        self.departBaggagePickedLabel.rac.text = self.viewModel.outputs.departBaggageText
+        self.returnBaggagePickedLabel.rac.text = self.viewModel.outputs.returnBaggageText
         
-        self.citizenshipInputStackView.rac.hidden = self.viewModel.outputs.isInternational
         self.pasportNoInputStackView.rac.hidden = self.viewModel.outputs.isInternational
         self.pasportExpiredInputStackView.rac.hidden = self.viewModel.outputs.isInternational
         self.pasportIssuesStackView.rac.hidden = self.viewModel.outputs.isInternational
         self.departBaggageInputStackView.rac.hidden = self.viewModel.outputs.isAvailableBaggage
         self.returnBaggageInputStackView.rac.hidden = self.viewModel.outputs.isAvailableBaggage
         
-        self.dateBornSeparatorView.rac.hidden = self.viewModel.outputs.isInternational
-        self.citizenshipSeparatorView.rac.hidden = self.viewModel.outputs.isInternational
         self.pasportNoSeparatorView.rac.hidden = self.viewModel.outputs.isInternational
         self.pasportExpiredSeparatorView.rac.hidden = self.viewModel.outputs.isInternational
         self.pasportIssuesSeparatorView.rac.hidden = self.viewModel.outputs.isInternational
+        self.departBaggageSeparatorView.rac.hidden = self.viewModel.outputs.isAvailableBaggage
+        self.returnBaggageSeparatorView.rac.hidden = self.viewModel.outputs.isAvailableBaggage
         
         self.collectInternationalButton.rac.isEnabled = self.viewModel.outputs.isPassengerFormValid
         
@@ -414,14 +407,32 @@ public final class PassengerInternationalVC: UIViewController {
         self.viewModel.outputs.goToBaggagePicker
             .observe(on: QueueScheduler.main)
             .observeValues { [weak self] resBaggage in
-                self?.goTakeBaggage(res: resBaggage)
+                guard let _self = self else { return }
+                let pickBaggageVC = PassengerBaggagePickerVC.configureWith(resBaggage)
+                pickBaggageVC.departDelegate = _self
+                pickBaggageVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+                pickBaggageVC.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
+                _self.present(pickBaggageVC, animated: true, completion: nil)
+        }
+        
+        self.viewModel.outputs.goReturnBaggagePicker
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] resBaggage in
+                guard let _self = self else { return }
+                let pickBaggageVC = PassengerBaggagePickerVC.configureWith(resBaggage)
+                pickBaggageVC.returnDelegate = _self
+                pickBaggageVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+                pickBaggageVC.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
+                _self.present(pickBaggageVC, animated: true, completion: nil)
         }
         
         self.viewModel.outputs.goToBirthdatePicker
             .observe(on: QueueScheduler.main)
             .observeValues { [weak self] format in
+                print("Res Baggage: \(format)")
                 self?.goToBirthDatePickerController(field: format)
         }
+        
         self.viewModel.outputs.dismissInputsPicker
             .observe(on: QueueScheduler.main)
             .observeValues { [weak self] steps in
@@ -499,18 +510,13 @@ public final class PassengerInternationalVC: UIViewController {
     
     fileprivate func goToIssuedPickerController() {
         let nationalPickerVC = NationalityPickVC.configureWith()
-//        nationalPickerVC.delegate = self
         nationalPickerVC.issueCountryDelegate = self
         self.present(nationalPickerVC, animated: true, completion: nil)
     }
     
+    // I required a data from take baggage, How to make sure there is one?
     fileprivate func goTakeBaggage(res: [ResourceBaggage]) {
-        let pickBaggageVC = PassengerBaggagePickerVC.configureWith(res)
-        pickBaggageVC.departDelegate = self
-        pickBaggageVC.returnDelegate = self
-        pickBaggageVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-        pickBaggageVC.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
-        self.present(pickBaggageVC, animated: true, completion: nil)
+        
     }
     
     @objc fileprivate func cancelButtonTapped() {

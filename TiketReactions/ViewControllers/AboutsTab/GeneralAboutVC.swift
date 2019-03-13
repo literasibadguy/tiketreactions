@@ -29,7 +29,6 @@ internal final class GeneralAboutVC: UIViewController {
     @IBOutlet private weak var contactButton: UIButton!
     @IBOutlet private weak var contactCellSeparatorView: UIView!
     
-    
     @IBOutlet private weak var currencyValueLabel: UILabel!
     @IBOutlet private weak var deviceIDValueLabel: UILabel!
     
@@ -38,11 +37,7 @@ internal final class GeneralAboutVC: UIViewController {
         let vc = Storyboard.GeneralAbout.instantiate(GeneralAboutVC.self)
         return vc
     }
-    
-    public override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -80,9 +75,10 @@ internal final class GeneralAboutVC: UIViewController {
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
         _ = self.deviceIDValueLabel
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
-        
+    
         _ = self.contactInputLabel
             |> UILabel.lens.textColor .~ .tk_official_green
+            |> UILabel.lens.text .~ "Feedback"
         
         _ = self.currencyCellSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_base_grey_100
@@ -95,6 +91,7 @@ internal final class GeneralAboutVC: UIViewController {
         
         _ = self.welcomeLabel
             |> UILabel.lens.text .~ "triptozero"
+            |> UILabel.lens.textColor .~ .tk_official_green
     }
     
     override func bindViewModel() {

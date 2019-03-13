@@ -18,7 +18,7 @@ private let baseTabBarItemStyle = UITabBarItem.lens.title .~ nil
 
 public func flightTabBarItemStyle() -> (UITabBarItem) -> UITabBarItem {
     return baseTabBarItemStyle
-        <> UITabBarItem.lens.title %~ { _ in "Flight" }
+        <> UITabBarItem.lens.title %~ { _ in "Trip" }
         <> UITabBarItem.lens.image .~ image(named: "flight-tabbar-icon")
         <> UITabBarItem.lens.selectedImage .~ image(named: "flight-tabbar-icon-selected")
         <> UITabBarItem.lens.accessibilityLabel .~ "Flight"

@@ -13,14 +13,16 @@ import Result
 import TiketKitModels
 
 public struct PassengersData {
-    public let passengers: [FormatDataForm]
+    public let passenger: FormatDataForm
     public let isInternational: Bool
     public let isBaggage: Bool
+    public let departBaggage: FormatDataForm?
+    public let returnBaggage: FormatDataForm?
 }
 
-public enum PassengerDestinationStatus {
-    case domestic
+public enum PassengerStatus {
     case international
+    case domestic
 }
 
 public enum PassengerFormState {
@@ -46,8 +48,8 @@ public protocol PassengersListViewModelInputs {
 public protocol PassengersListViewModelOutputs {
     var loadPassengerLists: Signal<[FormatDataForm], NoError> { get }
     var setPassengerFormat: Signal<[FormatDataForm], NoError> { get }
-    var goToFirstPassenger: Signal<(FormatDataForm, PassengerStatus), NoError> { get }
-    var goToAdultPassengers: Signal<FormatDataForm, NoError> { get }
+    var goToFirstPassenger: Signal<(FormatDataForm, PassengerStatus, FormatDataForm?), NoError> { get }
+    var goToAdultPassengers: Signal<PassengersData, NoError> { get }
     var goToChildPassengers: Signal<FormatDataForm, NoError> { get }
     var goToInfantPassengers: Signal<FormatDataForm, NoError> { get }
     var goToPassengerForm: Signal<FormatDataForm, NoError> { get }
@@ -71,9 +73,14 @@ public final class PassengersListViewModel: PassengersListViewModelType, Passeng
         
         let passsengerState: Signal<(isInternational: Bool, isDepartBaggage: Bool, isReturnBaggage: Bool), NoError> = current.signal.skipNil().map { ($0.adultPassengerList.adult1.passportNo != nil, $0.adultPassengerList.adult1.departBaggage != nil, $0.adultPassengerList.adult1.returnBaggage != nil) }
         
+        let departBaggage = current.signal.skipNil().filter { flightData in
+            flightData.adultPassengerList.adult1.departBaggage != nil && flightData.adultPassengerList.adult1.returnBaggage != nil
+        }.map { $0.adultPassengerList.adult1.departBaggage }
+        
         let personalizedBaggagePassenger = Signal.combineLatest(current.signal.skipNil(), passsengerState.signal).map { flightData, state in
             [state.isDepartBaggage ? flightData.adultPassengerList.adult1.departBaggage?.resBaggage : nil, state.isReturnBaggage ? flightData.adultPassengerList.adult1.returnBaggage?.resBaggage : nil]
         }.map { $0.compact() }
+        
         
 //        let listInternational = current.signal.skipNil().filter { $0.adultPassengerList.adult1.passportNo != nil }.map { [$0.adultPassengerList.adult1.separator, $0.adultPassengerList.adult2.separtor, $0.adultPassengerList.adult3.separtor, $0.adultPassengerList.adult4.separtor, $0.adultPassengerList.adult5.separtor, $0.adultPassengerList.adult6.separtor, $0.adultPassengerList.child1.separtor, $0.adultPassengerList.child2.separtor, $0.adultPassengerList.child3.separtor, $0.adultPassengerList.child4.separtor, $0.adultPassengerList.child5.separtor, $0.adultPassengerList.child6.separtor, $0.adultPassengerList.infant1.separtor, $0.adultPassengerList.infant2.separtor, $0.adultPassengerList.infant3.separtor, $0.adultPassengerList.infant4.separtor, $0.adultPassengerList.infant5.separtor, $0.adultPassengerList.infant6.separtor].compact() }
         
@@ -87,7 +94,11 @@ public final class PassengersListViewModel: PassengersListViewModelType, Passeng
         
         let findOutStatus = Signal.merge(current.signal.skipNil().filter { $0.adultPassengerList.adult1.passportNo != nil }.mapConst(PassengerStatus.international), current.signal.skipNil().filter { $0.adultPassengerList.adult1.passportNo == nil }.mapConst(PassengerStatus.domestic))
         
-        self.goToFirstPassenger = Signal.combineLatest(self.selectedPassengerProperty.signal.skipNil(), findOutStatus.signal)
+        self.goToFirstPassenger = .empty
+            
+        // Signal.combineLatest(self.selectedPassengerProperty.signal.skipNil(), findOutStatus.signal, departBaggage.signal)
+        
+        self.goToAdultPassengers = Signal.combineLatest(self.selectedPassengerProperty.signal.skipNil(), current.signal.skipNil().map { $0.adultPassengerList }).map(tabData(selected:required:))
         
         let contactForm = self.firstPassengerFilledProperty.signal.skipNil()
         
@@ -120,7 +131,7 @@ public final class PassengersListViewModel: PassengersListViewModelType, Passeng
         }
         
         let addOrderFlightService = totalParam.values().takeWhen(self.remindTappedCheckoutProperty.signal.skipNil().filter { isTrue($0) }.ignoreValues()).switchMap { entireParam in
-            AppEnvironment.current.apiService.addOrderFlight(params: entireParam).ck_delay(AppEnvironment.current.apiDelayInterval, on: AppEnvironment.current.scheduler).on(started: { getOrderLoading.value = true }, terminated: { getOrderLoading.value = false }).materialize()
+            AppEnvironment.current.apiService.addOrderFlight(params: entireParam).ck_delay(AppEnvironment.current.apiDelayInterval, on: AppEnvironment.current.scheduler).on(started: { getOrderLoading.value = true }, completed: { getOrderLoading.value = true }, terminated: { getOrderLoading.value = false }).materialize()
         }
         
         addOrderFlightService.values().observe(on: UIScheduler()).observeValues { envelope in
@@ -131,12 +142,12 @@ public final class PassengersListViewModel: PassengersListViewModelType, Passeng
         
         let errorCheckout = addOrderFlightService.values().filter { $0.diagnostic.status == .error && $0.diagnostic.status == .failed }.ignoreValues()
         
-        self.goToAdultPassengers = .empty
+        
         self.goToChildPassengers = .empty
         self.goToInfantPassengers = .empty
         
         self.goToPassengerForm = .empty
-        
+
         self.isPassengerListValid = Signal.combineLatest(self.contactFormValidProperty.signal, self.getListsPassengerProperty.signal.mapConst(true).skipRepeats(==)).map { isTrue($0.0 && $0.1) }
         
         self.orderFlightIsLoading = getOrderLoading.signal
@@ -151,7 +162,7 @@ public final class PassengersListViewModel: PassengersListViewModelType, Passeng
                     case .successful:
                         return SignalProducer(value: envelope)
                     }
-                }.retry(upTo: 2)
+                }
             }
             }.materialize()
         
@@ -162,15 +173,7 @@ public final class PassengersListViewModel: PassengersListViewModelType, Passeng
         let lastOrderDetailId = myOrder.signal.map { $0.orderData }.filter { !$0.isEmpty }
             .map { $0.last!.orderDetailId }
         
-        lastOrderDetailId.observe(on: UIScheduler()).observeValues { lastDetailId in
-            print("WHATS LAST ORDER DETAIL ID: \(String(describing: lastDetailId))")
-        }
-        
-        let checkoutRequestLink = lastOrderEvent.values().signal.filter { $0.checkout != nil }.map { $0.checkout
-        }
-        
-        checkoutRequestLink.observe(on: UIScheduler()).observeValues { checkoutURI in
-            print("WHATS CHECKOUT URI: \(String(describing: checkoutURI))")
+        let checkoutRequestLink = Signal.combineLatest(myOrder.signal.ignoreValues(), lastOrderEvent.values()).map(second).signal.filter { $0.checkout != nil }.map { $0.checkout
         }
         
         let checkoutPageRequestEnvelope = checkoutRequestLink.signal.switchMap { checkout in
@@ -183,15 +186,15 @@ public final class PassengersListViewModel: PassengersListViewModelType, Passeng
             AppEnvironment.current.apiService.checkoutFlightLogin(url: $0.0, params: $0.1).ck_delay(AppEnvironment.current.apiDelayInterval, on: AppEnvironment.current.scheduler).on(starting: { getOrderLoading.value = true }, completed: { getOrderLoading.value = true }, terminated: { getOrderLoading.value = false }).retry(upTo: 3).materialize()
         }
         
-       checkoutLoginEvent.observe(on: UIScheduler()).observeValues { checkoutURI in
-            print("WHATS Checkout Login Event URI: \(String(describing: checkoutURI))")
-        }
-        
         let emailPick = checkoutLoginEvent.values().filter { $0.diagnostic.status == .successful }
         
         let decidedOrder = Signal.combineLatest(myOrder, emailPick).on(value: { saveIssuedOrder($0.0.orderId, email: $0.1.username) } ).map(first)
         
-        self.goToPaymentMethod = decidedOrder.signal.takeWhen(emailPick.ignoreValues())
+        decidedOrder.observe(on: UIScheduler()).observeValues { ordering in
+            print("DECIDED ORDER: \(String(describing: ordering))")
+        }
+        
+        self.goToPaymentMethod = decidedOrder.signal.takeWhen(checkoutLoginEvent.values().filter { $0.diagnostic.status == .successful }.ignoreValues())
     }
     
     fileprivate let configFlightDataProperty = MutableProperty<GetFlightDataEnvelope?>(nil)
@@ -256,8 +259,8 @@ public final class PassengersListViewModel: PassengersListViewModelType, Passeng
     
     public let loadPassengerLists: Signal<[FormatDataForm], NoError>
     public let setPassengerFormat: Signal<[FormatDataForm], NoError>
-    public let goToFirstPassenger: Signal<(FormatDataForm, PassengerStatus), NoError>
-    public let goToAdultPassengers: Signal<FormatDataForm, NoError>
+    public let goToFirstPassenger: Signal<(FormatDataForm, PassengerStatus, FormatDataForm?), NoError>
+    public let goToAdultPassengers: Signal<PassengersData, NoError>
     public let goToChildPassengers: Signal<FormatDataForm, NoError>
     public let goToInfantPassengers: Signal<FormatDataForm, NoError>
     public let goToPassengerForm: Signal<FormatDataForm, NoError>
@@ -271,10 +274,18 @@ public final class PassengersListViewModel: PassengersListViewModelType, Passeng
     public var outputs: PassengersListViewModelOutputs { return self }
 }
 
-private func createOrder(contact: GroupPassengersParam, lists: [String: AdultPassengerParam]) -> SignalProducer<AddOrderFlightEnvelope, ErrorEnvelope> {
-    _ = contact
-        |> GroupPassengersParam.lens.groupPassengers .~ lists
-    return AppEnvironment.current.apiService.addOrderFlight(params: contact)
+private func tabData(selected: FormatDataForm, required: RequiredPassengers) -> PassengersData {
+    let isInternational = required.adult1.passportNo != nil
+    let isDepartBaggage = required.adult1.departBaggage != nil
+    let isReturnBaggage = required.adult1.returnBaggage != nil
+    
+    let departBaggage = isDepartBaggage ? required.adult1.departBaggage : nil
+    
+    let returnBaggage = isReturnBaggage ? required.adult1.returnBaggage : nil
+    
+    print("List Depart Baggage: \(String(describing: departBaggage))")
+    
+    return PassengersData(passenger: selected, isInternational: isInternational, isBaggage: isDepartBaggage, departBaggage: departBaggage, returnBaggage: returnBaggage)
 }
 
 private func countThePassengers(lists: [FormatDataForm]) -> Int {

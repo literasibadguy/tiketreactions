@@ -10,11 +10,6 @@ import Argo
 import Curry
 import Runes
 
-public enum PassengerStatus {
-    case international
-    case domestic
-}
-
 public struct GetFlightDataEnvelope {
     public let diagnostic: Diagnostic
     public let adultPassengerList: RequiredPassengers

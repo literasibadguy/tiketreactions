@@ -17,9 +17,6 @@ public final class HotelLiveFormVC: UIViewController {
     fileprivate let viewModel: HotelFormViewModelType = HotelFormViewModel()
     
     @IBOutlet private weak var hotelFormStackView: UIStackView!
-    @IBOutlet private weak var featureLabelStackView: UIStackView!
-    @IBOutlet private weak var cariHotelLabel: UILabel!
-    @IBOutlet private weak var currentDateLabel: UILabel!
     @IBOutlet private weak var destinationInputStackView: UIStackView!
     @IBOutlet private weak var destinationInputTextLabel: UILabel!
     @IBOutlet private weak var destinationContainerView: UIView!
@@ -37,12 +34,6 @@ public final class HotelLiveFormVC: UIViewController {
     
     @IBOutlet private weak var guestSeparatorView: UIView!
     @IBOutlet private weak var confirmSearchButton: DesignableButton!
-    
-    @IBOutlet private weak var alignBottomConstraintView: NSLayoutConstraint!
-    
-    @IBOutlet private weak var featureBackgroundImageView: UIImageView!
-    
-    
     
     public static func instantiate() -> HotelLiveFormVC {
         let vc = Storyboard.HotelForm.instantiate(HotelLiveFormVC.self)
@@ -75,25 +66,6 @@ public final class HotelLiveFormVC: UIViewController {
     
     public override func bindStyles() {
         super.bindStyles()
-
-        
-        _ = self.cariHotelLabel
-            |> UILabel.lens.text .~ Localizations.FindHotelTitle
-        
-        if UIDevice.current.screenType == .iPhones_5_5s_5c_SE {
-            _ = self.featureBackgroundImageView
-                |> UIImageView.lens.contentMode .~ .scaleToFill
-            
-            _ = self.guestLabel
-                |> UILabel.lens.font .~ UIFont.systemFont(ofSize: 22.0)
-            
-            _ = self.destinationLabel
-                |> UILabel.lens.font .~ UIFont.systemFont(ofSize: 22.0)
-            
-            _ = self.cariHotelLabel
-                |> UILabel.lens.font .~ UIFont.systemFont(ofSize: 26.0)
-        }
- 
         
         _ = self.hotelFormStackView
             |> UIStackView.lens.layoutMargins .~ .init(topBottom: Styles.grid(6), leftRight: Styles.grid(2))
@@ -143,8 +115,6 @@ public final class HotelLiveFormVC: UIViewController {
     public override func bindViewModel() {
         super.bindViewModel()
 
-        
-        self.currentDateLabel.rac.text = self.viewModel.outputs.currentDateText
         self.destinationLabel.rac.text = self.viewModel.outputs.destinationHotelLabelText
         self.guestLabel.rac.text = self.viewModel.outputs.guestHotelLabelText
         

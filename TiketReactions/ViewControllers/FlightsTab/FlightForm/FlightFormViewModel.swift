@@ -126,7 +126,7 @@ public final class FlightFormViewModel: FlightFormViewModelType, FlightFormViewM
         
         self.setSelectedButton = .empty
         
-        self.pinSelectedIndicatorTab = self.navigateToFlightStatusTab.map { ($0, true) }.skipRepeats(==)
+        self.pinSelectedIndicatorTab = self.navigateToFlightStatusTab.map { ($0, true) }
         
         self.firstDateText = Signal.merge(originInitialDateText.signal.map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "d MMM yyyy") ?? "" }, self.selectedDateProperty.signal.skipNil().map { Format.date(secondsInUTC: $0.first.timeIntervalSince1970, template: "d MMM yyyy") ?? "" })
 

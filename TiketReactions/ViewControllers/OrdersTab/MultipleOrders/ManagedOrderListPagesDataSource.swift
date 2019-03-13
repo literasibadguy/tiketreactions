@@ -15,12 +15,7 @@ internal final class ManagedOrderListPagesDataSource: NSObject, UIPageViewContro
         let hotelController = OrderListVC.instantiate()
         let flightController = FlightOrderListVC.instantiate()
         
-        self.viewControllers = ManagedOrderTab.allTabs.map { tab in
-            switch tab {
-            case .hotel: return hotelController
-            case .flight: return flightController
-            }
-        }
+        self.viewControllers = [hotelController, flightController]
     }
     
     internal func controllerFor(tab: ManagedOrderTab) -> UIViewController? {
@@ -37,30 +32,42 @@ internal final class ManagedOrderListPagesDataSource: NSObject, UIPageViewContro
     }
     
     
-    internal func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let pageIdx = self.viewControllers.index(of: viewController) else {
-            fatalError("Couldn't find \(viewController) in \(self.viewControllers)")
-        }
-        
-        let nextPageIdx = pageIdx + 1
-        guard nextPageIdx < self.viewControllers.count else {
-            return nil
-        }
-        
-        return self.viewControllers[nextPageIdx]
-    }
-
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let pageIdx = self.viewControllers.index(of: viewController) else {
             fatalError("Couldn't find \(viewController) in \(self.viewControllers)")
         }
         
         let previousPageIdx = pageIdx - 1
+        
+        guard previousPageIdx >= 0 else {
+            return nil
+        }
+        
         guard previousPageIdx < self.viewControllers.count else {
             return nil
         }
         
         return self.viewControllers[previousPageIdx]
+    }
+    
+    internal func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        guard let pageIdx = self.viewControllers.index(of: viewController) else {
+            fatalError("Couldn't find \(viewController) in \(self.viewControllers)")
+        }
+        
+        let nextPageIdx = pageIdx + 1
+        
+        let vcCount = self.viewControllers.count
+        
+        guard vcCount != nextPageIdx else {
+            return nil
+        }
+        
+        guard vcCount > nextPageIdx else {
+            return nil
+        }
+        
+        return self.viewControllers[nextPageIdx]
     }
     
     private func tabFor(controller: UIViewController) -> ManagedOrderTab? {

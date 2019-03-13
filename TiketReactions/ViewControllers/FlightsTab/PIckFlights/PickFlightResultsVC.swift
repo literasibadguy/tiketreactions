@@ -141,6 +141,7 @@ public final class PickFlightResultsVC: UIViewController {
         self.datesMainLabel.rac.text = self.viewModel.outputs.showDateText
         self.destinationMainLabel.rac.text = self.viewModel.outputs.showDestinationText
         
+        
         self.viewModel.outputs.flights
             .observe(on: UIScheduler())
             .observeValues { [weak self] flights, notice in

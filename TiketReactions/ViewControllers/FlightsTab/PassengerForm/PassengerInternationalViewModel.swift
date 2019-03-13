@@ -22,6 +22,7 @@ public enum InternationalFormGoTo {
 public protocol PassengerInternationalViewModelInputs {
     
     func configureWith(_ separator: FormatDataForm, status: PassengerStatus, baggages: FormatDataForm?)
+    func configureWith(data: PassengersData)
     func configCurrentPassenger(pass: AdultPassengerParam)
     
     func titleSalutationButtonTapped()
@@ -76,6 +77,8 @@ public protocol PassengerInternationalViewModelOutputs {
     var goToInputsPicker: Signal<InternationalFormGoTo, NoError> { get }
     var goToBirthdatePicker: Signal<String, NoError> { get }
     var goToBaggagePicker: Signal<[ResourceBaggage], NoError> { get }
+    var goReturnBaggagePicker: Signal<[ResourceBaggage], NoError> { get }
+    var dismissBaggagePicker: Signal<(), NoError> { get }
     var dismissInputsPicker: Signal<InternationalFormGoTo, NoError> { get }
     var firstNameFirstResponder: Signal<(), NoError> { get }
     var lastNameFirstResponder: Signal<(), NoError> { get }
@@ -101,31 +104,38 @@ public final class PassengerInternationalViewModel: PassengerInternationalViewMo
     public init() {
         
         let current = Signal.combineLatest(self.configSeparatorProperty.signal.skipNil().map(first), self.viewDidLoadProperty.signal).map(first)
+        
         let statusFlight = Signal.combineLatest(self.configSeparatorProperty.signal.skipNil().map(second), self.viewDidLoadProperty.signal).map(first)
         
         let baggageData = Signal.combineLatest(self.configSeparatorProperty.signal.skipNil().map(third), self.viewDidLoadProperty.signal).map(first)
         
         let passengerFilled = Signal.combineLatest(self.configCurrentPassProperty.signal.skipNil(), self.viewDidLoadProperty.signal).map(first)
         
+        let passengerData = Signal.combineLatest(self.configPassengerDataProperty.signal.skipNil(), self.viewDidLoadProperty.signal).map(first)
+        
         statusFlight.observe(on: UIScheduler()).observeValues {
             print("What Status Flight: \($0)")
         }
         
-        self.isInternational = statusFlight.signal.map { $0 == .domestic }
+        self.isInternational = passengerData.signal.map { $0.isInternational }.negate()
         
-        self.isAvailableBaggage = baggageData.signal.map { !$0.isNil }
+        self.isAvailableBaggage = passengerData.signal.map { $0.isBaggage }.negate()
         
         let initial = self.viewDidLoadProperty.signal.mapConst("")
         
-        self.passengerStatusText = current.map { $0.fieldText }
+        self.passengerStatusText = Signal.merge(current.map { $0.fieldText }, passengerData.signal.map { $0.passenger.fieldText })
 
         self.goToInputsPicker = Signal.merge(self.titleSalutationTappedProperty.signal.map { InternationalFormGoTo.goToTitleSalutationPicker }, self.citizenshipTappedProperty.signal.map { InternationalFormGoTo.goToCitizenshipPicker }, self.expiredPassportTappedProperty.signal.map { InternationalFormGoTo.goToExpiredPassportPicker }, self.issuedPassportTappedProperty.signal.map { InternationalFormGoTo.goToIssuedPassportPicker })
         
-        self.goToBirthdatePicker = current.signal.map { $0.fieldText }.takeWhen(self.birthDateTappedProperty.signal)
+        self.goToBirthdatePicker = passengerData.signal.map { $0.passenger.fieldText }.takeWhen(self.birthDateTappedProperty.signal)
         
         self.dismissInputsPicker = Signal.merge(self.titleSalutationCanceledProperty.signal.map { InternationalFormGoTo.goToTitleSalutationPicker }, self.citizenshipCanceledProperty.signal.map { InternationalFormGoTo.goToCitizenshipPicker }, self.expiredPassportCanceledProperty.signal.map { InternationalFormGoTo.goToExpiredPassportPicker }, self.issuedPassportCanceledProperty.signal.map { InternationalFormGoTo.goToIssuedPassportPicker })
         
-        self.goToBaggagePicker = baggageData.signal.skipNil().map { $0.resBaggage }.skipNil()
+        self.goToBaggagePicker = passengerData.signal.map { $0.departBaggage?.resBaggage }.skipNil().takeWhen(self.baggageDepartTappedProperty.signal)
+        
+        self.goReturnBaggagePicker = passengerData.signal.map { $0.returnBaggage?.resBaggage }.skipNil().takeWhen(self.baggageReturnTappedProperty.signal)
+        
+        self.dismissBaggagePicker = Signal.merge(self.baggageDepartCanceledProperty.signal, self.baggageReturnCanceledProperty.signal)
         
         self.firstNameFirstResponder = .empty
         self.lastNameFirstResponder = .empty
@@ -143,11 +153,13 @@ public final class PassengerInternationalViewModel: PassengerInternationalViewMo
         self.departBaggageText = Signal.merge(initial, self.baggageDepartChangedProperty.signal.skipNil().map { $0.name })
         self.returnBaggageText = Signal.merge(initial, self.baggageReturnChangedProperty.signal.skipNil().map { $0.name })
         
-        let domesticPassenger = Signal.combineLatest(self.titleLabelText.signal, self.firstNameTextFieldText.signal, self.lastNameTextFieldText.signal, current.map { $0.fieldText }).switchMap { title, firstname, lastname, counting -> SignalProducer<AdultPassengerParam, NoError> in
+        let domesticPassenger = Signal.combineLatest(self.titleLabelText.signal, self.firstNameTextFieldText.signal, self.lastNameTextFieldText.signal, passengerData.signal.map { $0.passenger.fieldText }, self.birthDateChangedProperty.signal.skipNil().map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "yyyy-MM-dd")! }, self.citizenshipChangedProperty.signal.skipNil().map { $0.countryId }).switchMap { title, firstname, lastname, counting, birthdate, citizenship -> SignalProducer<AdultPassengerParam, NoError> in
             let adult = .defaults
                 |> AdultPassengerParam.lens.title .~ title
                 |> AdultPassengerParam.lens.firstname .~ firstname
                 |> AdultPassengerParam.lens.lastname .~ lastname
+                |> AdultPassengerParam.lens.birthdate .~ birthdate
+                |> AdultPassengerParam.lens.passportNationality .~ citizenship
             return SignalProducer(value: adult)
         }
         
@@ -164,17 +176,38 @@ public final class PassengerInternationalViewModel: PassengerInternationalViewMo
             return SignalProducer(value: adult)
         }
         
+        let includedBaggage = Signal.combineLatest(passengerData.signal.map { $0.passenger.fieldText.contains("Dewasa") }, self.baggageDepartChangedProperty.signal.skipNil(), self.baggageReturnChangedProperty.signal.skipNil(), Signal.merge(domesticPassenger, internationalPassenger).signal).switchMap { _, baggageFirst, baggageReturn, passenger -> SignalProducer<AdultPassengerParam, NoError> in
+            let custom = passenger
+                |> AdultPassengerParam.lens.departAdultBaggage .~ baggageFirst.id
+                |> AdultPassengerParam.lens.returnAdultBaggage .~ baggageReturn.id
+            return SignalProducer(value: custom)
+        }
+        
+        let includedChildBaggage = Signal.combineLatest(passengerData.signal.map { $0.passenger.fieldText.contains("Anak") }, includedBaggage, self.baggageDepartChangedProperty.signal.skipNil(), self.baggageReturnChangedProperty.signal.skipNil()).switchMap { _, passengers, baggageFirst, baggageReturn -> SignalProducer<AdultPassengerParam, NoError> in
+            let custom = passengers
+                |> AdultPassengerParam.lens.departChildBaggage .~ baggageFirst.id
+                |> AdultPassengerParam.lens.returnChildBaggage .~ baggageReturn.id
+            return SignalProducer(value: custom)
+        }
+        
         self.isPassengerFormValid = Signal.combineLatest(self.titleLabelText.signal, self.firstNameTextFieldText.signal, self.lastNameTextFieldText.signal).map(isDomesticValid(title:firstName:lastName:))
         
-        let internationalValid = Signal.combineLatest(statusFlight.signal.filter { $0 == .international }.ignoreValues(), internationalPassenger.signal).map(second)
-        let domesticValid = Signal.combineLatest(statusFlight.signal.filter { $0 == .domestic}.ignoreValues(), domesticPassenger.signal).map(second)
+        let internationalValid = Signal.combineLatest(passengerData.signal.filter { $0.isInternational == true }.ignoreValues(), internationalPassenger.signal).map(second)
+        let domesticValid = Signal.combineLatest(passengerData.signal.filter { $0.isInternational == false }.ignoreValues(), domesticPassenger.signal).map(second)
         
-        self.submitInternationalPassenger = Signal.combineLatest(current.signal ,Signal.merge(domesticValid.signal, internationalValid.signal)).takeWhen(self.submitPassengerTappedProperty.signal)
+        let baggageValid = Signal.merge(includedBaggage.signal, includedChildBaggage.signal)
+        
+        self.submitInternationalPassenger = Signal.combineLatest(passengerData.signal.map { $0.passenger }, Signal.merge(domesticValid.signal, internationalValid.signal, baggageValid.signal)).takeWhen(self.submitPassengerTappedProperty.signal)
     }
     
     fileprivate let configSeparatorProperty = MutableProperty<(FormatDataForm, PassengerStatus, FormatDataForm?)?>(nil)
     public func configureWith(_ separator: FormatDataForm, status: PassengerStatus, baggages: FormatDataForm?) {
         self.configSeparatorProperty.value = (separator, status, baggages)
+    }
+    
+    fileprivate let configPassengerDataProperty = MutableProperty<PassengersData?>(nil)
+    public func configureWith(data: PassengersData) {
+        self.configPassengerDataProperty.value = data
     }
     
     fileprivate let configCurrentPassProperty = MutableProperty<AdultPassengerParam?>(nil)
@@ -330,6 +363,8 @@ public final class PassengerInternationalViewModel: PassengerInternationalViewMo
     public let goToInputsPicker: Signal<InternationalFormGoTo, NoError>
     public let goToBirthdatePicker: Signal<String, NoError>
     public let goToBaggagePicker: Signal<[ResourceBaggage], NoError>
+    public let goReturnBaggagePicker: Signal<[ResourceBaggage], NoError>
+    public let dismissBaggagePicker: Signal<(), NoError>
     public let dismissInputsPicker: Signal<InternationalFormGoTo, NoError>
     public let firstNameFirstResponder: Signal<(), NoError>
     public let lastNameFirstResponder: Signal<(), NoError>

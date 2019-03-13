@@ -93,10 +93,16 @@ internal final class PassengerBaggagePickerVC: UIViewController {
             .observe(on: QueueScheduler.main)
             .observeValues { [weak self] baggage in
                 guard let _self = self else { return }
-                _self.departDelegate?.passengerBaggageCanceled(_self)
                 _self.departDelegate?.passengerBaggagePicker(_self, choseBaggage: baggage)
-                _self.returnDelegate?.passengerReturnBaggageCanceled(_self)
+                _self.dismiss(animated: true, completion: nil)
+        }
+        
+        self.viewModel.outputs.notifyDelegateReturnBaggage
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] baggage in
+                guard let _self = self else { return }
                 _self.returnDelegate?.passengerReturnBaggagePicker(_self, choseBaggage: baggage)
+                _self.dismiss(animated: true, completion: nil)
         }
     }
     

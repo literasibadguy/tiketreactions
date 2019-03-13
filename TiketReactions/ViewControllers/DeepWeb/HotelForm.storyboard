@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,11 +15,11 @@
             <objects>
                 <viewController storyboardIdentifier="HotelGuestPickVC" id="m7t-DA-ec6" customClass="HotelGuestPickVC" customModule="triptozero" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OLG-kK-9c3">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="feL-bw-0dX" userLabel="Guest Container View">
-                                <rect key="frame" x="0.0" y="344" width="414" height="518"/>
+                                <rect key="frame" x="0.0" y="320" width="414" height="416"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bwj-X9-DxL">
                                         <rect key="frame" x="12" y="30" width="390" height="89"/>
@@ -75,7 +75,7 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gcp-qV-oRP">
-                                        <rect key="frame" x="20" y="443" width="374" height="50"/>
+                                        <rect key="frame" x="20" y="341" width="374" height="50"/>
                                         <color key="backgroundColor" red="0.3368430416" green="0.68521292099999997" blue="0.56773633560000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="Zhw-fd-kId"/>
@@ -103,7 +103,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kamar dan Tamu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EwT-2s-lMM">
-                                <rect key="frame" x="16" y="75" width="382" height="36"/>
+                                <rect key="frame" x="16" y="51" width="382" height="36"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -148,7 +148,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p1j-Xh-8TX" userLabel="Range Picker View">
-                                <rect key="frame" x="0.0" y="366" width="400" height="200"/>
+                                <rect key="frame" x="0.0" y="400" width="400" height="200"/>
                                 <subviews>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0si-sq-IYH" userLabel="Guest Picker View">
                                         <rect key="frame" x="0.0" y="-8" width="400" height="216"/>
@@ -167,7 +167,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tho-CP-rhE" userLabel="Navigation Picker View">
-                                <rect key="frame" x="0.0" y="302" width="400" height="64"/>
+                                <rect key="frame" x="0.0" y="336" width="400" height="64"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aMt-Lv-OXT">
                                         <rect key="frame" x="312" y="12" width="72" height="40"/>
@@ -186,7 +186,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kamar dan Tamu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tRf-8V-AdB">
-                                        <rect key="frame" x="14" y="21.5" width="134" height="21"/>
+                                        <rect key="frame" x="14" y="21.666666666666686" width="134" height="21"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -261,13 +261,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tDr-dh-3Jj" userLabel="Range Picker View">
-                                <rect key="frame" x="0.0" y="366" width="400" height="200"/>
+                                <rect key="frame" x="0.0" y="400" width="400" height="200"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="caC-JG-HBK">
                                         <rect key="frame" x="0.0" y="19" width="400" height="85"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Guests" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2O-30-cKX">
-                                                <rect key="frame" x="20" y="32" width="59.5" height="21"/>
+                                                <rect key="frame" x="19.999999999999996" y="32" width="59.666666666666657" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -292,13 +292,13 @@
                                         <rect key="frame" x="3" y="107" width="397" height="68"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rooms" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Im-Ho-u4h">
-                                                <rect key="frame" x="20" y="23.5" width="58" height="21"/>
+                                                <rect key="frame" x="20" y="23.666666666666629" width="58" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="cDz-hh-vpg">
-                                                <rect key="frame" x="287" y="19.5" width="94" height="29"/>
+                                                <rect key="frame" x="287" y="19.666666666666629" width="94" height="29"/>
                                                 <connections>
                                                     <action selector="roomValueStepper:" destination="frq-Va-h8t" eventType="valueChanged" id="mV1-Oy-wlO"/>
                                                 </connections>
@@ -326,7 +326,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ozA-e0-fyR" userLabel="Navigation Picker View">
-                                <rect key="frame" x="0.0" y="302" width="400" height="64"/>
+                                <rect key="frame" x="0.0" y="336" width="400" height="64"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B6O-0N-WJB">
                                         <rect key="frame" x="312" y="12" width="72" height="40"/>
@@ -345,7 +345,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kamar dan Tamu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b1Y-y6-fgb">
-                                        <rect key="frame" x="14" y="21.5" width="134" height="21"/>
+                                        <rect key="frame" x="14" y="21.666666666666686" width="134" height="21"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -415,11 +415,11 @@
             <objects>
                 <viewController storyboardIdentifier="HotelLiveFormVC" id="sEe-kz-oCD" customClass="HotelLiveFormVC" customModule="triptozero" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6ni-K0-Cns">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="mXf-Ge-lts" userLabel="Destination Hotel Stack View">
-                                <rect key="frame" x="0.0" y="676" width="414" height="176"/>
+                                <rect key="frame" x="0.0" y="380" width="414" height="176"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="v1x-4W-NdJ" userLabel="From Input Stack View">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="62"/>
@@ -485,7 +485,7 @@
                                         <rect key="frame" x="0.0" y="63" width="414" height="62"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tamu &amp; Kamar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aPb-ED-5Wx" userLabel="Date Born Input Text Label">
-                                                <rect key="frame" x="0.0" y="0.0" width="97.5" height="17"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="97.333333333333329" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -500,13 +500,13 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="45"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 Tamu, 1 Kamar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qMS-b2-r54" userLabel="Title Label">
-                                                                <rect key="frame" x="0.0" y="0.0" width="166.5" height="45"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="166.33333333333334" height="45"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Jxe-ty-dNQ" userLabel="Filler">
-                                                                <rect key="frame" x="166.5" y="0.0" width="197.5" height="45"/>
+                                                                <rect key="frame" x="166.33333333333337" y="0.0" width="197.66666666666663" height="45"/>
                                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </view>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="pick-green-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="4sI-HN-La4">
@@ -558,58 +558,17 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ioE-Fx-fC0" userLabel="Featured Container View">
-                                <rect key="frame" x="0.0" y="-10" width="414" height="175"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background-hotel-tab" translatesAutoresizingMaskIntoConstraints="NO" id="fkH-jk-dPx">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="175"/>
-                                    </imageView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="uUb-dN-iL4">
-                                        <rect key="frame" x="18" y="77" width="155" height="69"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cari Hotel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zi2-jV-xJN">
-                                                <rect key="frame" x="0.0" y="0.0" width="130" height="33.5"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5 November" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKr-SU-WK5">
-                                                <rect key="frame" x="0.0" y="35.5" width="155" height="33.5"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="28"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="fkH-jk-dPx" firstAttribute="top" secondItem="ioE-Fx-fC0" secondAttribute="top" id="3qu-ho-dHW"/>
-                                    <constraint firstItem="uUb-dN-iL4" firstAttribute="leading" secondItem="ioE-Fx-fC0" secondAttribute="leadingMargin" constant="10" id="SRV-NA-3De"/>
-                                    <constraint firstItem="fkH-jk-dPx" firstAttribute="leading" secondItem="ioE-Fx-fC0" secondAttribute="leading" id="ZeH-5D-hw0"/>
-                                    <constraint firstAttribute="bottom" secondItem="fkH-jk-dPx" secondAttribute="bottom" id="cmU-WW-3dL"/>
-                                    <constraint firstAttribute="height" constant="175" id="q64-Ue-dFp"/>
-                                    <constraint firstAttribute="trailing" secondItem="fkH-jk-dPx" secondAttribute="trailing" id="qnp-Oh-rIF"/>
-                                    <constraint firstItem="uUb-dN-iL4" firstAttribute="top" secondItem="ioE-Fx-fC0" secondAttribute="topMargin" constant="25" id="uRS-jF-KFi"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="ioE-Fx-fC0" firstAttribute="trailing" secondItem="a7p-os-GBa" secondAttribute="trailing" id="1JG-4c-PGB"/>
-                            <constraint firstItem="ioE-Fx-fC0" firstAttribute="leading" secondItem="a7p-os-GBa" secondAttribute="leading" id="4eY-gT-ede"/>
                             <constraint firstItem="mXf-Ge-lts" firstAttribute="leading" secondItem="a7p-os-GBa" secondAttribute="leading" id="BQE-Iw-HF9"/>
                             <constraint firstItem="mXf-Ge-lts" firstAttribute="trailing" secondItem="a7p-os-GBa" secondAttribute="trailing" id="Kzl-2V-FVL"/>
-                            <constraint firstItem="a7p-os-GBa" firstAttribute="bottom" secondItem="mXf-Ge-lts" secondAttribute="bottom" constant="10" id="Lj7-iv-nUP"/>
-                            <constraint firstItem="ioE-Fx-fC0" firstAttribute="top" secondItem="6ni-K0-Cns" secondAttribute="top" constant="-10" id="cbd-cg-rJ5"/>
+                            <constraint firstItem="mXf-Ge-lts" firstAttribute="centerY" secondItem="6ni-K0-Cns" secondAttribute="centerY" constant="100" id="u4M-Gl-qHk"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="a7p-os-GBa"/>
                     </view>
                     <connections>
-                        <outlet property="alignBottomConstraintView" destination="Lj7-iv-nUP" id="4Tm-5B-WJw"/>
-                        <outlet property="cariHotelLabel" destination="zi2-jV-xJN" id="qvh-zy-2KR"/>
                         <outlet property="confirmSearchButton" destination="OaL-JV-Vpq" id="wGY-8h-zjF"/>
-                        <outlet property="currentDateLabel" destination="iKr-SU-WK5" id="TD6-7q-ymH"/>
                         <outlet property="destinationContainerView" destination="Sd7-Pm-7W5" id="C9g-Ml-hpe"/>
                         <outlet property="destinationInputStackView" destination="v1x-4W-NdJ" id="gBj-cO-bbv"/>
                         <outlet property="destinationInputTextLabel" destination="jCu-g7-ICG" id="h5K-9g-sWn"/>
@@ -617,8 +576,6 @@
                         <outlet property="destinationMenuStackView" destination="XOY-xr-XLR" id="Bhx-dR-XM5"/>
                         <outlet property="destinationPickButton" destination="T8O-hV-2J6" id="wGn-CL-ZhU"/>
                         <outlet property="destinationSeparatorView" destination="VB2-Ab-389" id="fsb-jL-9Sz"/>
-                        <outlet property="featureBackgroundImageView" destination="fkH-jk-dPx" id="cE5-bK-04D"/>
-                        <outlet property="featureLabelStackView" destination="uUb-dN-iL4" id="Hfh-Js-sWV"/>
                         <outlet property="guestContainerView" destination="huZ-zu-oxf" id="Qh0-x4-98b"/>
                         <outlet property="guestInputStackView" destination="a2J-hP-fs2" id="mqe-ob-8qb"/>
                         <outlet property="guestInputTextLabel" destination="aPb-ED-5Wx" id="8kK-px-Xyt"/>
@@ -638,11 +595,11 @@
             <objects>
                 <viewController id="Yuv-oZ-EWZ" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Lex-a7-Axb">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="hAV-6o-oIV" userLabel="Destination Hotel Stack View">
-                                <rect key="frame" x="0.0" y="676" width="414" height="176"/>
+                                <rect key="frame" x="0.0" y="550" width="414" height="176"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="KIE-PZ-gNw" userLabel="From Input Stack View">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="62"/>
@@ -708,7 +665,7 @@
                                         <rect key="frame" x="0.0" y="63" width="414" height="62"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tamu &amp; Kamar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VrG-pc-QRN" userLabel="Date Born Input Text Label">
-                                                <rect key="frame" x="0.0" y="0.0" width="97.5" height="17"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="97.333333333333329" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -723,13 +680,13 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="45"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 Tamu, 1 Kamar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dfj-B6-yV1" userLabel="Title Label">
-                                                                <rect key="frame" x="0.0" y="0.0" width="166.5" height="45"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="166.33333333333334" height="45"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="7r0-3y-zM6" userLabel="Filler">
-                                                                <rect key="frame" x="166.5" y="0.0" width="197.5" height="45"/>
+                                                                <rect key="frame" x="166.33333333333337" y="0.0" width="197.66666666666663" height="45"/>
                                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </view>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="pick-green-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="lhC-qM-EeW">
