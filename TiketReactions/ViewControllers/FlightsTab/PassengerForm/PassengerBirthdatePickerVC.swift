@@ -18,6 +18,10 @@ internal protocol PassengerExpiredPassportPickerDelegate: class {
     func expiredDateHaveSelected(_ date: Date)
 }
 
+internal protocol PassengerIssueDatePassportPickerDelegate: class {
+    func issueDateHaveSelected(_ date: Date)
+}
+
 internal final class PassengerBirthdatePickerVC: UIViewController {
     
     fileprivate let viewModel: PassBirthdatePickerViewModelType = PassBirthdatePickerViewModel()
@@ -32,6 +36,7 @@ internal final class PassengerBirthdatePickerVC: UIViewController {
     
     internal weak var delegate: PassengerBirthdatePickerDelegate?
     internal weak var expiredDelegate: PassengerExpiredPassportPickerDelegate?
+    internal weak var issueDateDelegate: PassengerIssueDatePassportPickerDelegate?
     
     static func instantiate(delegate: PassengerBirthdatePickerDelegate) -> PassengerBirthdatePickerVC {
         let vc =  Storyboard.PassengerForm.instantiate(PassengerBirthdatePickerVC.self)
@@ -39,9 +44,17 @@ internal final class PassengerBirthdatePickerVC: UIViewController {
         return vc
     }
     
-    static func instantiate(expiredDelegate: PassengerExpiredPassportPickerDelegate) -> PassengerBirthdatePickerVC {
+    static func instantiate(expiredDelegate: PassengerExpiredPassportPickerDelegate, state: PassengerFormState) -> PassengerBirthdatePickerVC {
         let vc =  Storyboard.PassengerForm.instantiate(PassengerBirthdatePickerVC.self)
+        vc.viewModel.inputs.configureWith(state)
         vc.expiredDelegate = expiredDelegate
+        return vc
+    }
+    
+    static func instantiate(issueDelegate: PassengerIssueDatePassportPickerDelegate, state: PassengerFormState) -> PassengerBirthdatePickerVC {
+        let vc =  Storyboard.PassengerForm.instantiate(PassengerBirthdatePickerVC.self)
+        vc.viewModel.inputs.configureWith(state)
+        vc.issueDateDelegate = issueDelegate
         return vc
     }
     
@@ -104,6 +117,7 @@ internal final class PassengerBirthdatePickerVC: UIViewController {
                 guard let _self = self else { return }
                 _self.delegate?.dateHaveSelected(_self.birthdatePicker.date)
                 _self.expiredDelegate?.expiredDateHaveSelected(_self.birthdatePicker.date)
+                _self.issueDateDelegate?.issueDateHaveSelected(_self.birthdatePicker.date)
                 _self.dismiss(animated: true, completion: nil)
         }
     }
@@ -124,8 +138,13 @@ internal final class PassengerBirthdatePickerVC: UIViewController {
             self.birthdatePicker.maximumDate = Calendar.current.date(byAdding: .year, value: 0, to: Date())
         case .adultPassenger:
             self.birthdatePicker.maximumDate = Calendar.current.date(byAdding: .year, value: -18, to: Date())
-        default:
-            self.birthdatePicker.minimumDate = Calendar.current.date(byAdding: .month, value: -6, to: Date())
+        case .expiredPassport:
+            self.birthdatePicker.minimumDate = Calendar.current.date(byAdding: .month, value: +6, to: Date())
+             self.birthdatePicker.maximumDate = Calendar.current.date(byAdding: .year, value: +10, to: Date())
+        case .issueDatePassport:
+            self.birthdatePicker.minimumDate = Calendar.current.date(byAdding: .year, value: -10, to: Date())
+            self.birthdatePicker.maximumDate = Calendar.current.date(byAdding: .year, value: 0, to: Date())
+        default: return
         }
     }
 }

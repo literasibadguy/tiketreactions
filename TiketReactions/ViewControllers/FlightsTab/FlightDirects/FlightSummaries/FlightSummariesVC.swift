@@ -67,6 +67,9 @@ public final class FlightSummariesVC: UIViewController {
             |> UIButton.lens.backgroundColor .~ .tk_official_green
             |> UIButton.lens.title(forState: .normal) .~ Localizations.OrderTitleButtonPickFlight
         
+        _ = self.labelActivityIndicator
+            |> UILabel.lens.text .~ Localizations.BookingattentionTitle
+        
         _ = self.loadingOverlayView
             |> UIView.lens.isHidden .~ true
         

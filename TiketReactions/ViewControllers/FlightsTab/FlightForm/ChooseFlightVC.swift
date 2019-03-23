@@ -109,9 +109,11 @@ internal final class ChooseFlightVC: UIViewController {
         
         _ = self.originInputLabel
             |> UILabel.lens.textColor .~ .black
+            |> UILabel.lens.text .~ Localizations.FromFlightForm
         
         _ = self.destinationInputLabel
             |> UILabel.lens.textColor .~ .black
+            |> UILabel.lens.text .~ Localizations.ToFlightForm
         
         _ = self.departureInputLabel
             |> UILabel.lens.text .~ Localizations.OutboundTitlePickDate
@@ -132,6 +134,7 @@ internal final class ChooseFlightVC: UIViewController {
         
         _ = self.returnDateContainerView
             |> UIView.lens.backgroundColor .~ .clear
+        
         
         _ = self.datesInputStackView
             |> UIStackView.lens.isUserInteractionEnabled .~ false
@@ -157,6 +160,23 @@ internal final class ChooseFlightVC: UIViewController {
         
         _ = self.passengersValueLabel
             |> UILabel.lens.textColor .~ .tk_official_green
+        
+        if UIDevice.current.screenType == .iPhones_5_5s_5c_SE {
+            _ = self.departureInputLabel
+                |> UILabel.lens.font .~ UIFont.boldSystemFont(ofSize: 14.0)
+            
+            _ = self.returnInputLabel
+                |> UILabel.lens.font .~ UIFont.boldSystemFont(ofSize: 14.0)
+            
+            _ = self.firstDateValueLabel
+                |> UILabel.lens.font .~ UIFont.systemFont(ofSize: 17.0)
+            
+            _ = self.returnDateValueLabel
+                |> UILabel.lens.font .~ UIFont.systemFont(ofSize: 17.0)
+            
+            _ = self.passengersValueLabel
+                |> UILabel.lens.font .~ UIFont.boldSystemFont(ofSize: 17.0)
+        }
         
         _ = self.statusSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_base_grey_100
@@ -193,6 +213,15 @@ internal final class ChooseFlightVC: UIViewController {
             .observe(on: QueueScheduler.main)
             .observeValues { [weak self] destination in
                 self?.goToDestination(selected: destination)
+        }
+        
+        self.viewModel.outputs.errorNotice
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] in
+                guard let _self = self else { return }
+                _self.present(UIAlertController.genericError("Error", message: $0, cancel:nil), animated: true, completion: nil)
+//            _ = _self.destinationValueLabel
+//                |> UILabel.lens.text .~ Localizations.DestinationFlightTitleForm
         }
         
         self.viewModel.outputs.goToPassengers

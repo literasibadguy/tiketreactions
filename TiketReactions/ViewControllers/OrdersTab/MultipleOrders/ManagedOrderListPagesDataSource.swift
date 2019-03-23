@@ -15,7 +15,7 @@ internal final class ManagedOrderListPagesDataSource: NSObject, UIPageViewContro
         let hotelController = OrderListVC.instantiate()
         let flightController = FlightOrderListVC.instantiate()
         
-        self.viewControllers = [hotelController, flightController]
+        self.viewControllers = [flightController, hotelController]
     }
     
     internal func controllerFor(tab: ManagedOrderTab) -> UIViewController? {

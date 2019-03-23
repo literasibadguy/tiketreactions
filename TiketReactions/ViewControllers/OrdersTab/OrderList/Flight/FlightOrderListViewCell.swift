@@ -76,6 +76,8 @@ public final class FlightOrderListViewCell: UITableViewCell, ValueCell {
         
         self.orderTypeLabel.rac.text = self.viewModel.outputs.orderTypeText
         self.orderNameLabel.rac.text = self.viewModel.outputs.orderNameText
+        self.orderNameDetailLabel.rac.text = self.viewModel.outputs.orderNameDetailText
+        self.startDateLabel.rac.text = self.viewModel.outputs.startDateText
         
         self.viewModel.outputs.notifyToDeleteOrder
             .observe(on: UIScheduler())

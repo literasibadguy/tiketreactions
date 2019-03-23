@@ -42,6 +42,9 @@ public final class FlightDirectsCellViewModel: FlightDirectsCellViewModelType, F
         self.flightNameText = currentFlight.map { $0.flightNumber }
         self.flightTimeText = currentFlight.map { "\($0.flightDetail.simpleDepartureTime) - \($0.flightDetail.simpleArrivalTime)" }
         self.flightStatusText = currentFlight.map { $0.stopTimes }
+        
+        
+        
         self.flightDurationText = currentFlight.map { $0.inner.duration }
     }
     

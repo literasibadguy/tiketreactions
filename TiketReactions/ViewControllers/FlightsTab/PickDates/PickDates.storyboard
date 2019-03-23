@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,7 +13,7 @@
         <!--Date RangesVC-->
         <scene sceneID="rOU-qV-0DC">
             <objects>
-                <collectionViewController storyboardIdentifier="DateRangesVC" id="7Gi-6j-dtv" customClass="DateRangesVC" customModule="TripToZero" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="DateRangesVC" id="7Gi-6j-dtv" customClass="DateRangesVC" customModule="triptozero" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Ish-7g-e7s">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="412"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -47,7 +47,7 @@
         <!--Pick DatesVC-->
         <scene sceneID="RMr-YO-7yj">
             <objects>
-                <viewController storyboardIdentifier="PickDatesVC" id="bYF-PJ-q8W" customClass="PickDatesVC" customModule="TripToZero" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PickDatesVC" id="bYF-PJ-q8W" customClass="PickDatesVC" customModule="triptozero" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ESn-2S-bk1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -72,14 +72,14 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jl6-jn-anP" userLabel="Date Stack View">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Jl6-jn-anP" userLabel="Date Stack View">
                                         <rect key="frame" x="0.0" y="70" width="375" height="112"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EkW-vB-nnL" userLabel="Departure Container View">
-                                                <rect key="frame" x="0.0" y="0.0" width="190" height="112"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="187.5" height="112"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Berangkat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CYL-Lr-Ra5">
-                                                        <rect key="frame" x="20" y="10" width="135" height="21"/>
+                                                        <rect key="frame" x="20" y="10" width="132.5" height="21"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="21" id="iJm-T8-FPn"/>
                                                         </constraints>
@@ -88,7 +88,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Senin, 14 September 2018" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zqx-Qb-1FQ">
-                                                        <rect key="frame" x="20" y="31" width="150" height="71"/>
+                                                        <rect key="frame" x="20" y="31" width="147.5" height="71"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -106,10 +106,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jsZ-v6-DRH" userLabel="Arrival Container View">
-                                                <rect key="frame" x="190" y="0.0" width="185" height="112"/>
+                                                <rect key="frame" x="187.5" y="0.0" width="187.5" height="112"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kembali" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mAI-RP-U7E">
-                                                        <rect key="frame" x="29" y="10" width="135" height="21"/>
+                                                        <rect key="frame" x="29" y="10" width="137.5" height="21"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="21" id="OBh-0f-PjL"/>
                                                         </constraints>
@@ -118,7 +118,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Senin, 14 September 2018" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o86-Ma-orq">
-                                                        <rect key="frame" x="21" y="31" width="143" height="71"/>
+                                                        <rect key="frame" x="21" y="31" width="145.5" height="71"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -136,9 +136,6 @@
                                                 </constraints>
                                             </view>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstItem="jsZ-v6-DRH" firstAttribute="leading" secondItem="Jl6-jn-anP" secondAttribute="leading" constant="190" id="CRE-E7-ghS"/>
-                                        </constraints>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L8Y-GE-5DF" userLabel="Nav Date Separator View">
                                         <rect key="frame" x="0.0" y="182" width="375" height="1"/>

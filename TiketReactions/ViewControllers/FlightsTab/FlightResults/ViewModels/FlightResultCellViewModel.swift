@@ -22,6 +22,7 @@ public protocol FlightResultCellViewModelOutputs {
     var departureTimeText: Signal<String, NoError> { get }
     var arrivalTimeText: Signal<String, NoError> { get }
     var flightCodeText: Signal<String, NoError> { get }
+    var directTimeText: Signal<String, NoError> { get }
 }
 
 public protocol FlightResultCellViewModelType {
@@ -34,12 +35,13 @@ public final class FlightResultCellViewModel: FlightResultCellViewModelType, Fli
     public init() {
         let flight = self.configFlightProperty.signal.skipNil()
         
-        self.flightPriceText = flight.signal.map { "\(symbolForCurrency(AppEnvironment.current.locale.currencyCode ?? "")) \(Format.currency(Double($0.priceValue)!, country: "Rp"))" }
+        self.flightPriceText = flight.signal.map { "\(symbolForCurrency(AppEnvironment.current.apiService.currency)) \(Format.currency(Double($0.priceValue)!, country: AppEnvironment.current.locale.currencyCode ?? "IDR"))" }
         self.departureCodeText = flight.signal.map { $0.departureCity }
         self.arrivalCodeText = flight.signal.map { $0.arrivalCity }
         self.departureTimeText = flight.signal.map { $0.flightDetail.simpleDepartureTime }
         self.arrivalTimeText = flight.signal.map { $0.flightDetail.simpleArrivalTime }
         self.flightCodeText = flight.signal.map { $0.flightNumber }
+        self.directTimeText = flight.signal.map { $0.inner.duration }
     }
     
     fileprivate let configFlightProperty = MutableProperty<Flight?>(nil)
@@ -53,6 +55,7 @@ public final class FlightResultCellViewModel: FlightResultCellViewModelType, Fli
     public let departureTimeText: Signal<String, NoError>
     public let arrivalTimeText: Signal<String, NoError>
     public let flightCodeText: Signal<String, NoError>
+    public let directTimeText: Signal<String, NoError>
     
     public var inputs: FlightResultCellViewModelInputs { return self }
     public var outputs: FlightResultCellViewModelOutputs { return self }

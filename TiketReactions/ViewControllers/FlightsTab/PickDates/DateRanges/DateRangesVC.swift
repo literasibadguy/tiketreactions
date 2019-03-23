@@ -163,7 +163,6 @@ extension DateRangesVC: UICollectionViewDelegateFlowLayout {
             // selectedEndDate must be nil
             // if status is return
             // selectedEndDate must be cell date
-            
             if isStatusFlightOneWay == true {
                 selectedStartDate = cell.date
                 selectedEndDate = nil
@@ -173,6 +172,12 @@ extension DateRangesVC: UICollectionViewDelegateFlowLayout {
                     selectedEndDate = cell.date
                     self.navigationItem.rightBarButtonItem?.isEnabled = true
                     self.delegate?.diSelectEndDate(endDate: selectedEndDate)
+                } else if areSameDay(dateA: selectedStartDate!, dateB: cell.date!) {
+                    selectedEndDate = cell.date
+                    self.delegate?.diSelectEndDate(endDate: selectedEndDate)
+                } else {
+                    selectedStartDate = cell.date
+                    self.delegate?.didSelectStartDate(startDate: selectedStartDate)
                 }
             }
             
@@ -187,6 +192,7 @@ extension DateRangesVC: UICollectionViewDelegateFlowLayout {
                 delegate?.didSelectStartDate(startDate: selectedStartDate)
             }
             */
+            
         } else {
             selectedStartDate = cell.date
             delegate?.didSelectStartDate(startDate: selectedStartDate)

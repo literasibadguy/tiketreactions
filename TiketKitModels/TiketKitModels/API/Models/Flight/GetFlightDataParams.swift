@@ -71,141 +71,127 @@ public struct RequiredPassengers {
     
     public struct Adult3 {
         public let separtor: FormatDataForm?
-        public let title: FormatDataForm?
-        public let firstname: FormatDataForm?
-        public let lastname: FormatDataForm?
         public let birtdate: FormatDataForm?
-        public let passportNationality: FormatDataForm?
         public let passportNo: FormatDataForm?
 //        public let passportExpiryDate: FormatDataForm?
 //        public let passportIssuing: FormatDataForm?
-        public let checkinBaggage: FormatDataForm?
+        public let departBaggage: FormatDataForm?
+        public let transitDepartBaggage: FormatDataForm?
+        public let returnBaggage: FormatDataForm?
+        public let transitReturnBaggage: FormatDataForm?
     }
     
     public struct Adult4 {
         public let separtor: FormatDataForm?
-        public let title: FormatDataForm?
-        public let firstname: FormatDataForm?
-        public let lastname: FormatDataForm?
         public let birtdate: FormatDataForm?
-        public let passportNationality: FormatDataForm?
         public let passportNo: FormatDataForm?
 //        public let passportExpiryDate: FormatDataForm?
 //        public let passportIssuing: FormatDataForm?
-        public let checkinBaggage: FormatDataForm?
+        public let departBaggage: FormatDataForm?
+        public let transitDepartBaggage: FormatDataForm?
+        public let returnBaggage: FormatDataForm?
+        public let transitReturnBaggage: FormatDataForm?
     }
     
     public struct Adult5 {
         public let separtor: FormatDataForm?
-        public let title: FormatDataForm?
-        public let firstname: FormatDataForm?
-        public let lastname: FormatDataForm?
         public let birtdate: FormatDataForm?
-        public let passportNationality: FormatDataForm?
         public let passportNo: FormatDataForm?
 //        public let passportExpiryDate: FormatDataForm?
 //        public let passportIssuing: FormatDataForm?
-        public let checkinBaggage: FormatDataForm?
+        public let departBaggage: FormatDataForm?
+        public let transitDepartBaggage: FormatDataForm?
+        public let returnBaggage: FormatDataForm?
+        public let transitReturnBaggage: FormatDataForm?
     }
     
     public struct Adult6 {
         public let separtor: FormatDataForm?
-        public let title: FormatDataForm?
-        public let firstname: FormatDataForm?
-        public let lastname: FormatDataForm?
         public let birtdate: FormatDataForm?
-        public let passportNationality: FormatDataForm?
         public let passportNo: FormatDataForm?
 //        public let passportExpiryDate: FormatDataForm?
 //        public let passportIssuing: FormatDataForm?
-        public let checkinBaggage: FormatDataForm?
+        public let departBaggage: FormatDataForm?
+        public let transitDepartBaggage: FormatDataForm?
+        public let returnBaggage: FormatDataForm?
+        public let transitReturnBaggage: FormatDataForm?
     }
     
     public struct Child1 {
         public let separtor: FormatDataForm?
-        public let title: FormatDataForm?
-        public let firstname: FormatDataForm?
-        public let lastname: FormatDataForm?
         public let birtdate: FormatDataForm?
-        public let passportNationality: FormatDataForm?
         public let passportNo: FormatDataForm?
 //        public let passportExpiryDate: FormatDataForm?
 //        public let passportIssuing: FormatDataForm?
-        public let checkinBaggage: FormatDataForm?
+        public let departBaggage: FormatDataForm?
+        public let transitDepartBaggage: FormatDataForm?
+        public let returnBaggage: FormatDataForm?
+        public let transitReturnBaggage: FormatDataForm?
     }
     
     public struct Child2 {
         public let separtor: FormatDataForm?
-        public let title: FormatDataForm?
-        public let firstname: FormatDataForm?
-        public let lastname: FormatDataForm?
         public let birtdate: FormatDataForm?
-        public let passportNationality: FormatDataForm?
         public let passportNo: FormatDataForm?
 //        public let passportExpiryDate: FormatDataForm?
 //        public let passportIssuing: FormatDataForm?
-        public let checkinBaggage: FormatDataForm?
+        public let departBaggage: FormatDataForm?
+        public let transitDepartBaggage: FormatDataForm?
+        public let returnBaggage: FormatDataForm?
+        public let transitReturnBaggage: FormatDataForm?
     }
     
     public struct Child3 {
         public let separtor: FormatDataForm?
-        public let title: FormatDataForm?
-        public let firstname: FormatDataForm?
-        public let lastname: FormatDataForm?
         public let birtdate: FormatDataForm?
-        public let passportNationality: FormatDataForm?
         public let passportNo: FormatDataForm?
 //        public let passportExpiryDate: FormatDataForm?
 //        public let passportIssuing: FormatDataForm?
-        public let checkinBaggage: FormatDataForm?
+        public let departBaggage: FormatDataForm?
+        public let transitDepartBaggage: FormatDataForm?
+        public let returnBaggage: FormatDataForm?
+        public let transitReturnBaggage: FormatDataForm?
     }
     
     public struct Child4 {
         public let separtor: FormatDataForm?
-        public let title: FormatDataForm?
-        public let firstname: FormatDataForm?
-        public let lastname: FormatDataForm?
         public let birtdate: FormatDataForm?
-        public let passportNationality: FormatDataForm?
         public let passportNo: FormatDataForm?
 //        public let passportExpiryDate: FormatDataForm?
 //        public let passportIssuing: FormatDataForm?
-        public let checkinBaggage: FormatDataForm?
+        public let departBaggage: FormatDataForm?
+        public let transitDepartBaggage: FormatDataForm?
+        public let returnBaggage: FormatDataForm?
+        public let transitReturnBaggage: FormatDataForm?
     }
     
     public struct Child5 {
         public let separtor: FormatDataForm?
-        public let title: FormatDataForm?
-        public let firstname: FormatDataForm?
-        public let lastname: FormatDataForm?
         public let birtdate: FormatDataForm?
-        public let passportNationality: FormatDataForm?
         public let passportNo: FormatDataForm?
 //        public let passportExpiryDate: FormatDataForm?
 //        public let passportIssuing: FormatDataForm?
-        public let checkinBaggage: FormatDataForm?
+        public let departBaggage: FormatDataForm?
+        public let transitDepartBaggage: FormatDataForm?
+        public let returnBaggage: FormatDataForm?
+        public let transitReturnBaggage: FormatDataForm?
     }
     
     public struct Child6 {
         public let separtor: FormatDataForm?
-        public let title: FormatDataForm?
-        public let firstname: FormatDataForm?
-        public let lastname: FormatDataForm?
         public let birtdate: FormatDataForm?
-        public let passportNationality: FormatDataForm?
         public let passportNo: FormatDataForm?
 //        public let passportExpiryDate: FormatDataForm?
 //        public let passportIssuing: FormatDataForm?
-        public let checkinBaggage: FormatDataForm?
+        public let departBaggage: FormatDataForm?
+        public let transitDepartBaggage: FormatDataForm?
+        public let returnBaggage: FormatDataForm?
+        public let transitReturnBaggage: FormatDataForm?
     }
     
     public struct Infant1 {
         public let separtor: FormatDataForm?
-        public let title: FormatDataForm?
-        public let firstname: FormatDataForm?
-        public let lastname: FormatDataForm?
         public let birtdate: FormatDataForm?
-        public let passportNationality: FormatDataForm?
         public let passportNo: FormatDataForm?
 //        public let passportExpiryDate: FormatDataForm?
 //        public let passportIssuing: FormatDataForm?
@@ -213,11 +199,7 @@ public struct RequiredPassengers {
     
     public struct Infant2 {
         public let separtor: FormatDataForm?
-        public let title: FormatDataForm?
-        public let firstname: FormatDataForm?
-        public let lastname: FormatDataForm?
         public let birtdate: FormatDataForm?
-        public let passportNationality: FormatDataForm?
         public let passportNo: FormatDataForm?
 //        public let passportExpiryDate: FormatDataForm?
 //        public let passportIssuing: FormatDataForm?
@@ -226,11 +208,7 @@ public struct RequiredPassengers {
     
     public struct Infant3 {
         public let separtor: FormatDataForm?
-        public let title: FormatDataForm?
-        public let firstname: FormatDataForm?
-        public let lastname: FormatDataForm?
         public let birtdate: FormatDataForm?
-        public let passportNationality: FormatDataForm?
         public let passportNo: FormatDataForm?
 //        public let passportExpiryDate: FormatDataForm?
 //        public let passportIssuing: FormatDataForm?
@@ -239,11 +217,7 @@ public struct RequiredPassengers {
     
     public struct Infant4 {
         public let separtor: FormatDataForm?
-        public let title: FormatDataForm?
-        public let firstname: FormatDataForm?
-        public let lastname: FormatDataForm?
         public let birtdate: FormatDataForm?
-        public let passportNationality: FormatDataForm?
         public let passportNo: FormatDataForm?
 //        public let passportExpiryDate: FormatDataForm?
 //        public let passportIssuing: FormatDataForm?
@@ -251,11 +225,7 @@ public struct RequiredPassengers {
     
     public struct Infant5 {
         public let separtor: FormatDataForm?
-        public let title: FormatDataForm?
-        public let firstname: FormatDataForm?
-        public let lastname: FormatDataForm?
         public let birtdate: FormatDataForm?
-        public let passportNationality: FormatDataForm?
         public let passportNo: FormatDataForm?
 //        public let passportExpiryDate: FormatDataForm?
 //        public let passportIssuing: FormatDataForm?
@@ -263,11 +233,7 @@ public struct RequiredPassengers {
     
     public struct Infant6 {
         public let separtor: FormatDataForm?
-        public let title: FormatDataForm?
-        public let firstname: FormatDataForm?
-        public let lastname: FormatDataForm?
         public let birtdate: FormatDataForm?
-        public let passportNationality: FormatDataForm?
         public let passportNo: FormatDataForm?
 //        public let passportExpiryDate: FormatDataForm?
 //        public let passportIssuing: FormatDataForm?
@@ -397,7 +363,7 @@ extension RequiredPassengers.Adult2: Argo.Decodable {
             <*> json <|? "dcheckinbaggagea12"
             <*> json <|? "dcheckinbaggagea22"
             <*> json <|? "rcheckinbaggagea12"
-            <*> json <|? "rcheckinbaggagea12"
+            <*> json <|? "rcheckinbaggagea22"
     }
 }
 
@@ -408,17 +374,16 @@ extension RequiredPassengers.Adult3: Argo.Decodable {
         
         let adult1 = create
             <^> json <|? "separator_adult3"
-            <*> json <|? "titlea3"
-            <*> json <|? "firstnamea3"
-            <*> json <|? "lastnamea3"
         
         return adult1
             <*> json <|? "birthdatea3"
-            <*> json <|? "passportnationalitya3"
             <*> json <|? "passportnoa3"
 //            <*> json <|? "passportExpiryDatea3"
 //            <*> json <|? "passportissuinga3"
-            <*> json <|? "rcheckinbaggagec11"
+            <*> json <|? "dcheckinbaggagea13"
+            <*> json <|? "dcheckinbaggagea23"
+            <*> json <|? "rcheckinbaggagea13"
+            <*> json <|? "rcheckinbaggagea23"
     }
 }
 
@@ -428,17 +393,16 @@ extension RequiredPassengers.Adult4: Argo.Decodable {
         
         let adult1 = create
             <^> json <|? "separator_adult4"
-            <*> json <|? "titlea4"
-            <*> json <|? "firstnamea4"
-            <*> json <|? "lastnamea4"
         
         return adult1
             <*> json <|? "birthdatea4"
-            <*> json <|? "passportnationalitya4"
             <*> json <|? "passportnoa4"
 //            <*> json <|? "passportExpiryDatea4"
 //            <*> json <|? "passportissuinga4"
-            <*> json <|? "rcheckinbaggagec11"
+            <*> json <|? "dcheckinbaggagea14"
+            <*> json <|? "dcheckinbaggagea24"
+            <*> json <|? "rcheckinbaggagea14"
+            <*> json <|? "rcheckinbaggagea24"
     }
 }
 
@@ -448,17 +412,16 @@ extension RequiredPassengers.Adult5: Argo.Decodable {
         
         let adult1 = create
             <^> json <|? "separator_adult5"
-            <*> json <|? "titlea5"
-            <*> json <|? "firstnamea5"
-            <*> json <|? "lastnamea5"
         
         return adult1
             <*> json <|? "birthdatea5"
-            <*> json <|? "passportnationalitya5"
             <*> json <|? "passportnoa5"
 //            <*> json <|? "passportExpiryDatea5"
 //            <*> json <|? "passportissuinga5"
-            <*> json <|? "rcheckinbaggagec11"
+            <*> json <|? "dcheckinbaggagea15"
+            <*> json <|? "dcheckinbaggagea25"
+            <*> json <|? "rcheckinbaggagea15"
+            <*> json <|? "rcheckinbaggagea25"
     }
 }
 
@@ -468,17 +431,16 @@ extension RequiredPassengers.Adult6: Argo.Decodable {
         
         let adult1 = create
             <^> json <|? "separator_adult6"
-            <*> json <|? "titlea6"
-            <*> json <|? "firstnamea6"
-            <*> json <|? "lastnamea6"
         
         return adult1
             <*> json <|? "birthdatea6"
-            <*> json <|? "passportnationalitya6"
             <*> json <|? "passportnoa6"
 //            <*> json <|? "passportExpiryDatea6"
 //            <*> json <|? "passportissuinga6"
-            <*> json <|? "rcheckinbaggagec11"
+            <*> json <|? "dcheckinbaggagea16"
+            <*> json <|? "dcheckinbaggagea26"
+            <*> json <|? "rcheckinbaggagea16"
+            <*> json <|? "rcheckinbaggagea26"
     }
 }
 
@@ -488,17 +450,16 @@ extension RequiredPassengers.Child1: Argo.Decodable {
         
         let child1 = create
             <^> json <|? "separator_child1"
-            <*> json <|? "titlec1"
-            <*> json <|? "firstnamec1"
-            <*> json <|? "lastnamec1"
         
         return child1
             <*> json <|? "birthdatec1"
-            <*> json <|? "passportnationalityc1"
             <*> json <|? "passportnoc1"
 //            <*> json <|? "passportExpiryDatec1"
 //            <*> json <|? "passportissuingc1"
+            <*> json <|? "dcheckinbaggagec11"
+            <*> json <|? "dcheckinbaggagec21"
             <*> json <|? "rcheckinbaggagec11"
+            <*> json <|? "rcheckinbaggagec21"
     }
 }
 
@@ -508,17 +469,16 @@ extension RequiredPassengers.Child2: Argo.Decodable {
         
         let child1 = create
             <^> json <|? "separator_child2"
-            <*> json <|? "titlec2"
-            <*> json <|? "firstnamec2"
-            <*> json <|? "lastnamec2"
         
         return child1
             <*> json <|? "birthdatec2"
-            <*> json <|? "passportnationalityc2"
             <*> json <|? "passportnoc2"
 //            <*> json <|? "passportExpiryDatec2"
 //            <*> json <|? "passportissuingc2"
+            <*> json <|? "dcheckinbaggagec12"
+            <*> json <|? "dcheckinbaggagec22"
             <*> json <|? "rcheckinbaggagec12"
+            <*> json <|? "rcheckinbaggagec22"
     }
 }
 
@@ -528,17 +488,16 @@ extension RequiredPassengers.Child3: Argo.Decodable {
         
         let child1 = create
             <^> json <|? "separator_child3"
-            <*> json <|? "titlec3"
-            <*> json <|? "firstnamec3"
-            <*> json <|? "lastnamec3"
         
         return child1
             <*> json <|? "birthdatec3"
-            <*> json <|? "passportnationalityc3"
             <*> json <|? "passportnoc3"
 //            <*> json <|? "passportExpiryDatec3"
 //            <*> json <|? "passportissuingc3"
-            <*> json <|? "rcheckinbaggagec11"
+            <*> json <|? "dcheckinbaggagec13"
+            <*> json <|? "dcheckinbaggagec23"
+            <*> json <|? "rcheckinbaggagec13"
+            <*> json <|? "rcheckinbaggagec23"
     }
 }
 
@@ -548,17 +507,16 @@ extension RequiredPassengers.Child4: Argo.Decodable {
         
         let child1 = create
             <^> json <|? "separator_child4"
-            <*> json <|? "titlec4"
-            <*> json <|? "firstnamec4"
-            <*> json <|? "lastnamec4"
         
         return child1
             <*> json <|? "birthdatec4"
-            <*> json <|? "passportnationalityc4"
             <*> json <|? "passportnoc4"
 //            <*> json <|? "passportExpiryDatec4"
 //            <*> json <|? "passportissuingc4"
-            <*> json <|? "rcheckinbaggagec12"
+            <*> json <|? "dcheckinbaggagec14"
+            <*> json <|? "dcheckinbaggagec24"
+            <*> json <|? "rcheckinbaggagec14"
+            <*> json <|? "rcheckinbaggagec24"
     }
 }
 
@@ -568,17 +526,16 @@ extension RequiredPassengers.Child5: Argo.Decodable {
         
         let child1 = create
             <^> json <|? "separator_child5"
-            <*> json <|? "titlec5"
-            <*> json <|? "firstnamec5"
-            <*> json <|? "lastnamec5"
         
         return child1
             <*> json <|? "birthdatec5"
-            <*> json <|? "passportnationalityc5"
             <*> json <|? "passportnoc5"
 //            <*> json <|? "passportExpiryDatec5"
 //            <*> json <|? "passportissuingc5"
-            <*> json <|? "rcheckinbaggagec11"
+            <*> json <|? "dcheckinbaggagec15"
+            <*> json <|? "dcheckinbaggagec25"
+            <*> json <|? "rcheckinbaggagec15"
+            <*> json <|? "rcheckinbaggagec25"
     }
 }
 
@@ -588,17 +545,15 @@ extension RequiredPassengers.Child6: Argo.Decodable {
         
         let child1 = create
             <^> json <|? "separator_child6"
-            <*> json <|? "titlec6"
-            <*> json <|? "firstnamec6"
-            <*> json <|? "lastnamec6"
-        
         return child1
             <*> json <|? "birthdatec6"
-            <*> json <|? "passportnationalityc6"
             <*> json <|? "passportnoc6"
 //            <*> json <|? "passportExpiryDatec6"
 //            <*> json <|? "passportissuingc6"
-            <*> json <|? "rcheckinbaggagec12"
+            <*> json <|? "dcheckinbaggagec16"
+            <*> json <|? "dcheckinbaggagec26"
+            <*> json <|? "rcheckinbaggagec16"
+            <*> json <|? "rcheckinbaggagec26"
     }
 }
 
@@ -608,13 +563,9 @@ extension RequiredPassengers.Infant1: Argo.Decodable {
         
         let infant1 = create
             <^> json <|? "separator_infant1"
-            <*> json <|? "titlei1"
-            <*> json <|? "firstnamei1"
-            <*> json <|? "lastnamei1"
         
         return infant1
             <*> json <|? "birthdatei1"
-            <*> json <|? "passportnationalityi1"
             <*> json <|? "passportnoi1"
 //            <*> json <|? "passportExpiryDatei1"
 //            <*> json <|? "passportissuingi1"
@@ -627,13 +578,9 @@ extension RequiredPassengers.Infant2: Argo.Decodable {
         
         let infant1 = create
             <^> json <|? "separator_infant2"
-            <*> json <|? "titlei2"
-            <*> json <|? "firstnamei2"
-            <*> json <|? "lastnamei2"
         
         return infant1
             <*> json <|? "birthdatei2"
-            <*> json <|? "passportnationalityi2"
             <*> json <|? "passportnoi2"
 //            <*> json <|? "passportExpiryDatei2"
 //            <*> json <|? "passportissuingi2"
@@ -646,13 +593,9 @@ extension RequiredPassengers.Infant3 : Argo.Decodable {
         
         let infant1 = create
             <^> json <|? "separator_infant3"
-            <*> json <|? "titlei3"
-            <*> json <|? "firstnamei3"
-            <*> json <|? "lastnamei3"
         
         return infant1
             <*> json <|? "birthdatei3"
-            <*> json <|? "passportnationalityi3"
             <*> json <|? "passportnoi3"
 //            <*> json <|? "passportExpiryDatei3"
 //            <*> json <|? "passportissuingi3"
@@ -665,13 +608,9 @@ extension RequiredPassengers.Infant4 : Argo.Decodable {
         
         let infant1 = create
             <^> json <|? "separator_infant4"
-            <*> json <|? "titlei4"
-            <*> json <|? "firstnamei4"
-            <*> json <|? "lastnamei4"
         
         return infant1
             <*> json <|? "birthdatei4"
-            <*> json <|? "passportnationalityi4"
             <*> json <|? "passportnoi4"
 //            <*> json <|? "passportExpiryDatei4"
 //            <*> json <|? "passportissuingi4"
@@ -684,13 +623,9 @@ extension RequiredPassengers.Infant5 : Argo.Decodable {
         
         let infant1 = create
             <^> json <|? "separator_infant5"
-            <*> json <|? "titlei5"
-            <*> json <|? "firstnamei5"
-            <*> json <|? "lastnamei5"
         
         return infant1
             <*> json <|? "birthdatei5"
-            <*> json <|? "passportnationalityi5"
             <*> json <|? "passportnoi5"
 //            <*> json <|? "passportExpiryDatei5"
 //            <*> json <|? "passportissuingi5"
@@ -703,13 +638,9 @@ extension RequiredPassengers.Infant6 : Argo.Decodable {
         
         let infant1 = create
             <^> json <|? "separator_infant6"
-            <*> json <|? "titlei6"
-            <*> json <|? "firstnamei6"
-            <*> json <|? "lastnamei6"
         
         return infant1
             <*> json <|? "birthdatei6"
-            <*> json <|? "passportnationalityi6"
             <*> json <|? "passportnoi6"
 //            <*> json <|? "passportExpiryDatei6"
 //            <*> json <|? "passportissuingi6"
@@ -747,4 +678,5 @@ public struct GetFlightDataParams {
         return params
     }
 }
+
 

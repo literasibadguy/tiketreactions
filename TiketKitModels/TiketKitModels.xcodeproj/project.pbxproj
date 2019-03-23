@@ -116,7 +116,6 @@
 		CDB96768205E8A3D00DEE52F /* Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9672A205E8A3D00DEE52F /* Method.swift */; };
 		CDB96769205E8A3D00DEE52F /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9672B205E8A3D00DEE52F /* Route.swift */; };
 		CDB9676A205E8A3D00DEE52F /* FlightInfoSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9672D205E8A3D00DEE52F /* FlightInfoSamples.swift */; };
-		CDB9676B205E8A3D00DEE52F /* DiagnosticSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9672E205E8A3D00DEE52F /* DiagnosticSamples.swift */; };
 		CDB9676C205E8A3D00DEE52F /* ConfigSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9672F205E8A3D00DEE52F /* ConfigSamples.swift */; };
 		CDB9676D205E8A3D00DEE52F /* AvailableRoomSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96730205E8A3D00DEE52F /* AvailableRoomSamples.swift */; };
 		CDB9676E205E8A3D00DEE52F /* FlightSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB96731205E8A3D00DEE52F /* FlightSamples.swift */; };
@@ -138,6 +137,7 @@
 		CDD1265D2179E78800476E9C /* UIBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD1265C2179E78800476E9C /* UIBarItem.swift */; };
 		CDDA460020736DFE00844004 /* UISwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDA45FF20736DFE00844004 /* UISwitch.swift */; };
 		CDDA5BC52140073B005AC357 /* GetFlightDataParamsLenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDA5BC42140073B005AC357 /* GetFlightDataParamsLenses.swift */; };
+		CDEB8081223A2E2D00E1394E /* DiagnosticSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB9672E205E8A3D00DEE52F /* DiagnosticSamples.swift */; };
 		CDF129562137D2DE00B1DAB2 /* GetFlightDataSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDF129552137D2DE00B1DAB2 /* GetFlightDataSamples.swift */; };
 		CDFBC37321351CFA001E28A7 /* GetFlightDataParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFBC37221351CFA001E28A7 /* GetFlightDataParams.swift */; };
 		CDFBC3752135490B001E28A7 /* GetFlightData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFBC3742135490B001E28A7 /* GetFlightData.swift */; };
@@ -954,7 +954,6 @@
 				CDB96753205E8A3D00DEE52F /* HotelResult.swift in Sources */,
 				CD0D699C205E621F00548BC6 /* DemoteErrors.swift in Sources */,
 				CD0D6997205E621F00548BC6 /* FlatMap.swift in Sources */,
-				CDB9676B205E8A3D00DEE52F /* DiagnosticSamples.swift in Sources */,
 				CDB9677B205E8A3D00DEE52F /* FlightInfoLenses.swift in Sources */,
 				CD0D699E205E621F00548BC6 /* TakeWhen.swift in Sources */,
 				CD19F10C20B8DE4A0048689A /* TakeUntil.swift in Sources */,
@@ -998,6 +997,7 @@
 				CD0D69F7205E660A00548BC6 /* NSBundleType.swift in Sources */,
 				CD0D6996205E621F00548BC6 /* MapConst.swift in Sources */,
 				CDB9674E205E8A3D00DEE52F /* SearchHotelParams.swift in Sources */,
+				CDEB8081223A2E2D00E1394E /* DiagnosticSamples.swift in Sources */,
 				CDB96749205E8A3D00DEE52F /* TiketServerConfig.swift in Sources */,
 				CD0D699F205E622300548BC6 /* UISearchBar.swift in Sources */,
 				CD82EAD22068EF5A0006F66C /* FlightOrderData.swift in Sources */,

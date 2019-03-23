@@ -51,6 +51,8 @@ public protocol FlightFormViewModelOutputs {
     var destinationChanged: Signal<String, NoError> { get }
     var destinationAirportText: Signal<String, NoError> { get }
     
+    var errorNotice: Signal<String, NoError> { get }
+    
     var firstDateText: Signal<String, NoError> { get }
     var secondDateText: Signal<String, NoError> { get }
     
@@ -143,6 +145,16 @@ public final class FlightFormViewModel: FlightFormViewModelType, FlightFormViewM
         let singleFlightParams = Signal.combineLatest(self.navigateToFlightStatusTab.signal.filter { $0 == .oneWay }, inputsSingleParam).map(second)
         let returnFlightParams = Signal.combineLatest(self.navigateToFlightStatusTab.signal.filter { $0 == .roundTrip }, inputsRoundParam).map(second)
         
+        let sameCityFlights = Signal.combineLatest(self.selectedOriginProperty.signal.skipNil(), self.selectedDestinationProperty.signal.skipNil()).map { $0.0.airportName == $0.1.airportName }.sample(on: self.searchFlightTappedProperty.signal).filter { $0 == true }.map { _ in Localizations.ErrorSameCityFlight }
+        
+        let validRequired = Signal.merge(origin.signal.map { $0.airportCode.isEmpty }.sample(on: self.searchFlightTappedProperty.signal), destination.signal.map { $0.airportCode.isEmpty }.sample(on: self.searchFlightTappedProperty.signal)).filter { $0 == true }.map { _ in Localizations.ErrorEmptyCityFlight }
+        
+        self.errorNotice = Signal.merge(sameCityFlights.signal, validRequired.signal)
+        
+        validRequired.observe(on: UIScheduler()).observeValues { required in
+            print("WHY REQUIRED HERE: \(required)")
+        }
+        
         self.goToFlightResults = Signal.merge(singleFlightParams, returnFlightParams).signal.takeWhen(self.searchFlightTappedProperty.signal)
         
         self.singleStatusFlight = self.navigateToFlightStatusTab.signal.filter { $0 == .oneWay }.ignoreValues()
@@ -232,6 +244,7 @@ public final class FlightFormViewModel: FlightFormViewModelType, FlightFormViewM
     public let goToDestination: Signal<AirportResult, NoError>
     public let destinationChanged: Signal<String, NoError>
     public let destinationAirportText: Signal<String, NoError>
+    public let errorNotice: Signal<String, NoError>
     
     public let firstDateText: Signal<String, NoError>
     public let secondDateText: Signal<String, NoError>

@@ -18,6 +18,8 @@ public class PassengerSummaryViewCell: UITableViewCell, ValueCell {
     
     public typealias Value = FormatDataForm
     
+    fileprivate let viewModel: PassengerSummaryCellViewModelType = PassengerSummaryCellViewModel()
+    
     @IBOutlet fileprivate weak var summaryContainerView: UIView!
     @IBOutlet fileprivate weak var summaryStackView: UIStackView!
     @IBOutlet fileprivate weak var titlePassengerLabel: UILabel!
@@ -26,35 +28,40 @@ public class PassengerSummaryViewCell: UITableViewCell, ValueCell {
     
     internal weak var delegate: PassengerSummaryCellDelegate?
     
-    internal var updateHandler: ((PassengerSummaryViewCell) -> Void)? {
-        didSet {
-            
-        }
-    }
-    
     public override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
     
-    public func configureUpdated(value: AdultPassengerParam, row: Int) {
-        _ = self.formSummaryLabel
-            |> UILabel.lens.text .~ "\(value.title ?? "") \(value.firstname ?? "") \(value.lastname ?? "")"
-        self.delegate?.updatePassengerSummary(value, indexRow: row)
-    }
-    
-    public func configureWith(value: FormatDataForm) {
+    public override func bindStyles() {
+        super.bindStyles()
         
         _ = self.summaryContainerView
             |> UIView.lens.layer.borderColor .~ UIColor.tk_official_green.cgColor
             |> UIView.lens.layer.borderWidth .~ 1.0
         
+        _ = self.formSummaryLabel
+            |> UILabel.lens.text .~ Localizations.FillDataTitlePassengerForm
+    }
+    
+    public override func bindViewModel() {
+        super.bindViewModel()
+        
+        self.formSummaryLabel.rac.text = self.viewModel.outputs.summaryText
+    }
+    
+    public func configureWith(value: FormatDataForm) {
+//        print("INSIDE VALUE ADULT PASSENGER: \(value.1)")
+        
         _ = self.titlePassengerLabel
             |> UILabel.lens.text .~ value.fieldText
         
-        _ = self.formSummaryLabel
-            |> UILabel.lens.text .~ Localizations.FillDataTitlePassengerForm
+        self.viewModel.inputs.configurePassenger(value)
         
-        
+    }
+    
+    public func extendWith(passenger: AdultPassengerParam, indexRow: Int) {
+//        self.delegate?.updatePassengerSummary(passenger, indexRow: indexRow)
+        self.viewModel.inputs.configureSummary(passenger)
     }
 }

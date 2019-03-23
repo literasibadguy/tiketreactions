@@ -234,9 +234,9 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aCY-Kc-LTK" userLabel="Notice View">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mohon data diisi sesuai dengan identitas" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U8f-BG-t6Z">
-                                                <rect key="frame" x="17" y="22.5" width="302" height="19.5"/>
-                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mohon data diisi sesuai dengan identitas" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U8f-BG-t6Z">
+                                                <rect key="frame" x="17" y="23" width="341" height="18"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -244,12 +244,13 @@
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="U8f-BG-t6Z" firstAttribute="leading" secondItem="aCY-Kc-LTK" secondAttribute="leading" constant="17" id="G0e-6N-tLB"/>
+                                            <constraint firstAttribute="trailing" secondItem="U8f-BG-t6Z" secondAttribute="trailing" constant="17" id="Uz2-5K-eJF"/>
                                             <constraint firstItem="U8f-BG-t6Z" firstAttribute="centerY" secondItem="aCY-Kc-LTK" secondAttribute="centerY" id="aVf-Ur-oyy"/>
                                             <constraint firstAttribute="height" constant="64" id="tsd-gm-Coa"/>
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="j0N-fk-GHS" userLabel="Form Stack View">
-                                        <rect key="frame" x="0.0" y="64" width="375" height="700"/>
+                                        <rect key="frame" x="0.0" y="64" width="375" height="766"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Penumpang (Dewasa 1)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dpk-ok-icE" userLabel="Passenger Label">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
@@ -278,7 +279,7 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YAR-Vy-KTT" userLabel="Title Menu Stack View">
                                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ibis Style Braga Singapore" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xcT-Lh-d1L" userLabel="Title Label">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xcT-Lh-d1L" userLabel="Title Label">
                                                                         <rect key="frame" x="0.0" y="0.0" width="190" height="45"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                         <nil key="textColor"/>
@@ -399,7 +400,7 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Ix-No-aYK" userLabel="Birthdate Menu Stack View">
                                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ibis Style Braga Singapore" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avw-lH-dx2" userLabel="Birthdate Label">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avw-lH-dx2" userLabel="Birthdate Label">
                                                                         <rect key="frame" x="0.0" y="0.0" width="190" height="45"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                         <nil key="textColor"/>
@@ -460,7 +461,7 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JJa-0C-wBf" userLabel="Citizenship Menu Stack View">
                                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ibis Style Braga Singapore" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ulu-Li-E3N" userLabel="Citizenship Label">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ulu-Li-E3N" userLabel="Citizenship Label">
                                                                         <rect key="frame" x="0.0" y="0.0" width="190" height="45"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                         <nil key="textColor"/>
@@ -551,7 +552,7 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2lB-83-gzi" userLabel="Passport Expired Date Menu Stack View">
                                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ibis Style Braga Singapore" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZGj-Py-85g" userLabel="Title Label">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZGj-Py-85g" userLabel="Title Label">
                                                                         <rect key="frame" x="0.0" y="0.0" width="190" height="45"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                         <nil key="textColor"/>
@@ -612,7 +613,7 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SOp-GM-cTw" userLabel="Passport Issued Menu Stack View">
                                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ibis Style Braga Singapore" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pbZ-an-BP6" userLabel="Passport Issued Label">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pbZ-an-BP6" userLabel="Passport Issued Label">
                                                                         <rect key="frame" x="0.0" y="0.0" width="190" height="45"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                         <nil key="textColor"/>
@@ -655,8 +656,69 @@
                                                     <constraint firstAttribute="height" constant="1" id="WBd-EE-zbH"/>
                                                 </constraints>
                                             </view>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="vw1-7d-drx" userLabel="Depart Baggage Input Stack View">
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="AZT-XO-kXe" userLabel="Passport Issued Date Input Stack View">
                                                 <rect key="frame" x="0.0" y="568" width="375" height="65"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tanggal Penerbitan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pg2-6F-hyz" userLabel="Passport Issued Input Text Label">
+                                                        <rect key="frame" x="0.0" y="0.0" width="114" height="20"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bz4-cq-gxI" userLabel="Passport Issued Container View">
+                                                        <rect key="frame" x="0.0" y="20" width="375" height="45"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w8K-rN-K2h" userLabel="Passport Issued Pick Button">
+                                                                <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
+                                                            </button>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hac-MQ-UAf" userLabel="Passport Issued Menu Stack View">
+                                                                <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="50a-Sz-Fai" userLabel="Passport Issued Label">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="190" height="45"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <view contentMode="scaleToFill" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="YcS-7Z-OkJ" userLabel="Filler">
+                                                                        <rect key="frame" x="190" y="0.0" width="135" height="45"/>
+                                                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    </view>
+                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="pick-green-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="uqc-CM-TM4">
+                                                                        <rect key="frame" x="325" y="0.0" width="50" height="45"/>
+                                                                    </imageView>
+                                                                </subviews>
+                                                            </stackView>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="bottom" secondItem="hac-MQ-UAf" secondAttribute="bottom" id="92W-Qv-zqV"/>
+                                                            <constraint firstItem="hac-MQ-UAf" firstAttribute="leading" secondItem="Bz4-cq-gxI" secondAttribute="leading" id="9ds-8T-w8n"/>
+                                                            <constraint firstItem="w8K-rN-K2h" firstAttribute="top" secondItem="Bz4-cq-gxI" secondAttribute="top" id="IXW-Er-ng8"/>
+                                                            <constraint firstAttribute="height" constant="45" id="OV0-tL-Gpz"/>
+                                                            <constraint firstItem="w8K-rN-K2h" firstAttribute="leading" secondItem="Bz4-cq-gxI" secondAttribute="leading" id="QAC-If-aQx"/>
+                                                            <constraint firstAttribute="trailing" secondItem="hac-MQ-UAf" secondAttribute="trailing" id="beJ-yR-KEV"/>
+                                                            <constraint firstItem="hac-MQ-UAf" firstAttribute="top" secondItem="Bz4-cq-gxI" secondAttribute="top" id="dDq-yw-55i"/>
+                                                            <constraint firstAttribute="trailing" secondItem="w8K-rN-K2h" secondAttribute="trailing" id="fzN-DR-x9P"/>
+                                                            <constraint firstAttribute="bottom" secondItem="w8K-rN-K2h" secondAttribute="bottom" id="hes-bw-Ttk"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="65" id="DPF-MK-5Ln"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Bz4-cq-gxI" secondAttribute="trailing" id="RxU-CS-MHp"/>
+                                                    <constraint firstItem="Bz4-cq-gxI" firstAttribute="leading" secondItem="AZT-XO-kXe" secondAttribute="leading" id="qAQ-F1-fvY"/>
+                                                </constraints>
+                                            </stackView>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i0U-pO-UY0" userLabel="Passport Issued Date Separator View">
+                                                <rect key="frame" x="0.0" y="633" width="375" height="1"/>
+                                                <color key="backgroundColor" red="0.4297707778" green="0.93670528880000004" blue="0.48656967540000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="9Zs-qF-qQs"/>
+                                                </constraints>
+                                            </view>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="vw1-7d-drx" userLabel="Depart Baggage Input Stack View">
+                                                <rect key="frame" x="0.0" y="634" width="375" height="65"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pilihan Bagasi (CGK -&gt; HKG)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="glP-j7-DKk" userLabel="Depart Baggage Input Text Label">
                                                         <rect key="frame" x="0.0" y="0.0" width="168" height="20"/>
@@ -673,7 +735,7 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KYA-wM-cEh" userLabel="Depart Baggage Menu Stack View">
                                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25 Kg - Rp 250.000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JHE-hA-e4h" userLabel="Depart Baggage Label">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JHE-hA-e4h" userLabel="Depart Baggage Label">
                                                                         <rect key="frame" x="0.0" y="0.0" width="143" height="45"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                         <nil key="textColor"/>
@@ -710,14 +772,14 @@
                                                 </constraints>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NcM-Wg-Ovr" userLabel="Depart Baggage Separator View">
-                                                <rect key="frame" x="0.0" y="633" width="375" height="1"/>
+                                                <rect key="frame" x="0.0" y="699" width="375" height="1"/>
                                                 <color key="backgroundColor" red="0.4297707778" green="0.93670528880000004" blue="0.48656967540000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="Kjb-gV-5Pv"/>
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Fmg-bM-Ckd" userLabel="Return Baggage Input Stack View">
-                                                <rect key="frame" x="0.0" y="634" width="375" height="65"/>
+                                                <rect key="frame" x="0.0" y="700" width="375" height="65"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pilihan Bagasi (HKG -&gt; CGK)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p1r-Mf-w01" userLabel="Return Baggage Input Text Label">
                                                         <rect key="frame" x="0.0" y="0.0" width="168" height="20"/>
@@ -734,7 +796,7 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WIp-PU-cIy" userLabel="Return Baggage Menu Stack View">
                                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25 Kg - Rp 250.000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VHn-Eg-JdJ" userLabel="Return Baggage Label">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VHn-Eg-JdJ" userLabel="Return Baggage Label">
                                                                         <rect key="frame" x="0.0" y="0.0" width="143" height="45"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                         <nil key="textColor"/>
@@ -771,7 +833,7 @@
                                                 </constraints>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jx8-fh-YwV" userLabel="Return Baggage Separator View">
-                                                <rect key="frame" x="0.0" y="699" width="375" height="1"/>
+                                                <rect key="frame" x="0.0" y="765" width="375" height="1"/>
                                                 <color key="backgroundColor" red="0.4297707778" green="0.93670528880000004" blue="0.48656967540000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="Jq3-lD-hSy"/>
@@ -845,6 +907,12 @@
                         <outlet property="firstNameSeparatorView" destination="tvW-cA-dVH" id="6TL-RA-0Eb"/>
                         <outlet property="firstNameTextField" destination="dEd-ZH-2sN" id="Dxi-eF-9Er"/>
                         <outlet property="internationalStackView" destination="j0N-fk-GHS" id="XTx-Ad-IWy"/>
+                        <outlet property="issueDateContainerView" destination="Bz4-cq-gxI" id="brP-09-FcT"/>
+                        <outlet property="issueDateInputLabel" destination="pg2-6F-hyz" id="VUJ-NX-Ynz"/>
+                        <outlet property="issueDateMenuStackView" destination="hac-MQ-UAf" id="tmF-LS-mUi"/>
+                        <outlet property="issueDatePickButton" destination="w8K-rN-K2h" id="OYT-Zv-zIr"/>
+                        <outlet property="issueDatePickedLabel" destination="50a-Sz-Fai" id="mQc-hw-TlG"/>
+                        <outlet property="issueDateSeparatorView" destination="i0U-pO-UY0" id="y5t-l3-j70"/>
                         <outlet property="lastNameInputLabel" destination="vKi-it-7SH" id="TBZ-eR-0QS"/>
                         <outlet property="lastNameInputStackView" destination="x3I-zv-srF" id="NZ3-FM-1KT"/>
                         <outlet property="lastNameSeparatorView" destination="BMF-iu-ZhQ" id="vTo-zf-DHs"/>
@@ -869,6 +937,7 @@
                         <outlet property="pasportNoTextField" destination="hO9-eT-ilp" id="gUf-oh-0rc"/>
                         <outlet property="passengerLabel" destination="dpk-ok-icE" id="Xtm-Ds-0e0"/>
                         <outlet property="passportExpiredPickedLabel" destination="ZGj-Py-85g" id="SQF-6p-FE1"/>
+                        <outlet property="passportIssueDateInputStackView" destination="AZT-XO-kXe" id="hPW-et-bVw"/>
                         <outlet property="passportIssuesPickedLabel" destination="pbZ-an-BP6" id="Avo-aU-FFK"/>
                         <outlet property="returnBaggageContainerView" destination="OeH-bT-y3S" id="Epv-Es-V9Y"/>
                         <outlet property="returnBaggageInputLabel" destination="p1r-Mf-w01" id="fhT-O2-eUh"/>

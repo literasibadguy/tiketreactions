@@ -11,6 +11,7 @@ public enum Nib: String {
     case ValueTotalFlightViewCell
     case NoticeSummaryViewCell
     case PassengerSummaryViewCell
+    case PassengerFilledViewCell
     case PassengerFormTableViewCell
     case BannerPagerViewCell
     case GuestFormTableViewCell

@@ -67,6 +67,7 @@ public final class PassengersStepperVC: UIViewController {
         _ = self.doneButton
             |> UIButton.lens.titleColor(forState: .normal) .~ .tk_official_green
             |> UIButton.lens.titleColor(forState: .disabled) .~ .tk_base_grey_100
+            |> UIButton.lens.title(forState: .normal) .~ Localizations.DonebuttonTitle
         
         _ = self.guestInputTitleLabel
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
@@ -74,7 +75,7 @@ public final class PassengersStepperVC: UIViewController {
         _ = self.adultStepper
             |> UIStepper.lens.tintColor .~ .tk_official_green
             |> UIStepper.lens.minimumValue .~ 1
-            |> UIStepper.lens.maximumValue .~ 7
+            |> UIStepper.lens.maximumValue .~ 6
         
         _ = self.childStepper
             |> UIStepper.lens.tintColor .~ .tk_official_green
@@ -84,7 +85,7 @@ public final class PassengersStepperVC: UIViewController {
         _ = self.infantStepper
             |> UIStepper.lens.tintColor .~ .tk_official_green
             |> UIStepper.lens.minimumValue .~ 0
-            |> UIStepper.lens.maximumValue .~ 1
+            |> UIStepper.lens.maximumValue .~ 6
         
         _ = self.adultLabel
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
@@ -104,6 +105,7 @@ public final class PassengersStepperVC: UIViewController {
         self.childStepper.rac.value = self.viewModel.outputs.childValue
         self.infantStepper.rac.value = self.viewModel.outputs.infantValue
         
+        self.guestInputTitleLabel.rac.text = self.viewModel.outputs.passengerTotalValueText
         self.adultLabel.rac.text = self.viewModel.outputs.adultValueText
         self.childLabel.rac.text = self.viewModel.outputs.childValueText
         self.infantLabel.rac.text = self.viewModel.outputs.infantValueText

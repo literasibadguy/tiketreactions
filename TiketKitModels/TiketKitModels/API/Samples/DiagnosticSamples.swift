@@ -10,5 +10,5 @@ import Foundation
 
 extension Diagnostic {
     
-    internal static let sample = Diagnostic(status: .successful, elapseTime: "", memoryUsage: "", unixTimestamp: 0, confirm: "", lang: "", currency: "")
+    internal static let sample = Diagnostic(errorMessage: "", status: .successful, elapseTime: "", memoryUsage: "", unixTimestamp: 0, confirm: "", lang: "", currency: "")
 }

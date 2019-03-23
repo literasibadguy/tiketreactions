@@ -20,6 +20,7 @@ class FlightResultViewCell: UITableViewCell, ValueCell {
     @IBOutlet fileprivate weak var flightPriceLabel: UILabel!
     @IBOutlet fileprivate weak var generalFlightInfoStackView: UIStackView!
     
+    @IBOutlet fileprivate weak var directTimeLabel: UILabel!
     @IBOutlet fileprivate weak var flightIdLabel: UILabel!
     @IBOutlet fileprivate weak var departureCodeLabel: UILabel!
     @IBOutlet fileprivate weak var departureTimeLabel: UILabel!
@@ -75,6 +76,7 @@ class FlightResultViewCell: UITableViewCell, ValueCell {
         self.arrivalCodeLabel.rac.text = self.viewModel.outputs.arrivalCodeText
         self.departureTimeLabel.rac.text = self.viewModel.outputs.departureTimeText
         self.arrivalTimeLabel.rac.text = self.viewModel.outputs.arrivalTimeText
+        self.directTimeLabel.rac.text = self.viewModel.outputs.directTimeText
     }
     
     func configureWith(value: Flight) {

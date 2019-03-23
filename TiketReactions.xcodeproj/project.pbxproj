@@ -21,6 +21,8 @@
 		CD0B11EF20B6450F00DC25CE /* CurrencyListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0B11EE20B6450F00DC25CE /* CurrencyListViewCell.swift */; };
 		CD0B11F420B6573300DC25CE /* CurrencyListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0B11F320B6573300DC25CE /* CurrencyListViewModel.swift */; };
 		CD0B11F620B65DF600DC25CE /* CurrencyListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0B11F520B65DF600DC25CE /* CurrencyListDataSource.swift */; };
+		CD0D0B37223E2073000CD02E /* PassengerFilledViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0D0B35223E2073000CD02E /* PassengerFilledViewCell.swift */; };
+		CD0D0B38223E2073000CD02E /* PassengerFilledViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD0D0B36223E2073000CD02E /* PassengerFilledViewCell.xib */; };
 		CD0D68D8205E53C900548BC6 /* TiketKitModels.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD0D68D7205E53C900548BC6 /* TiketKitModels.framework */; };
 		CD0D68D9205E53C900548BC6 /* TiketKitModels.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CD0D68D7205E53C900548BC6 /* TiketKitModels.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CD0EDE35208EB60E00B28875 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0EDE34208EB60E00B28875 /* UIAlertController.swift */; };
@@ -144,6 +146,7 @@
 		CD96FE71207C9875002CA546 /* HotelDiscoveryEmbedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD96FE70207C9875002CA546 /* HotelDiscoveryEmbedViewModel.swift */; };
 		CD96FE73207C988A002CA546 /* HotelDiscoveryNavViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD96FE72207C988A002CA546 /* HotelDiscoveryNavViewModel.swift */; };
 		CD99D66E2117E77F0088841E /* PassengersStepperVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD99D66D2117E77F0088841E /* PassengersStepperVC.swift */; };
+		CDA17236223B20FE00C6A3F6 /* PassengerSummaryCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA17235223B20FD00C6A3F6 /* PassengerSummaryCellViewModel.swift */; };
 		CDA6E47C20DBE4580037CE54 /* BankTransfersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA6E47B20DBE4580037CE54 /* BankTransfersVC.swift */; };
 		CDA848C120A960F5003F74A4 /* HotelDiscoveryFilters.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CDA848C020A960F5003F74A4 /* HotelDiscoveryFilters.storyboard */; };
 		CDA848C320A98F8D003F74A4 /* HotelDiscoveryFiltersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA848C220A98F8D003F74A4 /* HotelDiscoveryFiltersDataSource.swift */; };
@@ -461,6 +464,8 @@
 		CD0B11F320B6573300DC25CE /* CurrencyListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyListViewModel.swift; sourceTree = "<group>"; };
 		CD0B11F520B65DF600DC25CE /* CurrencyListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyListDataSource.swift; sourceTree = "<group>"; };
 		CD0B4470201DF4C70083B1E5 /* UIStepperLenses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStepperLenses.swift; sourceTree = "<group>"; };
+		CD0D0B35223E2073000CD02E /* PassengerFilledViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassengerFilledViewCell.swift; sourceTree = "<group>"; };
+		CD0D0B36223E2073000CD02E /* PassengerFilledViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PassengerFilledViewCell.xib; sourceTree = "<group>"; };
 		CD0D68D7205E53C900548BC6 /* TiketKitModels.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TiketKitModels.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD0E4D70201DDE3E00F59D40 /* PickPassengers.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PickPassengers.storyboard; sourceTree = "<group>"; };
 		CD0E4D74201DDE8000F59D40 /* PickPassengersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickPassengersVC.swift; sourceTree = "<group>"; };
@@ -642,6 +647,7 @@
 		CD9B9051201B6FBB009F1FC4 /* ValueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueCell.swift; sourceTree = "<group>"; };
 		CD9B9059201B7472009F1FC4 /* FlightDirectViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlightDirectViewCell.xib; sourceTree = "<group>"; };
 		CD9B905B201B7702009F1FC4 /* ContactInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactInfoViewCell.swift; sourceTree = "<group>"; };
+		CDA17235223B20FD00C6A3F6 /* PassengerSummaryCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassengerSummaryCellViewModel.swift; sourceTree = "<group>"; };
 		CDA6E47B20DBE4580037CE54 /* BankTransfersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankTransfersVC.swift; sourceTree = "<group>"; };
 		CDA79503201EABE000769673 /* UIImageViewLenses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewLenses.swift; sourceTree = "<group>"; };
 		CDA79505201EAC0200769673 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
@@ -1397,6 +1403,7 @@
 				CDB931602047D96400F5892B /* ContactInfoViewCell.xib */,
 				CDCD8B24212E4F50004F84D1 /* ValueTotalFlightViewCell.swift */,
 				CDCD8B25212E4F50004F84D1 /* ValueTotalFlightViewCell.xib */,
+				CDA17235223B20FD00C6A3F6 /* PassengerSummaryCellViewModel.swift */,
 			);
 			path = FlightDirects;
 			sourceTree = "<group>";
@@ -2045,6 +2052,8 @@
 				CD756FC421A3F10B009F74F5 /* PassengerRowView.swift */,
 				CD5E012421AA3CA6000321FD /* PassengerContactRowViewCell.swift */,
 				CD3F566A21AB9E8200EB257B /* PassengerListManager.swift */,
+				CD0D0B35223E2073000CD02E /* PassengerFilledViewCell.swift */,
+				CD0D0B36223E2073000CD02E /* PassengerFilledViewCell.xib */,
 			);
 			path = PassengersList;
 			sourceTree = "<group>";
@@ -2234,6 +2243,7 @@
 				CDEFECF5203ECD1000EAAC71 /* FlightForm.storyboard in Resources */,
 				CD0B11ED20B61D0200DC25CE /* CurrencyList.storyboard in Resources */,
 				CDEFECF6203ECD1000EAAC71 /* EmptyStates.storyboard in Resources */,
+				CD0D0B38223E2073000CD02E /* PassengerFilledViewCell.xib in Resources */,
 				CDBE2DF620E451CE004A7DFF /* CountryPicker.bundle in Resources */,
 				CDC648D02019F85F00D11772 /* LaunchScreen.storyboard in Resources */,
 				CDC648CD2019F85F00D11772 /* Assets.xcassets in Resources */,
@@ -2480,6 +2490,7 @@
 				CD336D832192A8F200C9DC5D /* IssueListPresentable.swift in Sources */,
 				CDEFECE3203ECAF900EAAC71 /* RoomSummaryViewCell.swift in Sources */,
 				CDB8AB12207A1DF900FBCB1A /* BannerPagerViewCell.swift in Sources */,
+				CD0D0B37223E2073000CD02E /* PassengerFilledViewCell.swift in Sources */,
 				CD2CFD4421D795CF00DB0505 /* PassengerFormDataSource.swift in Sources */,
 				CD58CD2F2235164E006778E4 /* ManagedOrderListPagesVC.swift in Sources */,
 				CD4457932201902D00D0D220 /* NationalListViewCell.swift in Sources */,
@@ -2636,6 +2647,7 @@
 				CD964642204BFB950024F32A /* PickPassengersViewModel.swift in Sources */,
 				CDEFECC5203ECAE200EAAC71 /* ContactInfoViewCell.swift in Sources */,
 				CDEFECC6203ECAE200EAAC71 /* MinimalFlightViewCell.swift in Sources */,
+				CDA17236223B20FE00C6A3F6 /* PassengerSummaryCellViewModel.swift in Sources */,
 				CD526036207F5EB3000B2865 /* Navigation.swift in Sources */,
 				CDD8DA77212AEAF600AEFBE0 /* FlightDirectsCellViewModel.swift in Sources */,
 				CDAD3A3E21265F8C00A25E72 /* FlightResultCellViewModel.swift in Sources */,

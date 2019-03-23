@@ -9,7 +9,7 @@
 // Flight
 "Origin_Flight_Title_Form" = "Origin";
 "Destination_Flight_Title_Form" = "Destination";
-"Passenger_Flight_Title_Form" = "Passenger";
+"Passenger_Flight_Title_Form" = "Passengers";
 "Outbound_Title_Pick_Date" = "Outbound";
 "Return_Title_Pick_Date" = "Return";
 "Find_Flights_Button_Pick_Date" = "Find Flights";
@@ -19,6 +19,7 @@
 "Return_Notice_Pick_Flight" = "Return to %@";
 "Choose_Title_Button_Pick_Flight" = "Choose this flight";
 "Order_Title_Button_Pick_Flight" = "Order this flight";
+"Passenger_Lists_Title" = "Passengers List";
 "Check_Flight_Notice_Summary" = "Please check your flight first before take an order";
 "Passenger_Adult_Status_list" = "Adult %d";
 "Passenger_Child_Status_list" = "Child %d";
@@ -28,9 +29,21 @@
 "PassportNo_Title_Passenger_Form" = "Passport No.";
 "Expired_Title_Passenger_Form" = "Expired Date";
 "IssuedPassport_Passenger_Form" = "Issued Passport";
+"IssueDatePassport_Passenger_Form" = "Issuing Date Passport";
+"Baggage_Pick_Title" = "Baggages";
+"DepartBaggage_Passenger_Form" = "First Flight Baggage";
+"ReturnBaggage_Passenger_Form" = "Return Flight Baggage";
 "Form_Notice_Reminder" = "Fill this form with your identity";
 "Option_Title_Passenger_Form" = "Same as Contact Detail";
 "Fill_Data_Title_Passenger_Form" = "Fill Data";
+"Error_Same_City_Flight" = "Departure city and destination city must be different";
+"Error_Empty_City_Flight" = "Please select airport departure and destination";
+"From_Flight_Form" = "From";
+"To_Flight_Form" = "To";
+"Booking_Notice_Get_Order" = "Please Wait, we are confirming your booking";
+"Save_Passenger_Input_Form" = "Save";
+"Notice_Identity_Passenger_Form" = "Please fill the data according passenger identity, Passport, National ID";
+"Return_Time_Greater_Notice" = "Return time should be greater than depart time";
 
 
 // Hotel

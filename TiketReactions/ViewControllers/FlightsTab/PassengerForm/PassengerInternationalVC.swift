@@ -94,6 +94,16 @@ public final class PassengerInternationalVC: UIViewController {
     @IBOutlet fileprivate weak var pasportIssuesSeparatorView: UIView!
     @IBOutlet fileprivate weak var passportIssuesPickedLabel: UILabel!
     
+    // ISSUE DATE STACK VIEW
+    //
+    @IBOutlet fileprivate weak var passportIssueDateInputStackView: UIStackView!
+    @IBOutlet fileprivate weak var issueDateInputLabel: UILabel!
+    @IBOutlet fileprivate weak var issueDateContainerView: UIView!
+    @IBOutlet fileprivate weak var issueDatePickButton: UIButton!
+    @IBOutlet fileprivate weak var issueDateMenuStackView: UIStackView!
+    @IBOutlet fileprivate weak var issueDatePickedLabel: UILabel!
+    @IBOutlet fileprivate weak var issueDateSeparatorView: UIView!
+    
     // DEPART BAGGAGE INPUT STACK VIEW
     @IBOutlet fileprivate weak var departBaggageInputStackView: UIStackView!
     @IBOutlet fileprivate weak var departBaggageInputLabel: UILabel!
@@ -134,6 +144,12 @@ public final class PassengerInternationalVC: UIViewController {
         return vc
     }
     
+    public static func configureExtendedWith(_ params: AdultPassengerParam) -> PassengerInternationalVC {
+        let vc = Storyboard.PassengerForm.instantiate(PassengerInternationalVC.self)
+        vc.viewModel.inputs.configCurrentPassenger(pass: params)
+        return vc
+    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -149,6 +165,7 @@ public final class PassengerInternationalVC: UIViewController {
         self.citizenshipPickButton.addTarget(self, action: #selector(citizenshipButtonTapped), for: .touchUpInside)
         self.pasportExpiredPickButton.addTarget(self, action: #selector(pasportExpiredButtonTapped), for: .touchUpInside)
         self.pasportIssuesPickButton.addTarget(self, action: #selector(pasportIssuesButtonTapped), for: .touchUpInside)
+        self.issueDatePickButton.addTarget(self, action: #selector(passportIssueDateButtonTapped), for: .touchUpInside)
         self.departBaggagePickButton.addTarget(self, action: #selector(departBaggageButtonTapped), for: .touchUpInside)
         self.returnBaggagePickButton.addTarget(self, action: #selector(returnBaggageButtonTapped), for: .touchUpInside)
         
@@ -164,6 +181,12 @@ public final class PassengerInternationalVC: UIViewController {
         self.collectInternationalButton.addTarget(self , action: #selector(submitPassengerFormTapped), for: .touchUpInside)
         
         self.viewModel.inputs.viewDidLoad()
+    }
+    
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.viewModel.inputs.viewDidAppear()
     }
 
     public override func bindStyles() {
@@ -193,6 +216,8 @@ public final class PassengerInternationalVC: UIViewController {
         _ = self.passportIssuesPickedLabel
             |> UILabel.lens.textColor .~ .darkGray
         _ = self.passportExpiredPickedLabel
+            |> UILabel.lens.textColor .~ .darkGray
+        _ = self.issueDatePickedLabel
             |> UILabel.lens.textColor .~ .darkGray
         
         _ = self.titleInputStackView
@@ -224,11 +249,16 @@ public final class PassengerInternationalVC: UIViewController {
             |> UIStackView.lens.spacing .~ Styles.grid(1)
 //            |> UIStackView.lens.isHidden .~ true
         
+        _ = self.passportIssueDateInputStackView
+            |> UIStackView.lens.spacing .~ Styles.grid(1)
+        
         _ = self.departBaggageInputStackView
             |> UIStackView.lens.spacing .~ Styles.grid(1)
+//            |> UIStackView.lens.isHidden .~ true
         
         _ = self.returnBaggageInputStackView
             |> UIStackView.lens.spacing .~ Styles.grid(1)
+//            |> UIStackView.lens.isHidden .~ true
         
         _ = self.titleMenuStackView
             |> UIStackView.lens.spacing .~ Styles.grid(1)
@@ -246,14 +276,23 @@ public final class PassengerInternationalVC: UIViewController {
             |> UIStackView.lens.spacing .~ Styles.grid(1)
             |> UIStackView.lens.alignment .~ .center
             |> UIStackView.lens.isUserInteractionEnabled .~ false
+        
+        _ = self.issueDateMenuStackView
+            |> UIStackView.lens.spacing .~ Styles.grid(1)
+            |> UIStackView.lens.alignment .~ .center
+            |> UIStackView.lens.isUserInteractionEnabled .~ false
+        
         _ = self.pasportExporedMenuStackView
             |> UIStackView.lens.spacing .~ Styles.grid(1)
             |> UIStackView.lens.alignment .~ .center
             |> UIStackView.lens.isUserInteractionEnabled .~ false
+        
+        
         _ = self.departBaggageMenuStackView
             |> UIStackView.lens.spacing .~ Styles.grid(1)
             |> UIStackView.lens.alignment .~ .center
             |> UIStackView.lens.isUserInteractionEnabled .~ false
+        
         _ = self.returnBaggageMenuStackView
             |> UIStackView.lens.spacing .~ Styles.grid(1)
             |> UIStackView.lens.alignment .~ .center
@@ -274,12 +313,22 @@ public final class PassengerInternationalVC: UIViewController {
         _ = self.pasportExpiredContainerView
             |> UIView.lens.layoutMargins .~ .init(top: Styles.grid(2), left: Styles.grid(2), bottom: Styles.grid(2), right: Styles.grid(4))
             |> UIView.lens.backgroundColor .~ .white
+        _ = self.issueDateContainerView
+            |> UIView.lens.layoutMargins .~ .init(top: Styles.grid(2), left: Styles.grid(2), bottom: Styles.grid(2), right: Styles.grid(4))
+            |> UIView.lens.backgroundColor .~ .white
         _ = self.departBaggageContainerView
             |> UIView.lens.layoutMargins .~ .init(top: Styles.grid(2), left: Styles.grid(2), bottom: Styles.grid(2), right: Styles.grid(4))
             |> UIView.lens.backgroundColor .~ .white
+        
         _ = self.returnBaggageContainerView
             |> UIView.lens.layoutMargins .~ .init(top: Styles.grid(2), left: Styles.grid(2), bottom: Styles.grid(2), right: Styles.grid(4))
             |> UIView.lens.backgroundColor .~ .white
+        
+        _ = self.noticeLabel
+            |> UILabel.lens.text .~ Localizations.NoticeIdentityPassengerForm
+        
+        _ = self.titleInputTextLabel
+            |> UILabel.lens.text .~ Localizations.TitleFormData
         
         _ = self.firstNameInputLabel
             |> UILabel.lens.text .~ Localizations.FirstnameFormData
@@ -301,6 +350,15 @@ public final class PassengerInternationalVC: UIViewController {
         
         _ = self.dateBornInputTextLabel
             |> UILabel.lens.text .~ Localizations.BirthdateTitlePassengerForm
+        
+        _ = self.issueDateInputLabel
+            |> UILabel.lens.text .~ Localizations.IssuedatepassportPassengerForm
+        
+        _ = self.departBaggageInputLabel
+            |> UILabel.lens.text .~ Localizations.DepartbaggagePassengerForm
+        
+        _ = self.returnBaggageInputLabel
+            |> UILabel.lens.text .~ Localizations.ReturnbaggagePassengerForm
         
         _ = self.firstNameTextField
             |> UITextField.lens.returnKeyType .~ .next
@@ -347,17 +405,22 @@ public final class PassengerInternationalVC: UIViewController {
             |> UIView.lens.backgroundColor .~ .tk_official_green
 //            |> UIView.lens.isHidden .~ true
         
+        _ = self.issueDateSeparatorView
+            |> UIView.lens.backgroundColor .~ .tk_official_green
+        
         _ = self.departBaggageSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_official_green
+//            |> UIView.lens.isHidden .~ true
         
         _ = self.returnBaggageSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_official_green
+//            |> UIView.lens.isHidden .~ true
         
         _ = self.collectInternationalButton
             |> UIButton.lens.backgroundColor(forState: .normal) .~ .tk_official_green
             |> UIButton.lens.backgroundColor(forState: .disabled) .~ .tk_typo_green_grey_600
             |> UIButton.lens.titleColor(forState: .normal) .~ .white
-            |> UIButton.lens.isEnabled .~ false
+            |> UIButton.lens.title(forState: .normal) .~ Localizations.SavePassengerInputForm
     }
     
     public override func bindViewModel() {
@@ -372,6 +435,7 @@ public final class PassengerInternationalVC: UIViewController {
         self.pasportNoTextField.rac.text = self.viewModel.outputs.noPassportTextFieldText
         self.passportExpiredPickedLabel.rac.text = self.viewModel.outputs.expiredPassportLabelText
         self.passportIssuesPickedLabel.rac.text = self.viewModel.outputs.issuedPassportLabelText
+        self.issueDatePickedLabel.rac.text = self.viewModel.outputs.issueDatePassportLabelText
         self.departBaggagePickedLabel.rac.text = self.viewModel.outputs.departBaggageText
         self.returnBaggagePickedLabel.rac.text = self.viewModel.outputs.returnBaggageText
         
@@ -379,15 +443,17 @@ public final class PassengerInternationalVC: UIViewController {
         self.pasportExpiredInputStackView.rac.hidden = self.viewModel.outputs.isInternational
         self.pasportIssuesStackView.rac.hidden = self.viewModel.outputs.isInternational
         self.departBaggageInputStackView.rac.hidden = self.viewModel.outputs.isAvailableBaggage
-        self.returnBaggageInputStackView.rac.hidden = self.viewModel.outputs.isAvailableBaggage
+        self.returnBaggageInputStackView.rac.hidden = self.viewModel.outputs.isReturnBaggage
+        self.passportIssueDateInputStackView.rac.hidden = self.viewModel.outputs.isScootFlight
         
         self.pasportNoSeparatorView.rac.hidden = self.viewModel.outputs.isInternational
         self.pasportExpiredSeparatorView.rac.hidden = self.viewModel.outputs.isInternational
         self.pasportIssuesSeparatorView.rac.hidden = self.viewModel.outputs.isInternational
         self.departBaggageSeparatorView.rac.hidden = self.viewModel.outputs.isAvailableBaggage
-        self.returnBaggageSeparatorView.rac.hidden = self.viewModel.outputs.isAvailableBaggage
+        self.returnBaggageSeparatorView.rac.hidden = self.viewModel.outputs.isReturnBaggage
+        self.issueDateSeparatorView.rac.hidden = self.viewModel.outputs.isScootFlight
         
-        self.collectInternationalButton.rac.isEnabled = self.viewModel.outputs.isPassengerFormValid
+    //    self.collectInternationalButton.rac.isEnabled = self.viewModel.outputs.isPassengerFormValid
         
         self.viewModel.outputs.goToInputsPicker
             .observe(on: QueueScheduler.main)
@@ -401,6 +467,8 @@ public final class PassengerInternationalVC: UIViewController {
                     self?.goToExpiredPickerController()
                 case .goToIssuedPassportPicker:
                     self?.goToIssuedPickerController()
+                case .goToIssueDatePassportPicker:
+                    self?.goToIssueDatePickerController()
                 }
         }
         
@@ -440,6 +508,12 @@ public final class PassengerInternationalVC: UIViewController {
                 default:
                     self?.dismiss(animated: true, completion: nil)
                 }
+        }
+        
+        self.viewModel.outputs.genericErrorNotValid
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] in
+                self?.present(UIAlertController.genericError(message: "Data hasn't been valid", cancel:nil), animated: true, completion: nil)
         }
         
         self.viewModel.outputs.submitInternationalPassenger
@@ -502,7 +576,14 @@ public final class PassengerInternationalVC: UIViewController {
     }
     
     fileprivate func goToExpiredPickerController() {
-        let birthdatePickerVC = PassengerBirthdatePickerVC.instantiate(expiredDelegate: self)
+        let birthdatePickerVC = PassengerBirthdatePickerVC.instantiate(expiredDelegate: self, state: .expiredPassport)
+        birthdatePickerVC.modalTransitionStyle = .crossDissolve
+        birthdatePickerVC.modalPresentationStyle = .overFullScreen
+        self.present(birthdatePickerVC, animated: true, completion: nil)
+    }
+    
+    fileprivate func goToIssueDatePickerController() {
+        let birthdatePickerVC = PassengerBirthdatePickerVC.instantiate(issueDelegate: self, state: .issueDatePassport)
         birthdatePickerVC.modalTransitionStyle = .crossDissolve
         birthdatePickerVC.modalPresentationStyle = .overFullScreen
         self.present(birthdatePickerVC, animated: true, completion: nil)
@@ -541,6 +622,10 @@ public final class PassengerInternationalVC: UIViewController {
     
     @objc fileprivate func pasportIssuesButtonTapped() {
         self.viewModel.inputs.issuedPassportButtonTapped()
+    }
+    
+    @objc fileprivate func passportIssueDateButtonTapped() {
+        self.viewModel.inputs.issueDatePassportButtonTapped()
     }
     
     @objc fileprivate func firstNameTextFieldChanged(_ textField: UITextField) {
@@ -599,6 +684,12 @@ extension PassengerInternationalVC: PassengerBirthdatePickerDelegate {
 extension PassengerInternationalVC: PassengerExpiredPassportPickerDelegate {
     func expiredDateHaveSelected(_ date: Date) {
         self.viewModel.inputs.expiredPassportChanged(date)
+    }
+}
+
+extension PassengerInternationalVC: PassengerIssueDatePassportPickerDelegate {
+    func issueDateHaveSelected(_ date: Date) {
+        self.viewModel.inputs.issueDatePassportChanged(date)
     }
 }
 

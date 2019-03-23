@@ -62,7 +62,7 @@ public final class PickFlightResultsViewModel: PickFlightResultsViewModelType, P
         self.flights = Signal.combineLatest(fetchFlightServices.values().map { $0.departResuts }.skipNil(), noticeSignal)
         self.showNextSteps = self.tappedFlightProperty.signal.skipNil().mapConst(true)
         self.showDestinationText = Signal.combineLatest(currentParam.signal.map { "\($0.fromAirport ?? "") - \($0.toAirport ?? "")" }, self.viewDidLoadProperty.signal.mapConst("")).map(first)
-        self.showDateText = self.viewDidLoadProperty.signal.mapConst("")
+        self.showDateText = currentParam.signal.map { $0.departDate }.skipNil().map(stringToResultsDate(rawDate:)).map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "d MMM yyyy") }.skipNil()
         self.returnFlights = .empty
         self.showEmptyState = self.flights.signal.map(first).filter { $0.isEmpty }.map { _ in emptyStateFlight() }
         self.hideEmptyState = Signal.merge(self.viewWillAppearProperty.signal.ignoreValues().take(first: 1), self.flights.map(first).filter { !$0.isEmpty }.ignoreValues())
@@ -141,7 +141,7 @@ public final class PickFlightResultsViewModel: PickFlightResultsViewModelType, P
 
 private func takeFlightsIntoNotice(_ envelope: SearchFlightEnvelope) -> PickNoticeFlight {
     if let firstResultFlight = envelope.departResuts?.first {
-        return PickNoticeFlight(date: firstResultFlight.inner.departureFlightDateStr, route: Localizations.OutboundNoticePickFlight(firstResultFlight.flightDetail.departureCityName))
+        return PickNoticeFlight(date: firstResultFlight.inner.departureFlightDateStr, route: Localizations.OutboundNoticePickFlight(firstResultFlight.flightDetail.arrivalCityName))
     } else {
         return PickNoticeFlight(date: nil, route: nil)
     }
@@ -167,13 +167,14 @@ private func emptyStateFlight() -> EmptyState {
     return EmptyState.flightResult
 }
 
-private func somehowToCurlForceUpdate(_ force: String) {
-    print("Somehow to Curl Force Update")
-    if let sample = URL(string: force) {
-        var request = URLRequest(url: sample)
-        request.httpMethod = "GET"
-        let session = URLSession.shared
-        session.dataTask(with: request).resume()
+public func stringToResultsDate(rawDate: String) -> Date {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+    print("RAW DATE: \(rawDate)")
+    guard let date = dateFormatter.date(from: rawDate) else {
+        fatalError("ERROR: Date conversion failed due to mismatched format.")
     }
+    
+    return date
 }
 

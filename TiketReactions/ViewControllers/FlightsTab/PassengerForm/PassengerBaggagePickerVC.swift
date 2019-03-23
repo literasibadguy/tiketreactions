@@ -72,6 +72,9 @@ internal final class PassengerBaggagePickerVC: UIViewController {
         _ = self.baggagePickerView
             |> UIView.lens.backgroundColor .~ .white
         
+        _ = self.baggageInputLabel
+            |> UILabel.lens.text .~ Localizations.BaggagePickTitle
+        
         _ = self.doneButton
             |> UIButton.lens.backgroundColor .~ .tk_official_green
         

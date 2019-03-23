@@ -25,7 +25,7 @@ public final class PickFlightResultsVC: UIViewController {
     @IBOutlet fileprivate weak var HeadLabelStackView: UIStackView!
     @IBOutlet fileprivate weak var destinationMainLabel: UILabel!
     @IBOutlet fileprivate weak var datesMainLabel: UILabel!
-    @IBOutlet fileprivate weak var filterButton: UIButton!
+//    @IBOutlet fileprivate weak var filterButton: UIButton!
     
     @IBOutlet fileprivate weak var flightsTableView: UITableView!
     @IBOutlet fileprivate weak var footerContainerView: UIView!
@@ -115,8 +115,9 @@ public final class PickFlightResultsVC: UIViewController {
         _ = self.dismissButton
             |> UIButton.lens.titleColor(forState: .normal) .~ .tk_official_green
         
-        _ = self.filterButton
-            |> UIButton.lens.titleColor(forState: .normal) .~ .tk_official_green
+//        _ = self.filterButton
+//            |> UIButton.lens.titleColor(forState: .normal) .~ .tk_official_green
+//            |> UIButton.lens.isHidden .~ true
         
         _ = self.loadingIndicatorView
             |> baseActivityIndicatorStyle
@@ -126,6 +127,7 @@ public final class PickFlightResultsVC: UIViewController {
         
         _ = self.nextStepsButton
             |> UIButton.lens.backgroundColor .~ .tk_official_green
+            |> UIButton.lens.title(forState: .normal) .~ Localizations.ChooseTitleButtonPickFlight
         
         _ = self.separatorContainerView
             |> UIView.lens.backgroundColor .~ .tk_base_grey_100
@@ -140,7 +142,6 @@ public final class PickFlightResultsVC: UIViewController {
 //        self.loadingIndicatorView.rac.animating = self.viewModel.outputs.flightsAreLoading
         self.datesMainLabel.rac.text = self.viewModel.outputs.showDateText
         self.destinationMainLabel.rac.text = self.viewModel.outputs.showDestinationText
-        
         
         self.viewModel.outputs.flights
             .observe(on: UIScheduler())

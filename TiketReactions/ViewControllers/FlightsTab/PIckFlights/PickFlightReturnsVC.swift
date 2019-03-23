@@ -18,7 +18,7 @@ public final class PickFlightReturnsVC: UIViewController {
     
     @IBOutlet fileprivate weak var navContainerView: UIView!
     @IBOutlet fileprivate weak var cancelButton: UIButton!
-    @IBOutlet fileprivate weak var filterButton: UIButton!
+//    @IBOutlet fileprivate weak var filterButton: UIButton!
     @IBOutlet fileprivate weak var headingStackView: UIStackView!
     @IBOutlet fileprivate weak var routeLabel: UILabel!
     @IBOutlet fileprivate weak var headingDateLabel: UILabel!
@@ -44,6 +44,7 @@ public final class PickFlightReturnsVC: UIViewController {
         self.returnsTableView.dataSource = dataSource
         self.returnsTableView.delegate = self
         
+        self.viewModel.inputs.viewDidLoad()
     }
     
     public override func viewWillAppear(_ animated: Bool) {
@@ -54,7 +55,6 @@ public final class PickFlightReturnsVC: UIViewController {
     
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.viewModel.inputs.viewDidAppear()
     }
     
     public override func viewDidLayoutSubviews() {
@@ -85,14 +85,16 @@ public final class PickFlightReturnsVC: UIViewController {
         _ = self.cancelButton
             |> UIButton.lens.titleColor(forState: .normal) .~ .tk_official_green
         
-        _ = self.filterButton
-            |> UIButton.lens.titleColor(forState: .normal) .~ .tk_official_green
+//         _ = self.filterButton
+//            |> UIButton.lens.titleColor(forState: .normal) .~ .tk_official_green
+//            |> UIButton.lens.isHidden .~ true
         
         _ = self.footerContainerView
             |> UIView.lens.isHidden .~ true
         
         _ = self.nextStepsButton
             |> UIButton.lens.backgroundColor .~ .tk_official_green
+            |> UIButton.lens.title(forState: .normal) .~ Localizations.ChooseTitleButtonPickFlight
         
         _ = self.navSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_base_grey_100
@@ -100,6 +102,9 @@ public final class PickFlightReturnsVC: UIViewController {
     
     public override func bindViewModel() {
         super.bindViewModel()
+        
+        self.routeLabel.rac.text = self.viewModel.outputs.showDestinationText
+        self.headingDateLabel.rac.text = self.viewModel.outputs.showDateText
         
         self.viewModel.outputs.flights
             .observe(on: UIScheduler())
@@ -118,6 +123,12 @@ public final class PickFlightReturnsVC: UIViewController {
             .observe(on: UIScheduler())
             .observeValues { [weak self] in
                 self?.dismiss(animated: true, completion: nil)
+        }
+        
+        self.viewModel.outputs.errorValidTimeFlight
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] in
+                self?.present(UIAlertController.genericError("Error", message: Localizations.ReturnTimeGreaterNotice, cancel: nil), animated: true, completion: nil)
         }
         
         self.viewModel.outputs.goToCartFlight

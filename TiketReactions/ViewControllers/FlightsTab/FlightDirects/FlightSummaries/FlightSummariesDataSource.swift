@@ -21,8 +21,8 @@ internal final class FlightSummariesDataSource: ValueCellDataSource {
     }
     
     func load(_ totalPrice: String) {
-        self.set(values: [totalPrice], cellClass: ValueTotalFlightViewCell.self, inSection: 1)
-        self.set(values: [Localizations.CheckFlightNoticeSummary], cellClass: NoticeSummaryViewCell.self, inSection: 2)
+//        self.set(values: [totalPrice], cellClass: ValueTotalFlightViewCell.self, inSection: 1)
+        self.set(values: [Localizations.CheckFlightNoticeSummary], cellClass: NoticeSummaryViewCell.self, inSection: 1)
     }
     
     override func configureCell(tableCell cell: UITableViewCell, withValue value: Any) {

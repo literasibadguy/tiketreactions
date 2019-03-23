@@ -115,11 +115,11 @@ public final class FlightSummariesViewModel: FlightSummariesViewModelType, Fligh
 
 private func giveSingleTotal(_ depart: Flight) -> String {
     let total = Double(depart.priceValue)!
-    return "\(symbolForCurrency(AppEnvironment.current.locale.currencyCode ?? "")) \(Format.currency(total, country: "Rp"))"
+    return "\(symbolForCurrency(AppEnvironment.current.apiService.currency)) \(Format.currency(total, country: AppEnvironment.current.locale.currencyCode ?? "IDR"))"
 }
 
 private func giveFlightTotal(_ depart: Flight, returned: Flight) -> String {
     let total = Double(depart.priceValue)! + Double(depart.priceValue)!
-    return "\(symbolForCurrency(AppEnvironment.current.locale.currencyCode ?? "")) \(Format.currency(total, country: "Rp"))"
+    return "\(symbolForCurrency(AppEnvironment.current.apiService.currency)) \(Format.currency(total, country: AppEnvironment.current.locale.currencyCode ?? "IDR"))"
 }
 

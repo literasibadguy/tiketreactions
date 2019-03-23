@@ -11,6 +11,7 @@ public struct Diagnostic {
         case empty = 250
     }
     
+    public let errorMessage: String?
     public let status: Status
     public let elapseTime: String?
     public let memoryUsage: String?
@@ -23,7 +24,8 @@ public struct Diagnostic {
 extension Diagnostic: Argo.Decodable {
     public static func decode(_ json: JSON) -> Decoded<Diagnostic> {
         return curry(Diagnostic.init)
-            <^> json <| "status"
+            <^> (json <|? "error_msgs" <|> .success(nil))
+            <*> json <| "status"
             <*> json <|? "elapsetime"
             <*> json <|? "memoryusage"
             <*> json <|? "unix_timestamp"

@@ -27,7 +27,7 @@ extension HotelPagination: Argo.Decodable {
     }
 }
 
-private func stringToInt(_ string: String) -> Decoded<Int> {
+public func stringToInt(_ string: String) -> Decoded<Int> {
     return Int(string).map(Decoded.success) ?? .success(0)
 }
 

@@ -75,6 +75,7 @@ public final class PickPassengersVC: UIViewController {
         
         _ = self.passengersTitleLabel
             |> UILabel.lens.textColor .~ .tk_official_green
+            |> UILabel.lens.text .~ Localizations.PassengerFlightTitleForm
         
         _ = self.saveButton
             |> UIButton.lens.backgroundColor .~ .tk_official_green

@@ -18,6 +18,7 @@
 "Return_Notice_Pick_Flight" = "Pulang ke %@";
 "Choose_Title_Button_Pick_Flight" = "Pilih penerbangan ini";
 "Order_Title_Button_Pick_Flight" = "Pesan penerbangan ini";
+"Passenger_Lists_Title" = "Daftar Penumpang";
 "Check_Flight_Notice_Summary" = "Mohon dicek kembali penerbangan ini sebelum melakukan pemesanan";
 "Passenger_Contact_Form_Title" = "Kontak Form";
 "Passenger_Adult_Status_list" = "Dewasa %d";
@@ -28,10 +29,21 @@
 "PassportNo_Title_Passenger_Form" = "No. Paspor";
 "Expired_Title_Passenger_Form" = "Jatuh Tanggal Kadaluarsa";
 "IssuedPassport_Passenger_Form" = "Kota Terbit Paspor";
+"IssueDatePassport_Passenger_Form" = "Tanggal Terbit Passport";
+"Baggage_Pick_Title" = "Bagasi";
+"DepartBaggage_Passenger_Form" = "Bagasi Penerbangan Pertama";
+"ReturnBaggage_Passenger_Form" = "Bagasi Penerbangan Pulang";
 "Form_Notice_Reminder" = "Mohon data penumpang sesuai identitas";
 "Option_Title_Passenger_Form" = "Sama dengan kontak";
 "Fill_Data_Title_Passenger_Form" = "Isi Data";
-
+"Error_Same_City_Flight" = "Kota keberangkatan dan kota tujuan harus berbeda";
+"Error_Empty_City_Flight" = "Silahkan pilih bandara keberangkatan dan tujuan";
+"From_Flight_Form" = "Dari";
+"To_Flight_Form" = "Ke";
+"Booking_Notice_Get_Order" = "Mohon tunggu, kami konfirmasi booking anda";
+"Save_Passenger_Input_Form" = "Simpan";
+"Notice_Identity_Passenger_Form" = "Mohon isi data sesuai identitas penumpang, Passport, kartu penduduk";
+"Return_Time_Greater_Notice" = "Waktu pulang harus lebih besar dari waktu pergi";
 
 "Destination_Hotel_Title_Form" = "Destinasi / Hotel";
 "Welcome_To_TripToZero" = "Selamat Datang di triptozero";

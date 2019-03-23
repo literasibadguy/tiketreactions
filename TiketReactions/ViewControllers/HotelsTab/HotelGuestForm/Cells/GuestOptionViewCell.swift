@@ -57,7 +57,7 @@ internal class GuestOptionViewCell: UITableViewCell, ValueCell {
         switch value {
         case .flightOption:
             _ = self.titleOptionLabel
-                |> UILabel.lens.text .~ "Kontak Sama dengan Penumpang Pertama"
+                |> UILabel.lens.text .~ "Same as contact detail"
         case .hotelOption:
             _ = self.titleOptionLabel
                 |> UILabel.lens.text .~ Localizations.AnotherguestOptionFormTitle

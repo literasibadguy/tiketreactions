@@ -39,7 +39,7 @@ public final class FlightOrderCellViewModel: FlightOrderCellViewModelType, Fligh
         self.orderTypeText = order.signal.map { "\($0.orderType)" }
         self.orderNameText = order.signal.map { $0.orderName  }
         self.orderNameDetailText = order.signal.map { $0.orderNameDetail }
-        self.startDateText = .empty
+        self.startDateText = order.signal.map { $0.detail.flightStatus.flightDate }
         
         self.notifyToDeleteOrder = order.takeWhen(self.deleteOrderTappedProperty.signal)
     }

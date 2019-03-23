@@ -47,11 +47,12 @@ public final class PickPassengersViewModel: PickPassengersViewModelType, PickPas
         
         let infantChanged = Signal.merge(countChanged.map { Double($0.2) }, self.infantChangedProperty.signal.skipNil()).map { Int($0) }
         
-        let passengerAdapted = Signal.combineLatest(adultChanged, childChanged, infantChanged).map { $0.0 < $0.1 && $0.0 < $0.2 }
+        let passengerAdapted = Signal.combineLatest(adultChanged, infantChanged).map { $0.0 < $0.1 }
         
-        self.adultValueText = adultChanged.map { "\(Int($0)) Dewasa" }
-        self.childValueText = childChanged.map { "\(Int($0)) Anak" }
-        self.infantValueText = infantChanged.map { "\(Int($0)) Bayi" }
+        
+        self.adultValueText = adultChanged.map { Localizations.PassengerAdultStatusList($0) }
+        self.childValueText = childChanged.map { Localizations.PassengerChildStatusList($0) }
+        self.infantValueText = infantChanged.map { Localizations.PassengerInfantStatusList($0) }
         
         self.adultValue = adultChanged.map { Double($0) }
         self.childValue = childChanged.map { Double($0) }
@@ -59,7 +60,7 @@ public final class PickPassengersViewModel: PickPassengersViewModelType, PickPas
         
         let totalValue = Signal.combineLatest(adultChanged, childChanged, infantChanged).map { $0.0 + $0.1 + $0.2 }
         
-        self.passengerTotalValueText = totalValue.map { "\($0) Penumpang" }
+        self.passengerTotalValueText = totalValue.map { "\($0) \(Localizations.PassengerFlightTitleForm)" }
         
         self.dismissPickPassengers = Signal.combineLatest(adultChanged, childChanged, infantChanged).takeWhen(self.confirmButtonProperty.signal)
         

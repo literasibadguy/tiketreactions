@@ -199,6 +199,7 @@ public struct GroupPassengersParam {
         params["passportnationalitya1"] = self.groupPassengers?["Penumpang Dewasa 1"]?.passportNationality
         params["passportnoa1"] = self.groupPassengers?["Penumpang Dewasa 1"]?.passportNo
         params["passportExpiryDatea1"] = self.groupPassengers?["Penumpang Dewasa 1"]?.passportExpiryDate
+        params["passportissueddatea1"] = self.groupPassengers?["Penumpang Dewasa 1"]?.passportIssuedDate
         params["passportissuinga1"] = self.groupPassengers?["Penumpang Dewasa 1"]?.passportIssue
         params["dcheckinbaggagea11"] = self.groupPassengers?["Penumpang Dewasa 1"]?.departAdultBaggage
         params["rcheckinbaggagea11"] = self.groupPassengers?["Penumpang Dewasa 1"]?.returnAdultBaggage
@@ -210,6 +211,7 @@ public struct GroupPassengersParam {
         params["passportnationalitya2"] = self.groupPassengers?["Penumpang Dewasa 2"]?.passportNationality
         params["passportnoa2"] = self.groupPassengers?["Penumpang Dewasa 2"]?.passportNo
         params["passportExpiryDatea2"] = self.groupPassengers?["Penumpang Dewasa 2"]?.passportExpiryDate
+        params["passportissueddatea2"] = self.groupPassengers?["Penumpang Dewasa 2"]?.passportIssuedDate
         params["passportissuinga2"] = self.groupPassengers?["Penumpang Dewasa 2"]?.passportIssue
         params["dcheckinbaggagea12"] = self.groupPassengers?["Penumpang Dewasa 2"]?.departAdultBaggage
         params["rcheckinbaggagea12"] = self.groupPassengers?["Penumpang Dewasa 2"]?.returnAdultBaggage
@@ -221,6 +223,7 @@ public struct GroupPassengersParam {
         params["passportnationalitya3"] = self.groupPassengers?["Penumpang Dewasa 3"]?.passportNationality
         params["passportnoa3"] = self.groupPassengers?["Penumpang Dewasa 3"]?.passportNo
         params["passportExpiryDatea3"] = self.groupPassengers?["Penumpang Dewasa 3"]?.passportExpiryDate
+        params["passportissueddatea3"] = self.groupPassengers?["Penumpang Dewasa 3"]?.passportIssuedDate
         params["passportissuinga3"] = self.groupPassengers?["Penumpang Dewasa 3"]?.passportIssue
         params["dcheckinbaggagea13"] = self.groupPassengers?["Penumpang Dewasa 3"]?.departAdultBaggage
         params["rcheckinbaggagea13"] = self.groupPassengers?["Penumpang Dewasa 3"]?.returnAdultBaggage
@@ -232,6 +235,7 @@ public struct GroupPassengersParam {
         params["passportnationalitya4"] = self.groupPassengers?["Penumpang Dewasa 4"]?.passportNationality
         params["passportnoa4"] = self.groupPassengers?["Penumpang Dewasa 4"]?.passportNo
         params["passportExpiryDatea4"] = self.groupPassengers?["Penumpang Dewasa 4"]?.passportExpiryDate
+        params["passportissueddatea4"] = self.groupPassengers?["Penumpang Dewasa 4"]?.passportIssuedDate
         params["passportissuinga4"] = self.groupPassengers?["Penumpang Dewasa 4"]?.passportIssue
         params["dcheckinbaggagea14"] = self.groupPassengers?["Penumpang Dewasa 4"]?.departAdultBaggage
         params["rcheckinbaggagea14"] = self.groupPassengers?["Penumpang Dewasa 4"]?.returnAdultBaggage
@@ -243,6 +247,7 @@ public struct GroupPassengersParam {
         params["passportnationalitya5"] = self.groupPassengers?["Penumpang Dewasa 5"]?.passportNationality
         params["passportnoa5"] = self.groupPassengers?["Penumpang Dewasa 5"]?.passportNo
         params["passportExpiryDatea5"] = self.groupPassengers?["Penumpang Dewasa 5"]?.passportExpiryDate
+        params["passportissueddatea5"] = self.groupPassengers?["Penumpang Dewasa 5"]?.passportIssuedDate
         params["passportissuinga5"] = self.groupPassengers?["Penumpang Dewasa 5"]?.passportIssue
         params["dcheckinbaggagea15"] = self.groupPassengers?["Penumpang Dewasa 5"]?.departAdultBaggage
         params["rcheckinbaggagea15"] = self.groupPassengers?["Penumpang Dewasa 5"]?.returnAdultBaggage
@@ -254,6 +259,7 @@ public struct GroupPassengersParam {
         params["passportnationalitya6"] = self.groupPassengers?["Penumpang Dewasa 6"]?.passportNationality
         params["passportnoa6"] = self.groupPassengers?["Penumpang Dewasa 6"]?.passportNo
         params["passportExpiryDatea6"] = self.groupPassengers?["Penumpang Dewasa 6"]?.passportExpiryDate
+        params["passportissueddatea6"] = self.groupPassengers?["Penumpang Dewasa 6"]?.passportIssuedDate
         params["passportissuinga6"] = self.groupPassengers?["Penumpang Dewasa 6"]?.passportIssue
         params["dcheckinbaggagea16"] = self.groupPassengers?["Penumpang Dewasa 6"]?.departAdultBaggage
         params["rcheckinbaggagea16"] = self.groupPassengers?["Penumpang Dewasa 6"]?.returnAdultBaggage
@@ -265,9 +271,10 @@ public struct GroupPassengersParam {
         params["passportnationalityc1"] = self.groupPassengers?["Penumpang Anak 1"]?.passportNationality
         params["passportnoc1"] = self.groupPassengers?["Penumpang Anak 1"]?.passportNo
         params["passportExpiryDatec1"] = self.groupPassengers?["Penumpang Anak 1"]?.passportExpiryDate
+        params["passportissueddatec1"] = self.groupPassengers?["Penumpang Anak 1"]?.passportIssuedDate
         params["passportissuingc1"] = self.groupPassengers?["Penumpang Anak 1"]?.passportIssue
-        params["dcheckinbaggagec11"] = self.groupPassengers?["Penumpang Anak 1"]?.departAdultBaggage
-        params["rcheckinbaggagec11"] = self.groupPassengers?["Penumpang Anak 1"]?.returnAdultBaggage
+        params["dcheckinbaggagec11"] = self.groupPassengers?["Penumpang Anak 1"]?.departChildBaggage
+        params["rcheckinbaggagec11"] = self.groupPassengers?["Penumpang Anak 1"]?.returnChildBaggage
         
         params["titlec2"] = self.groupPassengers?["Penumpang Anak 1"]?.title
         params["firstnamec2"] = self.groupPassengers?["Penumpang Anak 2"]?.firstname
@@ -276,9 +283,10 @@ public struct GroupPassengersParam {
         params["passportnationalityc2"] = self.groupPassengers?["Penumpang Anak 2"]?.passportNationality
         params["passportnoc2"] = self.groupPassengers?["Penumpang Anak 2"]?.passportNo
         params["passportExpiryDatec2"] = self.groupPassengers?["Penumpang Anak 2"]?.passportExpiryDate
+        params["passportissueddatec2"] = self.groupPassengers?["Penumpang Anak 2"]?.passportIssuedDate
         params["passportissuingc2"] = self.groupPassengers?["Penumpang Anak 2"]?.passportIssue
-        params["dcheckinbaggagec12"] = self.groupPassengers?["Penumpang Anak 2"]?.departAdultBaggage
-        params["rcheckinbaggagec12"] = self.groupPassengers?["Penumpang Anak 2"]?.returnAdultBaggage
+        params["dcheckinbaggagec12"] = self.groupPassengers?["Penumpang Anak 2"]?.departChildBaggage
+        params["rcheckinbaggagec12"] = self.groupPassengers?["Penumpang Anak 2"]?.returnChildBaggage
         
         params["titlec3"] = self.groupPassengers?["Penumpang Anak 3"]?.title
         params["firstnamec3"] = self.groupPassengers?["Penumpang Anak 3"]?.firstname
@@ -287,9 +295,10 @@ public struct GroupPassengersParam {
         params["passportnationalityc3"] = self.groupPassengers?["Penumpang Anak 3"]?.passportNationality
         params["passportnoc3"] = self.groupPassengers?["Penumpang Anak 3"]?.passportNo
         params["passportExpiryDatec3"] = self.groupPassengers?["Penumpang Anak 3"]?.passportExpiryDate
+        params["passportissueddatec3"] = self.groupPassengers?["Penumpang Anak 3"]?.passportIssuedDate
         params["passportissuingc3"] = self.groupPassengers?["Penumpang Anak 3"]?.passportIssue
-        params["dcheckinbaggagec13"] = self.groupPassengers?["Penumpang Anak 3"]?.departAdultBaggage
-        params["rcheckinbaggagec13"] = self.groupPassengers?["Penumpang Anak 3"]?.returnAdultBaggage
+        params["dcheckinbaggagec13"] = self.groupPassengers?["Penumpang Anak 3"]?.departChildBaggage
+        params["rcheckinbaggagec13"] = self.groupPassengers?["Penumpang Anak 3"]?.returnChildBaggage
         
         params["titlec4"] = self.groupPassengers?["Penumpang Anak 4"]?.title
         params["firstnamec4"] = self.groupPassengers?["Penumpang Anak 4"]?.firstname
@@ -298,9 +307,10 @@ public struct GroupPassengersParam {
         params["passportnationalityc4"] = self.groupPassengers?["Penumpang Anak 4"]?.passportNationality
         params["passportnoc4"] = self.groupPassengers?["Penumpang Anak 4"]?.passportNo
         params["passportExpiryDatec4"] = self.groupPassengers?["Penumpang Anak 4"]?.passportExpiryDate
+        params["passportissueddatec4"] = self.groupPassengers?["Penumpang Anak 4"]?.passportIssuedDate
         params["passportissuingc4"] = self.groupPassengers?["Penumpang Anak 4"]?.passportIssue
-        params["dcheckinbaggagec14"] = self.groupPassengers?["Penumpang Anak 4"]?.departAdultBaggage
-        params["rcheckinbaggagec14"] = self.groupPassengers?["Penumpang Anak 4"]?.returnAdultBaggage
+        params["dcheckinbaggagec14"] = self.groupPassengers?["Penumpang Anak 4"]?.departChildBaggage
+        params["rcheckinbaggagec14"] = self.groupPassengers?["Penumpang Anak 4"]?.returnChildBaggage
         
         params["titlec5"] = self.groupPassengers?["Penumpang Anak 5"]?.title
         params["firstnamec5"] = self.groupPassengers?["Penumpang Anak 5"]?.firstname
@@ -309,9 +319,10 @@ public struct GroupPassengersParam {
         params["passportnationalityc5"] = self.groupPassengers?["Penumpang Anak 5"]?.passportNationality
         params["passportnoc5"] = self.groupPassengers?["Penumpang Anak 5"]?.passportNo
         params["passportExpiryDatec5"] = self.groupPassengers?["Penumpang Anak 5"]?.passportExpiryDate
+        params["passportissueddatec5"] = self.groupPassengers?["Penumpang Anak 5"]?.passportIssuedDate
         params["passportissuingc5"] = self.groupPassengers?["Penumpang Anak 5"]?.passportIssue
-        params["dcheckinbaggagec15"] = self.groupPassengers?["Penumpang Anak 5"]?.departAdultBaggage
-        params["rcheckinbaggagec15"] = self.groupPassengers?["Penumpang Anak 5"]?.returnAdultBaggage
+        params["dcheckinbaggagec15"] = self.groupPassengers?["Penumpang Anak 5"]?.departChildBaggage
+        params["rcheckinbaggagec15"] = self.groupPassengers?["Penumpang Anak 5"]?.returnChildBaggage
         
         params["titlec6"] = self.groupPassengers?["Penumpang Anak 6"]?.title
         params["firstnamec6"] = self.groupPassengers?["Penumpang Anak 6"]?.firstname
@@ -320,9 +331,10 @@ public struct GroupPassengersParam {
         params["passportnationalityc6"] = self.groupPassengers?["Penumpang Anak 6"]?.passportNationality
         params["passportnoc6"] = self.groupPassengers?["Penumpang Anak 6"]?.passportNo
         params["passportExpiryDatec6"] = self.groupPassengers?["Penumpang Anak 6"]?.passportExpiryDate
+        params["passportissueddatec6"] = self.groupPassengers?["Penumpang Anak 6"]?.passportIssuedDate
         params["passportissuingc6"] = self.groupPassengers?["Penumpang Anak 6"]?.passportIssue
-        params["dcheckinbaggagec16"] = self.groupPassengers?["Penumpang Anak 6"]?.departAdultBaggage
-        params["rcheckinbaggagec16"] = self.groupPassengers?["Penumpang Anak 6"]?.returnAdultBaggage
+        params["dcheckinbaggagec16"] = self.groupPassengers?["Penumpang Anak 6"]?.departChildBaggage
+        params["rcheckinbaggagec16"] = self.groupPassengers?["Penumpang Anak 6"]?.returnChildBaggage
         
         params["titlei1"] = self.groupPassengers?["Penumpang Bayi 1"]?.title
         params["firstnamei1"] = self.groupPassengers?["Penumpang Bayi 1"]?.firstname
@@ -332,6 +344,7 @@ public struct GroupPassengersParam {
         params["passportnoi1"] = self.groupPassengers?["Penumpang Bayi 1"]?.passportNo
         params["passportExpiryDatei1"] = self.groupPassengers?["Penumpang Bayi 1"]?.passportExpiryDate
         params["passportissuingi1"] = self.groupPassengers?["Penumpang Bayi 1"]?.passportIssue
+        params["passportissueddatei1"] = self.groupPassengers?["Penumpang Bayi 1"]?.passportIssuedDate
         
         params["titlei2"] = self.groupPassengers?["Penumpang Bayi 2"]?.title
         params["firstnamei2"] = self.groupPassengers?["Penumpang Bayi 2"]?.firstname
@@ -341,6 +354,7 @@ public struct GroupPassengersParam {
         params["passportnoi2"] = self.groupPassengers?["Penumpang Bayi 2"]?.passportNo
         params["passportExpiryDatei2"] = self.groupPassengers?["Penumpang Bayi 2"]?.passportExpiryDate
         params["passportissuingi2"] = self.groupPassengers?["Penumpang Bayi 2"]?.passportIssue
+        params["passportissueddatei2"] = self.groupPassengers?["Penumpang Bayi 2"]?.passportIssuedDate
         
         params["titlei3"] = self.groupPassengers?["Penumpang Bayi 3"]?.title
         params["firstnamei3"] = self.groupPassengers?["Penumpang Bayi 3"]?.firstname
@@ -350,6 +364,7 @@ public struct GroupPassengersParam {
         params["passportnoi3"] = self.groupPassengers?["Penumpang Bayi 3"]?.passportNo
         params["passportExpiryDatei3"] = self.groupPassengers?["Penumpang Bayi 3"]?.passportExpiryDate
         params["passportissuingi3"] = self.groupPassengers?["Penumpang Bayi 3"]?.passportIssue
+        params["passportissueddatei3"] = self.groupPassengers?["Penumpang Bayi 3"]?.passportIssuedDate
         
         params["titlei4"] = self.groupPassengers?["Penumpang Bayi 4"]?.title
         params["firstnamei4"] = self.groupPassengers?["Penumpang Bayi 4"]?.firstname
@@ -359,6 +374,7 @@ public struct GroupPassengersParam {
         params["passportnoi4"] = self.groupPassengers?["Penumpang Bayi 4"]?.passportNo
         params["passportExpiryDatei4"] = self.groupPassengers?["Penumpang Bayi 4"]?.passportExpiryDate
         params["passportissuingi4"] = self.groupPassengers?["Penumpang Bayi 4"]?.passportIssue
+        params["passportissueddatei4"] = self.groupPassengers?["Penumpang Bayi 4"]?.passportIssuedDate
         
         params["titlei5"] = self.groupPassengers?["Penumpang Bayi 5"]?.title
         params["firstnamei5"] = self.groupPassengers?["Penumpang Bayi 5"]?.firstname
@@ -368,6 +384,7 @@ public struct GroupPassengersParam {
         params["passportnoi5"] = self.groupPassengers?["Penumpang Bayi 5"]?.passportNo
         params["passportExpiryDatei5"] = self.groupPassengers?["Penumpang Bayi 5"]?.passportExpiryDate
         params["passportissuingi5"] = self.groupPassengers?["Penumpang Bayi 5"]?.passportIssue
+        params["passportissueddatei5"] = self.groupPassengers?["Penumpang Bayi 5"]?.passportIssuedDate
         
         params["titlei6"] = self.groupPassengers?["Penumpang Bayi 6"]?.title
         params["firstnamei6"] = self.groupPassengers?["Penumpang Bayi 6"]?.firstname
@@ -377,6 +394,7 @@ public struct GroupPassengersParam {
         params["passportnoi6"] = self.groupPassengers?["Penumpang Bayi 6"]?.passportNo
         params["passportExpiryDatei6"] = self.groupPassengers?["Penumpang Bayi 6"]?.passportExpiryDate
         params["passportissuingi6"] = self.groupPassengers?["Penumpang Bayi 6"]?.passportIssue
+        params["passportissueddatei6"] = self.groupPassengers?["Penumpang Bayi 6"]?.passportIssuedDate
         
         /*
         params["titlea2"] = passA2.title

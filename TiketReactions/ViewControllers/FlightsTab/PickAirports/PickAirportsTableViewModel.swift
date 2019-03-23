@@ -144,11 +144,11 @@ public final class PickAirportsTableViewModel: PickAirportsTableViewModelType, P
 private func statusLocation(status: String) -> String {
     switch status {
     case "Departure":
-        return "origin"
+        return Localizations.OriginFlightTitleForm
     case "Arrival":
-        return "destination"
+        return Localizations.DestinationFlightTitleForm
     default:
-        return "Tidak ada tujuan"
+        return ""
     }
 }
 

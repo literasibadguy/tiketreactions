@@ -43,7 +43,7 @@ public struct FlightOrderDataDetail {
         public let departureTime: String
         
         public let arrivalTime: String
-        public let baggageFee: Int?
+        public let baggageFee: Int
         
         public let departureAirportName: String
         public let departureCityName: String
@@ -153,7 +153,7 @@ extension FlightOrderDataDetail.FlightStatus: Argo.Decodable {
         
         return tmp2
             <*> json <| "arrival_time"
-            <*> json <|? "baggage_fee"
+            <*> ((json <| "baggage_fee" >>- stringToInt) <|> (json <| "baggage_fee"))
             <*> json <| "departure_airport_name"
             <*> json <| "departure_city_name"
             <*> json <| "arrival_airport_name"
