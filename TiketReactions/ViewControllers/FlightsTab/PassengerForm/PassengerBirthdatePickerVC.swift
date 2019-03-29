@@ -105,6 +105,8 @@ internal final class PassengerBirthdatePickerVC: UIViewController {
     override func bindViewModel() {
         super.bindViewModel()
         
+//        self.birthdateInputLabel.rac.text = self.viewModel.outputs.statusText
+        
         self.viewModel.outputs.changeDateFormat
             .observe(on: UIScheduler())
             .observeValues { [weak self] format in
@@ -129,19 +131,29 @@ internal final class PassengerBirthdatePickerVC: UIViewController {
     private func changedMinimumMaximumDate(state: PassengerFormState) {
         switch state {
         case .childPassenger:
+            _ = self.birthdateInputLabel
+                |> UILabel.lens.text .~ Localizations.BirthdateTitlePassengerForm
             print("Child Passenger Birthdate Pick")
             self.birthdatePicker.minimumDate = Calendar.current.date(byAdding: .year, value: -11, to: Date())
             self.birthdatePicker.maximumDate = Calendar.current.date(byAdding: .year, value: -2, to: Date())
         case .infantPassenger:
+            _ = self.birthdateInputLabel
+                |> UILabel.lens.text .~ Localizations.BirthdateTitlePassengerForm
             print("Infant Passenger Birthdate Pick")
             self.birthdatePicker.minimumDate = Calendar.current.date(byAdding: .year, value: -1, to: Date())
             self.birthdatePicker.maximumDate = Calendar.current.date(byAdding: .year, value: 0, to: Date())
         case .adultPassenger:
-            self.birthdatePicker.maximumDate = Calendar.current.date(byAdding: .year, value: -18, to: Date())
+            _ = self.birthdateInputLabel
+                |> UILabel.lens.text .~ Localizations.BirthdateTitlePassengerForm
+            self.birthdatePicker.maximumDate = Calendar.current.date(byAdding: .year, value: -12, to: Date())
         case .expiredPassport:
-            self.birthdatePicker.minimumDate = Calendar.current.date(byAdding: .month, value: +6, to: Date())
+            _ = self.birthdateInputLabel
+                |> UILabel.lens.text .~ Localizations.ExpiredTitlePassengerForm
+            self.birthdatePicker.minimumDate = Calendar.current.date(byAdding: .month, value: +7, to: Date())
              self.birthdatePicker.maximumDate = Calendar.current.date(byAdding: .year, value: +10, to: Date())
         case .issueDatePassport:
+            _ = self.birthdateInputLabel
+                |> UILabel.lens.text .~ Localizations.IssuedatepassportPassengerForm
             self.birthdatePicker.minimumDate = Calendar.current.date(byAdding: .year, value: -10, to: Date())
             self.birthdatePicker.maximumDate = Calendar.current.date(byAdding: .year, value: 0, to: Date())
         default: return

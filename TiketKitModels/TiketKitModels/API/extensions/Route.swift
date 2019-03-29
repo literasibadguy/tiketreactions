@@ -36,8 +36,9 @@ internal enum Route {
     case checkoutGuestSample(String)
     case payCheckout(String)
     case availablePayment
-    case bankTransfer(String)
+    case bankTransfer
     case instantBankTransfer(String)
+    case virtualAccountTransfer
     case klikBCA(String)
     case creditCard(String)
     case bcaKlikpay(String)
@@ -114,10 +115,12 @@ internal enum Route {
             return (.GET, url, [:])
         case .availablePayment:
             return (.GET, "/checkout/checkout_payment?", [:])
-        case let .bankTransfer(currency):
-            return (.GET, "/checkout/checkout_payment/2?btn_booking=1", [:])
+        case .bankTransfer:
+            return (.GET, "/checkout/checkout_payment/12?btn_booking=1", [:])
         case let .instantBankTransfer(currency):
             return (.GET, "/checkout/checkout_payment/35?btn_booking=1", ["currency": currency])
+        case .virtualAccountTransfer:
+            return (.GET, "/checkout/checkout_payment/99?btn_booking=1", [:])
         case let .klikBCA(userBCA):
             return (.GET, "/checkout/checkout_payment/3?btn_booking=1", ["user_bca": userBCA])
         case let .creditCard(checkouttoken):
@@ -135,7 +138,7 @@ internal enum Route {
         /*
          
          /*
-         // Bank Transfer https://api-sandbox.tiket.com/checkout/checkout_payment/2?token=2ee91e32f9113e863da4c57e235098d1&currency=IDR&btn_booking=1&output=json
+         // Bank Transfer https://api-sandbox.tiket.com/checkout/checkout_payment/12?token=2ee91e32f9113e863da4c57e235098d1&currency=IDR&btn_booking=1&output=json
          
          // Bank Transfer (Instant Confirmation) http://api-sandbox.tiket.com/checkout/checkout_payment/35?token=4c71d60d367bbffa1b293cb663afc4e9&btn_booking=1&currency=IDR&output=json
          

@@ -124,8 +124,6 @@ internal final class PassengerTitlePickerVC: UIViewController {
                 _self.delegate?.passengerTitlePickerVCCancelled(_self)
                 _self.delegate?.passengerTitlePickerVC(_self, choseTitle: title)
         }
-        
-
     }
     
     @objc fileprivate func doneButtonTapped() {

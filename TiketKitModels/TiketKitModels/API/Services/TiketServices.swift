@@ -149,12 +149,17 @@ public struct TiketServices: TiketServiceType {
         return request(.checkHistoryOrder(orderId, email))
     }
     
-    public func bankTransferRequest(currency: String) -> SignalProducer<BankTransferPaymentEnvelope, ErrorEnvelope> {
-        return request(.bankTransfer(currency))
+    public func bankTransferRequest() -> SignalProducer<BankTransferPaymentEnvelope, ErrorEnvelope> {
+//        return request(.bankTransfer(currency))
+        return request(.bankTransfer)
     }
     
     public func atmTransferRequest(currency: String) -> SignalProducer<InstantTransferPaymentEnvelope, ErrorEnvelope> {
         return request(.instantBankTransfer(currency))
+    }
+    
+    public func virtualAccountTransfer() -> SignalProducer<VirtualAccountTransfersEnvelope, ErrorEnvelope> {
+        return request(.virtualAccountTransfer)
     }
     
     public func klikBCARequest(_ user: String) -> SignalProducer<KlikBCAPaymentEnvelope, ErrorEnvelope> {
@@ -189,7 +194,7 @@ public struct TiketServices: TiketServiceType {
     private func getRequestPayment(_ route: Route) -> SignalProducer<URLRequest, NoError> {
         let properties = route.requestProperties
         
-        let sandboxRelative = URL(string: "https://tiket.com/")!
+        let sandboxRelative = URL(string: "https://sandbox.tiket.com/")!
         
         guard let url = URL(string: properties.path, relativeTo: sandboxRelative as URL) else {
             fatalError(

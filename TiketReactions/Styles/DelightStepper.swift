@@ -25,7 +25,7 @@ import UIKit
                 label.text = items[Int(value)]
             }
             else if showIntegerIfDoubleIsInteger && isInteger {
-                label.text = String(stringInterpolationSegment: Int(value))
+                label.text = String(Int(value))
             } else {
                 label.text = String(stringInterpolationSegment: value)
             }
@@ -205,7 +205,7 @@ import UIKit
         let label = UILabel()
         label.textAlignment = .center
         if self.showIntegerIfDoubleIsInteger && floor(self.value) == self.value {
-            label.text = String(stringInterpolationSegment: Int(self.value))
+            label.text = String(Int(self.value))
         } else {
             label.text = String(stringInterpolationSegment: self.value)
         }

@@ -146,7 +146,7 @@ public final class HotelFormVC: UIViewController {
         self.viewModel.outputs.showGuestRoomPick
             .observe(on: QueueScheduler.main)
             .observeValues { [weak self] guest, room in
-                print("WHAT GUEST ROOM: \(guest, room)")
+//                print("WHAT GUEST ROOM: \(guest, room)")
                 self?.goToPickGuestHotel(guest: guest, room: room)
         }
         

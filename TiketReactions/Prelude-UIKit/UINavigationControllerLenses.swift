@@ -19,28 +19,28 @@ public protocol UINavigationControllerProtocol: UIViewControllerProtocol {
 extension UINavigationController: UINavigationControllerProtocol {}
 
 public extension LensHolder where Object: UINavigationControllerProtocol {
-    public var navigationBar: Lens<Object, UINavigationBar> {
+    var navigationBar: Lens<Object, UINavigationBar> {
         return Lens(
             view: { view in view.navigationBar },
             set: { $1 }
         )
     }
     
-    public var navigationBarHidden: Lens<Object, Bool> {
+    var navigationBarHidden: Lens<Object, Bool> {
         return Lens(
             view: { view in view.isNavigationBarHidden },
             set: { view, set in set.isNavigationBarHidden = view; return set }
         )
     }
     
-    public func setNavigationBarHidden(animated: Bool) -> Lens<Object, Bool> {
+    func setNavigationBarHidden(animated: Bool) -> Lens<Object, Bool> {
         return Lens(
             view: { view in view.isNavigationBarHidden },
             set: { view, set in set.setNavigationBarHidden(view, animated: animated); return set }
         )
     }
     
-    public var viewControllers: Lens<Object, [UIViewController]> {
+    var viewControllers: Lens<Object, [UIViewController]> {
         return Lens(
             view: { view in view.viewControllers },
             set: { view, set in set.viewControllers = view; return set }

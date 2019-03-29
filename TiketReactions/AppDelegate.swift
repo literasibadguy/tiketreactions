@@ -32,6 +32,7 @@ internal final class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window?.tintColor = .tk_official_green
         self.setDefaultRealmForTiket()
+
         
         AppEnvironment.replaceCurrentEnvironment(
             AppEnvironment.fromStorage(ubiquitousStore: NSUbiquitousKeyValueStore.default, userDefaults: UserDefaults.standard)

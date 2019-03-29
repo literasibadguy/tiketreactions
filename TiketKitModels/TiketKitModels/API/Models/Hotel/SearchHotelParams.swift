@@ -71,10 +71,6 @@ private func boolToString(_ bool: Bool?) -> Decoded<SearchHotelParams.Sort?> {
     return .success(sort)
 }
 
-private func stringToInt(_ string: String?) -> Decoded<Int?> {
-    guard let string = string else { return .success(nil) }
-    return Int(string).map(Decoded.success) ?? .failure(.custom("Could not parse string into int."))
-}
 
 extension SearchHotelParams: Equatable {}
 public func == (a: SearchHotelParams, b: SearchHotelParams) -> Bool {

@@ -1,6 +1,5 @@
 public enum Secrets {
     public static let fieldReportEmail = "firasraf@kicikku.com"
-    
     public static let googleMapKeys = "AIzaSyDY06nW1UVnDikX07QDJfJYkPIqVVofxtM"
     
     public enum Api {

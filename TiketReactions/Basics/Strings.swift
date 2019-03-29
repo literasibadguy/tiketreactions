@@ -411,5 +411,18 @@ public struct Localizations {
 
     /// Base translation: From
     public static var FromFlightForm : String = NSLocalizedString("From_Flight_Form", comment: "")
-
+    
+    public static var MstrFormData: String = NSLocalizedString("Mstr_Form_Data", comment: "")
+    public static var MissFormData: String = NSLocalizedString("Miss_Form_Data", comment: "")
+    public static var TitleChildFormData: String = NSLocalizedString("TitleChild_Form_Data", comment: "")
+    
+    public static func OrderExpireInfo(_ value1 : String) -> String {
+        return String(format: NSLocalizedString("OrderExpire_Info", comment: ""), value1)
+    }
+    
+    public static func UniqueCodeInfo(_ value1 : Int) -> String {
+        return String(format: NSLocalizedString("UniqueCode_Info", comment: ""), value1)
+    }
+    
+    public static var NotAvailableInfo: String = NSLocalizedString("NotAvailable_Info", comment: "")
 }

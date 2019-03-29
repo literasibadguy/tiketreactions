@@ -31,6 +31,7 @@ public protocol PaymentsListViewModelInputs {
 public protocol PaymentsListViewModelOutputs {
     var orderIdLabelText: Signal<String, NoError> { get }
     var totalPriceLabelText: Signal<String, NoError> { get }
+    var availableBankTransfer: Signal<Bool, NoError> { get }
     var goBankTransfer: Signal<(), NoError> { get }
     var goCardCredit: Signal<URLRequest, NoError> { get }
     var goATMTransfer: Signal<(), NoError> { get }
@@ -56,9 +57,14 @@ public final class PaymentsListViewModel: PaymentsListViewModelType, PaymentsLis
         self.orderIdLabelText = Signal.merge(bookedOrder.map { "Order ID: \($0.orderId)" }, flightBookedOrder.map { "Order ID: \($0.orderId)" })
         self.totalPriceLabelText = Signal.merge(bookedOrder.map { Localizations.PaytotalTitle("\(Format.symbolForCurrency(AppEnvironment.current.apiService.currency)) \(Format.currency($0.totalWithoutTax, country: "Rp"))") }, flightBookedOrder.map { "Total Bayar: \(Format.symbolForCurrency(AppEnvironment.current.apiService.currency)) \(Format.currency($0.totalWithoutTax, country: AppEnvironment.current.apiService.currency))" })
         
+        let bankTransferEvent = self.viewDidLoadProperty.signal.switchMap { _ in
+            AppEnvironment.current.apiService.bankTransferRequest().materialize()
+        }
+        
         let sandboxCreditEvent = self.viewDidLoadProperty.signal.switchMap { _ in
             AppEnvironment.current.apiService.sandboxCreditCard(AppEnvironment.current.apiService.tiketToken?.token ?? "").materialize()
         }
+        
         /*
         let klikBCAEvent = self.viewDidLoadProperty.signal.switchMap { _ in
             AppEnvironment.current.apiService.klikBCARequest("firasraf").materialize()
@@ -76,6 +82,8 @@ public final class PaymentsListViewModel: PaymentsListViewModelType, PaymentsLis
         let epayBRIEvent = self.viewDidLoadProperty.signal.switchMap { _ in
             AppEnvironment.current.apiService.epayBRIRequest(AppEnvironment.current.apiService.tiketToken?.token ?? "").materialize()
         }
+        
+        self.availableBankTransfer = self.viewDidLoadProperty.signal.mapConst(compareAvailablePayment())
         
         self.goBankTransfer = self.bankTransferTappedProperty.signal
         self.goCardCredit = sandboxCreditEvent.values().takeWhen(self.cardCreditTappedProperty.signal)
@@ -151,6 +159,7 @@ public final class PaymentsListViewModel: PaymentsListViewModelType, PaymentsLis
     
     public let orderIdLabelText: Signal<String, NoError>
     public let totalPriceLabelText: Signal<String, NoError>
+    public let availableBankTransfer: Signal<Bool, NoError>
     public let goBankTransfer: Signal<(), NoError>
     public let goCardCredit: Signal<URLRequest, NoError>
     public let goATMTransfer: Signal<(), NoError>
@@ -170,5 +179,24 @@ fileprivate func storeOrderIssue(withOrder id: String) {
     } else {
             AppEnvironment.current.userDefaults.orderDetailIds.append(id)
     }
+}
+
+private func compareAvailablePayment() -> Bool {
+    let calendar = Calendar.current
+    let now = Date()
+    let eight_today = calendar.date(
+        bySettingHour: 20,
+        minute: 0,
+        second: 0,
+        of: now)!
+    
+    let seven_thirty_today = calendar.date(
+        bySettingHour: 7,
+        minute: 0,
+        second: 0,
+        of: now)!
+    
+    return now >= seven_thirty_today &&
+        now <= eight_today
 }
 

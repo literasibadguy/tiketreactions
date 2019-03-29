@@ -70,6 +70,7 @@ extension AvailablePaymentEnvelope.AvailablePayment: Argo.Decodable {
 public struct InstantTransferPaymentEnvelope {
     public let diagnostic: Diagnostic
     public let orderId: String
+    public let orderResult: TransferResult
     public let steps: [TransferATMSteps]
     public let message: String
     public let grandTotal: Double
@@ -80,6 +81,7 @@ extension InstantTransferPaymentEnvelope: Argo.Decodable {
         return curry(InstantTransferPaymentEnvelope.init)
             <^> json <| "diagnostic"
             <*> json <| "orderId"
+            <*> json <| "result"
             <*> json <|| "steps"
             <*> json <| "message"
             <*> json <| "grand_total"
@@ -218,19 +220,28 @@ extension InstantHotelOrderResult: Argo.Decodable {
 public struct BankTransferPaymentEnvelope {
     public let diagnostic: Diagnostic
     public let orderId: String
-    public let banks: [Bank]
+    public let orderResult: TransferResult
+    public let banks: Bank
     public let messages: String
-    public let confirmPayment: String
     public let grandTotal: Double
     
+    /*
+    public struct TransferResult {
+        public let orderId: String
+        public let orderHash: String
+        public let subTotal: Double
+        public let uniqueCode: Int
+        public let grandTotal: Double
+        public let confirmPayment: String
+    }
+    */
+    
     public struct Bank {
-        public let photo1: String
-        public let photo2: String
-        public let nameRekening: String
-        public let nameBank: String
-        public let cabang: String
-        public let noRekening: String
-        public let destination: String
+        public let bankImage: String
+        public let bankOwner: String
+        public let bankName: String
+        public let bankBranch: String
+        public let bankAccount: String
     }
 }
 
@@ -239,13 +250,48 @@ extension BankTransferPaymentEnvelope: Argo.Decodable {
         return curry(BankTransferPaymentEnvelope.init)
             <^> json <| "diagnostic"
             <*> json <| "orderId"
-            <*> json <|| "banks"
+            <*> json <| "result"
+            <*> json <| "banks"
             <*> json <| "message"
-            <*> json <| "confirm_payment"
             <*> json <| "grand_total"
     }
 }
 
+extension BankTransferPaymentEnvelope.Bank: Argo.Decodable {
+    public static func decode(_ json: JSON) -> Decoded<BankTransferPaymentEnvelope.Bank> {
+        return curry(BankTransferPaymentEnvelope.Bank.init)
+            <^> json <| "bank_image"
+            <*> json <| "bank_owner"
+            <*> json <| "bank_name"
+            <*> json <| "bank_branch"
+            <*> json <| "bank_account"
+    }
+}
+
+public struct TransferResult {
+    public let orderId: String
+    public let orderHash: String
+    public let subTotal: Double
+    public let uniqueCode: Int
+    public let grandTotal: Double
+    public let expiredTime: String
+    public let confirmPayment: String?
+}
+
+extension TransferResult: Argo.Decodable {
+    public static func decode(_ json: JSON) -> Decoded<TransferResult> {
+        return curry(TransferResult.init)
+            <^> json <| "order_id"
+            <*> json <| "order_hash"
+            <*> json <| "sub_total"
+            <*> json <| "unique_code"
+            <*> json <| "grand_total"
+            <*> json <| "order_expire_datetime"
+            <*> json <|? "already_transfer_url"
+    }
+}
+
+/*
 extension BankTransferPaymentEnvelope.Bank: Argo.Decodable {
     public static func decode(_ json: JSON) -> Decoded<BankTransferPaymentEnvelope.Bank> {
         return curry(BankTransferPaymentEnvelope.Bank.init)
@@ -258,6 +304,7 @@ extension BankTransferPaymentEnvelope.Bank: Argo.Decodable {
             <*> json <| "Destination"
     }
 }
+*/
 
 public struct KlikBCAPaymentEnvelope {
     public let diagnostic: Diagnostic

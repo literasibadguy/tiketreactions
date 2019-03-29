@@ -91,12 +91,14 @@ public final class NationalityPickVC: UIViewController {
                 _self.delegate?.changedCountry(_self, country: selected)
                 _self.issueCountryDelegate?.changedIssuing(_self, country: selected)
                 _self.dismiss(animated: true, completion: nil)
+                self?.searchBar.resignFirstResponder()
         }
         
         self.viewModel.outputs.dismissList
             .observe(on: QueueScheduler.main)
             .observeValues { [weak self] in
                 self?.dismiss(animated: true, completion: nil)
+                self?.searchBar.resignFirstResponder()
         }
     }
     

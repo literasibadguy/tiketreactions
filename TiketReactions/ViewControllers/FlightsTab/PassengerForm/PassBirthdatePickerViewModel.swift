@@ -21,6 +21,7 @@ public protocol PassBirthdatePickerViewModelInputs {
 public protocol PassBirthdatePickerViewModelOutputs {
     var changeDateFormat: Signal<PassengerFormState, NoError> { get }
     var submitDate: Signal<(), NoError> { get }
+    var statusText: Signal<String, NoError> { get }
 }
 
 public protocol PassBirthdatePickerViewModelType {
@@ -38,6 +39,8 @@ public final class PassBirthdatePickerViewModel: PassBirthdatePickerViewModelTyp
         self.changeDateFormat = Signal.merge(current.signal, expiredConfig.signal)
         
         self.submitDate = self.doneTappedProperty.signal
+        
+        self.statusText = Signal.merge(current.signal.filter { $0 == .expiredPassport }.map { _ in Localizations.ExpiredTitlePassengerForm }, current.signal.filter { $0 == .issueDatePassport }.map { _ in Localizations.IssuedatepassportPassengerForm }, current.signal.map { _ in Localizations.BirthdateTitlePassengerForm })
     }
     
     fileprivate let configStateProperty = MutableProperty<PassengerFormState?>(nil)
@@ -62,6 +65,7 @@ public final class PassBirthdatePickerViewModel: PassBirthdatePickerViewModelTyp
     
     public let changeDateFormat: Signal<PassengerFormState, NoError>
     public let submitDate: Signal<(), NoError>
+    public let statusText: Signal<String, NoError>
     
     public var inputs: PassBirthdatePickerViewModelInputs { return self }
     public var outputs: PassBirthdatePickerViewModelOutputs { return self }

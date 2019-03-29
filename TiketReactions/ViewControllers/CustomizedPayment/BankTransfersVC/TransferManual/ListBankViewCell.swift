@@ -56,14 +56,14 @@ public final class ListBankViewCell: UITableViewCell, ValueCell {
         
         print("Configured With: \(value)")
         
-        _ = self.cabangBankLabel
-            |> UILabel.lens.text .~ "an \(value.nameRekening)"
-        
         _ = self.nameBankLabel
-            |> UILabel.lens.text .~ "\(value.nameBank) Cab: \(value.cabang)"
+            |> UILabel.lens.text .~ "\(value.bankName) - \(value.bankBranch)"
+        
+        _ = self.cabangBankLabel
+            |> UILabel.lens.text .~ "an \(value.bankOwner)"
         
         _ = self.noRekLabel
-            |> UILabel.lens.text .~ "No. Rek: \(value.noRekening)"
+            |> UILabel.lens.text .~ "No. Rekening: \(value.bankAccount)"
         
     }
     

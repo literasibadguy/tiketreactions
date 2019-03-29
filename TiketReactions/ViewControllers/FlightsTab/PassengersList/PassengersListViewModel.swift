@@ -108,9 +108,9 @@ public final class PassengersListViewModel: PassengersListViewModelType, Passeng
             return SignalProducer(value: new)
             }.materialize()
         
-        let getValidFirst = Signal.combineLatest(self.sameValidFirstPassengerProperty.signal.skipNil().filter(isTrue).skipRepeats().ignoreValues(), self.contactFormValidProperty.signal.filter(isTrue).skipRepeats(), detectedFormat.signal.map { $0.first! }, current.signal.skipNil().map { $0.adultPassengerList }, firstTempoPassenger.values(), scootFlight.signal).map { _, _, detected, lists, tempo, scoot in
+        let getValidFirst = Signal.combineLatest( self.contactFormValidProperty.signal.filter(isTrue).skipRepeats(), detectedFormat.signal.map { $0.first! }, current.signal.skipNil().map { $0.adultPassengerList }, firstTempoPassenger.values(), scootFlight.signal).map {  _, detected, lists, tempo, scoot in
                 return tabData(selected: detected, required: lists, extended: tempo, scootFlight: scoot)
-            }
+            }.sample(on: self.sameValidFirstPassengerProperty.signal.skipNil().filter(isTrue).ignoreValues())
         
         let initialEmptyPassenger = Signal.combineLatest(self.selectedPassengerProperty.signal.skipNil().map(first), current.signal.skipNil().map { $0.adultPassengerList }, scootFlight.signal).map { detected, lists, scoot in
             return tabData(selected: detected, required: lists, scootFlight: scoot)
@@ -127,6 +127,7 @@ public final class PassengersListViewModel: PassengersListViewModelType, Passeng
             return SignalProducer(value: newExtend)
         }
         */
+
         
         self.goToAdultPassengers = Signal.merge(initialEmptyPassenger.signal, firedFilledPassenger.signal.skipRepeats { lhs, rhs in lhs.extended?.firstname == rhs.extended?.firstname })
         
@@ -203,7 +204,7 @@ public final class PassengersListViewModel: PassengersListViewModelType, Passeng
             AppEnvironment.current.apiService.fetchFlightOrder().on(started: { getOrderLoading.value = true }, terminated: { getOrderLoading.value = false }).flatMapError { _ in return SignalProducer(error: CheckoutRetryError()) }
                 .flatMap { envelope -> SignalProducer<FlightOrderEnvelope, CheckoutRetryError> in
                     switch envelope.diagnostic.status {
-                    case .failed, .empty, .error, .timeout:
+                    case .failed, .empty, .error, .timeout, .expired:
                         return SignalProducer(error: CheckoutRetryError())
                     case .successful:
                         return SignalProducer(value: envelope)
@@ -238,10 +239,11 @@ public final class PassengersListViewModel: PassengersListViewModelType, Passeng
             print("DECIDED ORDER: \(String(describing: ordering))")
         }
         
-        self.errorAlert = Signal.merge(checkoutPageRequestEnvelope.values().filter { $0.diagnostic.status == .error }.ignoreValues(), errorCheckout.signal.ignoreValues(), lastOrderEvent.values().signal.filter { $0.diagnostic.status == .error }.ignoreValues()).map { _ in Localizations.ConfirmerrorTitle }
+        self.errorAlert = Signal.merge(checkoutPageRequestEnvelope.values().filter { $0.diagnostic.status == .error }.map { $0.diagnostic.errorMessage }.skipNil(), errorCheckout.signal.map { $0.diagnostic.errorMessage }.skipNil(), lastOrderEvent.values().signal.filter { $0.diagnostic.status == .error }.map { $0.diagnostic.errorMessage }.skipNil())
         
-        self.orderFlightIsLoading = Signal.merge(self.viewDidLoadProperty.signal.mapConst(false), self.remindTappedCheckoutProperty.signal.skipNil().filter(isTrue), checkoutLoginEvent.values().map { $0.diagnostic.status != .successful })
-        self.hideLoadingOverlay = Signal.merge(self.viewDidLoadProperty.signal.mapConst(true), self.remindTappedCheckoutProperty.signal.skipNil().filter(isTrue).map { _ in return false }, checkoutLoginEvent.values().map { $0.diagnostic.status == .successful })
+        self.orderFlightIsLoading = Signal.merge(self.viewDidLoadProperty.signal.mapConst(false), self.remindTappedCheckoutProperty.signal.skipNil().filter(isTrue), checkoutLoginEvent.values().map { $0.diagnostic.status != .successful }, self.errorAlert.mapConst(false))
+        
+        self.hideLoadingOverlay = Signal.merge(self.viewDidLoadProperty.signal.mapConst(true), self.remindTappedCheckoutProperty.signal.skipNil().filter(isTrue).map { _ in return false }, checkoutLoginEvent.values().map { $0.diagnostic.status == .successful }, self.errorAlert.mapConst(true))
         
         self.goToPaymentMethod = decidedOrder.signal.takeWhen(checkoutLoginEvent.values().filter { $0.diagnostic.status == .successful }.ignoreValues())
     }

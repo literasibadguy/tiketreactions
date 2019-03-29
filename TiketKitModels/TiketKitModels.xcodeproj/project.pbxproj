@@ -75,6 +75,7 @@
 		CD97290620A14ED400321199 /* HotelResultSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD97290520A14ED400321199 /* HotelResultSamples.swift */; };
 		CD97290820A14EEF00321199 /* OrderDataSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD97290720A14EEF00321199 /* OrderDataSamples.swift */; };
 		CDA6E47F20DBE4C00037CE54 /* BankTransfersEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA6E47E20DBE4C00037CE54 /* BankTransfersEnvelope.swift */; };
+		CDAA5368224BBB040081BA64 /* VirtualAccountTransfersEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAA5367224BBB040081BA64 /* VirtualAccountTransfersEnvelope.swift */; };
 		CDAC38D52097D21B00B494D7 /* HotelBookingSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAC38D42097D21B00B494D7 /* HotelBookingSummary.swift */; };
 		CDAC38D72097D27400B494D7 /* HotelBookingSummaryLenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAC38D62097D27400B494D7 /* HotelBookingSummaryLenses.swift */; };
 		CDAFFDF320B2155500CA3136 /* LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAFFDF220B2155500CA3136 /* LocalizedString.swift */; };
@@ -232,6 +233,7 @@
 		CD97290520A14ED400321199 /* HotelResultSamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelResultSamples.swift; sourceTree = "<group>"; };
 		CD97290720A14EEF00321199 /* OrderDataSamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDataSamples.swift; sourceTree = "<group>"; };
 		CDA6E47E20DBE4C00037CE54 /* BankTransfersEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankTransfersEnvelope.swift; sourceTree = "<group>"; };
+		CDAA5367224BBB040081BA64 /* VirtualAccountTransfersEnvelope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualAccountTransfersEnvelope.swift; sourceTree = "<group>"; };
 		CDAC38D42097D21B00B494D7 /* HotelBookingSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelBookingSummary.swift; sourceTree = "<group>"; };
 		CDAC38D62097D27400B494D7 /* HotelBookingSummaryLenses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelBookingSummaryLenses.swift; sourceTree = "<group>"; };
 		CDAFFDF220B2155500CA3136 /* LocalizedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedString.swift; sourceTree = "<group>"; };
@@ -557,6 +559,7 @@
 			isa = PBXGroup;
 			children = (
 				CDA6E47E20DBE4C00037CE54 /* BankTransfersEnvelope.swift */,
+				CDAA5367224BBB040081BA64 /* VirtualAccountTransfersEnvelope.swift */,
 			);
 			path = Payments;
 			sourceTree = "<group>";
@@ -981,6 +984,7 @@
 				CDB9676E205E8A3D00DEE52F /* FlightSamples.swift in Sources */,
 				CDB96747205E8A3D00DEE52F /* TiketToken.swift in Sources */,
 				CD0D69A7205E622800548BC6 /* LazyMutableProperty.swift in Sources */,
+				CDAA5368224BBB040081BA64 /* VirtualAccountTransfersEnvelope.swift in Sources */,
 				CDB96771205E8A3D00DEE52F /* EncodableType.swift in Sources */,
 				CDB96764205E8A3D00DEE52F /* GetTokenEnvelope.swift in Sources */,
 				CDB96757205E8A3D00DEE52F /* FlightInfo.swift in Sources */,

@@ -27,43 +27,43 @@ public struct SelectableRow {
 }
 
 public extension Lens where Whole == SelectableRow, Part == SearchHotelParams {
-    public var mainCountry: Lens<SelectableRow, String?> {
+    var mainCountry: Lens<SelectableRow, String?> {
         return SelectableRow.lens.params..SearchHotelParams.lens.query
     }
-    public var startDate: Lens<SelectableRow, String?> {
+    var startDate: Lens<SelectableRow, String?> {
         return SelectableRow.lens.params..SearchHotelParams.lens.startDate
     }
-    public var endDate: Lens<SelectableRow, String?> {
+    var endDate: Lens<SelectableRow, String?> {
         return SelectableRow.lens.params..SearchHotelParams.lens.endDate
     }
-    public var night: Lens<SelectableRow, Int?> {
+    var night: Lens<SelectableRow, Int?> {
         return SelectableRow.lens.params..SearchHotelParams.lens.night
     }
-    public var room: Lens<SelectableRow, Int?> {
+    var room: Lens<SelectableRow, Int?> {
         return SelectableRow.lens.params..SearchHotelParams.lens.room
     }
-    public var adult: Lens<SelectableRow, String?> {
+    var adult: Lens<SelectableRow, String?> {
         return SelectableRow.lens.params..SearchHotelParams.lens.adult
     }
-    public var child: Lens<SelectableRow, Int?> {
+    var child: Lens<SelectableRow, Int?> {
         return SelectableRow.lens.params..SearchHotelParams.lens.child
     }
-    public var sort: Lens<SelectableRow, SearchHotelParams.Sort?> {
+    var sort: Lens<SelectableRow, SearchHotelParams.Sort?> {
         return SelectableRow.lens.params..SearchHotelParams.lens.sort
     }
-    public var minStar: Lens<SelectableRow, Int?> {
+    var minStar: Lens<SelectableRow, Int?> {
         return SelectableRow.lens.params..SearchHotelParams.lens.minStar
     }
-    public var maxStar: Lens<SelectableRow, Int?> {
+    var maxStar: Lens<SelectableRow, Int?> {
         return SelectableRow.lens.params..SearchHotelParams.lens.maxStar
     }
-    public var minPrice: Lens<SelectableRow, String> {
+    var minPrice: Lens<SelectableRow, String> {
         return SelectableRow.lens.params..SearchHotelParams.lens.minPrice
     }
-    public var maxPrice: Lens<SelectableRow, String> {
+    var maxPrice: Lens<SelectableRow, String> {
         return SelectableRow.lens.params..SearchHotelParams.lens.maxPrice
     }
-    public var distance: Lens<SelectableRow, Int?> {
+    var distance: Lens<SelectableRow, Int?> {
         return SelectableRow.lens.params..SearchHotelParams.lens.distance
     }
 }

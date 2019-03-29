@@ -29,6 +29,7 @@ public final class PaymentsListVC: UIViewController {
     
     @IBOutlet fileprivate weak var bankTransfertopSeparatorView: UIView!
     @IBOutlet fileprivate weak var bankTransferbottomSeparatorView: UIView!
+    @IBOutlet fileprivate weak var notAvailableTransferLabel: UILabel!
     
     // KARTU KREDIT
     @IBOutlet fileprivate weak var kartuKreditView: UIView!
@@ -128,6 +129,9 @@ public final class PaymentsListVC: UIViewController {
         _ = self.orderDetailView
             |> UIView.lens.backgroundColor .~ .tk_fade_green_grey
         
+        _ = self.notAvailableTransferLabel
+            |> UILabel.lens.text .~ Localizations.NotAvailableInfo
+        
         _ = self.epayBRIInputLabel
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
         _ = self.cimbClicksLabel
@@ -179,6 +183,24 @@ public final class PaymentsListVC: UIViewController {
         
         self.orderIdInputLabel.rac.text = self.viewModel.outputs.orderIdLabelText
         self.totalPriceInputLabel.rac.text = self.viewModel.outputs.totalPriceLabelText
+        
+        self.viewModel.outputs.availableBankTransfer
+            .observe(on: UIScheduler())
+            .observeValues { [weak self] available in
+                guard let _self = self else { return }
+                if isTrue(available) {
+                    _ = _self.bankTransferButton
+                        |> UIButton.lens.isUserInteractionEnabled .~ true
+                    _ = _self.notAvailableTransferLabel
+                        |> UILabel.lens.isHidden .~ true
+                } else {
+                    _ = _self.bankTransferButton
+                        |> UIButton.lens.isUserInteractionEnabled .~ false
+                    _ = _self.notAvailableTransferLabel
+                        |> UILabel.lens.isHidden .~ false
+                }
+        }
+                
         
         self.viewModel.outputs.goBankTransfer
             .observe(on: QueueScheduler.main)

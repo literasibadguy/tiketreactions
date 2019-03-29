@@ -109,7 +109,6 @@
 		CD6171F721631940000AB23B /* FlightOrderListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6171F621631940000AB23B /* FlightOrderListVC.swift */; };
 		CD626E01203DAD30004A0037 /* AppDelegateViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD917CFA202D51F300A3760E /* AppDelegateViewModelTests.swift */; };
 		CD626E02203DAD30004A0037 /* TiketComponentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC649082019F8C600D11772 /* TiketComponentsTests.swift */; };
-		CD6A4DD720E35ACA00560552 /* DelightStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6A4DD620E35ACA00560552 /* DelightStepper.swift */; };
 		CD6A77F321F2FCB3005607CA /* PassengerDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6A77F221F2FCB3005607CA /* PassengerDetailVC.swift */; };
 		CD6CFC4C20871E670072B60A /* HotelMapViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6CFC4B20871E670072B60A /* HotelMapViewCell.swift */; };
 		CD6F5A6420454DEB004B030D /* TiketNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6F5A6320454DEB004B030D /* TiketNavigationBar.swift */; };
@@ -249,7 +248,6 @@
 		CDEFEC58203ECAAF00EAAC71 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDA42BA201DC8A500A5B2E2 /* UIColor.swift */; };
 		CDEFEC59203ECAAF00EAAC71 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDA42BD201DC8C500A5B2E2 /* Colors.swift */; };
 		CDEFEC5A203ECAAF00EAAC71 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA79505201EAC0200769673 /* UIImage.swift */; };
-		CDEFEC5B203ECAAF00EAAC71 /* CustomStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA79507201EE3DA00769673 /* CustomStepper.swift */; };
 		CDEFEC5C203ECAAF00EAAC71 /* ComponentStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4E1BC1201A1E600000B291 /* ComponentStyles.swift */; };
 		CDEFEC5D203ECAAF00EAAC71 /* UIEdgeInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4E1BC4201A1E910000B291 /* UIEdgeInsets.swift */; };
 		CDEFEC5E203ECAAF00EAAC71 /* UITraitCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4E1BC6201A1ED20000B291 /* UITraitCollection.swift */; };
@@ -2731,11 +2729,9 @@
 				CD25261A20FC5BA000D60ABA /* IssuedListViewCell.swift in Sources */,
 				CDEFEC58203ECAAF00EAAC71 /* UIColor.swift in Sources */,
 				CD8D97462132C6F5003215B5 /* PickFlightReturnsViewModel.swift in Sources */,
-				CD6A4DD720E35ACA00560552 /* DelightStepper.swift in Sources */,
 				CD0B11F620B65DF600DC25CE /* CurrencyListDataSource.swift in Sources */,
 				CDEFEC59203ECAAF00EAAC71 /* Colors.swift in Sources */,
 				CDEFEC5A203ECAAF00EAAC71 /* UIImage.swift in Sources */,
-				CDEFEC5B203ECAAF00EAAC71 /* CustomStepper.swift in Sources */,
 				CDEFEC5C203ECAAF00EAAC71 /* ComponentStyles.swift in Sources */,
 				CDEEDDA4209F56EE00A0AC0B /* HotelLiveFeedNavViewModel.swift in Sources */,
 				CD46AB60223372540048DE70 /* SearchHomePagesDataSource.swift in Sources */,

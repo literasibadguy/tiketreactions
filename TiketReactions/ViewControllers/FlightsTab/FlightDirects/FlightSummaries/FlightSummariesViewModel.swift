@@ -24,6 +24,7 @@ public protocol FlightSummariesViewModelOutputs {
     var loadFlightSources: Signal<(Flight, Flight), NoError> { get }
     var loadPriceValueTotal: Signal<String, NoError> { get }
     var getFlightDataLoading: Signal<Bool, NoError> { get }
+    var getFlightDataError: Signal<String, NoError> { get }
     var goToPassengerList: Signal<GetFlightDataEnvelope, NoError> { get }
 }
 
@@ -79,6 +80,8 @@ public final class FlightSummariesViewModel: FlightSummariesViewModelType, Fligh
             print("Give me behind this: \(envelope)")
         }
         
+        self.getFlightDataError = getFlightDataEnvelope.values().filter { $0.diagnostic.status == .error }.map { $0.diagnostic.errorMessage }.skipNil()
+        
         self.getFlightDataLoading = dataIsLoading.signal
         self.goToPassengerList = getFlightDataEnvelope.values()
     }
@@ -107,6 +110,7 @@ public final class FlightSummariesViewModel: FlightSummariesViewModelType, Fligh
     public let loadFlightSources: Signal<(Flight, Flight), NoError>
     public let loadPriceValueTotal: Signal<String, NoError>
     public let getFlightDataLoading: Signal<Bool, NoError>
+    public let getFlightDataError: Signal<String, NoError>
     public let goToPassengerList: Signal<GetFlightDataEnvelope, NoError>
     
     public var inputs: FlightSummariesViewModelInputs { return self }

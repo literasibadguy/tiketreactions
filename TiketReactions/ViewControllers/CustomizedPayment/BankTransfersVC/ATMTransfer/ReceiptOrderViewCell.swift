@@ -16,7 +16,11 @@ internal final class ReceiptOrderViewCell: UITableViewCell, ValueCell {
     
     @IBOutlet private weak var orderIdLabel: UILabel!
     @IBOutlet private weak var totalTitleLabel: UILabel!
+    @IBOutlet private weak var subtotalPriceLabel: UILabel!
+    @IBOutlet private weak var uniqueCodeLabel: UILabel!
     @IBOutlet private weak var totalPriceLabel: UILabel!
+    @IBOutlet weak var orderExpiredTime: UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,8 +39,21 @@ internal final class ReceiptOrderViewCell: UITableViewCell, ValueCell {
         _ = self.orderIdLabel
             |> UILabel.lens.text .~ "Order ID: \(value.orderId)"
         
+        _ = self.subtotalPriceLabel
+            |> UILabel.lens.text .~ "Subtotal: \(Format.symbolForCurrency(AppEnvironment.current.apiService.currency)) \(Format.currency(value.orderResult.subTotal, country: AppEnvironment.current.apiService.currency ))"
+        
+        _ = self.uniqueCodeLabel
+            |> UILabel.lens.text .~ Localizations.UniqueCodeInfo(value.orderResult.uniqueCode)
+        
+        let expireDate = stringToExpiredPayTime(raw: value.orderResult.expiredTime)
+        
+        print("IS IT CORRECT FOR EXPIRE TIME: \(value.orderResult.expiredTime)")
+        
+        _ = self.orderExpiredTime
+            |> UILabel.lens.text .~ Localizations.OrderExpireInfo(Format.date(secondsInUTC: expireDate.timeIntervalSince1970, template: "HH:mm")!)
+        
         _ = self.totalPriceLabel
-            |> UILabel.lens.text .~ "\(Format.symbolForCurrency(AppEnvironment.current.apiService.currency)) \(Format.currency(value.grandTotal, country: AppEnvironment.current.apiService.currency ))"
+            |> UILabel.lens.text .~ "\(Format.symbolForCurrency(AppEnvironment.current.apiService.currency)) \(Format.currency(value.orderResult.grandTotal, country: AppEnvironment.current.apiService.currency ))"
         
     }
 

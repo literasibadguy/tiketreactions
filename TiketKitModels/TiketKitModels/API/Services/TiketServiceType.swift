@@ -77,9 +77,11 @@ public protocol TiketServiceType {
     
     // Payment Methods
     
-    func bankTransferRequest(currency: String) -> SignalProducer<BankTransferPaymentEnvelope, ErrorEnvelope>
+    func bankTransferRequest() -> SignalProducer<BankTransferPaymentEnvelope, ErrorEnvelope>
     
     func atmTransferRequest(currency: String) -> SignalProducer<InstantTransferPaymentEnvelope, ErrorEnvelope>
+    
+    func virtualAccountTransfer() -> SignalProducer<VirtualAccountTransfersEnvelope, ErrorEnvelope>
     
     func klikBCARequest(_ user: String) -> SignalProducer<KlikBCAPaymentEnvelope, ErrorEnvelope>
     

@@ -6,6 +6,7 @@ public struct Diagnostic {
     public enum Status: Int {
         case error = 204
         case timeout = 201
+        case expired = 207
         case failed = 403
         case successful = 200
         case empty = 250

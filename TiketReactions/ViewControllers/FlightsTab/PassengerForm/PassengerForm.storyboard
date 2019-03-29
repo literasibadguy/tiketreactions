@@ -936,6 +936,7 @@
                         <outlet property="pasportNoSeparatorView" destination="PZz-dq-KqW" id="asc-Cg-gHE"/>
                         <outlet property="pasportNoTextField" destination="hO9-eT-ilp" id="gUf-oh-0rc"/>
                         <outlet property="passengerLabel" destination="dpk-ok-icE" id="Xtm-Ds-0e0"/>
+                        <outlet property="passengerScrollView" destination="n6h-iw-ED0" id="vtL-dG-Zdk"/>
                         <outlet property="passportExpiredPickedLabel" destination="ZGj-Py-85g" id="SQF-6p-FE1"/>
                         <outlet property="passportIssueDateInputStackView" destination="AZT-XO-kXe" id="hPW-et-bVw"/>
                         <outlet property="passportIssuesPickedLabel" destination="pbZ-an-BP6" id="Avo-aU-FFK"/>
@@ -1660,8 +1661,8 @@
                                         <rect key="frame" x="8" y="8" width="384" height="32"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Titel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Liz-9b-dZw" userLabel="Birthdate Input Label">
-                                                <rect key="frame" x="0.0" y="0.0" width="35" height="32"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="31.5" height="32"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>

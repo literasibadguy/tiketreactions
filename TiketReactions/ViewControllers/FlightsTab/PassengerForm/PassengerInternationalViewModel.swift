@@ -81,8 +81,10 @@ public protocol PassengerInternationalViewModelOutputs {
     var isScootFlight: Signal<Bool, NoError> { get }
     var departBaggageText: Signal<String, NoError> { get }
     var returnBaggageText: Signal<String, NoError> { get }
+    var titleInputLabelText: Signal<String, NoError> { get }
     var titleLabelText: Signal<String, NoError> { get }
     var goToInputsPicker: Signal<InternationalFormGoTo, NoError> { get }
+    var goToTitlePicker: Signal<String, NoError> { get }
     var goToBirthdatePicker: Signal<String, NoError> { get }
     var goToBaggagePicker: Signal<[ResourceBaggage], NoError> { get }
     var goReturnBaggagePicker: Signal<[ResourceBaggage], NoError> { get }
@@ -157,9 +159,13 @@ public final class PassengerInternationalViewModel: PassengerInternationalViewMo
         
         let initial = self.viewDidLoadProperty.signal.mapConst("")
         
+        self.titleInputLabelText = Signal.merge(passengerData.signal.map { $0.passenger.fieldText.contains("Anak") }.filter { isTrue($0) }.map { _ in Localizations.TitleChildFormData }, passengerData.signal.map { $0.passenger.fieldText.contains("Bayi") }.filter { isTrue($0) }.map { _ in Localizations.TitleChildFormData }, passengerData.signal.map { $0.passenger.fieldText.contains("Dewasa") }.filter { isTrue($0) }.map { _ in Localizations.TitleFormData })
+        
         self.passengerStatusText = Signal.merge(current.map { $0.fieldText }, passengerData.signal.map { $0.passenger.fieldText })
 
-        self.goToInputsPicker = Signal.merge(self.titleSalutationTappedProperty.signal.map { InternationalFormGoTo.goToTitleSalutationPicker }, self.citizenshipTappedProperty.signal.map { InternationalFormGoTo.goToCitizenshipPicker }, self.expiredPassportTappedProperty.signal.map { InternationalFormGoTo.goToExpiredPassportPicker }, self.issuedPassportTappedProperty.signal.map { InternationalFormGoTo.goToIssuedPassportPicker }, self.issueDatePassportTappedProperty.signal.map { InternationalFormGoTo.goToIssueDatePassportPicker })
+        self.goToInputsPicker = Signal.merge(self.citizenshipTappedProperty.signal.map { InternationalFormGoTo.goToCitizenshipPicker }, self.expiredPassportTappedProperty.signal.map { InternationalFormGoTo.goToExpiredPassportPicker }, self.issuedPassportTappedProperty.signal.map { InternationalFormGoTo.goToIssuedPassportPicker }, self.issueDatePassportTappedProperty.signal.map { InternationalFormGoTo.goToIssueDatePassportPicker })
+        
+        self.goToTitlePicker = passengerData.signal.map { $0.passenger.fieldText }.takeWhen(self.titleSalutationTappedProperty.signal)
         
         self.goToBirthdatePicker = passengerData.signal.map { $0.passenger.fieldText }.takeWhen(self.birthDateTappedProperty.signal)
         
@@ -171,9 +177,19 @@ public final class PassengerInternationalViewModel: PassengerInternationalViewMo
         
         self.dismissBaggagePicker = Signal.merge(self.baggageDepartCanceledProperty.signal, self.baggageReturnCanceledProperty.signal)
         
-        self.firstNameFirstResponder = .empty
-        self.lastNameFirstResponder = .empty
-        self.noPassportFirstResponder = .empty
+        self.firstNameFirstResponder = self.titleSalutationChangedProperty.signal.ignoreValues()
+        self.lastNameFirstResponder = self.firstNameTextEndedProperty.signal
+        self.noPassportFirstResponder = Signal.combineLatest(passengerData.signal.filter { $0.isInternational == true }, self.citizenshipChangedProperty.signal.ignoreValues()).map(second)
+
+        let title = Signal.merge(self.titleSalutationChangedProperty.signal.skipNil(), passengerFilled.signal.map { $0.title }.skipNil())
+        let firstName = Signal.merge(self.firstNameTextChangedProperty.signal.skipNil(), passengerFilled.signal.map { $0.firstname }.skipNil())
+        let lastName = Signal.merge(self.lastNameTextChangedProperty.signal.skipNil(), passengerFilled.signal.map { $0.lastname }.skipNil())
+        let passportNo = Signal.merge(self.noPassportTextChangedProperty.signal.skipNil(), passengerFilled.signal.map { $0.passportNo }.skipNil())
+        let citizenship = Signal.merge(self.citizenshipChangedProperty.signal.skipNil().map { $0.countryId }, passengerFilled.signal.map { $0.passportNationality }.skipNil())
+        let birthdate = Signal.merge(self.birthDateChangedProperty.signal.skipNil().map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "yyyy-MM-dd")! }, passengerFilled.signal.map { $0.birthdate }.skipNil())
+        let issuingPassport = Signal.merge(self.issuedPassportChangedProperty.signal.skipNil().map { $0.countryId }, passengerFilled.signal.map { $0.passportIssue }.skipNil())
+        let expiredPassport = Signal.merge(self.expiredPassportChangedProperty.signal.skipNil().map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "yyyy-MM-dd")! }, passengerFilled.signal.map { $0.passportExpiryDate }.skipNil())
+        let issueDatePassport = Signal.merge(self.issueDatePassportChangedProperty.signal.skipNil().map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "yyyy-MM-dd")! }, passengerFilled.signal.map { $0.passportIssuedDate }.skipNil())
         
         self.titleLabelText = Signal.merge(self.titleSalutationChangedProperty.signal.skipNil(), passengerFilled.signal.map { $0.title }.skipNil())
         self.firstNameTextFieldText = Signal.merge(self.firstNameTextChangedProperty.signal.skipNil(), passengerFilled.signal.map { $0.firstname }.skipNil())
@@ -181,15 +197,20 @@ public final class PassengerInternationalViewModel: PassengerInternationalViewMo
         self.noPassportTextFieldText = Signal.merge(self.noPassportTextChangedProperty.signal.skipNil(), passengerFilled.signal.map { $0.passportNo }.skipNil())
         self.birthDateLabelText = Signal.merge(self.birthDateChangedProperty.signal.skipNil().map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "MMM d, yyyy")! }, passengerFilled.signal.map { $0.birthdate }.skipNil())
         self.citizenshipLabelText = Signal.merge(self.citizenshipChangedProperty.signal.skipNil().map { $0.countryName }, passengerFilled.signal.map { $0.passportNationality }.skipNil())
+        
         self.expiredPassportLabelText = Signal.merge(self.expiredPassportChangedProperty.signal.skipNil().map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "MMM d, yyyy")! }, passengerFilled.signal.map { $0.passportExpiryDate }.skipNil())
         self.issuedPassportLabelText = Signal.merge(self.issuedPassportChangedProperty.signal.skipNil().map { $0.countryName }, passengerFilled.signal.map { $0.passportIssue }.skipNil())
         
-        self.departBaggageText = Signal.merge(initial, self.baggageDepartChangedProperty.signal.skipNil().map { $0.name })
-        self.returnBaggageText = Signal.merge(initial, self.baggageReturnChangedProperty.signal.skipNil().map { $0.name })
+        let departBaggageFilled = Signal.merge(passengerFilled.signal.map { $0.departAdultBaggage }.skipNil(), passengerFilled.signal.map { $0.departChildBaggage }.skipNil())
+        
+        let returnBaggageFilled = Signal.merge(passengerFilled.signal.map { $0.returnAdultBaggage }.skipNil(), passengerFilled.signal.map { $0.returnChildBaggage }.skipNil())
+        
+        self.departBaggageText = Signal.merge(departBaggageFilled.signal, self.baggageDepartChangedProperty.signal.skipNil().map { $0.name })
+        self.returnBaggageText = Signal.merge(returnBaggageFilled.signal, self.baggageReturnChangedProperty.signal.skipNil().map { $0.name })
         
         self.issueDatePassportLabelText = Signal.merge(self.issueDatePassportChangedProperty.signal.skipNil().map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "MMM d, yyyy")! }, passengerFilled.signal.map { $0.passportIssuedDate }.skipNil())
         
-        let domesticPassenger = Signal.combineLatest(self.titleLabelText.signal, self.firstNameTextFieldText.signal, self.lastNameTextFieldText.signal, passengerData.signal.map { $0.passenger.fieldText }, self.birthDateChangedProperty.signal.skipNil().map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "yyyy-MM-dd")! }, self.citizenshipChangedProperty.signal.skipNil().map { $0.countryId }).switchMap { title, firstname, lastname, counting, birthdate, citizenship -> SignalProducer<AdultPassengerParam, NoError> in
+        let domesticPassenger = Signal.combineLatest(title.signal, firstName.signal, lastName.signal, birthdate.signal, citizenship.signal).switchMap { title, firstname, lastname, birthdate, citizenship -> SignalProducer<AdultPassengerParam, NoError> in
             let adult = .defaults
                 |> AdultPassengerParam.lens.title .~ title
                 |> AdultPassengerParam.lens.firstname .~ firstname
@@ -199,7 +220,7 @@ public final class PassengerInternationalViewModel: PassengerInternationalViewMo
             return SignalProducer(value: adult)
         }
         
-        let internationalPassenger = Signal.combineLatest(self.titleLabelText.signal, self.firstNameTextFieldText, self.lastNameTextFieldText.signal, self.birthDateChangedProperty.signal.skipNil().map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "yyyy-MM-dd")! }, self.noPassportTextFieldText.signal, self.citizenshipChangedProperty.signal.skipNil().map { $0.countryId }, self.expiredPassportChangedProperty.signal.skipNil().map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "yyyy-MM-dd")! }, self.issuedPassportChangedProperty.signal.skipNil().map { $0.countryId }).filter(isInternationalValid(title:firstName:lastName:birthdate:noPassport:citizenship:expired: issued:)).switchMap { title, firstname, lastname, birthdate, noPassport, citizenship, expired, issued -> SignalProducer<AdultPassengerParam, NoError> in
+        let internationalPassenger = Signal.combineLatest(title.signal, firstName.signal, lastName.signal, birthdate.signal, passportNo.signal, citizenship.signal, expiredPassport.signal, issuingPassport.signal).filter(isInternationalValid(title:firstName:lastName:birthdate:noPassport:citizenship:expired: issued:)).switchMap { title, firstname, lastname, birthdate, noPassport, citizenship, expired, issued -> SignalProducer<AdultPassengerParam, NoError> in
             let adult = .defaults
                 |> AdultPassengerParam.lens.title .~ title
                 |> AdultPassengerParam.lens.firstname .~ firstname
@@ -212,7 +233,7 @@ public final class PassengerInternationalViewModel: PassengerInternationalViewMo
             return SignalProducer(value: adult)
         }
         
-        let internationalIssueDatePassenger = Signal.combineLatest(internationalPassenger.signal, self.issueDatePassportChangedProperty.signal.skipNil().map { Format.date(secondsInUTC: $0.timeIntervalSince1970, template: "yyyy-MM-dd")! }).switchMap { passenger, issueDate -> SignalProducer<AdultPassengerParam, NoError> in
+        let internationalIssueDatePassenger = Signal.combineLatest(internationalPassenger.signal, issueDatePassport.signal).switchMap { passenger, issueDate -> SignalProducer<AdultPassengerParam, NoError> in
             let custom = passenger
                 |> AdultPassengerParam.lens.passportIssuedDate .~ issueDate
             return SignalProducer(value: custom)
@@ -461,8 +482,10 @@ public final class PassengerInternationalViewModel: PassengerInternationalViewMo
     public let isScootFlight: Signal<Bool, NoError>
     public let departBaggageText: Signal<String, NoError>
     public let returnBaggageText: Signal<String, NoError>
+    public let titleInputLabelText: Signal<String, NoError>
     public let titleLabelText: Signal<String, NoError>
     public let goToInputsPicker: Signal<InternationalFormGoTo, NoError>
+    public let goToTitlePicker: Signal<String, NoError>
     public let goToBirthdatePicker: Signal<String, NoError>
     public let goToBaggagePicker: Signal<[ResourceBaggage], NoError>
     public let goReturnBaggagePicker: Signal<[ResourceBaggage], NoError>
@@ -493,6 +516,18 @@ private func isDomesticValid(title: String?, firstName: String?, lastName: Strin
 
 private func isInternationalValid(title: String?, firstName: String?, lastName: String?, birthdate: String?, noPassport: String?, citizenship: String?, expired: String?, issued: String?) -> Bool {
     return !title.isNil && !firstName.isNil && !lastName.isNil && !birthdate.isNil && !noPassport.isNil && !citizenship.isNil && !expired.isNil && !issued.isNil
+}
+
+private func isInternationalIssueDateValid(title: String?, firstName: String?, lastName: String?, birthdate: String?, noPassport: String?, citizenship: String?, expired: String?, issued: String?, issueDate: String?) -> Bool {
+    return !title.isNil && !firstName.isNil && !lastName.isNil && !birthdate.isNil && !noPassport.isNil && !citizenship.isNil && !expired.isNil && !issued.isNil && !issueDate.isNil
+}
+
+private func isInternationalWithSingleBaggageValid(title: String?, firstName: String?, lastName: String?, birthdate: String?, noPassport: String?, citizenship: String?, expired: String?, issued: String?, issueDate: String?, firstBaggage: String?) -> Bool {
+    return !title.isNil && !firstName.isNil && !lastName.isNil && !birthdate.isNil && !noPassport.isNil && !citizenship.isNil && !expired.isNil && !issued.isNil && !issueDate.isNil && !firstBaggage.isNil
+}
+
+private func isInternationalWithMultiBaggageValid(title: String?, firstName: String?, lastName: String?, birthdate: String?, noPassport: String?, citizenship: String?, expired: String?, issued: String?, issueDate: String?, firstBaggage: String?, returnBaggage: String?) -> Bool {
+    return !title.isNil && !firstName.isNil && !lastName.isNil && !birthdate.isNil && !noPassport.isNil && !citizenship.isNil && !expired.isNil && !issued.isNil && !issueDate.isNil && !firstBaggage.isNil && !returnBaggage.isNil
 }
 
 private func identityPassenger(_ separator: String) -> String {

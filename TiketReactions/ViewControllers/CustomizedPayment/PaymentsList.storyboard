@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,7 +13,7 @@
         <!--Pilih Pembayaran-->
         <scene sceneID="bvI-Ns-BZu">
             <objects>
-                <viewController storyboardIdentifier="PaymentsListVC" title="Pilih Pembayaran" id="B5P-Sq-lhJ" customClass="PaymentsListVC" customModule="TripToZero" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PaymentsListVC" title="Pilih Pembayaran" id="B5P-Sq-lhJ" customClass="PaymentsListVC" customModule="triptozero" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="g62-jy-cmg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="867"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -130,17 +130,25 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cxx-0z-97a" userLabel="Bank Transfer Button">
                                                         <rect key="frame" x="15" y="10" width="345" height="80"/>
                                                     </button>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pembayaran transfer tidak tersedia" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GXm-sK-A5O">
+                                                        <rect key="frame" x="145.5" y="63" width="211.5" height="16"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                        <color key="textColor" red="1" green="0.0" blue="0.045438516569999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="cbC-5V-qbO" firstAttribute="top" secondItem="mvU-Dv-UCP" secondAttribute="top" constant="10" id="0L6-HU-t7o"/>
                                                     <constraint firstAttribute="trailing" secondItem="cxx-0z-97a" secondAttribute="trailing" constant="15" id="1ud-2o-36y"/>
+                                                    <constraint firstAttribute="trailingMargin" secondItem="GXm-sK-A5O" secondAttribute="trailing" constant="10" id="BM6-fn-qfj"/>
                                                     <constraint firstAttribute="bottom" secondItem="cbC-5V-qbO" secondAttribute="bottom" constant="10" id="BW9-uG-jyI"/>
                                                     <constraint firstAttribute="bottom" secondItem="cxx-0z-97a" secondAttribute="bottom" constant="10" id="FJN-zJ-4TX"/>
                                                     <constraint firstItem="cbC-5V-qbO" firstAttribute="leading" secondItem="mvU-Dv-UCP" secondAttribute="leading" constant="15" id="Fk4-n9-2Uk"/>
                                                     <constraint firstAttribute="trailing" secondItem="cbC-5V-qbO" secondAttribute="trailing" constant="15" id="M8n-0l-pKv"/>
                                                     <constraint firstItem="cxx-0z-97a" firstAttribute="leading" secondItem="mvU-Dv-UCP" secondAttribute="leading" constant="15" id="XHC-dy-hwM"/>
                                                     <constraint firstAttribute="height" constant="100" id="iqW-9f-apH"/>
+                                                    <constraint firstItem="VS8-WB-DMd" firstAttribute="top" secondItem="GXm-sK-A5O" secondAttribute="bottom" constant="10" id="oPA-s5-BlB"/>
                                                     <constraint firstItem="cxx-0z-97a" firstAttribute="top" secondItem="mvU-Dv-UCP" secondAttribute="top" constant="10" id="udW-qG-5un"/>
                                                 </constraints>
                                             </view>
@@ -610,6 +618,7 @@
                         <outlet property="klikBCAInputLabel" destination="2mD-yp-Vek" id="NfX-f8-f07"/>
                         <outlet property="klikBCATopSeparatorView" destination="oqZ-27-MoL" id="SZM-ux-8kD"/>
                         <outlet property="klikBCAView" destination="cah-yG-yTn" id="3V8-3z-ohl"/>
+                        <outlet property="notAvailableTransferLabel" destination="GXm-sK-A5O" id="msk-2p-aqA"/>
                         <outlet property="orderDetailView" destination="mAY-1I-hMU" id="aIp-OS-xxI"/>
                         <outlet property="orderIdInputLabel" destination="jr6-zJ-tu1" id="Rfm-Sp-pEB"/>
                         <outlet property="totalPriceInputLabel" destination="ghH-bm-bBP" id="EWw-Zu-0lu"/>

@@ -22,42 +22,42 @@ public protocol UINavigationBarProtocol: UIViewProtocol {
 extension UINavigationBar: UINavigationBarProtocol {}
 
 public extension LensHolder where Object: UINavigationBarProtocol {
-    public func backgroundImage(forBarMetrics barMetrics: UIBarMetrics) -> Lens<Object, UIImage?> {
+    func backgroundImage(forBarMetrics barMetrics: UIBarMetrics) -> Lens<Object, UIImage?> {
         return Lens(
             view: { view in view.backgroundImage(for: barMetrics) },
             set: { view, set in set.setBackgroundImage(view, for: barMetrics); return set}
         )
     }
     
-    public var barTintColor: Lens<Object, UIColor?> {
+    var barTintColor: Lens<Object, UIColor?> {
         return Lens(
             view: { $0.barTintColor },
             set: { $1.barTintColor = $0; return $1; }
         )
     }
     
-    public var shadowImage: Lens<Object, UIImage?> {
+    var shadowImage: Lens<Object, UIImage?> {
         return Lens(
             view: { $0.shadowImage },
             set: { $1.shadowImage = $0; return $1; }
         )
     }
     
-    public var titleTextAttributes: Lens<Object, [NSAttributedStringKey: Any]> {
+    var titleTextAttributes: Lens<Object, [NSAttributedStringKey: Any]> {
         return Lens(
             view: { view in view.titleTextAttributes ?? [:] },
             set: { view, set in set.titleTextAttributes = view; return set; }
         )
     }
     
-    public var translucent: Lens<Object, Bool> {
+    var translucent: Lens<Object, Bool> {
         return Lens(
             view: { view in view.isTranslucent },
             set: { view, set in set.isTranslucent = view; return set; }
         )
     }
     
-    public var prefersLargeTitles: Lens<Object, Bool> {
+    var prefersLargeTitles: Lens<Object, Bool> {
         return Lens(
             view: { view in view.prefersLargeTitles },
             set: { view, set in set.prefersLargeTitles = view; return set; }

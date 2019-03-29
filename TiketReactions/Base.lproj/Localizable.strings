@@ -24,7 +24,7 @@
 "Passenger_Adult_Status_list" = "Adult %d";
 "Passenger_Child_Status_list" = "Child %d";
 "Passenger_Infant_Status_list" = "Infant %d";
-"Birthdate_Title_Passenger_Form" = "Birthdate";
+"Birthdate_Title_Passenger_Form" = "Date of Birth";
 "Citizen_Title_Passenger_Form" = "Citizenship";
 "PassportNo_Title_Passenger_Form" = "Passport No.";
 "Expired_Title_Passenger_Form" = "Expired Date";
@@ -135,3 +135,9 @@
 "CountryCode_Title" = "Country Code & Phone Number";
 "CountryCodePick_Title" = "Country Code";
 "BookingAttention_Title" = "Please Wait, Booking is in process";
+"Mstr_Form_Data" = "Mstr";
+"Miss_Form_Data" = "Miss";
+"TitleChild_Form_Data" = "Title (Mstr, Miss)";
+"OrderExpire_Info" = "Your order expire until %@";
+"UniqueCode_Info" = "Unique Code: %d";
+"NotAvailable_Info" = "Bank Transfer isn't available";

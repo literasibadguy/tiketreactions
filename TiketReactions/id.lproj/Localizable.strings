@@ -134,3 +134,9 @@
 "CountryCode_Title" = "Kode Negara & No. Hp";
 "CountryCodePick_Title" = "Kode Negara";
 "BookingAttention_Title" = "Mohon Tunggu, Booking sedang proses";
+"Mstr_Form_Data" = "Tuan";
+"Miss_Form_Data" = "Nona";
+"TitleChild_Form_Data" = "Title (Tuan, Nona)";
+"OrderExpire_Info" = "Waktu pembayaran berakhir %@";
+"UniqueCode_Info" = "Kode Unik: %d";
+"NotAvailable_Info" = "Pembayaran Transfer tidak tersedia";

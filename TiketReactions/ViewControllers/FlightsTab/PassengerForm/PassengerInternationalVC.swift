@@ -17,12 +17,14 @@ public enum PassengerInternationalType {
 
 public protocol PassengerInternationalDelegate: class {
     func paramFormSubmitted(_ internationalVC: PassengerInternationalVC, format: FormatDataForm, passenger: AdultPassengerParam)
+    func paramHaveCanceled()
 }
 
 public final class PassengerInternationalVC: UIViewController {
     
     fileprivate let viewModel: PassengerInternationalViewModelType = PassengerInternationalViewModel()
 
+    @IBOutlet fileprivate weak var passengerScrollView: UIScrollView!
     @IBOutlet fileprivate weak var noticeView: UIView!
     @IBOutlet fileprivate weak var noticeLabel: UILabel!
     
@@ -160,6 +162,16 @@ public final class PassengerInternationalVC: UIViewController {
         self.navigationItem.setLeftBarButton(cancelBarButton, animated: true)
         self.navigationController?.navigationBar.isTranslucent = false
         
+        /*
+        let doneToolbar:UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0,  width: self.view.frame.size.width, height: 30))
+        //create left side empty space so that done button set on right side
+        let flexSpace = UIBarButtonItem(barButtonSystemItem:    .flexibleSpace, target: nil, action: nil)
+        let doneBtn: UIBarButtonItem = UIBarButtonItem(title: Localizations.DonebuttonTitle, style: .done, target: self, action: #selector(noPassportTextFieldDoneEditing(_:)))
+        doneBtn.tintColor = .tk_official_green
+        doneToolbar.setItems([flexSpace, doneBtn], animated: false)
+        doneToolbar.sizeToFit()
+        */
+        
         self.titlePickButton.addTarget(self, action: #selector(titleSalutationButtonTapped), for: .touchUpInside)
         self.dateBornPickButton.addTarget(self, action: #selector(dateBornButtonTapped), for: .touchUpInside)
         self.citizenshipPickButton.addTarget(self, action: #selector(citizenshipButtonTapped), for: .touchUpInside)
@@ -177,6 +189,7 @@ public final class PassengerInternationalVC: UIViewController {
         
         self.pasportNoTextField.addTarget(self, action: #selector(noPassportTextFieldChanged(_:)), for: [.editingDidEndOnExit, .editingChanged])
         self.pasportNoTextField.addTarget(self, action: #selector(noPassportTextFieldDoneEditing), for: .editingDidEndOnExit)
+//        self.pasportNoTextField.inputAccessoryView = doneToolbar
         
         self.collectInternationalButton.addTarget(self , action: #selector(submitPassengerFormTapped), for: .touchUpInside)
         
@@ -187,6 +200,12 @@ public final class PassengerInternationalVC: UIViewController {
         super.viewDidAppear(animated)
         
         self.viewModel.inputs.viewDidAppear()
+    }
+    
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        startListeningToNotifications()
     }
 
     public override func bindStyles() {
@@ -327,9 +346,6 @@ public final class PassengerInternationalVC: UIViewController {
         _ = self.noticeLabel
             |> UILabel.lens.text .~ Localizations.NoticeIdentityPassengerForm
         
-        _ = self.titleInputTextLabel
-            |> UILabel.lens.text .~ Localizations.TitleFormData
-        
         _ = self.firstNameInputLabel
             |> UILabel.lens.text .~ Localizations.FirstnameFormData
         
@@ -377,6 +393,7 @@ public final class PassengerInternationalVC: UIViewController {
             |> UITextField.lens.tintColor .~ .tk_official_green
             |> UITextField.lens.borderStyle .~ .none
             |> UITextField.lens.keyboardType .~ .default
+            |> UITextField.lens.autocapitalizationType .~ .allCharacters
         
         _ = self.titleSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_official_green
@@ -426,6 +443,12 @@ public final class PassengerInternationalVC: UIViewController {
     public override func bindViewModel() {
         super.bindViewModel()
         
+        self.titleInputTextLabel.rac.text = self.viewModel.outputs.titleInputLabelText
+        
+        self.firstNameTextField.rac.becomeFirstResponder = self.viewModel.outputs.firstNameFirstResponder
+        self.lastNameTextField.rac.becomeFirstResponder = self.viewModel.outputs.lastNameFirstResponder
+        self.pasportNoTextField.rac.becomeFirstResponder = self.viewModel.outputs.noPassportFirstResponder
+        
         self.passengerLabel.rac.text = self.viewModel.outputs.passengerStatusText
         self.titlePickedLabel.rac.text = self.viewModel.outputs.titleLabelText
         self.firstNameTextField.rac.text = self.viewModel.outputs.firstNameTextFieldText
@@ -459,8 +482,8 @@ public final class PassengerInternationalVC: UIViewController {
             .observe(on: QueueScheduler.main)
             .observeValues { [weak self] steps in
                 switch steps {
-                case .goToTitleSalutationPicker:
-                    self?.goToTitlePickerController()
+//                case .goToTitleSalutationPicker:
+//                    self?.goToTitlePickerController()
                 case .goToCitizenshipPicker:
                     self?.goToCitizenshipPickerController()
                 case .goToExpiredPassportPicker:
@@ -469,7 +492,14 @@ public final class PassengerInternationalVC: UIViewController {
                     self?.goToIssuedPickerController()
                 case .goToIssueDatePassportPicker:
                     self?.goToIssueDatePickerController()
+                default: return
                 }
+        }
+        
+        self.viewModel.outputs.goToTitlePicker
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] field in
+                self?.goToTitlePickerController(field: field)
         }
         
         self.viewModel.outputs.goToBaggagePicker
@@ -525,8 +555,15 @@ public final class PassengerInternationalVC: UIViewController {
         }
     }
     
-    fileprivate func goToTitlePickerController() {
-        let titles = ["Tuan", "Nyonya", "Nona"]
+    fileprivate func goToTitlePickerController(field: String) {
+        var titles: [String]
+        if field.contains("Anak") {
+            titles = [Localizations.MstrFormData, Localizations.MissFormData]
+        } else if field.contains("Bayi") {
+            titles = [Localizations.MstrFormData, Localizations.MissFormData]
+        } else {
+            titles = [Localizations.MrFormData, Localizations.MrsFormData, Localizations.MsFormData]
+        }
         let titlePickerVC = PassengerTitlePickerVC.instantiate(titles: titles, selectedTitle: "", delegate: self)
         titlePickerVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
         titlePickerVC.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
@@ -600,8 +637,54 @@ public final class PassengerInternationalVC: UIViewController {
         
     }
     
+    fileprivate func startListeningToNotifications() {
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+        nc.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+    }
+    
+    @objc fileprivate func keyboardWillShow(_ notification: Foundation.Notification) {
+        guard
+            let userInfo = notification.userInfo as? [String: AnyObject],
+            let keyboardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            else {
+                return
+        }
+        
+        refreshInsets(forKeyboardFrame: keyboardFrame)
+    }
+    
+    @objc fileprivate func keyboardWillHide(_ notification: Foundation.Notification) {
+        guard
+            let userInfo = notification.userInfo as? [String: AnyObject],
+            let keyboardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            else {
+                return
+        }
+        
+        refreshInsets(forKeyboardFrame: keyboardFrame)
+        //        dismissOptionsViewControllerIfNecessary()
+    }
+    
+    fileprivate func refreshInsets(forKeyboardFrame keyboardFrame: CGRect) {
+        let referenceView: UIScrollView = self.passengerScrollView
+        
+        let scrollInsets = UIEdgeInsets(top: referenceView.scrollIndicatorInsets.top, left: 0, bottom: view.frame.maxY - keyboardFrame.minY, right: 0)
+        let contentInsets  = UIEdgeInsets(top: referenceView.contentInset.top, left: 0, bottom: view.frame.maxY - keyboardFrame.minY, right: 0)
+        
+        self.passengerScrollView.scrollIndicatorInsets = scrollInsets
+        self.passengerScrollView.contentInset = contentInsets
+        
+        //        htmlTextView.scrollIndicatorInsets = scrollInsets
+        //        htmlTextView.contentInset = contentInsets
+        
+        //        richTextView.scrollIndicatorInsets = scrollInsets
+        //        richTextView.contentInset = contentInsets
+    }
+    
     @objc fileprivate func cancelButtonTapped() {
         self.navigationController?.popViewController(animated: true)
+        self.delegate?.paramHaveCanceled()
     }
     
     @objc fileprivate func titleSalutationButtonTapped() {
@@ -650,6 +733,7 @@ public final class PassengerInternationalVC: UIViewController {
     
     @objc fileprivate func noPassportTextFieldDoneEditing(_ textField: UITextField) {
         self.viewModel.inputs.noPassportTextFieldDidEndEditing()
+        self.pasportNoTextField.resignFirstResponder()
     }
     
     @objc fileprivate func departBaggageButtonTapped() {

@@ -208,7 +208,7 @@ public final class PassengersListVC: UIViewController {
         self.goToPassengerInternationalVC(format, status: status, baggages: res)
     }
     
-    func startListeningToNotifications() {
+    fileprivate func startListeningToNotifications() {
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
         nc.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
@@ -348,6 +348,13 @@ extension PassengersListVC: PassengerInternationalDelegate {
         } else {
             (self.listPassengersTableView.cellForRow(at: selectedIndexPath) as? PassengerSummaryViewCell)?.extendWith(passenger: passenger, indexRow: selectedIndexPath.row)
         }
+        
+        self.listPassengersTableView.deselectRow(at: selectedIndexPath, animated: true)
+    }
+    
+    public func paramHaveCanceled() {
+        guard let selectedIndexPath = self.listPassengersTableView.indexPathForSelectedRow else { return }
+        self.listPassengersTableView.deselectRow(at: selectedIndexPath, animated: true)
     }
 }
 

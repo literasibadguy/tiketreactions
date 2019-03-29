@@ -13,35 +13,35 @@ extension UITextField: UITextFieldProtocol {}
 
 public extension LensHolder where Object: UITextFieldProtocol {
     
-    public var borderStyle: Lens<Object, UITextBorderStyle> {
+    var borderStyle: Lens<Object, UITextBorderStyle> {
         return Lens(
             view: { $0.borderStyle },
             set: { $1.borderStyle = $0; return $1 }
         )
     }
     
-    public var font: Lens<Object, UIFont?> {
+    var font: Lens<Object, UIFont?> {
         return Lens(
             view: { $0.font },
             set: { $1.font = $0; return $1 }
         )
     }
     
-    public var placeholder: Lens<Object, String?> {
+    var placeholder: Lens<Object, String?> {
         return Lens(
             view: { $0.placeholder },
             set: { $1.placeholder = $0; return $1 }
         )
     }
     
-    public var textAlignment: Lens<Object, NSTextAlignment> {
+    var textAlignment: Lens<Object, NSTextAlignment> {
         return Lens(
             view: { $0.textAlignment },
             set: { $1.textAlignment = $0; return $1 }
         )
     }
     
-    public var textColor: Lens<Object, UIColor?> {
+    var textColor: Lens<Object, UIColor?> {
         return Lens(
             view: { $0.textColor },
             set: { $1.textColor = $0; return $1 }

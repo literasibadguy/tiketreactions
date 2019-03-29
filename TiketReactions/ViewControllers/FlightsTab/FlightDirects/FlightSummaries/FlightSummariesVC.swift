@@ -102,6 +102,12 @@ public final class FlightSummariesVC: UIViewController {
                 self?.summaryTableView.reloadData()
         }
         
+        self.viewModel.outputs.getFlightDataError
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] message in
+                self?.present(UIAlertController.genericError("Error", message: message, cancel:nil), animated: true, completion: nil)
+        }
+        
         self.viewModel.outputs.goToPassengerList
             .observe(on: QueueScheduler.main)
             .observeValues { [weak self] flightData in

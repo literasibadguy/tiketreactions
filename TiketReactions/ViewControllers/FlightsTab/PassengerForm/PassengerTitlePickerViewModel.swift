@@ -99,6 +99,10 @@ fileprivate func choseTitleIntoParam(_ title: String) -> String {
         return "Ms"
     case Localizations.MrsFormData:
         return "Mrs"
+    case Localizations.MstrFormData:
+        return "Mstr"
+    case Localizations.MissFormData:
+        return "Miss"
     default:
         return ""
     }

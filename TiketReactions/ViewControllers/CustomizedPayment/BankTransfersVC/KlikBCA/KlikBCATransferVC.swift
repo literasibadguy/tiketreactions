@@ -24,6 +24,8 @@ internal final class KlikBCATransferVC: UIViewController {
     @IBOutlet private weak var orderIdTextLabel: UILabel!
     @IBOutlet private weak var totalInputLabel: UILabel!
     @IBOutlet private weak var messageTextLabel: UILabel!
+    @IBOutlet private weak var subtotalTextLabel: UILabel!
+    @IBOutlet private weak var uniqueCodeLabel: UILabel!
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     lazy private var lazyDoneButton: UIBarButtonItem = {

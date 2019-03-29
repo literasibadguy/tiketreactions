@@ -118,7 +118,7 @@ public final class HotelEmbedGuestFormViewModel: HotelEmbedGuestFormViewModelTyp
                 .flatMap { envelope -> SignalProducer<HotelOrderEnvelope, CheckoutRetryError> in
                 
                 switch envelope.diagnostic.status {
-                    case .failed, .empty, .error, .timeout:
+                    case .failed, .empty, .error, .timeout, .expired:
                         return SignalProducer(error: CheckoutRetryError())
                     case .successful:
                         return SignalProducer(value: envelope)

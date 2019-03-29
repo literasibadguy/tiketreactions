@@ -79,6 +79,13 @@ public final class BankTransfersVC: UITableViewController {
                 self?.tableView.reloadData()
         }
         
+        self.viewModel.outputs.selectedPayment
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] url in
+                let urlRequest = URLRequest(url: url)
+                self?.goToCheckout(urlRequest, title: "")
+        }
+        
         self.viewModel.outputs.confirmTransfers
             .observe(on: QueueScheduler.main)
             .observeValues { [weak self] in
@@ -88,7 +95,7 @@ public final class BankTransfersVC: UITableViewController {
         self.viewModel.outputs.transferNotAvailable
             .observe(on: QueueScheduler.main)
             .observeValues { [weak self] in
-                self?.present(UIAlertController.genericError(message: $0, cancel: { _ in self?.navigationController?.popViewController(animated: true) }), animated: true, completion: nil)
+                self?.present(UIAlertController.genericError("Bank Transfer", message: $0, cancel: { _ in self?.navigationController?.popViewController(animated: true) }), animated: true, completion: nil)
         }
         
         self.viewModel.outputs.dismissToChecked
@@ -104,6 +111,19 @@ public final class BankTransfersVC: UITableViewController {
                     })
                 }
         }
+    }
+    
+    public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let virtualPay = self.dataSource.issueAtIndexPath(indexPath) {
+            self.viewModel.inputs.didSelectVirtual(payment: virtualPay)
+        }
+    }
+    
+    fileprivate func goToCheckout(_ request: URLRequest, title: String) {
+        let checkoutVC = CheckoutPageVC.configuredWith(initialRequest: request)
+        checkoutVC.title = title
+        let navVC = UINavigationController(rootViewController: checkoutVC)
+        self.present(navVC, animated: true, completion: nil)
     }
     
     @objc private func doneButtonItemTapped() {

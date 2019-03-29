@@ -46,6 +46,8 @@ internal class GuestOptionViewCell: UITableViewCell, ValueCell {
         _ = self.guestSwitch
             |> UISwitch.lens.tintColor .~ .tk_official_green
         
+
+        
         self.guestSwitch.onTintColor = .tk_official_green
     }
     
@@ -57,7 +59,7 @@ internal class GuestOptionViewCell: UITableViewCell, ValueCell {
         switch value {
         case .flightOption:
             _ = self.titleOptionLabel
-                |> UILabel.lens.text .~ "Same as contact detail"
+                |> UILabel.lens.text .~ Localizations.OptionTitlePassengerForm
         case .hotelOption:
             _ = self.titleOptionLabel
                 |> UILabel.lens.text .~ Localizations.AnotherguestOptionFormTitle

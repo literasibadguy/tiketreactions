@@ -11,11 +11,22 @@ import TiketKitModels
 
 public final class BankTransfersDataSource: ValueCellDataSource {
     
-
+    /*
+    public func load(_ bankEnvelope: VirtualAccountTransfersEnvelope) {
+        self.set(values: [bankEnvelope], cellClass: ReceiptManualViewCell.self, inSection: 0)
+        self.set(values: bankEnvelope.vaResult.vaMultiplePayment, cellClass: ListBankViewCell.self, inSection: 1)
+        self.set(values: ["\(Localizations.NoticescreenshotTitle)"], cellClass: NoticeSummaryViewCell.self, inSection: 2)
+    }
+    */
+    
     public func load(_ bankEnvelope: BankTransferPaymentEnvelope) {
         self.set(values: [bankEnvelope], cellClass: ReceiptManualViewCell.self, inSection: 0)
-        self.set(values: bankEnvelope.banks, cellClass: ListBankViewCell.self, inSection: 1)
-        self.set(values: ["\(bankEnvelope.messages) -- \(Localizations.NoticescreenshotTitle)"], cellClass: NoticeSummaryViewCell.self, inSection: 2)
+        self.set(values: [bankEnvelope.banks], cellClass: ListBankViewCell.self, inSection: 1)
+        self.set(values: ["\(Localizations.NoticescreenshotTitle)"], cellClass: NoticeSummaryViewCell.self, inSection: 2)
+    }
+    
+    public func issueAtIndexPath(_ indexPath: IndexPath) -> VirtualAccountPayment? {
+        return self[indexPath] as? VirtualAccountPayment
     }
     
     public override func configureCell(tableCell cell: UITableViewCell, withValue value: Any) {

@@ -14,6 +14,7 @@ import TiketKitModels
 public protocol BankTransfersViewModelInputs {
     func doneButtonItemTapped()
     func dismissTransfers(_ confirmed: Bool)
+    func didSelectVirtual(payment: VirtualAccountPayment)
     func viewDidLoad()
 }
 
@@ -23,6 +24,7 @@ public protocol BankTransfersViewModelOutputs {
     var banksAreAnimating: Signal<Bool, NoError> { get }
     var confirmTransfers: Signal<(), NoError> { get }
     var transferNotAvailable: Signal<String, NoError> { get }
+    var selectedPayment: Signal<URL, NoError> { get }
     var dismissToChecked: Signal<(), NoError> { get }
 }
 
@@ -35,16 +37,30 @@ public final class BankTransfersViewModel: BankTransfersViewModelType, BankTrans
     
     public init() {
         let banksAreLoading = MutableProperty(false)
-        let bankTransferEvent = self.viewDidLoadProperty.signal.switchMap { _ in
-            AppEnvironment.current.apiService.bankTransferRequest(currency: AppEnvironment.current.apiService.currency).on(started: { banksAreLoading.value = true }, terminated: { banksAreLoading.value = false }).materialize()
+        
+        /*
+        let vaTransferEvent = self.viewDidLoadProperty.signal.switchMap { _ in
+            AppEnvironment.current.apiService.virtualAccountTransfer().on(started: { banksAreLoading.value = true }, terminated: { banksAreLoading.value = false }).materialize()
+        }
+        */
+        
+        let banksTransferEvent = self.viewDidLoadProperty.signal.switchMap { _ in
+            AppEnvironment.current.apiService.bankTransferRequest().on(started: { banksAreLoading.value = true }, terminated: { banksAreLoading.value = false }).materialize()
         }
         
         self.doneEnabled = banksAreLoading.signal
         
-        self.banks = bankTransferEvent.values()
+        // bankTransferEvent.values()
+        
+        self.banks = banksTransferEvent.values()
         self.banksAreAnimating = banksAreLoading.signal
         
-        self.transferNotAvailable = bankTransferEvent.errors().map { _ in Localizations.TransfernotavailableNotice }
+        // bankTransferEvent.errors().map { _ in Localizations.TransfernotavailableNotice }
+        
+        self.transferNotAvailable = banksTransferEvent.errors().map { _ in Localizations.TransfernotavailableNotice }
+        
+        self.selectedPayment = .empty
+        
         
         self.confirmTransfers = self.doneItemTappedProperty.signal
         self.dismissToChecked = self.dismissTransferConfirmedProperty.signal.filter(isTrue).ignoreValues()
@@ -58,6 +74,11 @@ public final class BankTransfersViewModel: BankTransfersViewModelType, BankTrans
     fileprivate let dismissTransferConfirmedProperty = MutableProperty(false)
     public func dismissTransfers(_ confirmed: Bool) {
         self.dismissTransferConfirmedProperty.value = confirmed
+    }
+    
+    fileprivate let selectedVirtualPaymentProperty = MutableProperty<VirtualAccountPayment?>(nil)
+    public func didSelectVirtual(payment: VirtualAccountPayment) {
+        self.selectedVirtualPaymentProperty.value = payment
     }
     
     fileprivate let doneItemTappedProperty = MutableProperty(())
@@ -75,6 +96,7 @@ public final class BankTransfersViewModel: BankTransfersViewModelType, BankTrans
     public let banksAreAnimating: Signal<Bool, NoError>
     public let confirmTransfers: Signal<(), NoError>
     public let transferNotAvailable: Signal<String, NoError>
+    public let selectedPayment: Signal<URL, NoError>
     public let dismissToChecked: Signal<(), NoError>
     
     public var inputs: BankTransfersViewModelInputs { return self }

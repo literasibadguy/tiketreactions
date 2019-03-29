@@ -211,7 +211,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mohon tunggu sebentar" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="btp-vg-DfM">
-                                <rect key="frame" x="109.5" y="392.5" width="195" height="61"/>
+                                <rect key="frame" x="109.5" y="310" width="195" height="61"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="61" id="Kx8-ED-6RO"/>
                                     <constraint firstAttribute="width" constant="195" id="ffa-ei-PQu"/>
@@ -221,7 +221,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="JUm-Z4-5D1">
-                                <rect key="frame" x="197" y="463.5" width="20" height="20"/>
+                                <rect key="frame" x="197" y="381" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -230,9 +230,9 @@
                             <constraint firstItem="Yr5-bv-S1r" firstAttribute="leading" secondItem="BOW-nn-YvK" secondAttribute="leading" id="GRF-ye-qsi"/>
                             <constraint firstItem="JUm-Z4-5D1" firstAttribute="top" secondItem="btp-vg-DfM" secondAttribute="bottom" constant="10" id="MxM-LX-ulf"/>
                             <constraint firstItem="BOW-nn-YvK" firstAttribute="trailing" secondItem="Yr5-bv-S1r" secondAttribute="trailing" id="OW7-em-sLb"/>
+                            <constraint firstItem="btp-vg-DfM" firstAttribute="top" secondItem="BOW-nn-YvK" secondAttribute="top" constant="222" id="Rfp-Pp-e7K"/>
                             <constraint firstItem="Yr5-bv-S1r" firstAttribute="top" secondItem="BOW-nn-YvK" secondAttribute="top" id="Xqm-vh-qPs"/>
                             <constraint firstItem="btp-vg-DfM" firstAttribute="centerX" secondItem="urn-BW-fEy" secondAttribute="centerX" id="Xr6-eQ-8AN"/>
-                            <constraint firstItem="btp-vg-DfM" firstAttribute="centerY" secondItem="urn-BW-fEy" secondAttribute="centerY" constant="-25" id="YXP-nv-htF"/>
                             <constraint firstItem="BOW-nn-YvK" firstAttribute="trailing" secondItem="AcY-Y9-xKx" secondAttribute="trailing" id="Zpv-FT-2yd"/>
                             <constraint firstItem="AcY-Y9-xKx" firstAttribute="top" secondItem="Yr5-bv-S1r" secondAttribute="bottom" id="am4-Os-Vxt"/>
                             <constraint firstItem="AcY-Y9-xKx" firstAttribute="bottom" secondItem="BOW-nn-YvK" secondAttribute="bottom" id="cFO-Hb-N2g"/>
