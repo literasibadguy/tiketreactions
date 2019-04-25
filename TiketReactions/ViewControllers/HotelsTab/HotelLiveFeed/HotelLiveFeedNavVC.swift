@@ -7,7 +7,6 @@
 //
 import Prelude
 import ReactiveSwift
-import Spring
 import UIKit
 import TiketKitModels
 
@@ -19,11 +18,11 @@ internal final class HotelLiveFeedNavVC: UIViewController {
     
     fileprivate let viewModel: HotelLiveFeedNavViewModelType = HotelLiveFeedNavViewModel()
     
-    @IBOutlet fileprivate weak var locationContainerView: DesignableView!
+    @IBOutlet fileprivate weak var locationContainerView: UIView!
     @IBOutlet fileprivate weak var locationFormButton: UIButton!
     @IBOutlet fileprivate weak var locationContentLabel: UILabel!
     
-    @IBOutlet fileprivate weak var dateContainerView: DesignableView!
+    @IBOutlet fileprivate weak var dateContainerView: UIView!
     @IBOutlet fileprivate weak var dateFormButton: UIButton!
     @IBOutlet fileprivate weak var dateContentLabel: UILabel!
     

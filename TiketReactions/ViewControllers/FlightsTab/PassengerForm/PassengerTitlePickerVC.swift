@@ -9,7 +9,6 @@
 import UIKit
 import Prelude
 import ReactiveSwift
-import Spring
 import TiketKitModels
 
 internal protocol PassengerTitlePickerVCDelegate: class {
@@ -28,7 +27,7 @@ internal final class PassengerTitlePickerVC: UIViewController {
     @IBOutlet fileprivate weak var titleStackView: UIStackView!
     
     @IBOutlet fileprivate weak var titleInputLabel: UILabel!
-    @IBOutlet fileprivate weak var doneButton: DesignableButton!
+    @IBOutlet fileprivate weak var doneButton: UIButton!
     
     @IBOutlet fileprivate weak var topSeparatorView: UIView!
     @IBOutlet fileprivate weak var bottomSeparatorView: UIView!

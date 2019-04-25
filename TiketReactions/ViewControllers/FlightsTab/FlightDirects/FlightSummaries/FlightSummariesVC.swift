@@ -59,7 +59,7 @@ public final class FlightSummariesVC: UIViewController {
         
         _ = self.summaryTableView
             |> UITableView.lens.backgroundColor .~ .tk_base_grey_100
-            |> UITableView.lens.rowHeight .~ UITableViewAutomaticDimension
+            |> UITableView.lens.rowHeight .~ UITableView.automaticDimension
             |> UITableView.lens.estimatedRowHeight .~ 480.0
             |> UITableView.lens.separatorStyle .~ .none
         

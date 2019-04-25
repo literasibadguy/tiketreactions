@@ -65,7 +65,7 @@ class DateRangeViewCell: UICollectionViewCell {
         selectedView?.backgroundColor = .tk_official_green
         selectedView?.layer.cornerRadius = height / 2
         self.addSubview(selectedView!)
-        self.sendSubview(toBack: selectedView!)
+        self.sendSubviewToBack(selectedView!)
         
         label.textColor = UIColor.white
     }
@@ -77,7 +77,7 @@ class DateRangeViewCell: UICollectionViewCell {
         halfBackgroundView = UIView(frame: CGRect(x: width / 2, y: 0, width: width / 2, height: height))
         halfBackgroundView?.backgroundColor = .tk_official_green
         self.addSubview(halfBackgroundView!)
-        self.sendSubview(toBack: halfBackgroundView!)
+        self.sendSubviewToBack(halfBackgroundView!)
         
         addRoundHighlightView()
     }
@@ -89,7 +89,7 @@ class DateRangeViewCell: UICollectionViewCell {
         halfBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: width / 2, height: height))
         halfBackgroundView?.backgroundColor = .tk_official_green
         self.addSubview(halfBackgroundView!)
-        self.sendSubview(toBack: halfBackgroundView!)
+        self.sendSubviewToBack(halfBackgroundView!)
         
         addRoundHighlightView()
     }
@@ -101,7 +101,7 @@ class DateRangeViewCell: UICollectionViewCell {
         roundHighlightView?.backgroundColor = .tk_official_green
         roundHighlightView?.layer.cornerRadius = height / 2
         self.addSubview(roundHighlightView!)
-        self.sendSubview(toBack: roundHighlightView!)
+        self.sendSubviewToBack(roundHighlightView!)
     }
     
     func highlight() {

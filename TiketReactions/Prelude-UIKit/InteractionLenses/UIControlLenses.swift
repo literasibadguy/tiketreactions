@@ -1,18 +1,18 @@
 import Prelude
 import UIKit
 
-public typealias TargetSelectorControlEvent = (Any, Selector, UIControlEvents)
+public typealias TargetSelectorControlEvent = (Any, Selector, UIControl.Event)
 
 public protocol UIControlProtocol: UIViewProtocol {
-    func actions(forTarget target: Any?, forControlEvent controlEvent: UIControlEvents) -> [String]?
-    func addTarget(_ target: Any?, action: Selector, for controlEvents: UIControlEvents)
-    var allControlEvents: UIControlEvents { get }
+    func actions(forTarget target: Any?, forControlEvent controlEvent: UIControl.Event) -> [String]?
+    func addTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event)
+    var allControlEvents: UIControl.Event { get }
     var allTargets: Set<AnyHashable> { get }
-    var contentHorizontalAlignment: UIControlContentHorizontalAlignment { get set }
-    var contentVerticalAlignment: UIControlContentVerticalAlignment { get set }
+    var contentHorizontalAlignment: UIControl.ContentHorizontalAlignment { get set }
+    var contentVerticalAlignment: UIControl.ContentVerticalAlignment { get set }
     var isEnabled: Bool { get set }
     var isHighlighted: Bool { get set }
-    func removeTarget(_ target: Any?, action: Selector?, for controlEvents: UIControlEvents)
+    func removeTarget(_ target: Any?, action: Selector?, for controlEvents: UIControl.Event)
     var isSelected: Bool { get set }
 }
 
@@ -32,14 +32,14 @@ public extension LensHolder where Object: UIControlProtocol {
         )
     }
     
-    var contentHorizontalAlignment: Lens<Object, UIControlContentHorizontalAlignment> {
+    var contentHorizontalAlignment: Lens<Object, UIControl.ContentHorizontalAlignment> {
         return Lens(
             view: { $0.contentHorizontalAlignment },
             set: { $1.contentHorizontalAlignment = $0; return $1 }
         )
     }
     
-    var contentVerticalAlignment: Lens<Object, UIControlContentVerticalAlignment> {
+    var contentVerticalAlignment: Lens<Object, UIControl.ContentVerticalAlignment> {
         return Lens(
             view: { $0.contentVerticalAlignment },
             set: { $1.contentVerticalAlignment = $0; return $1 }
@@ -79,7 +79,7 @@ private func allTargetsSelectorsAndEvents(forControl control: UIControlProtocol)
     -> [TargetSelectorControlEvent] {
         
         return bitComponents(forMask: control.allControlEvents.rawValue)
-            .map(UIControlEvents.init(rawValue:))
+            .map(UIControl.Event.init(rawValue:))
             .flatMap { event in
                 control.allTargets
                     .flatMap { target in

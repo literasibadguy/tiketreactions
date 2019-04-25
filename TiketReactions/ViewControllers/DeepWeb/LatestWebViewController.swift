@@ -58,7 +58,7 @@ internal class LatestWebViewController: UIViewController {
         _ = self.webView
             |> UIWebView.lens.suppressesIncrementalRendering .~ true
             |> UIWebView.lens.translatesAutoresizingMaskIntoConstraints .~ false
-            |> UIWebView.lens.scrollView.decelerationRate .~ UIScrollViewDecelerationRateNormal
+            |> UIWebView.lens.scrollView.decelerationRate .~ UIScrollView.DecelerationRate(rawValue: UIScrollView.DecelerationRate.normal.rawValue)
     }
     
     internal override func bindViewModel() {

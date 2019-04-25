@@ -7,7 +7,6 @@
 //
 import Prelude
 import ReactiveSwift
-import Spring
 import TiketKitModels
 import UIKit
 
@@ -17,7 +16,7 @@ public final class PickDatesHotelVC: UIViewController {
     fileprivate var dateRangeVC: DateRangesVC!
     
     @IBOutlet fileprivate weak var cancelButton: UIButton!
-    @IBOutlet fileprivate weak var findHotelButton: DesignableButton!
+    @IBOutlet fileprivate weak var findHotelButton: UIButton!
     
     @IBOutlet fileprivate weak var mainDateLabel: UILabel!
     @IBOutlet fileprivate weak var checkInDateLabel: UILabel!
@@ -35,7 +34,7 @@ public final class PickDatesHotelVC: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.dateRangeVC = self.childViewControllers
+        self.dateRangeVC = self.children
             .compactMap { $0 as? DateRangesVC }.first
         self.dateRangeVC.delegate = self
         

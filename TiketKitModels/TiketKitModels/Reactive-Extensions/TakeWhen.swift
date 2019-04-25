@@ -18,7 +18,7 @@ public extension SignalProtocol {
      
      - returns: A new signal.
      */
-    public func takeWhen <U> (_ other: Signal<U, Error>) -> Signal<Value, Error> {
+    func takeWhen <U> (_ other: Signal<U, Error>) -> Signal<Value, Error> {
         return other.withLatest(from: self.signal as! Signal<Value, NoError>).map { tuple in tuple.1 }
     }
     
@@ -29,7 +29,7 @@ public extension SignalProtocol {
      
      - returns: A new signal.
      */
-    public func takePairWhen <U> (_ other: Signal<U, Error>) -> Signal<(Value, U), Error> {
+    func takePairWhen <U> (_ other: Signal<U, Error>) -> Signal<(Value, U), Error> {
         return other.withLatest(from: self.signal as! Signal<Value, NoError>).map { ($0.1, $0.0) }
     }
 }

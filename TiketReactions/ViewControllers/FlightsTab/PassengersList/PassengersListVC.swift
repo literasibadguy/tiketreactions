@@ -80,7 +80,7 @@ public final class PassengersListVC: UIViewController {
             |> UINavigationBar.lens.shadowImage .~ UIImage()
         
         _ = self.listPassengersTableView
-            |> UITableView.lens.rowHeight .~ UITableViewAutomaticDimension
+            |> UITableView.lens.rowHeight .~ UITableView.automaticDimension
             |> UITableView.lens.backgroundColor .~ .white
             |> UITableView.lens.estimatedRowHeight .~ 480.0
             |> UITableView.lens.separatorStyle .~ .none
@@ -126,7 +126,7 @@ public final class PassengersListVC: UIViewController {
             .observe(on: QueueScheduler.main)
             .observeValues { [weak self] contact in
                 guard let _self = self else { return }
-                _self.listPassengersTableView.selectRow(at: IndexPath(row: 0, section: 2), animated: true, scrollPosition: UITableViewScrollPosition.none)
+                _self.listPassengersTableView.selectRow(at: IndexPath(row: 0, section: 2), animated: true, scrollPosition: UITableView.ScrollPosition.none)
                 let vc = PassengerInternationalVC.configureDataWith(contact)
                 vc.delegate = self
                 self?.navigationController?.pushViewController(vc, animated: true)
@@ -210,14 +210,14 @@ public final class PassengersListVC: UIViewController {
     
     fileprivate func startListeningToNotifications() {
         let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-        nc.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+        nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        nc.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc fileprivate func keyboardWillShow(_ notification: Foundation.Notification) {
         guard
             let userInfo = notification.userInfo as? [String: AnyObject],
-            let keyboardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
             else {
                 return
         }
@@ -228,7 +228,7 @@ public final class PassengersListVC: UIViewController {
     @objc fileprivate func keyboardWillHide(_ notification: Foundation.Notification) {
         guard
             let userInfo = notification.userInfo as? [String: AnyObject],
-            let keyboardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
             else {
                 return
         }

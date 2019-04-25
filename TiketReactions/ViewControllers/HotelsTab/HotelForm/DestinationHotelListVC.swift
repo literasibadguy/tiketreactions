@@ -56,12 +56,13 @@ internal final class DestinationHotelListVC: UIViewController, UITableViewDelega
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        startListeningToNotifications()
+        
         self.cancelButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         
         self.searchBar.delegate = self
         self.viewModel.inputs.viewWillAppear(animated: animated)
     }
-    
     
     internal override func bindStyles() {
         super.bindStyles()
@@ -69,7 +70,7 @@ internal final class DestinationHotelListVC: UIViewController, UITableViewDelega
         _ = self.hotelDestinationTableView
             |> UITableView.lens.separatorStyle .~ .none
             |> UITableView.lens.backgroundColor .~ .white
-            |> UITableView.lens.rowHeight .~ UITableViewAutomaticDimension
+            |> UITableView.lens.rowHeight .~ UITableView.automaticDimension
             |> UITableView.lens.estimatedRowHeight .~ 88.0
         
         _ = self.searchBar
@@ -167,6 +168,50 @@ internal final class DestinationHotelListVC: UIViewController, UITableViewDelega
         self.locationManager.startUpdatingLocation()
     }
     
+    fileprivate func startListeningToNotifications() {
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        nc.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc fileprivate func keyboardWillShow(_ notification: Foundation.Notification) {
+        guard
+            let userInfo = notification.userInfo as? [String: AnyObject],
+            let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            else {
+                return
+        }
+        
+        refreshInsets(forKeyboardFrame: keyboardFrame)
+    }
+    
+    @objc fileprivate func keyboardWillHide(_ notification: Foundation.Notification) {
+        guard
+            let userInfo = notification.userInfo as? [String: AnyObject],
+            let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            else {
+                return
+        }
+        
+        refreshInsets(forKeyboardFrame: keyboardFrame)
+        //        dismissOptionsViewControllerIfNecessary()
+    }
+    
+    fileprivate func refreshInsets(forKeyboardFrame keyboardFrame: CGRect) {
+        let referenceView: UIScrollView = self.hotelDestinationTableView
+        
+        let scrollInsets = UIEdgeInsets(top: referenceView.scrollIndicatorInsets.top, left: 0, bottom: view.frame.maxY - keyboardFrame.minY, right: 0)
+        let contentInsets  = UIEdgeInsets(top: referenceView.contentInset.top, left: 0, bottom: view.frame.maxY - keyboardFrame.minY, right: 0)
+        
+        self.hotelDestinationTableView.scrollIndicatorInsets = scrollInsets
+        self.hotelDestinationTableView.contentInset = contentInsets
+        
+        //        htmlTextView.scrollIndicatorInsets = scrollInsets
+        //        htmlTextView.contentInset = contentInsets
+        
+        //        richTextView.scrollIndicatorInsets = scrollInsets
+        //        richTextView.contentInset = contentInsets
+    }
     
     
     @objc fileprivate func closeButtonTapped() {

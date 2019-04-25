@@ -55,7 +55,7 @@ internal final class FacilityListVC: UIViewController {
         
         _ = self.facilityHotelTableView
             |> UITableView.lens.separatorStyle .~ .none
-            |> UITableView.lens.rowHeight .~ UITableViewAutomaticDimension
+            |> UITableView.lens.rowHeight .~ UITableView.automaticDimension
         
         _ = self.facilityHeaderSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_base_grey_100

@@ -11,20 +11,20 @@ import UIKit
 
 public protocol UITableViewCellProtocol: UIViewProtocol {
     var contentView: UIView { get }
-    var selectionStyle: UITableViewCellSelectionStyle { get set }
+    var selectionStyle: UITableViewCell.SelectionStyle { get set }
 }
 
 extension UITableViewCell: UITableViewCellProtocol {}
 
 public extension LensHolder where Object: UITableViewCellProtocol {
-    public var contentView: Lens<Object, UIView> {
+    var contentView: Lens<Object, UIView> {
         return Lens(
             view: { view in view.contentView },
             set: { return $1 }
         )
     }
     
-    public var selectionStyle: Lens<Object, UITableViewCellSelectionStyle> {
+    var selectionStyle: Lens<Object, UITableViewCell.SelectionStyle> {
         return Lens(
             view: { view in view.selectionStyle },
             set: { view, set in set.selectionStyle = view; return set }

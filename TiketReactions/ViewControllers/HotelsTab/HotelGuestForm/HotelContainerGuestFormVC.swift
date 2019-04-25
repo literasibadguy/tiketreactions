@@ -39,9 +39,9 @@ public final class HotelContainerGuestFormVC: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.contentController = self.childViewControllers.compactMap { $0 as? HotelGuestFormVC }.first
+        self.contentController = self.children.compactMap { $0 as? HotelGuestFormVC }.first
         self.contentController.delegate = self
-        self.bookingController = self.childViewControllers.compactMap { $0 as? HotelNavGuestFormVC }.first
+        self.bookingController = self.children.compactMap { $0 as? HotelNavGuestFormVC }.first
         self.bookingController.delegate = self
         
         self.viewModel.inputs.viewDidLoad()

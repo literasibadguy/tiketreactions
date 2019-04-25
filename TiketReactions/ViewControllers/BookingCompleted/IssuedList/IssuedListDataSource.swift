@@ -35,7 +35,7 @@ public final class IssuedListDataSource: ValueCellDataSource {
         }
     }
     
-    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             if let issue = issueAtIndexPath(indexPath) {
                 guard !issue.isInvalidated else {

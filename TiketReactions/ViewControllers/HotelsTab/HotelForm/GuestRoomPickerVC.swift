@@ -8,7 +8,6 @@
 
 import Prelude
 import ReactiveSwift
-import Spring
 import UIKit
 
 public protocol GuestRoomPickerDelegate: class {
@@ -27,7 +26,7 @@ public final class GuestRoomPickerVC: UIViewController {
     @IBOutlet fileprivate weak var guestInputTitleLabel: UILabel!
     
     @IBOutlet fileprivate weak var navigationPickerView: UIView!
-    @IBOutlet fileprivate weak var doneButton: DesignableButton!
+    @IBOutlet fileprivate weak var doneButton: UIButton!
     
     @IBOutlet fileprivate weak var topSeparatorView: UIView!
     @IBOutlet fileprivate weak var bottomSeparatorView: UIView!
@@ -45,7 +44,7 @@ public final class GuestRoomPickerVC: UIViewController {
         
         self.doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
         self.doneButton.setBackgroundColor(.tk_official_green, forState: .normal)
-        self.doneButton.cornerRadius = 8.0
+//        self.doneButton.cornerRadius = 8.0
         
         // Do any additional setup after loading the view.
         self.viewModel.inputs.viewDidLoad()

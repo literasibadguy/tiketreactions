@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,18 +15,18 @@
             <objects>
                 <viewController storyboardIdentifier="PassengersListVC" title="Daftar Penumpang" id="2Jl-5A-caa" customClass="PassengersListVC" customModule="triptozero" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="urn-BW-fEy">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Yr5-bv-S1r">
-                                <rect key="frame" x="0.0" y="88" width="414" height="699"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="528"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="GuestOptionViewCell" rowHeight="64" id="6wA-Lc-zog" customClass="GuestOptionViewCell" customModule="triptozero" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="64"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="64"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6wA-Lc-zog" id="YhS-ec-YQS">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="63.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="63.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lu5-DX-Vcu" userLabel="Passenger Option Stack View">
@@ -72,14 +72,14 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="115" id="om2-Wv-BWG" userLabel="Passengers Stack View Cell">
-                                        <rect key="frame" x="0.0" y="92" width="414" height="115"/>
+                                        <rect key="frame" x="0.0" y="92" width="375" height="115"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="om2-Wv-BWG" id="SGC-Y3-EPH">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="114.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="114.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xbL-IB-mV7">
-                                                    <rect key="frame" x="20" y="11" width="374" height="93"/>
+                                                    <rect key="frame" x="15" y="11" width="384" height="93"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Semua Penumpang" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="myG-UP-JUB">
                                                             <rect key="frame" x="10" y="10" width="128" height="17"/>
@@ -88,10 +88,10 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Pfj-9w-p0l" userLabel="Passengers Row Stack View">
-                                                            <rect key="frame" x="0.0" y="36" width="374" height="57"/>
+                                                            <rect key="frame" x="0.0" y="36" width="384" height="57"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bfm-2v-gbZ" userLabel="Passenger Row View" customClass="PassengerRowView" customModule="triptozero" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="57"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="384" height="57"/>
                                                                     <subviews>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="dD5-60-mdZ" userLabel="Form Name Stack View">
                                                                             <rect key="frame" x="8" y="10" width="133" height="37"/>
@@ -111,7 +111,7 @@
                                                                             </subviews>
                                                                         </stackView>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HdY-X8-40q" userLabel="Passenger Separator View">
-                                                                            <rect key="frame" x="0.0" y="56" width="374" height="1"/>
+                                                                            <rect key="frame" x="0.0" y="56" width="384" height="1"/>
                                                                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="1" id="gY5-x7-8Ya"/>
@@ -151,14 +151,14 @@
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="85" id="O7G-Rw-3Mq">
-                                        <rect key="frame" x="0.0" y="207" width="414" height="85"/>
+                                        <rect key="frame" x="0.0" y="207" width="375" height="85"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="O7G-Rw-3Mq" id="RdV-2z-LgF">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="84.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="84.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vC2-1P-ccZ" userLabel="Passenger Container View">
-                                                    <rect key="frame" x="20" y="11" width="374" height="63"/>
+                                                    <rect key="frame" x="15" y="11" width="384" height="63"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="2ka-Mh-yvA">
                                                             <rect key="frame" x="18" y="9.5" width="153.5" height="44"/>
@@ -196,7 +196,7 @@
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AcY-Y9-xKx">
-                                <rect key="frame" x="0.0" y="787" width="414" height="75"/>
+                                <rect key="frame" x="0.0" y="592" width="375" height="75"/>
                                 <color key="backgroundColor" red="0.19683982350000001" green="0.59010686530000001" blue="0.22948678289999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="75" id="AWr-r1-rT9"/>
@@ -206,37 +206,41 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                             </button>
-                            <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qCd-au-Q5L" userLabel="Loading Overlay View">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                            <view alpha="0.89999997615814198" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qCd-au-Q5L" userLabel="Loading Overlay View">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mohon tunggu, booking sedang proses" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="btp-vg-DfM">
+                                        <rect key="frame" x="90" y="222" width="195" height="61"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="61" id="Kx8-ED-6RO"/>
+                                            <constraint firstAttribute="width" constant="195" id="ffa-ei-PQu"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="JUm-Z4-5D1">
+                                        <rect key="frame" x="177.5" y="283" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mohon tunggu sebentar" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="btp-vg-DfM">
-                                <rect key="frame" x="109.5" y="310" width="195" height="61"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="61" id="Kx8-ED-6RO"/>
-                                    <constraint firstAttribute="width" constant="195" id="ffa-ei-PQu"/>
+                                    <constraint firstItem="JUm-Z4-5D1" firstAttribute="centerX" secondItem="btp-vg-DfM" secondAttribute="centerX" id="C0O-OG-rA8"/>
+                                    <constraint firstItem="btp-vg-DfM" firstAttribute="top" secondItem="qCd-au-Q5L" secondAttribute="top" constant="222" id="TVw-9c-hTm"/>
+                                    <constraint firstItem="JUm-Z4-5D1" firstAttribute="top" secondItem="btp-vg-DfM" secondAttribute="bottom" id="ffE-fb-z6Y"/>
+                                    <constraint firstItem="btp-vg-DfM" firstAttribute="centerX" secondItem="qCd-au-Q5L" secondAttribute="centerX" id="sY0-zA-ZjF"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
-                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="JUm-Z4-5D1">
-                                <rect key="frame" x="197" y="381" width="20" height="20"/>
-                            </activityIndicatorView>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="qCd-au-Q5L" firstAttribute="leading" secondItem="BOW-nn-YvK" secondAttribute="leading" id="1vG-Nl-wsY"/>
                             <constraint firstItem="Yr5-bv-S1r" firstAttribute="leading" secondItem="BOW-nn-YvK" secondAttribute="leading" id="GRF-ye-qsi"/>
-                            <constraint firstItem="JUm-Z4-5D1" firstAttribute="top" secondItem="btp-vg-DfM" secondAttribute="bottom" constant="10" id="MxM-LX-ulf"/>
                             <constraint firstItem="BOW-nn-YvK" firstAttribute="trailing" secondItem="Yr5-bv-S1r" secondAttribute="trailing" id="OW7-em-sLb"/>
-                            <constraint firstItem="btp-vg-DfM" firstAttribute="top" secondItem="BOW-nn-YvK" secondAttribute="top" constant="222" id="Rfp-Pp-e7K"/>
                             <constraint firstItem="Yr5-bv-S1r" firstAttribute="top" secondItem="BOW-nn-YvK" secondAttribute="top" id="Xqm-vh-qPs"/>
-                            <constraint firstItem="btp-vg-DfM" firstAttribute="centerX" secondItem="urn-BW-fEy" secondAttribute="centerX" id="Xr6-eQ-8AN"/>
                             <constraint firstItem="BOW-nn-YvK" firstAttribute="trailing" secondItem="AcY-Y9-xKx" secondAttribute="trailing" id="Zpv-FT-2yd"/>
                             <constraint firstItem="AcY-Y9-xKx" firstAttribute="top" secondItem="Yr5-bv-S1r" secondAttribute="bottom" id="am4-Os-Vxt"/>
                             <constraint firstItem="AcY-Y9-xKx" firstAttribute="bottom" secondItem="BOW-nn-YvK" secondAttribute="bottom" id="cFO-Hb-N2g"/>
-                            <constraint firstItem="JUm-Z4-5D1" firstAttribute="centerX" secondItem="btp-vg-DfM" secondAttribute="centerX" id="fkX-uj-Jzi"/>
                             <constraint firstItem="BOW-nn-YvK" firstAttribute="bottom" secondItem="qCd-au-Q5L" secondAttribute="bottom" id="lgo-6O-BdM"/>
                             <constraint firstItem="AcY-Y9-xKx" firstAttribute="leading" secondItem="BOW-nn-YvK" secondAttribute="leading" id="rlf-4w-4Sv"/>
                             <constraint firstItem="BOW-nn-YvK" firstAttribute="top" secondItem="qCd-au-Q5L" secondAttribute="top" id="xG9-Ix-NhK"/>
@@ -262,17 +266,17 @@
             <objects>
                 <viewController id="Y1l-2g-3HR" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6J7-Hj-MD2">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="14f-nr-fzV">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ia1-8x-EJv">
-                                        <rect key="frame" x="0.0" y="52" width="414" height="121"/>
+                                        <rect key="frame" x="0.0" y="52" width="375" height="121"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vBH-m7-juT">
-                                                <rect key="frame" x="8" y="8" width="398" height="105"/>
+                                                <rect key="frame" x="8" y="8" width="359" height="105"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Semua Penumpang" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QbC-Rk-ARs">
                                                         <rect key="frame" x="18" y="15" width="172" height="23"/>

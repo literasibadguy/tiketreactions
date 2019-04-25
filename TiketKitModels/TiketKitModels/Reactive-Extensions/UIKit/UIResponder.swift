@@ -8,7 +8,7 @@ private enum Associations {
 }
 
 public extension Rac where Object: UIResponder {
-    public var becomeFirstResponder: Signal<(), NoError> {
+    var becomeFirstResponder: Signal<(), NoError> {
         nonmutating set {
             let prop: MutableProperty<()> = lazyMutableProperty(
                 object,
@@ -26,7 +26,7 @@ public extension Rac where Object: UIResponder {
         }
     }
     
-    public var isFirstResponder: Signal<Bool, NoError> {
+    var isFirstResponder: Signal<Bool, NoError> {
         nonmutating set {
             let prop: MutableProperty<Bool> = lazyMutableProperty(
                 object,

@@ -8,7 +8,7 @@ private enum Associations {
 
 public extension Rac where Object: UISearchBar {
     
-    public var text: Signal<String, NoError> {
+    var text: Signal<String, NoError> {
         nonmutating set {
             let prop: MutableProperty<String> = lazyMutableProperty(object, key: &Associations.text, setter: { [weak object] in object?.text = $0 }, getter: { [weak object] in object?.text ?? "" })
             

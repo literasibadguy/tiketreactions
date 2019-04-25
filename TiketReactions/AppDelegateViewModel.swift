@@ -44,7 +44,7 @@ public final class AppDelegateViewModel: AppDelegateViewModelType, AppDelegateVi
 //        self.applicationDidFinishLaunchingReturnValue = true
         
         let current = Signal.merge(self.appEnterForegroundProperty.signal, self.applicationLaunchOptionsProperty.signal.ignoreValues())
-        let clientAuth = ClientAuth(clientId: Secrets.Api.Client.staging)
+        let clientAuth = ClientAuth(clientId: Secrets.Api.Client.production)
         
         let tokenEnvelope = self.applicationLaunchOptionsProperty.signal.ignoreValues().filter { _ in !isTokenStored() }.switchMap { _ in
             AppEnvironment.current.apiService.getTokenEnvelope(clientAuth: clientAuth).materialize()
@@ -61,7 +61,7 @@ public final class AppDelegateViewModel: AppDelegateViewModelType, AppDelegateVi
         self.synchronizeUbiquitousStore = .empty
         
         self.applicationDidFinishLaunchingReturnValueProperty <~ self.applicationLaunchOptionsProperty.signal.skipNil().map { _ , options in
-            options?[UIApplicationLaunchOptionsKey.shortcutItem] == nil
+            options?[UIApplication.LaunchOptionsKey.shortcutItem] == nil
         }
     }
     

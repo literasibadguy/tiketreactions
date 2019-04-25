@@ -8,7 +8,6 @@
 import Prelude
 import ReactiveSwift
 import TiketKitModels
-import Spring
 import UIKit
 
 public final class PickFlightResultsVC: UIViewController {
@@ -29,7 +28,7 @@ public final class PickFlightResultsVC: UIViewController {
     
     @IBOutlet fileprivate weak var flightsTableView: UITableView!
     @IBOutlet fileprivate weak var footerContainerView: UIView!
-    @IBOutlet fileprivate weak var nextStepsButton: DesignableButton!
+    @IBOutlet fileprivate weak var nextStepsButton: UIButton!
     
     public static func configureWith(_ envelope: SearchFlightEnvelope) -> PickFlightResultsVC {
         let resultsVC = Storyboard.PickFlight.instantiate(PickFlightResultsVC.self)
@@ -62,7 +61,7 @@ public final class PickFlightResultsVC: UIViewController {
         
         let emptyVC = EmptyStatesVC.configuredWith(emptyState: nil)
         self.emptyStatesController = emptyVC
-        self.addChildViewController(emptyVC)
+        self.addChild(emptyVC)
         self.flightsTableView.addSubview(emptyVC.view)
         NSLayoutConstraint.activate([
             emptyVC.view.topAnchor.constraint(equalTo: self.flightsTableView.topAnchor),
@@ -70,7 +69,7 @@ public final class PickFlightResultsVC: UIViewController {
             emptyVC.view.bottomAnchor.constraint(equalTo: self.flightsTableView.bottomAnchor),
             emptyVC.view.trailingAnchor.constraint(equalTo: self.flightsTableView.trailingAnchor)
             ])
-        emptyVC.didMove(toParentViewController: self)
+        emptyVC.didMove(toParent: self)
         
         self.viewModel.inputs.viewDidLoad()
     }
@@ -102,7 +101,7 @@ public final class PickFlightResultsVC: UIViewController {
         
         _ = self.flightsTableView
             |> UITableView.lens.backgroundColor .~ .white
-            |> UITableView.lens.rowHeight .~ UITableViewAutomaticDimension
+            |> UITableView.lens.rowHeight .~ UITableView.automaticDimension
             |> UITableView.lens.estimatedRowHeight .~ 480.0
             |> UITableView.lens.separatorStyle .~ .none
         
@@ -205,7 +204,7 @@ public final class PickFlightResultsVC: UIViewController {
         
         emptyVC.setEmptyState(emptyState)
         emptyVC.view.isHidden = false
-        self.flightsTableView.bringSubview(toFront: emptyVC.view)
+        self.flightsTableView.bringSubviewToFront(emptyVC.view)
         UIView.animate(withDuration: 0.3, animations: {
             self.emptyStatesController?.view.alpha = 1.0
         })

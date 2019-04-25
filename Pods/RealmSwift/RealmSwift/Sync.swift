@@ -177,6 +177,38 @@ public typealias SyncLogLevel = RLMSyncLogLevel
 public typealias Provider = RLMIdentityProvider
 
 /**
+ * How the Realm client should validate the identity of the server for secure connections.
+ *
+ * By default, when connecting to the Realm Object Server over HTTPS, Realm will
+ * validate the server's HTTPS certificate using the system trust store and root
+ * certificates. For additional protection against man-in-the-middle (MITM)
+ * attacks and similar vulnerabilities, you can pin a certificate or public key,
+ * and reject all others, even if they are signed by a trusted CA.
+ */
+public enum ServerValidationPolicy {
+    /// Perform no validation and accept potentially invalid certificates.
+    ///
+    /// -warning: DO NOT USE THIS OPTION IN PRODUCTION.
+    case none
+
+    /// Use the default server trust evaluation based on the system-wide CA
+    /// store. Any certificate signed by a trusted CA will be accepted.
+    case system
+
+    /// Use a specific pinned certificate to validate the server identify.
+    ///
+    /// This will only connect to a server if one of the server certificates
+    /// matches the certificate stored at the given local path and that
+    /// certificate has a valid trust chain.
+    ///
+    /// On macOS, the certificate files may be in any of the formats supported
+    /// by SecItemImport(), including PEM and .cer (see SecExternalFormat for a
+    /// complete list of possible formats). On iOS and other platforms, only
+    /// DER .cer files are supported.
+    case pinCertificate(path: URL)
+}
+
+/**
  A `SyncConfiguration` represents configuration parameters for Realms intended to sync with
  a Realm Object Server.
  */
@@ -199,9 +231,18 @@ public struct SyncConfiguration {
     internal let stopPolicy: RLMSyncStopPolicy
 
     /**
+     How the SSL certificate of the Realm Object Server should be validated.
+     */
+    public let serverValidationPolicy: ServerValidationPolicy
+
+    /**
      Whether the SSL certificate of the Realm Object Server should be validated.
      */
-    public let enableSSLValidation: Bool
+    @available(*, deprecated, message: "Use serverValidationPolicy instead")
+    public var enableSSLValidation: Bool {
+        if case .none = serverValidationPolicy { return true }
+        return false
+    }
 
     /**
      Whether this Realm should be opened in 'partial synchronization' mode.
@@ -238,17 +279,32 @@ public struct SyncConfiguration {
         self.user = config.user
         self.realmURL = config.realmURL
         self.stopPolicy = config.stopPolicy
-        self.enableSSLValidation = config.enableSSLValidation
+        if let certificateURL = config.pinnedCertificateURL {
+            self.serverValidationPolicy = .pinCertificate(path: certificateURL)
+        } else {
+            self.serverValidationPolicy = config.enableSSLValidation ? .system : .none
+        }
         self.fullSynchronization = config.fullSynchronization
         self.urlPrefix = config.urlPrefix
     }
 
     func asConfig() -> RLMSyncConfiguration {
+        var validateSSL = true
+        var certificate: URL?
+        switch serverValidationPolicy {
+        case .none:
+            validateSSL = false
+        case .system:
+            break
+        case .pinCertificate(let path):
+            certificate = path
+        }
         return RLMSyncConfiguration(user: user, realmURL: realmURL,
                                     isPartial: !fullSynchronization,
                                     urlPrefix: urlPrefix,
                                     stopPolicy: stopPolicy,
-                                    enableSSLValidation: enableSSLValidation)
+                                    enableSSLValidation: validateSSL,
+                                    certificatePath: certificate)
     }
 
     /**
@@ -270,7 +326,7 @@ public struct SyncConfiguration {
         self.user = user
         self.realmURL = realmURL
         self.stopPolicy = .afterChangesUploaded
-        self.enableSSLValidation = enableSSLValidation
+        self.serverValidationPolicy = enableSSLValidation ? .system : .none
         self.fullSynchronization = !isPartial
         self.urlPrefix = urlPrefix
     }
@@ -520,6 +576,39 @@ extension SyncUser {
                                           urlPrefix: urlPrefix)
         return ObjectiveCSupport.convert(object: config)
     }
+
+    /**
+     Create a sync configuration instance.
+
+     Additional settings can be optionally specified. Descriptions of these
+     settings follow.
+
+     `serverValidationPolicy` defaults to `.system`. It can be set to
+     `.pinCertificate` to pin a specific SSL certificate, or `.none` for
+     debugging purposes.
+
+     - warning: The URL must be absolute (e.g. `realms://example.com/~/foo`), and cannot end with
+     `.realm`, `.realm.lock` or `.realm.management`.
+
+     - warning: NEVER disable SSL validation for a system running in production.
+     */
+    public func configuration(realmURL: URL? = nil, fullSynchronization: Bool = false,
+                              serverValidationPolicy: ServerValidationPolicy,
+                              urlPrefix: String? = nil) -> Realm.Configuration {
+        let config = self.__configuration(with: realmURL, fullSynchronization: fullSynchronization)
+        let syncConfig = config.syncConfiguration!
+        syncConfig.urlPrefix = urlPrefix
+        switch serverValidationPolicy {
+        case .none:
+            syncConfig.enableSSLValidation = false
+        case .system:
+            break
+        case .pinCertificate(let path):
+            syncConfig.pinnedCertificateURL = path
+        }
+        config.syncConfiguration = syncConfig
+        return ObjectiveCSupport.convert(object: config)
+    }
 }
 
 /**
@@ -540,12 +629,26 @@ public typealias SyncAccessLevel = RLMSyncAccessLevel
 
 public extension SyncSession {
     /**
+     The current state of the session represented by a session object.
+
+     - see: `RLMSyncSessionState`
+     */
+    typealias State = RLMSyncSessionState
+
+    /**
+     The current state of a sync session's connection.
+
+     - see: `RLMSyncConnectionState`
+     */
+    typealias ConnectionState = RLMSyncConnectionState
+
+    /**
      The transfer direction (upload or download) tracked by a given progress notification block.
 
      Progress notification blocks can be registered on sessions if your app wishes to be informed
      how many bytes have been uploaded or downloaded, for example to show progress indicator UIs.
      */
-    public enum ProgressDirection {
+    enum ProgressDirection {
         /// For monitoring upload progress.
         case upload
         /// For monitoring download progress.
@@ -558,7 +661,7 @@ public extension SyncSession {
      Progress notification blocks can be registered on sessions if your app wishes to be informed
      how many bytes have been uploaded or downloaded, for example to show progress indicator UIs.
      */
-    public enum ProgressMode {
+    enum ProgressMode {
         /**
          The block will be called forever, or until it is unregistered by calling
          `ProgressNotificationToken.invalidate()`.
@@ -585,12 +688,12 @@ public extension SyncSession {
      been automatically stopped, calling `invalidate()` does nothing. `invalidate()` should be called
      before the token is destroyed.
      */
-    public typealias ProgressNotificationToken = RLMProgressNotificationToken
+    typealias ProgressNotificationToken = RLMProgressNotificationToken
 
     /**
      A struct encapsulating progress information, as well as useful helper methods.
      */
-    public struct Progress {
+    struct Progress {
         /// The number of bytes that have been transferred.
         public let transferredBytes: Int
 
@@ -656,9 +759,9 @@ public extension SyncSession {
 
      - see: `ProgressDirection`, `Progress`, `ProgressNotificationToken`
      */
-    public func addProgressNotification(for direction: ProgressDirection,
-                                        mode: ProgressMode,
-                                        block: @escaping (Progress) -> Void) -> ProgressNotificationToken? {
+    func addProgressNotification(for direction: ProgressDirection,
+                                 mode: ProgressMode,
+                                 block: @escaping (Progress) -> Void) -> ProgressNotificationToken? {
         return __addProgressNotification(for: (direction == .upload ? .upload : .download),
                                          mode: (mode == .reportIndefinitely
                                             ? .reportIndefinitely
@@ -741,10 +844,6 @@ extension Results where Element == SyncPermission {
 
 // MARK: - Partial sync subscriptions
 
-// Partial sync subscriptions are only available in Swift 3.2 and newer.
-#if swift(>=3.2)
-
-
 /// The possible states of a sync subscription.
 public enum SyncSubscriptionState: Equatable {
     /// The subscription is being created, but has not yet been written to the synced Realm.
@@ -799,7 +898,7 @@ public enum SyncSubscriptionState: Equatable {
 /// Changes to the state of the subscription can be observed using `SyncSubscription.observe(_:options:_:)`.
 ///
 /// Subscriptions are created using `Results.subscribe()` or `Results.subscribe(named:)`.
-public class SyncSubscription<Type: RealmCollectionValue> {
+public class SyncSubscription<T: RealmCollectionValue>: RealmCollectionValue {
     private let rlmSubscription: RLMSyncSubscription
 
     /// The name of the subscription.
@@ -814,9 +913,22 @@ public class SyncSubscription<Type: RealmCollectionValue> {
         self.rlmSubscription = rlmSubscription
     }
 
+    public static func == (lhs: SyncSubscription, rhs: SyncSubscription) -> Bool {
+        return lhs.rlmSubscription == rhs.rlmSubscription
+    }
+
+// Partial sync subscriptions are only observable in Swift 3.2 and newer.
+#if swift(>=3.2)
+
     /// Observe the subscription for state changes.
     ///
-    /// When the state of the subscription changes, `block` will be invoked and passed the new state.
+    /// When the state of the subscription changes, `block` will be invoked and
+    /// passed the new state.
+    ///
+    /// The token returned from this function does not hold a strong reference to
+    /// this subscription object. This means that you must hold a reference to
+    /// the subscription object itself along with the returned token in order to
+    /// actually receive updates about the state.
     ///
     /// - parameter keyPath: The path to observe. Must be `\.state`.
     /// - parameter options: Options for the observation. Only `NSKeyValueObservingOptions.initial` option is
@@ -832,6 +944,8 @@ public class SyncSubscription<Type: RealmCollectionValue> {
         return KeyValueObservationNotificationToken(observation)
     }
 
+#endif // Swift >= 3.2
+
     /// Remove this subscription
     ///
     /// Removing a subscription will delete all objects from the local Realm that were matched
@@ -844,24 +958,51 @@ public class SyncSubscription<Type: RealmCollectionValue> {
 }
 
 extension Results {
-    /// Subscribe to the query represented by this `Results`
-    ///
-    /// The subscription will not have an explicit name.
-    ///
-    /// - returns: The subscription.
-    public func subscribe() -> SyncSubscription<Element> {
-        return SyncSubscription(rlmResults.subscribe())
-    }
+    // MARK: Sync
 
     /// Subscribe to the query represented by this `Results`
     ///
-    /// - parameter subscriptionName: The name of the subscription.
+    /// Subscribing to a query asks the server to synchronize all objects to the
+    /// client which match the query, along with all objects which are reachable
+    /// from those objects via links. This happens asynchronously, and the local
+    /// client Realm may not immediately have all objects which match the query.
+    /// Observe the `state` property of the returned subscription object to be
+    /// notified of when the subscription has been processed by the server and
+    /// all objects matching the query are available.
+    ///
+    /// Creating a new subscription with the same name and query as an existing
+    /// subscription will not create a new subscription, but instead will return
+    /// an object referring to the existing sync subscription. This means that
+    /// performing the same subscription twice followed by removing it once will
+    /// result in no subscription existing.
+    ///
+    /// The number of top-level matches may optionally be limited. This limit
+    /// respects the sort and distinct order of the query being subscribed to,
+    /// if any. Please note that the limit does not count or apply to objects
+    /// which are added indirectly due to being linked to by the objects in the
+    /// subscription. If the limit is larger than the number of objects which
+    /// match the query, all objects will be included.
+    ///
+    /// Creating a subscription is an asynchronous operation and the newly
+    /// created subscription will not be reported by Realm.subscriptions() until
+    /// it has transitioned from the `.creating` state to `.pending`,
+    /// `.created` or `.error`.
+    ///
+    /// - parameter subscriptionName: An optional name for the subscription.
+    /// - parameter limit: The maximum number of objects to include in the subscription.
     /// - returns: The subscription.
-    public func subscribe(named subscriptionName: String) -> SyncSubscription<Element> {
-        return SyncSubscription(rlmResults.subscribe(withName: subscriptionName))
+    public func subscribe(named subscriptionName: String? = nil, limit: Int? = nil) -> SyncSubscription<Element> {
+        if let limit = limit {
+            return SyncSubscription(rlmResults.subscribe(withName: subscriptionName, limit: UInt(limit)))
+        }
+        if let name = subscriptionName {
+            return SyncSubscription(rlmResults.subscribe(withName: name))
+        }
+        return SyncSubscription(rlmResults.subscribe())
     }
 }
 
+#if swift(>=3.2)
 internal class KeyValueObservationNotificationToken: NotificationToken {
     public var observation: NSKeyValueObservation?
 
@@ -1251,6 +1392,8 @@ public struct ObjectPrivileges: OptionSet, CustomDebugStringConvertible {
 }
 
 extension Realm {
+    // MARK: Sync - Permissions
+
     /**
     Returns the computed privileges which the current user has for this Realm.
 
@@ -1263,7 +1406,8 @@ extension Realm {
     operation is permitted but the server will still reject it if permission is
     revoked before the changes have been integrated on the server.
 
-    Non-synchronized Realms always have permission to perform all operations.
+    Non-synchronized and fully-synchronized Realms always have permission to
+    perform all operations.
 
      - returns: The privileges which the current user has for the current Realm.
      */
@@ -1283,7 +1427,8 @@ extension Realm {
     operation is permitted but the server will still reject it if permission is
     revoked before the changes have been integrated on the server.
 
-    Non-synchronized Realms always have permission to perform all operations.
+    Non-synchronized and fully-synchronized Realms always have permission to
+    perform all operations.
 
     The object must be a valid object managed by this Realm. Passing in an
     invalidated object, an unmanaged object, or an object managed by a
@@ -1308,7 +1453,8 @@ extension Realm {
     operation is permitted but the server will still reject it if permission is
     revoked before the changes have been integrated on the server.
 
-    Non-synchronized Realms always have permission to perform all operations.
+    Non-synchronized and fully-synchronized Realms always have permission to
+    perform all operations.
 
      - parameter cls: An Object subclass to get the privileges for.
      - returns: The privileges which the current user has for the given class.
@@ -1329,7 +1475,8 @@ extension Realm {
     operation is permitted but the server will still reject it if permission is
     revoked before the changes have been integrated on the server.
 
-    Non-synchronized Realms always have permission to perform all operations.
+    Non-synchronized and fully-synchronized Realms always have permission to
+    perform all operations.
 
      - parameter className: The name of an Object subclass to get the privileges for.
      - returns: The privileges which the current user has for the named class.
@@ -1343,7 +1490,7 @@ extension Realm {
 
      - parameter cls: An Object subclass to get the permissions for.
      - returns: The class-wide permissions for the given class.
-     - requires: This must only be called on a partially-synced Realm.
+     - requires: This must only be called on a Realm using query-based sync.
     */
     public func permissions<T: Object>(forType cls: T.Type) -> List<Permission> {
         return permissions(forClassNamed: cls._realmObjectName() ?? cls.className())
@@ -1355,7 +1502,7 @@ extension Realm {
      - parameter cls: The name of an Object subclass to get the permissions for.
      - returns: The class-wide permissions for the named class.
      - requires: className must name a class in this Realm's schema.
-     - requires: This must only be called on a partially-synced Realm.
+     - requires: This must only be called on a Realm using query-based sync.
     */
     public func permissions(forClassNamed className: String) -> List<Permission> {
         let classPermission = object(ofType: ClassPermission.self, forPrimaryKey: className)!
@@ -1365,10 +1512,43 @@ extension Realm {
     /**
     Returns the Realm-wide permissions.
 
-     - requires: This must only be called on a partially-synced Realm.
+     - requires: This must only be called on a Realm using query-based sync.
     */
     public var permissions: List<Permission> {
         return object(ofType: RealmPermission.self, forPrimaryKey: 0)!.permissions
+    }
+
+    // MARK: Sync - Subscriptions
+
+    /**
+    Returns this list of the query-based sync subscriptions made for this Realm.
+
+    This list includes all subscriptions which are currently in the states
+    `.pending`, `.created`, and `.error`. Newly created subscriptions which are
+    still in the `.creating` state are not included, and calling this
+    immediately after calling `Results.subscribe()` will typically not include
+    that subscription. Similarly, because unsubscription happens asynchronously,
+    this may continue to include subscriptions after
+    `SyncSubscription.unsubscribe()` is called on them.
+
+     - requires: This must only be called on a Realm using query-based sync.
+    */
+    public func subscriptions() -> Results<SyncSubscription<Object>> {
+        return Results(rlmRealm.subscriptions() as! RLMResults<AnyObject>)
+    }
+
+    /**
+    Returns the named query-based sync subscription, if it exists.
+
+    Subscriptions are created asynchronously, so calling this immediately after
+    calling Results.subscribe(named:)` will typically return `nil`. Only
+    subscriptions which are currently in the states `.pending`, `.created`,
+    and `.error` can be retrieved with this method.
+
+     - requires: This must only be called on a Realm using query-based sync.
+    */
+    public func subscription(named: String) -> SyncSubscription<Object>? {
+        return rlmRealm.subscription(withName: named).map(SyncSubscription.init)
     }
 }
 

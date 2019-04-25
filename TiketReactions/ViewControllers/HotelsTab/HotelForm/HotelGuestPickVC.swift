@@ -7,7 +7,6 @@
 //
 import Prelude
 import ReactiveSwift
-import Spring
 import TiketKitModels
 import UIKit
 
@@ -31,7 +30,7 @@ public final class HotelGuestPickVC: UIViewController {
     @IBOutlet fileprivate weak var roomTitleLabel: UILabel!
     @IBOutlet fileprivate weak var roomStepper: UIStepper!
     
-    @IBOutlet fileprivate weak var continueButton: DesignableButton!
+    @IBOutlet fileprivate weak var continueButton: UIButton!
     
     internal static func instantiate(guest: Int, room: Int) -> HotelGuestPickVC {
         let vc = Storyboard.HotelForm.instantiate(HotelGuestPickVC.self)

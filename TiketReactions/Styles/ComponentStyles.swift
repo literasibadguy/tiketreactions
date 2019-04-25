@@ -29,7 +29,7 @@ public func baseControllerStyle<VC: UIViewControllerProtocol> () -> ((VC) -> VC)
 public func baseTableControllerStyle<TVC: UITableViewControllerProtocol> (estimatedRowHeight: CGFloat = 480.0) -> ((TVC) -> TVC) {
     let style = baseControllerStyle()
         <> TVC.lens.view.backgroundColor .~ .tk_base_grey_100
-        <> TVC.lens.tableView.rowHeight .~ UITableViewAutomaticDimension
+        <> TVC.lens.tableView.rowHeight .~ UITableView.automaticDimension
         <> TVC.lens.tableView.estimatedRowHeight .~ estimatedRowHeight
     
     #if os(iOS)
@@ -59,7 +59,7 @@ public func baseTableViewCellStyle <TVC: UITableViewCellProtocol> () -> ((TVC) -
 public func baseActivityIndicatorStyle(indicator: UIActivityIndicatorView) -> UIActivityIndicatorView {
     return indicator
         |> UIActivityIndicatorView.lens.hidesWhenStopped .~ true
-        |> UIActivityIndicatorView.lens.activityIndicatorViewStyle .~ .white
+        |> UIActivityIndicatorView.lens.style .~ .white
         |> UIActivityIndicatorView.lens.color .~ .gray
 }
 
@@ -96,8 +96,8 @@ private let navBarLens: Lens<UINavigationController?, UINavigationBar?> = Lens(
 
 private let baseNavigationBarStyle =
     UINavigationBar.lens.titleTextAttributes .~ [
-        NSAttributedStringKey.foregroundColor: UIColor.black,
-        NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 16.0)
+        NSAttributedString.Key.foregroundColor: UIColor.black,
+        NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16.0)
         ]
         <> UINavigationBar.lens.translucent .~ false
         <> UINavigationBar.lens.barTintColor .~ .white

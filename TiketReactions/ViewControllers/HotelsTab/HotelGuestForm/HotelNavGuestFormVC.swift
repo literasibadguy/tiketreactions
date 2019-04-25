@@ -8,7 +8,6 @@
 
 import Prelude
 import ReactiveSwift
-import Spring
 import TiketKitModels
 import UIKit
 
@@ -23,7 +22,7 @@ public final class HotelNavGuestFormVC: UIViewController {
     
     @IBOutlet fileprivate weak var totalTitleLabel: UILabel!
     @IBOutlet fileprivate weak var totalValueLabel: UILabel!
-    @IBOutlet fileprivate  weak var goPaymentButton: DesignableButton!
+    @IBOutlet fileprivate  weak var goPaymentButton: UIButton!
     
     internal func configureWith(room: AvailableRoom) {
         self.viewModel.inputs.configWith(room: room)

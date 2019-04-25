@@ -8,7 +8,6 @@
 import FSPagerView
 import Prelude
 import ReactiveSwift
-import Spring
 import TiketKitModels
 import UIKit
 
@@ -42,7 +41,7 @@ public final class HotelFormVC: UIViewController {
     @IBOutlet fileprivate weak var guestInputContainerView: UIView!
     @IBOutlet fileprivate weak var guestInputSeparatorView: UIView!
     
-    @IBOutlet fileprivate weak var pickDateButton: DesignableButton!
+    @IBOutlet fileprivate weak var pickDateButton: UIButton!
     
     public static func instantiate() -> HotelFormVC {
         let vc = Storyboard.HotelForm.instantiate(HotelFormVC.self)

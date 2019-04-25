@@ -17,7 +17,7 @@ internal final class ManagedOrderListVC: UIViewController {
     @IBOutlet private weak var menuButtonsStackView: UIStackView!
     @IBOutlet private weak var flightButton: UIButton!
     @IBOutlet private weak var hotelButton: UIButton!
-    @IBOutlet private weak var issuesButtonItem: UIBarButtonItem!
+//    @IBOutlet private weak var issuesButtonItem: UIBarButtonItem!
     
     @IBOutlet private weak var selectedLineView: UIView!
     @IBOutlet private weak var selectedButtonIndicatorLeadingConstraint: NSLayoutConstraint!
@@ -45,7 +45,7 @@ internal final class ManagedOrderListVC: UIViewController {
         }
         */
  
-        self.pageViewController = self.childViewControllers.compactMap { $0 as? UIPageViewController }.first
+        self.pageViewController = self.children.compactMap { $0 as? UIPageViewController }.first
         self.pageViewController.setViewControllers([.init()], direction: .forward, animated: false, completion: nil)
         self.pageViewController.delegate = self
         
@@ -55,8 +55,8 @@ internal final class ManagedOrderListVC: UIViewController {
         _ = self.hotelButton
             |> UIButton.lens.targets .~ [(self, action: #selector(hotelButtonTapped), .touchUpInside)]
         
-        _ = self.issuesButtonItem
-            |> UIBarButtonItem.lens.targetAction .~ (self, #selector(issuesButtonTapped))
+//        _ = self.issuesButtonItem
+//            |> UIBarButtonItem.lens.targetAction .~ (self, #selector(issuesButtonTapped))
 
         self.viewModel.inputs.viewDidLoad()
     }
@@ -70,10 +70,10 @@ internal final class ManagedOrderListVC: UIViewController {
         
         _ = self |> baseControllerStyle()
         
-        _ = self.issuesButtonItem
-            |> UIBarButtonItem.lens.image .~ image(named: "issued-order-icon")
-            |> UIBarButtonItem.lens.accessibilityLabel .~ "Booking"
-         
+//        _ = self.issuesButtonItem
+//            |> UIBarButtonItem.lens.image .~ image(named: "issued-order-icon")
+//            |> UIBarButtonItem.lens.accessibilityLabel .~ "Booking"
+        
         _ = self.selectedLineView
             |> UIView.lens.backgroundColor .~ .tk_official_green
         
@@ -133,17 +133,17 @@ internal final class ManagedOrderListVC: UIViewController {
     
     private func setAttributedTitles(for button: UIButton, with string: String) {
         let normalTitleString = NSAttributedString(string: string, attributes: [
-            NSAttributedStringKey.font: self.traitCollection.isRegularRegular
+            NSAttributedString.Key.font: self.traitCollection.isRegularRegular
                 ? UIFont.boldSystemFont(ofSize: 16.0)
                 : UIFont.boldSystemFont(ofSize: 13.0),
-            NSAttributedStringKey.foregroundColor: UIColor.tk_typo_green_grey_600
+            NSAttributedString.Key.foregroundColor: UIColor.tk_typo_green_grey_600
             ])
         
         let selectedTitleString = NSAttributedString(string: string, attributes: [
-            NSAttributedStringKey.font: self.traitCollection.isRegularRegular
+            NSAttributedString.Key.font: self.traitCollection.isRegularRegular
                 ? UIFont.boldSystemFont(ofSize: 16.0)
                 : UIFont.boldSystemFont(ofSize: 13.0),
-            NSAttributedStringKey.foregroundColor: UIColor.tk_typo_green_grey_500
+            NSAttributedString.Key.foregroundColor: UIColor.tk_typo_green_grey_500
             ])
         
         _ = button

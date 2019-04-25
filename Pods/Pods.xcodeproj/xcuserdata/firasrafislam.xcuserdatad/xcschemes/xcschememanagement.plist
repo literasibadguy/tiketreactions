@@ -19,22 +19,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>AloeStackView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Argo.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Backpack-Icon.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Backpack.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>CalendarDateRangePickerViewController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -120,11 +110,6 @@
 			<false/>
 		</dict>
 		<key>Runes.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Spring.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

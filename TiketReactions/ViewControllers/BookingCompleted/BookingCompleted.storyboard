@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -171,33 +171,41 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Esx-od-wQq">
-                                            <rect key="frame" x="20" y="25.000000000000007" width="335" height="96.666666666666686"/>
+                                            <rect key="frame" x="20" y="10" width="335" height="119"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Terima Kasih" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aQg-PW-noR">
-                                                    <rect key="frame" x="0.0" y="0.0" width="335" height="28.666666666666668"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="335" height="24"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pesanan hotel anda telah dikonfirmasi, Terima kasih telah melakukan booking lewat triptozero" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c95-cI-tJg">
-                                                    <rect key="frame" x="0.0" y="32.666666666666657" width="335" height="64"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Pesanan hotel anda telah dikonfirmasi, Terima kasih telah melakukan booking lewat triptozero" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c95-cI-tJg">
+                                                    <rect key="frame" x="0.0" y="28" width="335" height="57"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="m54-Om-DHY">
+                                                    <rect key="frame" x="0.0" y="89" width="335" height="30"/>
+                                                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
+                                                    <state key="normal" title="Khusus Lion air, silakan klik sini, pemesanan ruang Bagasi, 6 jam sebelum keberangkatan">
+                                                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                         </stackView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="Esx-od-wQq" secondAttribute="trailing" constant="20" id="RkF-vH-eQm"/>
-                                        <constraint firstItem="Esx-od-wQq" firstAttribute="top" secondItem="FMK-Dr-OoF" secondAttribute="top" constant="25" id="e0B-cr-y1m"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="Esx-od-wQq" secondAttribute="bottom" constant="17.329999999999998" id="f2A-hR-0rq"/>
+                                        <constraint firstItem="Esx-od-wQq" firstAttribute="top" secondItem="FMK-Dr-OoF" secondAttribute="top" constant="10" id="e0B-cr-y1m"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Esx-od-wQq" secondAttribute="bottom" constant="10" id="f2A-hR-0rq"/>
                                         <constraint firstItem="Esx-od-wQq" firstAttribute="leading" secondItem="FMK-Dr-OoF" secondAttribute="leading" constant="20" id="xzZ-EM-8N7"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="confirmedLabel" destination="c95-cI-tJg" id="BOX-wZ-PnB"/>
+                                    <outlet property="flightNoticeButton" destination="m54-Om-DHY" id="9tj-oc-J1V"/>
                                     <outlet property="noticeStackView" destination="Esx-od-wQq" id="AC2-Dk-1WA"/>
                                     <outlet property="thankYouLabel" destination="aQg-PW-noR" id="j1O-Kr-es3"/>
                                 </connections>

@@ -69,7 +69,7 @@ internal final class ContactInfoViewCell: UITableViewCell, ValueCell {
     @IBOutlet fileprivate weak var countryCodePhoneStackView: UIStackView!
  //   @IBOutlet fileprivate weak var phoneInputTitleLabel: UILabel!
     @IBOutlet fileprivate weak var countryCodeInputTitleLabel: UILabel!
-    @IBOutlet fileprivate weak var phoneTextField: PhoneNumberTextField!
+    @IBOutlet fileprivate weak var phoneTextField: UITextField!
     @IBOutlet fileprivate weak var phoneSeparatorView: UIView!
     
     override public func awakeFromNib() {
@@ -220,7 +220,7 @@ internal final class ContactInfoViewCell: UITableViewCell, ValueCell {
         _ = self.phoneCodeButton
             |> UIButton.lens.titleColor(forState: .normal) .~ .tk_official_green
         
-        self.phoneTextField.isPartialFormatterEnabled = false
+//        self.phoneTextField.isPartialFormatterEnabled = false
         
         _ = phoneArrangeStackView
             |> UIStackView.lens.spacing .~ Styles.grid(2)
@@ -352,8 +352,8 @@ internal final class ContactInfoViewCell: UITableViewCell, ValueCell {
 
     }
     
-    @objc fileprivate func phoneTextFieldChanged(_ textField: PhoneNumberTextField) {
-        self.viewModel.inputs.phoneTextFieldChange(textField.text?.description, code: textField.defaultRegion)
+    @objc fileprivate func phoneTextFieldChanged(_ textField: UITextField) {
+        self.viewModel.inputs.phoneTextFieldChange(textField.text?.description, code: phoneCodeButton.titleLabel?.text ?? "+62")
     }
     
     @objc fileprivate func phoneTextFieldDoneEditing() {

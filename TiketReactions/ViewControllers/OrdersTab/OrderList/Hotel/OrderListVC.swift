@@ -9,7 +9,6 @@
 import Prelude
 import ReactiveSwift
 import RealmSwift
-import Spring
 import TiketKitModels
 import UIKit
 
@@ -57,9 +56,9 @@ internal final class OrderListVC: UIViewController {
         
         let emptyVC = EmptyStatesVC.configuredWith(emptyState: EmptyState.orderResult)
         self.emptyStatesController = emptyVC
-        self.addChildViewController(emptyVC)
+        self.addChild(emptyVC)
         self.view.addSubview(emptyVC.view)
-        emptyVC.didMove(toParentViewController: self)
+        emptyVC.didMove(toParent: self)
         
         self.viewModel.inputs.viewDidLoad()
     }
@@ -82,7 +81,7 @@ internal final class OrderListVC: UIViewController {
             |> UINavigationBar.lens.shadowImage .~ UIImage()
         
         _ = self.orderTableView
-            |> UITableView.lens.rowHeight .~ UITableViewAutomaticDimension
+            |> UITableView.lens.rowHeight .~ UITableView.automaticDimension
             |> UITableView.lens.estimatedRowHeight .~ 160.0
             |> UITableView.lens.separatorStyle .~ .none
         
@@ -122,7 +121,7 @@ internal final class OrderListVC: UIViewController {
                 self?.orderTableView.bounces = false
                 if let emptyVC = self?.emptyStatesController {
                     self?.emptyStatesController?.view.isHidden = false
-                    self?.view.bringSubview(toFront: emptyVC.view)
+                    self?.view.bringSubviewToFront(emptyVC.view)
                 }
         }
         

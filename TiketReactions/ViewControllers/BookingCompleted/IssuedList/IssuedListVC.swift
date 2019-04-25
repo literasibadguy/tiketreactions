@@ -49,7 +49,7 @@ public final class IssuedListVC: UITableViewController {
         
         let emptyVC = EmptyStatesVC.configuredWith(emptyState: nil)
         self.emptyStatesController = emptyVC
-        self.addChildViewController(emptyVC)
+        self.addChild(emptyVC)
         self.tableView.addSubview(emptyVC.view)
         NSLayoutConstraint.activate([
             emptyVC.view.topAnchor.constraint(equalTo: self.tableView.topAnchor),
@@ -57,7 +57,7 @@ public final class IssuedListVC: UITableViewController {
             emptyVC.view.bottomAnchor.constraint(equalTo: self.tableView.bottomAnchor),
             emptyVC.view.trailingAnchor.constraint(equalTo: self.tableView.trailingAnchor)
             ])
-        emptyVC.didMove(toParentViewController: self)
+        emptyVC.didMove(toParent: self)
         
         self.viewModel.inputs.viewDidLoad()
     }
@@ -157,11 +157,11 @@ public final class IssuedListVC: UITableViewController {
 
     }
     
-    public override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    public override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .delete
     }
     
-    public override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    public override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             if let issue = self.issueResultAtIndexPath(indexPath) {
                 let realm = try! Realm()
@@ -206,7 +206,7 @@ public final class IssuedListVC: UITableViewController {
         
         emptyVC.setEmptyState(emptyState)
         emptyVC.view.isHidden = false
-        self.view.bringSubview(toFront: emptyVC.view)
+        self.view.bringSubviewToFront(emptyVC.view)
         UIView.animate(withDuration: 0.3, animations: {
             self.emptyStatesController?.view.alpha = 1.0
         }, completion: nil)

@@ -12,13 +12,13 @@ import UIKit
 public final class BookingCompletedDataSource: ValueCellDataSource {
     
     func load(orderDetail: [OrderCartDetail]) {
-        self.set(values: [""], cellClass: FirstIssueViewCell.self, inSection: 0)
+        self.set(values: orderDetail, cellClass: FirstIssueViewCell.self, inSection: 0)
         self.set(values: orderDetail, cellClass: SecondIssueViewCell.self, inSection: 1)
     }
     
     override public func configureCell(tableCell cell: UITableViewCell, withValue value: Any) {
         switch (cell, value) {
-        case let (cell as FirstIssueViewCell, value as String):
+        case let (cell as FirstIssueViewCell, value as OrderCartDetail):
             cell.configureWith(value: value)
         case let (cell as SecondIssueViewCell, value as OrderCartDetail):
             cell.configureWith(value: value)

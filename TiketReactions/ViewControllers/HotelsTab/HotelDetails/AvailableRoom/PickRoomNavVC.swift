@@ -7,7 +7,6 @@
 //
 import Prelude
 import ReactiveSwift
-import Spring
 import TiketKitModels
 import UIKit
 
@@ -17,7 +16,7 @@ internal final class PickRoomNavVC: UIViewController {
     
     @IBOutlet fileprivate weak var roomNavSeparatorView: UIView!
     @IBOutlet fileprivate weak var startingPriceLabel: UILabel!
-    @IBOutlet weak var chooseRoomButton: DesignableButton!
+    @IBOutlet weak var chooseRoomButton: UIButton!
     
     internal func configureWith(hotel: HotelDirect, booking: HotelBookingSummary) {
         self.viewModel.inputs.configureWith(hotelDirect: hotel, booking: booking)

@@ -16,7 +16,7 @@ public protocol UITableViewControllerProtocol: UIViewControllerProtocol {
 extension UITableViewController: UITableViewControllerProtocol {}
 
 public extension LensHolder where Object: UITableViewControllerProtocol {
-    public var tableView: Lens<Object, UITableView> {
+    var tableView: Lens<Object, UITableView> {
         return Lens(
             view: { view in view.tableView },
             set: { view, set in set.tableView = view; return set }
@@ -34,7 +34,7 @@ extension Lens where Whole: UITableViewControllerProtocol, Part == UITableView {
     }
     
     #if os(iOS)
-    public var separatorStyle: Lens<Whole, UITableViewCellSeparatorStyle> {
+    public var separatorStyle: Lens<Whole, UITableViewCell.SeparatorStyle> {
         return Whole.lens.tableView..Part.lens.separatorStyle
     }
     #endif

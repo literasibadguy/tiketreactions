@@ -425,4 +425,6 @@ public struct Localizations {
     }
     
     public static var NotAvailableInfo: String = NSLocalizedString("NotAvailable_Info", comment: "")
+    
+    public static var LionAirNotice: String = NSLocalizedString("LionFlight_Notice", comment: "")
 }

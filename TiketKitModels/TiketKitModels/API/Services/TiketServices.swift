@@ -25,7 +25,7 @@ public struct TiketServices: TiketServiceType {
     public let currency: String
     public let buildVersion: String
     
-    public init(serverConfig: TiketServerConfigType = TiketServerConfig.staging, tiketToken: TiketTokenType? = nil, language: String = "id", currency: String = "IDR", buildVersion: String = Bundle.main._buildVersion) {
+    public init(serverConfig: TiketServerConfigType = TiketServerConfig.production, tiketToken: TiketTokenType? = nil, language: String = "id", currency: String = "IDR", buildVersion: String = Bundle.main._buildVersion) {
         self.serverConfig = serverConfig
         self.tiketToken = tiketToken
         self.language = language

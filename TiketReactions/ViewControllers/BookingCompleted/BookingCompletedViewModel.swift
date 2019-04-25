@@ -19,6 +19,7 @@ public protocol BookingCompletedViewModelInputs {
     func printVoucherTapped(_ document: PDFDocument)
     func printVoucherError(_ description: String)
     func confirmDismissError()
+    func baggagePrepaidTapped()
     func viewDidLoad()
 }
 
@@ -29,6 +30,7 @@ public protocol BookingCompletedViewModelOutputs {
     var showAlert: Signal<String, NoError> { get }
     var errorPDFPrint: Signal<String, NoError> { get }
     var dismissError: Signal<(), NoError> { get }
+    var goToWebBrowser: Signal<(), NoError> { get }
 }
 
 public protocol BookingCompletedViewModelType {
@@ -58,6 +60,8 @@ public final class BookingCompletedViewModel: BookingCompletedViewModelType, Boo
         self.errorPDFPrint =  self.printVoucherErrorProperty.signal
         
         self.dismissError = self.confirmDismissProperty.signal.ignoreValues()
+        
+        self.goToWebBrowser = self.baggageTappedProperty.signal
     }
     
     
@@ -86,6 +90,11 @@ public final class BookingCompletedViewModel: BookingCompletedViewModelType, Boo
         self.confirmDismissProperty.value = ()
     }
     
+    fileprivate let baggageTappedProperty = MutableProperty(())
+    public func baggagePrepaidTapped() {
+        self.baggageTappedProperty.value = ()
+    }
+    
     fileprivate let viewDidLoadProperty = MutableProperty(())
     public func viewDidLoad() {
         self.viewDidLoadProperty.value = ()
@@ -97,7 +106,7 @@ public final class BookingCompletedViewModel: BookingCompletedViewModelType, Boo
     public let showAlert: Signal<String, NoError>
     public let errorPDFPrint: Signal<String, NoError>
     public let dismissError: Signal<(), NoError>
-    
+    public let goToWebBrowser: Signal<(), NoError>
     
     public var inputs: BookingCompletedViewModelInputs { return self }
     public var outputs: BookingCompletedViewModelOutputs { return self }

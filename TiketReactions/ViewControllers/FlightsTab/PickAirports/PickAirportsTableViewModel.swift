@@ -42,7 +42,7 @@ public protocol PickAirportsTableViewModelType {
 public final class PickAirportsTableViewModel: PickAirportsTableViewModelType, PickAirportsTableViewModelInputs, PickAirportsTableViewModelOutputs {
     
     public init() {
-        let viewWillAppearNotAnimated = self.viewWillAppearProperty.signal.filter(isFalse).ignoreValues()
+//        let viewWillAppearNotAnimated = self.viewWillAppearProperty.signal.filter(isFalse).ignoreValues()
         
         let current = Signal.combineLatest(self.viewDidLoadProperty.signal, self.configureDataProperty.signal.skipNil()).map(second)
         

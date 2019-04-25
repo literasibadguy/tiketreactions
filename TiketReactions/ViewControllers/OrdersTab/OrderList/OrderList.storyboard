@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -74,14 +74,11 @@
                         <viewLayoutGuide key="safeArea" id="ivb-sE-yjc"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <navigationItem key="navigationItem" title="Order" id="PJt-tS-coD">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="Oc3-YB-Jws" userLabel="Issues Button Item"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Order" id="PJt-tS-coD"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="flightButton" destination="MnE-58-Cfx" id="fbG-3E-kXt"/>
                         <outlet property="hotelButton" destination="dNj-ku-tHd" id="nVO-fc-q3h"/>
-                        <outlet property="issuesButtonItem" destination="Oc3-YB-Jws" id="R36-dL-w1C"/>
                         <outlet property="menuButtonsStackView" destination="Xgg-Pl-nU1" id="qGf-an-OmL"/>
                         <outlet property="selectedButtonIndicatorLeadingConstraint" destination="j8Q-jD-fFT" id="BJ6-7o-1Q5"/>
                         <outlet property="selectedLineView" destination="rzL-I2-UTw" id="z2b-b2-lVe"/>

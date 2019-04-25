@@ -8,7 +8,6 @@
 
 import Prelude
 import ReactiveSwift
-import Spring
 import TiketKitModels
 import UIKit
 
@@ -33,7 +32,7 @@ public final class HotelLiveFormVC: UIViewController {
     @IBOutlet private weak var guestLabel: UILabel!
     
     @IBOutlet private weak var guestSeparatorView: UIView!
-    @IBOutlet private weak var confirmSearchButton: DesignableButton!
+    @IBOutlet private weak var confirmSearchButton: UIButton!
     
     public static func instantiate() -> HotelLiveFormVC {
         let vc = Storyboard.HotelForm.instantiate(HotelLiveFormVC.self)
@@ -104,12 +103,12 @@ public final class HotelLiveFormVC: UIViewController {
         _ = self.guestSeparatorView
             |> UIView.lens.backgroundColor .~ .tk_base_grey_100
         
-        self.confirmSearchButton.cornerRadius = 10.0
+//        self.confirmSearchButton.cornerRadius = 10.0
         
         _ = self.confirmSearchButton
-            |> DesignableButton.lens.title(forState: .normal) .~ Localizations.PickDateTitleForm
-            |> DesignableButton.lens.backgroundImage(forState: .normal) .~ UIImage(named: "background-hotel-tab")
-            |> DesignableButton.lens.backgroundImage(forState: .selected) .~ UIImage(named: "background-hotel-tab")
+            |> UIButton.lens.title(forState: .normal) .~ Localizations.PickDateTitleForm
+            |> UIButton.lens.backgroundImage(forState: .normal) .~ UIImage(named: "background-hotel-tab")
+            |> UIButton.lens.backgroundImage(forState: .selected) .~ UIImage(named: "background-hotel-tab")
     }
     
     public override func bindViewModel() {

@@ -10,7 +10,7 @@ import ReactiveSwift
 
 public extension SignalProtocol {
     
-    public func ignoreValues() -> Signal<Void, Error> {
+    func ignoreValues() -> Signal<Void, Error> {
         return signal.map { _ in () }
     }
 }

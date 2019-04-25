@@ -8,7 +8,6 @@
 import Prelude
 import ReactiveSwift
 import Result
-import Spring
 import TiketKitModels
 import UIKit
 
@@ -29,7 +28,7 @@ public final class AvailableRoomViewCell: UITableViewCell, ValueCell {
     @IBOutlet fileprivate weak var availableRoomSeparatorView: UIView!
     @IBOutlet fileprivate weak var availableRoomLabel: UILabel!
     
-    @IBOutlet fileprivate weak var bookRoomButton: DesignableButton!
+    @IBOutlet fileprivate weak var bookRoomButton: UIButton!
     
     
     public override func awakeFromNib() {

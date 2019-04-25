@@ -62,6 +62,8 @@ public final class PickAirportsTableVC: UIViewController {
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        startListeningToNotifications()
+        
         self.viewModel.inputs.viewWillAppear(animated: animated)
     }
     
@@ -71,7 +73,7 @@ public final class PickAirportsTableVC: UIViewController {
         _ = self.tableView
             |> UITableView.lens.separatorStyle .~ .none
             |> UITableView.lens.backgroundColor .~ .white
-            |> UITableView.lens.rowHeight .~ UITableViewAutomaticDimension
+            |> UITableView.lens.rowHeight .~ UITableView.automaticDimension
         
         _ = self.statusDestinationLabel
             |> UILabel.lens.textColor .~ .tk_official_green
@@ -107,6 +109,51 @@ public final class PickAirportsTableVC: UIViewController {
                 _self.destinationDelegate?.pickDestinationAirportsTable(_self, selectedRow: airport)
         }
         
+    }
+    
+    fileprivate func startListeningToNotifications() {
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        nc.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc fileprivate func keyboardWillShow(_ notification: Foundation.Notification) {
+        guard
+            let userInfo = notification.userInfo as? [String: AnyObject],
+            let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            else {
+                return
+        }
+        
+        refreshInsets(forKeyboardFrame: keyboardFrame)
+    }
+    
+    @objc fileprivate func keyboardWillHide(_ notification: Foundation.Notification) {
+        guard
+            let userInfo = notification.userInfo as? [String: AnyObject],
+            let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            else {
+                return
+        }
+        
+        refreshInsets(forKeyboardFrame: keyboardFrame)
+        //        dismissOptionsViewControllerIfNecessary()
+    }
+    
+    fileprivate func refreshInsets(forKeyboardFrame keyboardFrame: CGRect) {
+        let referenceView: UIScrollView = self.tableView
+        
+        let scrollInsets = UIEdgeInsets(top: referenceView.scrollIndicatorInsets.top, left: 0, bottom: view.frame.maxY - keyboardFrame.minY, right: 0)
+        let contentInsets  = UIEdgeInsets(top: referenceView.contentInset.top, left: 0, bottom: view.frame.maxY - keyboardFrame.minY, right: 0)
+        
+        self.tableView.scrollIndicatorInsets = scrollInsets
+        self.tableView.contentInset = contentInsets
+        
+        //        htmlTextView.scrollIndicatorInsets = scrollInsets
+        //        htmlTextView.contentInset = contentInsets
+        
+        //        richTextView.scrollIndicatorInsets = scrollInsets
+        //        richTextView.contentInset = contentInsets
     }
     
     @objc fileprivate func cancelButtonTapped() {

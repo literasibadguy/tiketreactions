@@ -8,7 +8,6 @@
 import UIKit
 import Prelude
 import ReactiveSwift
-import Spring
 import TiketKitModels
 
 public protocol HotelDiscoveryFiltersDelegate: class {
@@ -29,7 +28,7 @@ public final class HotelDiscoveryFiltersVC: UIViewController, UITableViewDelegat
     @IBOutlet fileprivate weak var navBottomView: UIView!
     @IBOutlet fileprivate weak var navSeparatorView: UIView!
     
-    @IBOutlet weak var passFilterButton: DesignableButton!
+    @IBOutlet weak var passFilterButton: UIButton!
     
     weak var delegate: HotelDiscoveryFiltersDelegate?
     
@@ -73,7 +72,7 @@ public final class HotelDiscoveryFiltersVC: UIViewController, UITableViewDelegat
         
         _ = self.filtersTableView
             |> UITableView.lens.separatorStyle .~ .none
-            |> UITableView.lens.rowHeight .~ UITableViewAutomaticDimension
+            |> UITableView.lens.rowHeight .~ UITableView.automaticDimension
             |> UITableView.lens.estimatedRowHeight .~ 64.0
         
         _ = self.passFilterButton

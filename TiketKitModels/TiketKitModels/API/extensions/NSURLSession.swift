@@ -24,7 +24,7 @@ private let scheduler = QueueScheduler(qos: .background, name: "firasrafislam.Ti
 
 internal extension URLSession {
     
-    internal func rac_dataResponse(_ request: URLRequest, uploading file: (url: URL, name: String)? = nil) -> SignalProducer<Data, ErrorEnvelope> {
+    func rac_dataResponse(_ request: URLRequest, uploading file: (url: URL, name: String)? = nil) -> SignalProducer<Data, ErrorEnvelope> {
     
         let producer = file.map { self.rac_dataWithRequest(request, uploading: $0, named: $1) } ?? self.reactive.data(with: request)
         
@@ -58,7 +58,7 @@ internal extension URLSession {
         }
     }
     
-    internal func rac_JSONResponse(_ request: URLRequest) -> SignalProducer<Any, ErrorEnvelope> {
+    func rac_JSONResponse(_ request: URLRequest) -> SignalProducer<Any, ErrorEnvelope> {
         
         return self.rac_dataResponse(request)
             .map(parseJSONData)

@@ -55,7 +55,7 @@ public final class CurrencyListVC: UIViewController {
         _ = self.currencyTableView
             |> UITableView.lens.separatorStyle .~ .none
             |> UITableView.lens.backgroundColor .~ .white
-            |> UITableView.lens.rowHeight .~ UITableViewAutomaticDimension
+            |> UITableView.lens.rowHeight .~ UITableView.automaticDimension
             |> UITableView.lens.estimatedRowHeight .~ 88.0
         
         _ = self.loadingIndicatorView

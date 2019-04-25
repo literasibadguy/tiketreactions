@@ -8,7 +8,7 @@ private enum Associations {
 }
 
 public extension Rac where Object: UITextField {
-    public var attributedPlaceholder: Signal<NSAttributedString, NoError> {
+    var attributedPlaceholder: Signal<NSAttributedString, NoError> {
         nonmutating set {
             let prop: MutableProperty<NSAttributedString> = lazyMutableProperty(
                 object,
@@ -24,7 +24,7 @@ public extension Rac where Object: UITextField {
         }
     }
     
-    public var text: Signal<String, NoError> {
+    var text: Signal<String, NoError> {
         nonmutating set {
             let prop: MutableProperty<String> = lazyMutableProperty(
                 object,

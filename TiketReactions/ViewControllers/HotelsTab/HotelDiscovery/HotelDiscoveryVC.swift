@@ -50,7 +50,7 @@ public final class HotelDiscoveryVC: UITableViewController {
         
         let emptyVC = EmptyStatesVC.configuredWith(emptyState: nil)
         self.emptyStatesController = emptyVC
-        self.addChildViewController(emptyVC)
+        self.addChild(emptyVC)
         self.view.addSubview(emptyVC.view)
         NSLayoutConstraint.activate([
             emptyVC.view.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -58,7 +58,7 @@ public final class HotelDiscoveryVC: UITableViewController {
             emptyVC.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             emptyVC.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
             ])
-        emptyVC.didMove(toParentViewController: self)
+        emptyVC.didMove(toParent: self)
     }
     
     public override func viewWillAppear(_ animated: Bool) {
@@ -181,7 +181,7 @@ public final class HotelDiscoveryVC: UITableViewController {
         
         emptyVC.setEmptyState(emptyState)
         emptyVC.view.isHidden = false
-        self.view.bringSubview(toFront: emptyVC.view)
+        self.view.bringSubviewToFront(emptyVC.view)
         UIView.animate(withDuration: 0.3, animations: {
             self.emptyStatesController?.view.alpha = 1.0
         }, completion: nil)

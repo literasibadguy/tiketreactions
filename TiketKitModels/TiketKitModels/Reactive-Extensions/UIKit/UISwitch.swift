@@ -8,7 +8,7 @@
     }
     
     public extension Rac where Object: UISwitch {
-        public var on: Signal<Bool, NoError> {
+        var on: Signal<Bool, NoError> {
             nonmutating set {
                 let prop: MutableProperty<Bool> = lazyMutableProperty(
                     object, key: &Associations.on,

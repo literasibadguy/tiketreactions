@@ -10,7 +10,7 @@ private enum Associations {
 }
 
 public extension Rac where Object: UILabel {
-    public var attributedText: Signal<NSAttributedString, NoError> {
+    var attributedText: Signal<NSAttributedString, NoError> {
         nonmutating set {
             let prop: MutableProperty<NSAttributedString> = lazyMutableProperty(
                 object,
@@ -26,7 +26,7 @@ public extension Rac where Object: UILabel {
         }
     }
     
-    public var text: Signal<String, NoError> {
+    var text: Signal<String, NoError> {
         nonmutating set {
             let prop: MutableProperty<String> = lazyMutableProperty(
                 object,
@@ -42,7 +42,7 @@ public extension Rac where Object: UILabel {
         }
     }
     
-    public var font: Signal<UIFont, NoError> {
+    var font: Signal<UIFont, NoError> {
         nonmutating set {
             let prop: MutableProperty<UIFont> = lazyMutableProperty(
                 object,
@@ -58,7 +58,7 @@ public extension Rac where Object: UILabel {
         }
     }
     
-    public var textColor: Signal<UIColor, NoError> {
+    var textColor: Signal<UIColor, NoError> {
         nonmutating set {
             let prop: MutableProperty<UIColor> = lazyMutableProperty(
                 object,

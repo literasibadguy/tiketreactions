@@ -18,7 +18,7 @@ public protocol RacObject {}
 public extension RacObject {
     typealias Object = Self
     
-    public var rac: Rac<Object> {
+    var rac: Rac<Object> {
         return Rac(object: self)
     }
 }

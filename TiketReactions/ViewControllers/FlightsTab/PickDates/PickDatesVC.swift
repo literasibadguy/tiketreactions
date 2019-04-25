@@ -8,7 +8,6 @@
 
 import Prelude
 import ReactiveSwift
-import Spring
 import TiketKitModels
 import UIKit
 
@@ -37,7 +36,7 @@ public final class PickDatesVC: UIViewController {
     
     @IBOutlet fileprivate weak var endDateTitleLabel: UILabel!
     @IBOutlet fileprivate weak var endDateTextLabel: UILabel!
-    @IBOutlet fileprivate weak var flightFindButton: DesignableButton!
+    @IBOutlet fileprivate weak var flightFindButton: UIButton!
     @IBOutlet fileprivate weak var loadingOverlayView: UIView!
     @IBOutlet fileprivate weak var loadingFlightIndicatorView: UIActivityIndicatorView!
     @IBOutlet fileprivate weak var cancelLoadingButton: UIButton!
@@ -68,7 +67,7 @@ public final class PickDatesVC: UIViewController {
         self.cancelButton.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
         self.flightFindButton.addTarget(self, action: #selector(flightResultButtonTapped), for: .touchUpInside)
 
-        self.dateRangeController = self.childViewControllers.compactMap { $0 as? DateRangesVC }.first
+        self.dateRangeController = self.children.compactMap { $0 as? DateRangesVC }.first
         self.dateRangeController.delegate = self
     
         self.viewModel.inputs.viewDidLoad()

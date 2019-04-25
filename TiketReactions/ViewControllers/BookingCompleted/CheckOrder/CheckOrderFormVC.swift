@@ -7,7 +7,6 @@
 //
 import Prelude
 import ReactiveSwift
-import Spring
 import TiketKitModels
 import UIKit
 
@@ -17,7 +16,7 @@ public final class CheckOrderFormVC: UIViewController {
     
     @IBOutlet fileprivate weak var orderIdTextField: UITextField!
     @IBOutlet fileprivate weak var emailTextField: UITextField!
-    @IBOutlet fileprivate weak var checkOrderButton: DesignableButton!
+    @IBOutlet fileprivate weak var checkOrderButton: UIButton!
     @IBOutlet fileprivate weak var orderFormSeparatorView: UIView!
     
     @IBOutlet fileprivate weak var loadingOverlayView: UIView!

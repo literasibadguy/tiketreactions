@@ -60,7 +60,7 @@ public final class NationalityPickVC: UIViewController {
         _ = self.nationalityTableView
             |> UITableView.lens.separatorStyle .~ .none
             |> UITableView.lens.backgroundColor .~ .white
-            |> UITableView.lens.rowHeight .~ UITableViewAutomaticDimension
+            |> UITableView.lens.rowHeight .~ UITableView.automaticDimension
             |> UITableView.lens.estimatedRowHeight .~ 88.0
         
         _ = self.loadingIndicatorView
@@ -69,6 +69,7 @@ public final class NationalityPickVC: UIViewController {
         _ = self.titleHeaderLabel
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600
             |> UILabel.lens.font .~ UIFont.boldSystemFont(ofSize: 22.0)
+            |> UILabel.lens.text .~ Localizations.CitizenTitlePassengerForm
         
         _ = self.nationalitySeparatorView
             |> UIView.lens.backgroundColor .~ .tk_base_grey_100

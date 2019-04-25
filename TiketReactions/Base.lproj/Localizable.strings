@@ -44,7 +44,7 @@
 "Save_Passenger_Input_Form" = "Save";
 "Notice_Identity_Passenger_Form" = "Please fill the data according passenger identity, Passport, National ID";
 "Return_Time_Greater_Notice" = "Return time should be greater than depart time";
-
+"LionFlight_Notice" = "For Lion Air flight, please click here, to order prepaid booking, six hours before depart";
 
 // Hotel
 "Destination_Hotel_Title_Form" = "Destination / Hotel";

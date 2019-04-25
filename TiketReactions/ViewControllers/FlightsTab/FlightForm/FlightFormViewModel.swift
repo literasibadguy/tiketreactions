@@ -120,7 +120,7 @@ public final class FlightFormViewModel: FlightFormViewModelType, FlightFormViewM
         
         self.passengersChanged = passengersParam
         
-        let selectedDate = self.selectedDateProperty.signal.skipNil()
+//        let selectedDate = self.selectedDateProperty.signal.skipNil()
         
         self.navigateToFlightStatusTab = Signal.merge(self.viewDidLoadProperty.signal.mapConst(.roundTrip), self.roundTripTappedProperty.signal.mapConst(.roundTrip), self.oneWayTappedProperty.signal.mapConst(.oneWay))
         

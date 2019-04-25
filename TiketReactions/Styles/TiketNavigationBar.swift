@@ -25,8 +25,8 @@ public class TiketNavigationBar: UINavigationBar {
     private func setup() {
         
         _ = self
-            |> UINavigationBar.lens.titleTextAttributes .~ [NSAttributedStringKey.foregroundColor: UIColor.white,
-                                                            NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16.0)]
+            |> UINavigationBar.lens.titleTextAttributes .~ [NSAttributedString.Key.foregroundColor: UIColor.white,
+                                                            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16.0)]
             |> UINavigationBar.lens.translucent .~ true
             |> UINavigationBar.lens.barTintColor .~ .white
             |> UINavigationBar.lens.shadowImage .~ UIImage()

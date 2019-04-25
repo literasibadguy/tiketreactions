@@ -24,49 +24,49 @@ extension UIBarItem: UIBarItemProtocol {
 }
 
 public extension LensHolder where Object: UIBarItemProtocol {
-    public var enabled: Lens<Object, Bool> {
+    var enabled: Lens<Object, Bool> {
         return Lens(
             view: { $0.isEnabled },
             set: { $1.isEnabled = $0; return $1 }
         )
     }
     
-    public var title: Lens<Object, String?> {
+    var title: Lens<Object, String?> {
         return Lens(
             view: { $0.title },
             set: { $1.title = $0; return $1 }
         )
     }
     
-    public var image: Lens<Object, UIImage?> {
+    var image: Lens<Object, UIImage?> {
         return Lens(
             view: { $0.image },
             set: { $1.image = $0; return $1 }
         )
     }
     
-    public var imageInsets: Lens<Object, UIEdgeInsets> {
+    var imageInsets: Lens<Object, UIEdgeInsets> {
         return Lens(
             view: { $0.imageInsets },
             set: { $1.imageInsets = $0; return $1 }
         )
     }
     
-    public var landscapeImagePhone: Lens<Object, UIImage?> {
+    var landscapeImagePhone: Lens<Object, UIImage?> {
         return Lens(
             view: { $0.landscapeImagePhone },
             set: { $1.landscapeImagePhone = $0; return $1 }
         )
     }
     
-    public var landscapeImagePhoneInsets: Lens<Object, UIEdgeInsets> {
+    var landscapeImagePhoneInsets: Lens<Object, UIEdgeInsets> {
         return Lens(
             view: { $0.landscapeImagePhoneInsets },
             set: { $1.landscapeImagePhoneInsets = $0; return $1 }
         )
     }
     
-    public var tag: Lens<Object, Int> {
+    var tag: Lens<Object, Int> {
         return Lens(
             view: { $0.tag },
             set: { $1.tag = $0; return $1 }

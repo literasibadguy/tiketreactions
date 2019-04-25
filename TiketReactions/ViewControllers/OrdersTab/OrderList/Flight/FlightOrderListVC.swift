@@ -42,9 +42,9 @@ internal final class FlightOrderListVC: UIViewController {
         
         let emptyVC = EmptyStatesVC.configuredWith(emptyState: EmptyState.flightResult)
         self.emptyStatesController = emptyVC
-        self.addChildViewController(emptyVC)
+        self.addChild(emptyVC)
         self.view.addSubview(emptyVC.view)
-        emptyVC.didMove(toParentViewController: self)
+        emptyVC.didMove(toParent: self)
         
         self.viewModel.inputs.viewDidLoad()
     }
@@ -59,7 +59,7 @@ internal final class FlightOrderListVC: UIViewController {
         super.bindStyles()
         
         _ = self.orderTableView
-            |> UITableView.lens.rowHeight .~ UITableViewAutomaticDimension
+            |> UITableView.lens.rowHeight .~ UITableView.automaticDimension
             |> UITableView.lens.estimatedRowHeight .~ 160.0
             |> UITableView.lens.separatorStyle .~ .none
         
@@ -98,7 +98,7 @@ internal final class FlightOrderListVC: UIViewController {
                 self?.orderTableView.bounces = false
                 if let emptyVC = self?.emptyStatesController {
                     self?.emptyStatesController?.view.isHidden = false
-                    self?.view.bringSubview(toFront: emptyVC.view)
+                    self?.view.bringSubviewToFront(emptyVC.view)
                 }
         }
         

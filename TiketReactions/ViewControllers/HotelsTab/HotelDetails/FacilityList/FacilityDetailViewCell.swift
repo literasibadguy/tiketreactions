@@ -43,7 +43,7 @@ internal final class FacilityDetailViewCell: UITableViewCell, ValueCell {
         //line height size
         paragraphStyle.lineSpacing = 2.6
         let attrString = NSMutableAttributedString(string: listNames.joined(separator: ", "))
-        attrString.addAttribute(kCTParagraphStyleAttributeName as NSAttributedStringKey, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+        attrString.addAttribute(kCTParagraphStyleAttributeName as NSAttributedString.Key, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         
         _ = self.subgroupLabel
             |> UILabel.lens.attributedText .~ attrString

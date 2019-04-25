@@ -90,7 +90,7 @@ public final class PassengersListViewModel: PassengersListViewModelType, Passeng
         
         let scootFlight = current.signal.skipNil().map { $0.departures.airlinesName == "SCOOT" }
         
-        let passsengerState: Signal<(isInternational: Bool, isDepartBaggage: Bool, isReturnBaggage: Bool), NoError> = current.signal.skipNil().map { ($0.adultPassengerList.adult1.passportNo != nil, $0.adultPassengerList.adult1.departBaggage != nil, $0.adultPassengerList.adult1.returnBaggage != nil) }
+//        let passsengerState: Signal<(isInternational: Bool, isDepartBaggage: Bool, isReturnBaggage: Bool), NoError> = current.signal.skipNil().map { ($0.adultPassengerList.adult1.passportNo != nil, $0.adultPassengerList.adult1.departBaggage != nil, $0.adultPassengerList.adult1.returnBaggage != nil) }
         
         let detectedFormat = current.signal.skipNil().map { [$0.adultPassengerList.adult1.separator, $0.adultPassengerList.adult2.separtor, $0.adultPassengerList.adult3.separtor, $0.adultPassengerList.adult4.separtor, $0.adultPassengerList.adult5.separtor, $0.adultPassengerList.adult6.separtor, $0.adultPassengerList.child1.separtor, $0.adultPassengerList.child2.separtor, $0.adultPassengerList.child3.separtor, $0.adultPassengerList.child4.separtor, $0.adultPassengerList.child5.separtor, $0.adultPassengerList.child6.separtor, $0.adultPassengerList.infant1.separtor, $0.adultPassengerList.infant2.separtor, $0.adultPassengerList.infant3.separtor, $0.adultPassengerList.infant4.separtor, $0.adultPassengerList.infant5.separtor, $0.adultPassengerList.infant6.separtor].compact() }
             

@@ -18,7 +18,7 @@ extension UICollectionView: UICollectionViewProtocol {}
 
 
 public extension LensHolder where Object: UICollectionViewProtocol {
-    public var contentInset: Lens<Object, UIEdgeInsets> {
+    var contentInset: Lens<Object, UIEdgeInsets> {
         return Lens(
             view: { $0.contentInset },
             set: { $1.contentInset = $0; return $1 }

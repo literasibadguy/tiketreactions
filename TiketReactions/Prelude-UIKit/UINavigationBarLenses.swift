@@ -14,7 +14,7 @@ public protocol UINavigationBarProtocol: UIViewProtocol {
     var barTintColor: UIColor? { get set }
     func setBackgroundImage(_ backgroundImage: UIImage?, for barMetrics: UIBarMetrics)
     var shadowImage: UIImage? { get set }
-    var titleTextAttributes: [NSAttributedStringKey : Any]? { get set }
+    var titleTextAttributes: [NSAttributedString.Key : Any]? { get set }
     var isTranslucent: Bool { get set }
     var prefersLargeTitles: Bool { get set }
 }
@@ -43,7 +43,7 @@ public extension LensHolder where Object: UINavigationBarProtocol {
         )
     }
     
-    var titleTextAttributes: Lens<Object, [NSAttributedStringKey: Any]> {
+    var titleTextAttributes: Lens<Object, [NSAttributedString.Key: Any]> {
         return Lens(
             view: { view in view.titleTextAttributes ?? [:] },
             set: { view, set in set.titleTextAttributes = view; return set; }

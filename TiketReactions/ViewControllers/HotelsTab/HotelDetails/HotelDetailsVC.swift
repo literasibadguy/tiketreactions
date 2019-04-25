@@ -33,9 +33,9 @@ public final class HotelDetailsVC: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.navDetailsVC = self.childViewControllers.compactMap { $0 as? HotelDetailsNavVC }.first
-        self.directsHotelVC = self.childViewControllers.compactMap { $0 as? HotelDirectsVC }.first
-        self.navRoomsVC = self.childViewControllers.compactMap { $0 as? PickRoomNavVC }.first
+        self.navDetailsVC = self.children.compactMap { $0 as? HotelDetailsNavVC }.first
+        self.directsHotelVC = self.children.compactMap { $0 as? HotelDirectsVC }.first
+        self.navRoomsVC = self.children.compactMap { $0 as? PickRoomNavVC }.first
         
         self.viewModel.inputs.viewDidLoad()
     }
@@ -80,6 +80,12 @@ public final class HotelDetailsVC: UIViewController {
             .observe(on: UIScheduler())
             .observeValues { [weak self] in
                 self?.navigationController?.setNavigationBarHidden($0, animated: $1)
+        }
+        
+        self.viewModel.outputs.genericError
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] error in
+                self?.present(UIAlertController.genericError("Ooops..", message: error, cancel: { _ in self?.dismiss(animated: true, completion: nil) }), animated: true, completion: nil)
         }
         
         self.viewModel.outputs.topLayoutConstraintConstant

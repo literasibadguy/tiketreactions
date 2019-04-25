@@ -7,7 +7,6 @@
 //
 import Prelude
 import ReactiveSwift
-import Spring
 import UIKit
 
 public protocol PickPassengersDelegate: class {
@@ -39,7 +38,7 @@ public final class PickPassengersVC: UIViewController {
     @IBOutlet fileprivate weak var infantTitleLabel: UILabel!
     @IBOutlet fileprivate weak var infantStepper: UIStepper!
     
-    @IBOutlet fileprivate weak var saveButton: DesignableButton!
+    @IBOutlet fileprivate weak var saveButton: UIButton!
     
     public static func configureWith(adult: Int, child: Int, infant: Int) -> PickPassengersVC {
         let vc = Storyboard.PickPassengers.instantiate(PickPassengersVC.self)

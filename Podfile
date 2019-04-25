@@ -18,7 +18,6 @@ target 'TiketReactions' do
   shared_with_all_pods
   pod 'Argo'
   pod 'AloeStackView'
-  pod 'CalendarDateRangePickerViewController'
   pod 'Curry'
   pod 'Runes'
   pod 'Alamofire', '~> 4.6'
@@ -30,7 +29,6 @@ target 'TiketReactions' do
   pod 'PDFReader'
   pod 'PhoneNumberKit'
   pod 'RealmSwift'
-  pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
   pod 'SwiftSoup'
 
   target 'TiketReactionsTests' do

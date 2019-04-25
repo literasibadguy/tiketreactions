@@ -27,9 +27,9 @@ internal final class HotelLiveFeedVC: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        self.navigationHeaderVC = self.childViewControllers.compactMap { $0 as? HotelLiveFeedNavVC }.first
+        self.navigationHeaderVC = self.children.compactMap { $0 as? HotelLiveFeedNavVC }.first
         self.navigationHeaderVC.delegate = self
-        self.contentVC = self.childViewControllers.compactMap { $0 as? HotelLiveFeedContentVC }.first
+        self.contentVC = self.children.compactMap { $0 as? HotelLiveFeedContentVC }.first
 //        self.navigationHeaderVC.delegate = self
         
         self.viewModel.inputs.viewDidLoad()

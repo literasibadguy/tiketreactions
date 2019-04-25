@@ -21,7 +21,7 @@ public protocol UITableViewProtocol: UIViewProtocol {
     #if os(iOS)
     var separatorColor: UIColor? { get set }
     var separatorEffect: UIVisualEffect? { get set }
-    var separatorStyle: UITableViewCellSeparatorStyle { get set }
+    var separatorStyle: UITableViewCell.SeparatorStyle { get set }
     #endif
 }
 
@@ -99,7 +99,7 @@ public extension LensHolder where Object: UITableViewProtocol {
         )
     }
     
-    var separatorStyle: Lens<Object, UITableViewCellSeparatorStyle> {
+    var separatorStyle: Lens<Object, UITableViewCell.SeparatorStyle> {
         return Lens(
             view: { $0.separatorStyle },
             set: { $1.separatorStyle = $0; return $1 }

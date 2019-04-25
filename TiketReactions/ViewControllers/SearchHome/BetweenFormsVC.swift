@@ -31,13 +31,13 @@ internal final class BetweenFormsVC: UIViewController {
 
     private func setupFormControllers() {
         let flightViewController = FlightFormVC.instantiate()
-        addChildViewController(flightViewController)
-        flightViewController.didMove(toParentViewController: self)
+        addChild(flightViewController)
+        flightViewController.didMove(toParent: self)
         self.flightVC = flightViewController
         
         let hotelViewController = HotelFormVC.instantiate()
-        addChildViewController(hotelViewController)
-        hotelViewController.didMove(toParentViewController: self)
+        addChild(hotelViewController)
+        hotelViewController.didMove(toParent: self)
         self.hotelVC = hotelViewController
         
         self.showController(self.flightVC)

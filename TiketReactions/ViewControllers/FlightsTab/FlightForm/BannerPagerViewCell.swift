@@ -8,7 +8,6 @@
 
 import UIKit
 import FSPagerView
-import Spring
 
 public final class BannerPagerViewCell: FSPagerViewCell, ValueCell {
     

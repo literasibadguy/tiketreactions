@@ -72,7 +72,7 @@ public final class PickFlightReturnsVC: UIViewController {
         
         _ = self.returnsTableView
             |> UITableView.lens.backgroundColor .~ .white
-            |> UITableView.lens.rowHeight .~ UITableViewAutomaticDimension
+            |> UITableView.lens.rowHeight .~ UITableView.automaticDimension
             |> UITableView.lens.estimatedRowHeight .~ 480.0
             |> UITableView.lens.separatorStyle .~ .none
         

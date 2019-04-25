@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="2mf-JN-JIW" userLabel="Form Stack View">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="510"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="500"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="if8-bo-i6Z" userLabel="Status Flight Stack View">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
@@ -271,16 +271,16 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hba-z0-hP0" userLabel="Passengers Container View">
-                                                <rect key="frame" x="0.0" y="353" width="414" height="60"/>
+                                                <rect key="frame" x="0.0" y="353" width="414" height="50"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZRf-fH-bwL" userLabel="Passengers Pick Button">
-                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                                     </button>
                                                     <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="OyL-Hs-UwD" userLabel="Passengers Menu Stack View">
-                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 Dewasa, 1 Anak, 1 Balita" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rsb-ZR-ocT" userLabel="Passengers Label">
-                                                                <rect key="frame" x="0.0" y="17" width="414" height="26.5"/>
+                                                                <rect key="frame" x="0.0" y="12" width="414" height="26.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -291,7 +291,7 @@
                                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="ZRf-fH-bwL" secondAttribute="trailing" id="5ax-Dp-leU"/>
-                                                    <constraint firstAttribute="height" constant="60" id="HHw-fD-SE8"/>
+                                                    <constraint firstAttribute="height" constant="50" id="HHw-fD-SE8"/>
                                                     <constraint firstAttribute="bottom" secondItem="ZRf-fH-bwL" secondAttribute="bottom" id="OTu-gU-zMF"/>
                                                     <constraint firstAttribute="bottom" secondItem="OyL-Hs-UwD" secondAttribute="bottom" id="YyW-hj-3HV"/>
                                                     <constraint firstItem="ZRf-fH-bwL" firstAttribute="leading" secondItem="hba-z0-hP0" secondAttribute="leading" id="a2g-Ly-weL"/>
@@ -302,31 +302,38 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rOL-A6-ske" userLabel="Passenger Separator View">
-                                                <rect key="frame" x="0.0" y="421" width="414" height="1"/>
+                                                <rect key="frame" x="0.0" y="411" width="414" height="1"/>
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="3IX-VZ-L1s"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xTp-fg-5Zm" userLabel="Search Button Container View">
-                                                <rect key="frame" x="0.0" y="430" width="414" height="80"/>
+                                                <rect key="frame" x="0.0" y="420" width="414" height="80"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s4x-x3-cq3" userLabel="Search Final Button">
-                                                        <rect key="frame" x="20" y="10" width="374" height="60"/>
+                                                        <rect key="frame" x="0.0" y="10" width="414" height="50"/>
                                                         <color key="backgroundColor" red="0.3368430416" green="0.68521292099999997" blue="0.56773633560000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="3r5-37-9WX"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                         <state key="normal" title="Cari Pesawat">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <integer key="value" value="5"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstItem="s4x-x3-cq3" firstAttribute="top" secondItem="xTp-fg-5Zm" secondAttribute="top" constant="10" id="1Er-DZ-wmM"/>
-                                                    <constraint firstAttribute="bottom" secondItem="s4x-x3-cq3" secondAttribute="bottom" constant="10" id="6ID-nQ-DG9"/>
-                                                    <constraint firstItem="s4x-x3-cq3" firstAttribute="leading" secondItem="xTp-fg-5Zm" secondAttribute="leading" constant="20" id="Cp8-sJ-QDK"/>
+                                                    <constraint firstItem="s4x-x3-cq3" firstAttribute="leading" secondItem="xTp-fg-5Zm" secondAttribute="leading" id="Cp8-sJ-QDK"/>
+                                                    <constraint firstItem="s4x-x3-cq3" firstAttribute="top" secondItem="xTp-fg-5Zm" secondAttribute="top" constant="10" id="Ktl-MD-MUY"/>
                                                     <constraint firstAttribute="height" constant="80" id="PBd-sU-Mxe"/>
-                                                    <constraint firstAttribute="trailing" secondItem="s4x-x3-cq3" secondAttribute="trailing" constant="20" id="wuv-So-V6M"/>
+                                                    <constraint firstAttribute="trailing" secondItem="s4x-x3-cq3" secondAttribute="trailing" id="wuv-So-V6M"/>
                                                 </constraints>
                                             </view>
                                         </subviews>

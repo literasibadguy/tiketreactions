@@ -5,12 +5,10 @@
 //  Created by Firas Rafislam on 25/01/18.
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
-import CalendarDateRangePickerViewController
 import FSPagerView
 import Prelude
 import ReactiveSwift
 import RealmSwift
-import Spring
 import TiketKitModels
 import UIKit
 
@@ -45,7 +43,7 @@ class FlightFormVC: UIViewController {
     @IBOutlet fileprivate weak var ToContainerView: UIView!
     @IBOutlet fileprivate weak var passengersContainerView: UIView!
     
-    @IBOutlet fileprivate weak var orderFirstButton: DesignableButton!
+    @IBOutlet fileprivate weak var orderFirstButton: UIButton!
     
     static func instantiate() -> FlightFormVC {
         let vc = Storyboard.FlightForm.instantiate(FlightFormVC.self)
@@ -137,6 +135,8 @@ class FlightFormVC: UIViewController {
             |> UIButton.lens.titleColor(forState: .normal) .~ .white
             |> UIButton.lens.backgroundImage(forState: .normal) .~ UIImage(named: "background-flight-tab")
             |> UIButton.lens.title(forState: .normal) .~ Localizations.PickDateTitleForm
+    
+        
     }
     
     override func bindViewModel() {
@@ -174,17 +174,17 @@ class FlightFormVC: UIViewController {
 
     private func setAttributedTitles(for button: UIButton, with string: String) {
         let normalTitleString = NSAttributedString(string: string, attributes: [
-            NSAttributedStringKey.font: self.traitCollection.isRegularRegular
+            NSAttributedString.Key.font: self.traitCollection.isRegularRegular
                 ? UIFont.boldSystemFont(ofSize: 16.0)
                 : UIFont.boldSystemFont(ofSize: 14.0),
-            NSAttributedStringKey.foregroundColor: UIColor.tk_typo_green_grey_600
+            NSAttributedString.Key.foregroundColor: UIColor.tk_typo_green_grey_600
             ])
         
         let selectedTitleString = NSAttributedString(string: string, attributes: [
-            NSAttributedStringKey.font: self.traitCollection.isRegularRegular
+            NSAttributedString.Key.font: self.traitCollection.isRegularRegular
                 ? UIFont.boldSystemFont(ofSize: 16.0)
                 : UIFont.boldSystemFont(ofSize: 14.0),
-            NSAttributedStringKey.foregroundColor: UIColor.tk_typo_green_grey_500
+            NSAttributedString.Key.foregroundColor: UIColor.tk_typo_green_grey_500
             ])
         
         _ = button

@@ -54,7 +54,7 @@ public final class DateRangesVC: UICollectionViewController {
         collectionView?.backgroundColor = UIColor.white
         
         collectionView?.register(DateRangeViewCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
-        collectionView?.register(DateRangeHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerReuseIdentifier)
+        collectionView?.register(DateRangeHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerReuseIdentifier)
         collectionView?.contentInset = collectionViewInsets
         
         if minimumDate == nil {
@@ -133,7 +133,7 @@ extension DateRangesVC {
     
     override public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
-        case UICollectionElementKindSectionHeader:
+        case UICollectionView.elementKindSectionHeader:
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerReuseIdentifier, for: indexPath) as! DateRangeHeaderView
             headerView.label.text = getMonthLabel(date: getFirstDateForSection(section: indexPath.section))
             return headerView

@@ -35,7 +35,7 @@ internal final class HotelLiveFeedContentVC: UITableViewController {
         
         let emptyVC = EmptyStatesVC.configuredWith(emptyState: nil)
         self.emptyStatesController = emptyVC
-        self.addChildViewController(emptyVC)
+        self.addChild(emptyVC)
         self.view.addSubview(emptyVC.view)
         NSLayoutConstraint.activate([
             emptyVC.view.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -43,7 +43,7 @@ internal final class HotelLiveFeedContentVC: UITableViewController {
             emptyVC.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             emptyVC.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
             ])
-        emptyVC.didMove(toParentViewController: self)
+        emptyVC.didMove(toParent: self)
         
         self.viewModel.inputs.viewDidLoad()
     }
@@ -114,7 +114,7 @@ internal final class HotelLiveFeedContentVC: UITableViewController {
         
         emptyVC.setEmptyState(emptyState)
         emptyVC.view.isHidden = false
-        self.view.bringSubview(toFront: emptyVC.view)
+        self.view.bringSubviewToFront(emptyVC.view)
         UIView.animate(withDuration: 0.3, animations: {
             self.emptyStatesController?.view.alpha = 1.0
         }, completion: nil)

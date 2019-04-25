@@ -34,7 +34,7 @@ public final class SearchHomeEmbedVC: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.pageViewController = self.childViewControllers.compactMap { $0 as? UIPageViewController }.first
+        self.pageViewController = self.children.compactMap { $0 as? UIPageViewController }.first
         self.pageViewController.setViewControllers(
             [.init()],
             direction: .forward,

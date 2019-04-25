@@ -56,6 +56,8 @@ public final class ThirdIssueViewModel: ThirdIssueViewModelType, ThirdIssueViewM
         let accFirstName = current.signal.map { $0.passenger.last?.accountFirstName }.skipNil()
         let accLastName = current.signal.map { $0.passenger.last?.accountLastName }.skipNil()
         
+        let isItLionAir = current.signal.map { $0.flightDetail.airlinesName }.skipNil().map { $0 == "LION" }
+        
 //        let departureFlight = current.signal.map { $0.flightDetail.departureCity }.skipNil()
 //        let arrivalFlight = current.signal.map { $0.flightDetail.arrivalCity }.skipNil()
         

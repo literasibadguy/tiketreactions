@@ -33,6 +33,8 @@ public protocol HotelDetailsVCViewModelOutputs {
     var setNavigationBarHiddenAnimated: Signal<(Bool, Bool), NoError> { get }
     
     var topLayoutConstraintConstant: Signal<CGFloat, NoError> { get }
+    
+    var genericError: Signal<String, NoError> { get }
 }
 
 public protocol HotelDetailsViewModelType {
@@ -54,10 +56,10 @@ public final class HotelDetailsViewModel: HotelDetailsViewModelType, HotelDetail
         let selectedHotel = Signal.combineLatest(self.configHotelDirectProperty.signal.skipNil(), self.viewDidLoadProperty.signal).map(first)
         
         let requestDirect = selectedHotel.switchMap { result in
-            AppEnvironment.current.apiService.fetchHotelDetail(url: result.0.businessURI, params: sampleParams).demoteErrors()
+            AppEnvironment.current.apiService.fetchHotelDetail(url: result.0.businessURI, params: sampleParams).materialize()
         }
         
-        self.configureChildVCHotelDirect = Signal.combineLatest(selectedHotel.map(first), requestDirect, selectedHotel.map(second))
+        self.configureChildVCHotelDirect = Signal.combineLatest(selectedHotel.map(first), requestDirect.values(), selectedHotel.map(second))
         
         self.setNeedsStatusBarAppearanceUpdate = Signal.merge(self.viewWillAppearAnimatedProperty.signal.ignoreValues(), self.willTransitionToCollectionProperty.signal.ignoreValues())
         
@@ -65,6 +67,8 @@ public final class HotelDetailsViewModel: HotelDetailsViewModelType, HotelDetail
             self.viewDidLoadProperty.signal.mapConst((true, false)),
             self.viewWillAppearAnimatedProperty.signal.skip(first: 1).map { (true, $0) }
         )
+        
+        self.genericError = requestDirect.errors().map { _ in "Mohon Maaf, Pesanan Hotel sedang gangguan" }
         
         self.topLayoutConstraintConstant = self.initialTopConstraintProperty.signal.skipNil().takePairWhen(self.willTransitionToCollectionProperty.signal.skipNil()).map(topLayoutConstraintConstant(initialTopConstraint:traitCollection:))
     }
@@ -108,6 +112,7 @@ public final class HotelDetailsViewModel: HotelDetailsViewModelType, HotelDetail
     public let setNavigationBarHiddenAnimated: Signal<(Bool, Bool), NoError>
     public let setNeedsStatusBarAppearanceUpdate: Signal<(), NoError>
     public let topLayoutConstraintConstant: Signal<CGFloat, NoError>
+    public let genericError: Signal<String, NoError>
     
     public var inputs: HotelDetailsVCViewModelInputs { return self }
     public var outputs: HotelDetailsVCViewModelOutputs { return self }

@@ -24,7 +24,7 @@ public protocol TiketServiceType {
     func getToken(_ tiketToken: TiketTokenType) -> Self
     
     func selectedCurrency(_ currency: String) -> Self
-   
+    
     func getTokenEnvelope(clientAuth: ClientAuthType) -> SignalProducer<GetTokenEnvelope, ErrorEnvelope>
     
     func listCurrencyEnvelope() -> SignalProducer<CurrencyListEnvelope, ErrorEnvelope>

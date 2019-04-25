@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2A3EC6A22956A2C4A94FB302E373AC56"
+               BlueprintIdentifier = "D29270FA78EB36A6D876566C0AF6507C"
                BuildableName = "Pods_TiketReactions_TiketReactionsTests.framework"
                BlueprintName = "Pods-TiketReactions-TiketReactionsTests"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2A3EC6A22956A2C4A94FB302E373AC56"
+            BlueprintIdentifier = "D29270FA78EB36A6D876566C0AF6507C"
             BuildableName = "Pods_TiketReactions_TiketReactionsTests.framework"
             BlueprintName = "Pods-TiketReactions-TiketReactionsTests"
             ReferencedContainer = "container:Pods.xcodeproj">

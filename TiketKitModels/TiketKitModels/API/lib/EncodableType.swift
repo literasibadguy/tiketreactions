@@ -7,11 +7,11 @@ public protocol EncodableType {
 
 public extension EncodableType {
     
-    public func toJSONData() -> Data? {
+    func toJSONData() -> Data? {
         return try? JSONSerialization.data(withJSONObject: encode(), options: [])
     }
     
-    public func toJSONString() -> String? {
+    func toJSONString() -> String? {
         return self.toJSONData().flatMap { String(data: $0, encoding: .utf8) }
     }
 }

@@ -9,6 +9,7 @@
 import PDFReader
 import Prelude
 import ReactiveSwift
+import SafariServices
 import TiketKitModels
 import UIKit
 
@@ -93,10 +94,20 @@ public final class BookingCompletedVC: UITableViewController {
             .observeValues { [weak self] in
                 self?.dismiss(animated: true, completion: nil)
         }
+        
+        self.viewModel.outputs.goToWebBrowser
+            .observe(on: QueueScheduler.main)
+            .observeValues { [weak self] in
+                let lionPrepaid = URL(string: "https://secure2.lionair.co.id/LionAirMMB2/")!
+                self?.goToSafariBrowser(url: lionPrepaid)
+        }
+        
     }
     
     public override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? SecondIssueViewCell {
+        if let cell = cell as? FirstIssueViewCell {
+            cell.delegate = self
+        } else if let cell = cell as? SecondIssueViewCell {
             cell.delegate = self
         }
     }
@@ -109,6 +120,12 @@ public final class BookingCompletedVC: UITableViewController {
         let navVC = UINavigationController(rootViewController: readerController)
         navVC.navigationBar.tintColor = .tk_official_green
         self.present(navVC, animated: true, completion: nil)
+    }
+    
+    fileprivate func goToSafariBrowser(url: URL) {
+        let controller = SFSafariViewController(url: url)
+        controller.modalPresentationStyle = .overFullScreen
+        self.present(controller, animated: true, completion: nil)
     }
     
     @objc fileprivate func dismissToOrders() {
@@ -124,6 +141,12 @@ public final class BookingCompletedVC: UITableViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+}
+
+extension BookingCompletedVC: FirstIssueCellDelegate {
+    public func baggageIssueButtonTapped() {
+        self.viewModel.inputs.baggagePrepaidTapped()
+    }
 }
 
 extension BookingCompletedVC: SecondIssueCelLDelegate {

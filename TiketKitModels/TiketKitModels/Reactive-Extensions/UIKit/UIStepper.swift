@@ -9,7 +9,7 @@ private enum Associations {
 }
 
 public extension Rac where Object: UIStepper {
-    public var minimumValue: Signal<Double, NoError> {
+    var minimumValue: Signal<Double, NoError> {
         nonmutating set {
             let prop: MutableProperty<Double> = lazyMutableProperty(
                 object,
@@ -25,7 +25,7 @@ public extension Rac where Object: UIStepper {
         }
     }
     
-    public var maximumValue: Signal<Double, NoError> {
+    var maximumValue: Signal<Double, NoError> {
         nonmutating set {
             let prop: MutableProperty<Double> = lazyMutableProperty(
                 object,
@@ -41,7 +41,7 @@ public extension Rac where Object: UIStepper {
         }
     }
     
-    public var value: Signal<Double, NoError> {
+    var value: Signal<Double, NoError> {
         nonmutating set {
             let prop: MutableProperty<Double> = lazyMutableProperty(
                 object,

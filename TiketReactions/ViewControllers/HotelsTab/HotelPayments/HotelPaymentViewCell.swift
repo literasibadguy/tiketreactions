@@ -6,7 +6,6 @@
 //  Copyright © 2018 Firas Rafislam. All rights reserved.
 //
 import Prelude
-import Spring
 import TiketKitModels
 import UIKit
 
@@ -15,7 +14,7 @@ class HotelPaymentViewCell: UITableViewCell, ValueCell {
     typealias Value = AvailablePaymentEnvelope.AvailablePayment
     
     
-    @IBOutlet fileprivate weak var payDesignableView: DesignableView!
+    @IBOutlet fileprivate weak var payDesignableView: UIView!
     
     @IBOutlet fileprivate weak var titlePaymentLabel: UILabel!
     @IBOutlet fileprivate weak var availablePaymentStackView: UIStackView!
@@ -44,7 +43,7 @@ class HotelPaymentViewCell: UITableViewCell, ValueCell {
     override func bindStyles() {
         super.bindStyles()
         
-        self.payDesignableView.borderColor = .tk_base_grey_100
+//        self.payDesignableView.borderColor = .tk_base_grey_100
         
         _ = self.titlePaymentLabel
             |> UILabel.lens.textColor .~ .tk_typo_green_grey_600

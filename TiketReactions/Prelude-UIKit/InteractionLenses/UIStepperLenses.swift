@@ -20,13 +20,13 @@ public protocol UIStepperProtocol: UIControlProtocol {
     
     var tintColor: UIColor! { get set }
     
-    func backgroundImage(for state: UIControlState) -> UIImage?
-    func setBackgroundImage(_ image: UIImage?, for state: UIControlState)
+    func backgroundImage(for state: UIControl.State) -> UIImage?
+    func setBackgroundImage(_ image: UIImage?, for state: UIControl.State)
     
-    func incrementImage(for state: UIControlState) -> UIImage?
-    func setIncrementImage(_ image: UIImage?, for state: UIControlState)
-    func decrementImage(for state: UIControlState) -> UIImage?
-    func setDecrementImage(_ image: UIImage?, for state: UIControlState)
+    func incrementImage(for state: UIControl.State) -> UIImage?
+    func setIncrementImage(_ image: UIImage?, for state: UIControl.State)
+    func decrementImage(for state: UIControl.State) -> UIImage?
+    func setDecrementImage(_ image: UIImage?, for state: UIControl.State)
     
 }
 
@@ -91,21 +91,21 @@ public extension LensHolder where Object: UIStepperProtocol {
         )
     }
     
-    func backgroundImage(for state: UIControlState) -> Lens<Object, UIImage?> {
+    func backgroundImage(for state: UIControl.State) -> Lens<Object, UIImage?> {
         return Lens(
             view: { view in view.backgroundImage(for: state) },
             set: { view, set in set.setBackgroundImage(view, for: state); return set }
         )
     }
     
-    func incrementImage(for state: UIControlState) -> Lens<Object, UIImage?> {
+    func incrementImage(for state: UIControl.State) -> Lens<Object, UIImage?> {
         return Lens(
             view: { view in view.incrementImage(for: state) },
             set: { view, set in set.setIncrementImage(view, for: state); return set}
         )
     }
     
-    func decrementImage(for state: UIControlState) -> Lens<Object, UIImage?> {
+    func decrementImage(for state: UIControl.State) -> Lens<Object, UIImage?> {
         return Lens(
             view: { view in view.decrementImage(for: state) },
             set: { view, set in set.setDecrementImage(view, for: state); return set}

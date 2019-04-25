@@ -20,7 +20,7 @@ extension NSAttributedString {
             paragraphStyle.lineBreakMode = lineBreakMode
         }
         let underlineValue = underlineStyle?.rawValue ?? 0
-        let attrs: [NSAttributedStringKey: Any] = [
+        let attrs: [NSAttributedString.Key: Any] = [
             .foregroundColor: color,
             .font: font,
             .paragraphStyle: paragraphStyle,
@@ -29,7 +29,7 @@ extension NSAttributedString {
         self.init(string: string, attributes: attrs)
     }
     
-    convenience init(button string: String, style: CustomStyledButton.Style, state: UIControlState = .normal, selected: Bool = false, alignment: NSTextAlignment = .center, lineBreakMode: NSLineBreakMode? = nil) {
+    convenience init(button string: String, style: CustomStyledButton.Style, state: UIControl.State = .normal, selected: Bool = false, alignment: NSTextAlignment = .center, lineBreakMode: NSLineBreakMode? = nil) {
         let stateColor: UIColor?
         if state == .disabled {
             stateColor = style.disabledTitleColor
@@ -48,7 +48,7 @@ extension NSAttributedString {
         }
         
         let color = stateColor ?? style.titleColor ?? .black
-        self.init(string, color: color, underlineStyle: style.underline ? .styleSingle : .styleNone, font: style.font, alignment: alignment, lineBreakMode: lineBreakMode)
+        self.init(string, color: color, underlineStyle: style.underline ? .single : .none, font: style.font, alignment: alignment, lineBreakMode: lineBreakMode)
     }
 }
 
