@@ -1,4 +1,4 @@
-# Triptozero iOS App
+# Triptozero iOS App [ARCHIVED]
 
 ![triptozero-ff](https://user-images.githubusercontent.com/6375030/173482284-a2e39e1d-544c-406b-b0b5-498a6221cf4b.jpg)
 
